@@ -17,4 +17,4 @@ tabled <- pivot_wider(data = as.data.frame(table(long$language, long$variable)),
                       names_from = Var2,
                       values_from = Freq)
 
-write.csv(tabled, )
+write.csv(tabled, "table_summary.csv", row.names = F)
