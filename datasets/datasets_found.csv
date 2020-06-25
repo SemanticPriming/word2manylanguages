@@ -1,7 +1,17 @@
+datasets_found
 Language,Variable,File Name,Link for New Stuff,,"Note: if you find something that isn't in our dataset, include the link or reference so I can add it to our dataset (even if you do find the files!)"
 Arabic,"Age of Acquisition, Familiar",Khwaileh2018 AOA,,,
 Arabic,"Familiar, Imagine",Boukadi2016,,,
 Bulgarian,Age of Acquisition,,https://www.sciencedirect.com/science/article/pii/S0749596X04000245,,
+Chinese,Age of Acquisition,Hao2008,Note: Dataset saved,,
+Chinese,"Age of Acquisition, Concreteness, Familiarity & Imagibility",Liu2007,https://link.springer.com/article/10.3758/BF03193147,,
+Chinese,Age of Acquisition & Familiarity,Weekes2007,Note: Dataset saved,,
+Chinese,Valence,Bai2005,http://www.wanfangdata.com.cn/details/detail.do?_type=perio&id=zgxlwszz200511001,,
+Chinese,Familiarity,Chang2016,https://link.springer.com/article/10.3758%2Fs13428-014-0559-7,,
+Chinese,Familiarity,Li2016,https://link.springer.com/article/10.3758/s13428-015-0692-y#appendices,,
+Chinese,"Concreteness, Familiarity, Imagibility & Valence",Yao2017,Note: Dataset saved,,
+Chinese,"Concreteness, Imagibility & Valence",Yee2017,Note: Dataset saved,,
+Chinese,Valence,Liu2012,https://link.springer.com/article/10.3758/s13428-012-0203-3#appendices,,
 Danish ,Age of Acquisition,JØRGENSEN2010,https://www.cambridge.org/core/journals/journal-of-child-language/article/clex-a-crosslinguistic-lexical-norms-database/CF1D041B56EA5856A70646A870CCAC31,,
 German ,Age of Acquisition & Familiarity,Schroder2012,https://link.springer.com/article/10.3758/s13428-011-0164-y#SecESM1,,
 German,Age of Acquisition,Birchenough2017,Note: Dataset saved ,,
