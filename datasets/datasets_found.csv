@@ -1,4 +1,4 @@
-datasets_found
+datasets_found,,,,,
 Language,Variable,File Name,Link for New Stuff,,"Note: if you find something that isn't in our dataset, include the link or reference so I can add it to our dataset (even if you do find the files!)"
 Arabic,"Age of Acquisition, Familiar",Khwaileh2018 AOA,,,
 Arabic,"Familiar, Imagine",Boukadi2016,,,
@@ -13,6 +13,9 @@ Chinese,"Concreteness, Familiarity, Imagibility & Valence",Yao2017,Note: Dataset
 Chinese,"Concreteness, Imagibility & Valence",Yee2017,Note: Dataset saved,,
 Chinese,Valence,Liu2012,https://link.springer.com/article/10.3758/s13428-012-0203-3#appendices,,
 Danish ,Age of Acquisition,JØRGENSEN2010,https://www.cambridge.org/core/journals/journal-of-child-language/article/clex-a-crosslinguistic-lexical-norms-database/CF1D041B56EA5856A70646A870CCAC31,,
+Finnish,"Concreteness, Familiarity & Valence ",Eilola2010,Note: Dataset saved,,
+Finnish,Valence,Leveau2012,Note: Dataset saved,,
+Finnish,Familiarity,Torrance2018,Note: Dataset saved,,
 German ,Age of Acquisition & Familiarity,Schroder2012,https://link.springer.com/article/10.3758/s13428-011-0164-y#SecESM1,,
 German,Age of Acquisition,Birchenough2017,Note: Dataset saved ,,
 German ,"Age of Acquisition, Imagibility & Valence ",Schroter2017,https://link.springer.com/article/10.3758/s13428-016-0851-9#Sec33,,
@@ -36,3 +39,4 @@ German,Valence ,Briesemeister2011a,https://journals.plos.org/plosone/article?id=
 German,Valence ,Schauenburg2015,https://link.springer.com/article/10.3758/s13428-014-0494-7#Sec12,,
 German,Valence ,Briesemeister2011,Note: Dataset saved ,,
 German,Valence ,Ebner2010,https://link.springer.com/content/pdf/10.3758/BRM.42.1.351.pdf,,
+Hebrew ,Valence ,Lassalle2018,Note: Dataset saved ,,
