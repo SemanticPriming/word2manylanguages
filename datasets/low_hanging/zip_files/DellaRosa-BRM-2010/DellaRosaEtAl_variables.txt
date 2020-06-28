@@ -1,0 +1,17 @@
+Italian name
+English translation	
+CNC	Concreteness
+CNCSd	Concreteness Standard deviation
+IMG	Imageability
+IMGSd	Imageability Standard deviation
+FAM	Familiarity
+FAMSd	Familiarity Standard deviation
+AoA	Age of Acquisition
+AoASd	Age of Acquisition Standard deviation
+CA	Context Availability
+CASd	Context Availability Standard deviation
+ABS	Abstractness
+ABSSd	Abstractness Standard deviation
+MoA	Mode of Acquisition
+MoASd	Mode of Acquisition Standard deviation
+Let	Number of letters

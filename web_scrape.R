@@ -45,11 +45,6 @@ ref[, variable := trimws(paste(ref$aoa, ref$concrete, ref$familiar, ref$imagine,
 #sort decreasing so I can start from last language
 setorder(ref, -language)
 
-#use ref titles to find links that we can search for "electronic supplementary material"
-
-# #start with google scholar link --- uhhhh never mind Google Scholar does NOT appreciate my web scraping skills
-# base_url <- "http://scholar.google.com/scholar?"
-
 # create data.frame
 log <- data.frame()
 
@@ -111,4 +106,57 @@ for(i in 1:nrow(ref)){
 log
 
 #write out log
-fwrite(log, "datasets/low_hanging/datasets_found_gc.csv", quote = F, sep = ",")
+fwrite(log, "datasets/low_hanging/datasets_found_gc.csv", quote = T, sep = ",")
+
+#start to clean up log
+log <- data.table(log)
+
+#get rid of all pdf, gif, docs, and zip
+log2 <- log[!file_name %in% grep(c(".pdf|.gif|.doc|.zip"), log$file_name, value = T),]
+
+#place all zip files at the bottom 
+log2 <- rbind(log2,log[file_name %in% grep(c(".zip"), log$file_name, value = T),])
+
+#create file search variable to help with grepping files later
+f_search <- character()
+
+#split and grab first word from files/authors
+for(i in 1:length(str_split(log2$file_name, boundary("word")))){
+  f_search[i] <- str_split(log2$file_name, boundary("word"))[[i]][1]
+}
+
+#loop for datasets that are just one file
+for(i in 74:nrow(log2)){
+  print(i)
+  if(length(grep(f_search[i], list.files("datasets/low_hanging/data_files/"), value = T, ignore.case = T)) > 1){next}
+  tryCatch({
+    log2[file_name %in% grep(f_search[i], log2$file_name, value = T),
+         file_name := grep(f_search[i], list.files("datasets/low_hanging/data_files/", ignore.case = T), value = T)][]
+  }, error = function(e){cat("Error: ", conditionMessage(e), "\n")})
+}
+
+#add file search variable to data.table
+log2[, f_search := f_search]
+
+#make a new log dt without any of the zip files
+log3 <- log2[!grep(".zip", log2$file_name)]
+
+#row bind to include all multiple file datasets 
+for(i in 1:nrow(log2[grep(".zip", log2$file_name)])){
+  log3 <- rbind(log3, 
+                data.table(language = log2[grep(".zip", log2$file_name)][i]$language,
+                           variable = log2[grep(".zip", log2$file_name)][i]$variable, 
+                           file_name = grep(log2[grep(".zip", log2$file_name)][i]$f_search, 
+                                            list.files("datasets/low_hanging/data_files/"), 
+                                            ignore.case = T, value = T)),
+                fill = T)
+}
+
+#delete file search var
+log3[, f_search := NULL][]
+
+#sort by language
+setorder(log3, -language)
+
+#and write out. 
+fwrite(log3, "datasets/low_hanging/datasets_found_gc.csv", quote = T, sep = ",")
