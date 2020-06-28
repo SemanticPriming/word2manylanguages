@@ -1,191 +1,225 @@
-language,variable,file_name
-Turkish,AOA  familiar,Raman, Raman, & Mertan_1.xlsx
-Turkish,AOA  familiar,Raman, Raman, & Mertan_2.xlsx
-Turkish,AOA concrete  imagine,Goz, Takcan, & Erciyes_1.pdf
-Spanish,valence,Ferre, Guasch, Moldovan, & Sanchez-Casas_1.xls
-Spanish,AOA  familiar imagine,Izura, Hernandez-Munoz, & Ellis_1.zip
-Spanish,concrete familiar imagine valence,Reales, Ballesteros, & Garcia_1.zip
-Spanish,concrete familiar imagine valence,Redondo, Fraga, Padron, & Comesana_1.zip
-Spanish,AOA  familiar,Manoiloff, Artstein, Canavoso, Fernandez, & Segui_1.zip
-Spanish,AOA,Alvarez & Cuetos_1.zip
-Spanish,AOA  familiar imagine,Cuetos & Allia_1.zip
-Spanish,familiar,Dasi, Soler, & Ruiz_1.zip
-Spanish,AOA,Alonso, Fernandez, & Diez_1.zip
-Spanish,concrete familiar,Moldovan, Ferre, Demestre, & Sanchez-Casas_1.pdf
-Spanish,AOA  familiar,Moreno-Martinez, Montoro, & Rodriguez-Rojo_1.xls
-Spanish,AOA,Alonso, Diez, & Fernandez_1.xlsx
-Spanish,valence,Ferre, Guasch, Martinez-Garcia, Fraga, & Hinojosa_1.xls
-Spanish,concrete familiar imagine valence,Guasch, Ferre, & Fraga_1.xlsx
-Spanish,familiar  valence,Soler, Dasi, Ruiz, & Cervera_1.pdf
-Spanish,valence,Stadthagen-Gonzalez, Imbault, Sanchez, & Brysbaert_1.csv
-Spanish,concrete familiar,Diez-Alamo, Diez, Alonso,Vargas, & Fernandez_1.rar
-Spanish,AOA,Diez-Alamo, Diez, Wojcik, Alonso, & Fernandez_1.xlsx
-Spanish,valence,Stadthagen-Gonzalez, Ferre, Perez-Sanchez, Imbault, & Hinojosa_1.csv
-Russian,AOA  familiar imagine,Grigoriev & Oshhepkov_1.xls
-Portuguese,AOA concrete familiar imagine,Marques, Fonseca, Morais, & Pinto_1.zip
-Portuguese,AOA,Cameirao & Vicente_1.zip
-Portuguese,valence,Soares, Pinheiro, Costa, Frade, Comesana, & Pureza_1.xls
-Portuguese,valence,Soares, Comesana, Pinheiro, Simoes, & Frade_1.xls
-Portuguese,concrete familiar  valence,Prada, Rodriques, Silva, & Garrido_1.doc
-Portuguese,concrete familiar  valence,Prada, Rodriques, Silva, & Garrido_2.doc
-Portuguese,concrete  imagine,Soares, Costa, Machado, Comesana, & Oliveira_1.xlsx
-Portuguese,valence,Pinheiro, Dias, Pedrosa, & Soares_1.docx
-Portuguese,valence,Pinheiro, Dias, Pedrosa, & Soares_2.docx
-Portuguese,valence,Pinheiro, Dias, Pedrosa, & Soares_3.docx
-Portuguese,valence,Pinheiro, Dias, Pedrosa, & Soares_4.docx
-Polish,valence,Marchewka, Zurawski, Jednorog, & Grabowska_1.xls
-Polish,valence,Marchewka, Zurawski, Jednorog, & Grabowska_2.xlsx
-Polish,valence,Imbir_1.xls
-Polish,imagine valence,Riegel, Wierzba, Wypych, Zurawski, Jednorog, Grabowska, & Marchewka_1.xlsx
-Persian,AOA   imagine,Bakhtiar, Nilipour, & Weekes_1.xlsx
-Persian,valence,Keshtiari, Kuhlmann, Eslami, & Klann-Delius_1.pdf
-Persian,valence,Keshtiari, Kuhlmann, Eslami, & Klann-Delius_2.pdf
-Persian,valence,Keshtiari, Kuhlmann, Eslami, & Klann-Delius_3.pdf
-Persian,AOA  familiar,Ghasisn, Yadegari, Rahgozar, Nazari, & Rastegarianzade_1.xlsx
-Japanese,AOA  familiar,Nishimoto, Miyawaki, Ueda, Une, & Takahashi_1.zip
-Japanese,familiar imagine,Nishimoto, Ueda, Miyawaki, Une, & Takahashi_1.xlsx
-Japanese,familiar imagine,Nishimoto, Ueda, Miyawaki, Une, & Takahashi_2.zip
-Japanese,valence,Yang, Makita, Nakao, Kanayama, Machizawa, Sasaoka, Sugata, Kobayashi, Hiramoto, Yamawaki, Iwanaga, & Miyatani_1.xlsx
-Italian,AOA   imagine,Rinaldi, Barca, & Burani_1.zip
-Italian,AOA,Barbarotto, Laiacona, & Capitani_1.zip
-Italian,AOA concrete familiar imagine,Della Rosa, Catricala, Vigliocco, & Cappa_1.zip
-Italian,AOA  familiar,Lotto, Dell Acqua, & Job_1.zip
-Italian,familiar,Montefinese, Ambrosini, Fairfield, & Mammarella_1.xls
-Italian,AOA  familiar,Tabossi, Arduino, & Fanari_1.xls
-Italian,AOA  familiar,Tabossi, Arduino, & Fanari_2.xls
-Italian,AOA  familiar,Tabossi, Arduino, & Fanari_3.doc
-Italian,concrete familiar imagine valence,Montefinese, Ambrosini, Fairfield, & Mammarella_1.pdf
-Italian,concrete,Salvi, Costantini, Bricolo, Perugini, & Beeman_1.pdf
-Greek,AOA,Dimitropoulou, Dunabeitia, Blitsas, & Carreiras_1.zip
-German,imagine,Gruhn & Smith_1.zip
-German,concrete   valence,Kanske & Kotz_1.zip
-German,AOA  familiar,Schroder, Gemballa, Ruppin, & Wartenburger_1.xls
-German,imagine valence,Schmidtke, Schroder, Jacobs, & Conrad_1.xlsx
-German,AOA,Birchenough, Davies, & Connelly_1.csv
-German,concrete familiar  valence,Citron, Cacciari, Kucharski, Beck, Conrad, & Jacobs_1.gif
-German,concrete familiar  valence,Citron, Cacciari, Kucharski, Beck, Conrad, & Jacobs_2.xls
-German,valence,Schauenburg, Ambrasat, Schroder, von Scheve, & Conrad_1.xlsx
-German,AOA   imagine valence,Schroter & Schroeder_1.pdf
-German,valence,Briesemeister, Kuchinke, & Jacobs_1.xls
-German,AOA,Smolka & Eulitz_1.pdf
-German,AOA,Smolka & Eulitz_2.pdf
-German,AOA,Smolka & Eulitz_3.csv
-French,AOA   imagine,Ferrand, Bonin, Meot, Augustinova, New, Pallier, & Brysbaert_1.zip
-French,AOA,Schwitter, Boyer, Meot, Bonin, & Laganaro_1.zip
-French,AOA  familiar,Alario & Ferrand_1.zip
-French,AOA,Cannard & Kandel_1.zip
-French,familiar,Cordier & Ny_1.zip
-French,imagine,Desrouchers & Thompson_1.zip
-French,AOA  familiar,Bonin, Meot, & Bugaiska_1.docx
-French,AOA  familiar,Bonin, Meot, & Bugaiska_2.xls
-French,valence,Syssau & Monnier_1.zip
-French,AOA  familiar,Bonin, Peereman, Malardier, Meot, & Chalard_1.zip
-French,valence,Bertels, Deliens, Peigneux, & Destrebecqz_1.doc
-French,AOA   imagine,Bonin, Meot, Millotte, & Bugaiska_1.xlsx
-French,AOA   imagine,Bonin, Meot, Ferrand, & Bugaiska_1.xlsx
-French,imagine valence,Monnier & Syssau_1.docx
-French,imagine valence,Monnier & Syssau_2.xlsx
-French,AOA    valence,Bonin, Meot, & Bugaiska_1.docx
-French,AOA    valence,Bonin, Meot, & Bugaiska_2.txt
-French,AOA    valence,Bonin, Meot, & Bugaiska_3.xlsx
-French,AOA    valence,Bonin, Meot, & Bugaiska_4.docx
-English,valence,Ferstl, Garnham, & Manouilidou_1.xlsx
-English,familiar imagine valence,Janscherwitz_1.zip
-English,familiar,Janssen, Pejtas, & Caramazza_1.zip
-English,concrete  imagine,Altarriba, Bauer, & Benvenuto_1.zip
-English,AOA  familiar,Johnston, Dent, Humphreys, & Barry_1.zip
-English,AOA   imagine,Juhasz & Yap_1.xls
-English,familiar,Kealy, Ritzhaupt, & Spears_1.zip
-English,concrete  imagine valence,Bestgen & Vincze_1.zip
-English,imagine,Chiarello, Shears, & Lund_1.zip
-English,concrete familiar,McDougall, Curry, & de Bruijn_1.zip
-English,AOA,Khanna & Cortese_1.xls
-English,AOA,Khanna & Cortese_2.xls
-English,familiar  valence,Libkuman, Otani, Kern, Viger, & Novak_1.zip
-English,familiar imagine valence,Marcell, Malatanos, Leahy, & Comeaux_1.zip
-English,concrete familiar,Mcdougall & Isherwood_1.zip
-English,AOA  familiar,Salmon, McMullen, & Filliter_1.zip
-English,AOA   imagine,Schock, Cortese, & Khanna_1.pdf
-English,AOA,Schock, Cortese, Khanna, & Toppi_1.xlsx
-English,concrete,Nelson, McEvoy, & Schreiber_1.zip
-English,familiar,Surprenant, Hura, Harper, Jamieson, Long, Thede, Rout, Hsueh, Hockema, Johnson, Srinivasan, White, & Laflen_1.zip
-English,familiar,Amsel, Urbach, & Kutas_1.csv
-English,AOA  familiar imagine,Clark & Paivio_1.zip
-English,imagine,Cortese & Fugett_1.zip
-English,AOA  familiar imagine,Morrow & Duffy_1.zip
-English,familiar,Yoon, Feinberg, Luo, Hedden, Gutchess, Chen, Mikels, Jiao, & Park_1.zip
-English,concrete familiar imagine valence,Cardillo, Schmidt, Kranjec, & Chatterjee_1.zip
-English,AOA,Cortese & Khanna_1.zip
-English,imagine,Cohen-Shikora, Balota, Kapuria, & Yap_1.xlsx
-English,AOA,De Cara & Goswami_1.zip
-English,valence,Warriner, Kuperman, & Brysbaert_1.zip
-English,valence,Lima, Castro, & Scott_1.xlsx
-English,valence,Lima, Castro, & Scott_2.zip
-English,AOA  familiar imagine,Tsaparina, Bonin, & Meot_1.xls
-English,AOA  familiar imagine,Tsaparina, Bonin, & Meot_2.xls
-English,valence,Stevenson, Mikels, & James_1.zip
-English,valence,Stevenson & James_1.zip
-English,valence,Mikels, Fredrickson, Larkin, Lindberg, Maglio, & Reuter-Lorenz_1.zip
-English,concrete,Brysbaert, Warriner, & Kuperman_1.xlsx
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_1.pdf
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_2.pdf
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_3.pdf
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_4.pdf
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_5.pdf
-English,valence,Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_6.xlsx
-English,AOA,Storkel_1.xls
-English,valence,Naples, Nguyen-Phuc, Coffman, Kresse, Faja, Bernier, & McPartland_1.doc
-English,valence,Naples, Nguyen-Phuc, Coffman, Kresse, Faja, Bernier, & McPartland_2.zip
-English,familiar,Roncero & de Almeida_1.docx
-English,familiar,Roncero & de Almeida_2.docx
-English,familiar,Roncero & de Almeida_3.docx
-English,familiar,Bulkes & Tanner_1.xlsx
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_1.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_2.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_3.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_4.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_5.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_7.zip
-English,familiar,Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx
-English,valence,Gilman, Shaheen, Nylocks, Halachoff, Chapman, Flynn, Matt, & Coifman_1.docx
-English,AOA  familiar imagine,Juhasz, Lai, & Woodcock_1.doc
-English,AOA  familiar imagine,Juhasz, Lai, & Woodcock_2.xlsx
-English,AOA  familiar imagine,Juhasz, Lai, & Woodcock_3.pdf
-English,concrete,Pexman, Heard, Lloyd, & Yap_1.docx
-English,concrete,Pexman, Heard, Lloyd, & Yap_2.xlsx
-English,concrete,Pexman, Heard, Lloyd, & Yap_3.xlsx
-English,valence,Calvo & Avero_1.zip
-English,valence,Calvo & Lundqvist_1.zip
-English,concrete familiar  valence,Cardillo, Watson, & Chatterjee_1.doc
-English,concrete familiar  valence,Cardillo, Watson, & Chatterjee_2.xls
-English,concrete familiar  valence,Cardillo, Watson, & Chatterjee_3.xls
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_1.xlsx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_2.xlsx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_3.xlsx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_4.docx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_5.docx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_6.docx
-English,valence,Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_7.pdf
-English,valence,Gruhn & Scheibe_1.zip
-English,valence,Palermo & Coltheart_1.zip
-English,valence,Rocklage, Rucker, & Nordgren_1.xlsx
-English,familiar  valence,Rodrigues, Prada, Gaspar, Garrido, & Lopes_1.pdf
-English,familiar,Saryazdi, Bannon, Rodrigues, Klammer, & Chambers_1.xlsx
-English,valence,Teh, Yap, Liow_1.zip
-English,valence,Teh, Yap, Liow_2.xlsx
-English,valence,Webb, Ayers, & Endress_1.docx
-English,valence,Webb, Ayers, & Endress_2.csv
-Dutch,AOA,Ruts, de Deyne, Ameel, Vanpaemel, Verbeemen, & Storms_1.zip
-Dutch,AOA    valence,Moors, Houwer, Hermans, Wanmaker, Schie, Can Harmelen, De Schryver, De Winne, & Brysbaert_1.xlsx
-Dutch,AOA  familiar imagine,de Deyne, Verheyen, Ameel, Vanpaemel, Dry, Voorspoels, & Storms_1.zip
-Dutch,concrete  imagine,Jasmin & Casasanto_1.pdf
-Dutch,AOA  familiar,Shao, Roelofs, & Meyer_1.doc
-Dutch,AOA  familiar imagine,Shao & Stiegert_1.xlsx
-Dutch,AOA  familiar imagine,Shao & Stiegert_2.docx
-Dutch,valence,Speed & Majid_1.xlsx
-Croatian,familiar,Rogic, Jeroncic, Bosnjak, Sedlar, Hren, & Deletis_1.docx
-Croatian,familiar,Rogic, Jeroncic, Bosnjak, Sedlar, Hren, & Deletis_2.zip
-Arabic,familiar imagine,Boukadi, Zoualdi, & Wilson_1.xlsx
-Arabic,familiar imagine,Boukadi, Zoualdi, & Wilson_2.xlsx
-Arabic,familiar imagine,Boukadi, Zoualdi, & Wilson_3.xlsx
+"language","variable","file_name"
+"Arabic","familiar imagine","Boukadi, Zoualdi, & Wilson_1.xlsx"
+"Arabic","familiar imagine","Boukadi, Zoualdi, & Wilson_2.xlsx"
+"Arabic","familiar imagine","Boukadi, Zoualdi, & Wilson_3.xlsx"
+"Croatian","familiar",
+"Dutch","AOA    valence","Moors, Houwer, Hermans, Wanmaker, Schie, Can Harmelen, De Schryver, De Winne, & Brysbaert_1.xlsx"
+"Dutch","AOA  familiar imagine","Shao & Stiegert_1.xlsx"
+"Dutch","valence","Speed & Majid_1.xlsx"
+"Dutch","AOA","Ruts_2004"
+"Dutch","AOA  familiar imagine","Alonso, Diez, & Fernandez_1.xlsx"
+"Dutch","AOA  familiar imagine","Barbarotto-Description&Data.txt"
+"Dutch","AOA  familiar imagine","de Deyne, Verheyen, Ameel, Vanpaemel, Dry, Voorspoels, & Storms_1"
+"Dutch","AOA  familiar imagine","DeCaraEtal(2002).xls"
+"Dutch","AOA  familiar imagine","DellaRosaEtAl_norms.xls"
+"Dutch","AOA  familiar imagine","Desrochers-Thompson_2009_Ratings.xls"
+"Dutch","AOA  familiar imagine","Diez-Alamo, Diez, Wojcik, Alonso, & Fernandez_1.xlsx"
+"Dutch","AOA  familiar imagine","Ghasisn, Yadegari, Rahgozar, Nazari, & Rastegarianzade_1.xlsx"
+"Dutch","AOA  familiar imagine","Moors, Houwer, Hermans, Wanmaker, Schie, Can Harmelen, De Schryver, De Winne, & Brysbaert_1.xlsx"
+"Dutch","AOA  familiar imagine","Schauenburg, Ambrasat, Schroder, von Scheve, & Conrad_1.xlsx"
+"Dutch","AOA  familiar imagine","Schmidtke, Schroder, Jacobs, & Conrad_1.xlsx"
+"Dutch","AOA  familiar imagine","Schroder, Gemballa, Ruppin, & Wartenburger_1.xls"
+"Dutch","AOA  familiar imagine","Soares, Comesana, Pinheiro, Simoes, & Frade_1.xls"
+"Dutch","AOA  familiar imagine","Soares, Pinheiro, Costa, Frade, Comesana, & Pureza_1.xls"
+"English","valence","Ferstl, Garnham, & Manouilidou_1.xlsx"
+"English","AOA   imagine","Juhasz & Yap_1.xls"
+"English","AOA","Khanna & Cortese_1.xls"
+"English","AOA","Khanna & Cortese_2.xls"
+"English","AOA","Schock, Cortese, Khanna, & Toppi_1.xlsx"
+"English","familiar","Amsel, Urbach, & Kutas_1.csv"
+"English","imagine","Cohen-Shikora, Balota, Kapuria, & Yap_1.xlsx"
+"English","valence","Lima, Castro, & Scott_1.xlsx"
+"English","AOA  familiar imagine","Tsaparina, Bonin, & Meot_1.xls"
+"English","AOA  familiar imagine","Tsaparina, Bonin, & Meot_2.xls"
+"English","concrete","Brysbaert, Warriner, & Kuperman_1.xlsx"
+"English","valence","Keefe, Villing, Racey, Strong, Wincenciak, & Barraclough_6.xlsx"
+"English","AOA","Storkel_1.xls"
+"English","familiar","Bulkes & Tanner_1.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","AOA  familiar imagine","Juhasz, Lai, & Woodcock_2.xlsx"
+"English","concrete","Pexman, Heard, Lloyd, & Yap_2.xlsx"
+"English","concrete","Pexman, Heard, Lloyd, & Yap_3.xlsx"
+"English","concrete familiar  valence","Cardillo, Watson, & Chatterjee_2.xls"
+"English","concrete familiar  valence","Cardillo, Watson, & Chatterjee_3.xls"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_1.xlsx"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_2.xlsx"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_3.xlsx"
+"English","valence","Rocklage, Rucker, & Nordgren_1.xlsx"
+"English","familiar","Saryazdi, Bannon, Rodrigues, Klammer, & Chambers_1.xlsx"
+"English","valence","Teh, Yap, Liow_2.xlsx"
+"English","valence","Webb, Ayers, & Endress_2.csv"
+"English","AOA  familiar","Johnston_etal_suppl.xls"
+"English","concrete  imagine valence","BestgenVincze"
+"English","imagine","ChiarelloEtAl(1999)APP-B.xls"
+"English","concrete familiar","McDougallEtAl(2009)norms.xls"
+"English","AOA  familiar","Salmon_Appendix_Sup_C.xls"
+"English","AOA  familiar imagine","Clark & Paivio"
+"English","familiar","Yoon .xls files"
+"English","valence","Lima, Castro, & Scott_1.xlsx"
+"English","valence","Stevenson(2008).xls"
+"English","valence","Stevenson(2008).xls"
+"English","valence","Teh, Yap, Liow_2.xlsx"
+"English","familiar imagine valence",
+"English","familiar","Janssen_etal_appendix_A.xls"
+"English","familiar","Janssen_etal_appendix_B.xls"
+"English","concrete  imagine","AltarribaEtAl(1999)App-A.xls"
+"English","concrete  imagine","AltarribaEtAl(1999)App-B.xls"
+"English","familiar","Kealy_etal_Table1.xls"
+"English","familiar","Kealy_etal_Table2.xls"
+"English","familiar  valence","Libkuman(2007)APP-B.xls"
+"English","familiar  valence","Libkuman(2007)APP-C.xls"
+"English","familiar  valence","Libkuman(2007)APP-D.xls"
+"English","familiar imagine valence",
+"English","concrete familiar","McDougallEtAl(2009)norms.xls"
+"English","concrete","Nelson_AppendixA.xls"
+"English","concrete","Nelson_AppendixB.xls"
+"English","concrete","Nelson_AppendixC.xls"
+"English","concrete","Nelson_AppendixD.xls"
+"English","familiar","SurprenantEtAl(1999)App-A.xls"
+"English","familiar","SurprenantEtAl(1999)App-B.xls"
+"English","imagine","Cortese B377 norms.xls"
+"English","imagine","cortese2004norms.xls"
+"English","imagine","Khanna & Cortese_1.xls"
+"English","imagine","Khanna & Cortese_2.xls"
+"English","imagine","Schock, Cortese, Khanna, & Toppi_1.xlsx"
+"English","AOA  familiar imagine","Morrow-AppendixA.xls"
+"English","AOA  familiar imagine","Morrow-AppendixB.xls"
+"English","concrete familiar imagine valence","Cardillo, Watson, & Chatterjee_2.xls"
+"English","concrete familiar imagine valence","Cardillo, Watson, & Chatterjee_3.xls"
+"English","concrete familiar imagine valence","CardilloEtAl_suppl_data.xls"
+"English","AOA","Cortese B377 norms.xls"
+"English","AOA","cortese2004norms.xls"
+"English","AOA","Khanna & Cortese_1.xls"
+"English","AOA","Khanna & Cortese_2.xls"
+"English","AOA","Schock, Cortese, Khanna, & Toppi_1.xlsx"
+"English","AOA","Alonso, Diez, & Fernandez_1.xlsx"
+"English","AOA","Barbarotto-Description&Data.txt"
+"English","AOA","de Deyne, Verheyen, Ameel, Vanpaemel, Dry, Voorspoels, & Storms_1"
+"English","AOA","DeCaraEtal(2002).xls"
+"English","AOA","DellaRosaEtAl_norms.xls"
+"English","AOA","Desrochers-Thompson_2009_Ratings.xls"
+"English","AOA","Diez-Alamo, Diez, Wojcik, Alonso, & Fernandez_1.xlsx"
+"English","AOA","Ghasisn, Yadegari, Rahgozar, Nazari, & Rastegarianzade_1.xlsx"
+"English","AOA","Moors, Houwer, Hermans, Wanmaker, Schie, Can Harmelen, De Schryver, De Winne, & Brysbaert_1.xlsx"
+"English","AOA","Schauenburg, Ambrasat, Schroder, von Scheve, & Conrad_1.xlsx"
+"English","AOA","Schmidtke, Schroder, Jacobs, & Conrad_1.xlsx"
+"English","AOA","Schroder, Gemballa, Ruppin, & Wartenburger_1.xls"
+"English","AOA","Soares, Comesana, Pinheiro, Simoes, & Frade_1.xls"
+"English","AOA","Soares, Pinheiro, Costa, Frade, Comesana, & Pureza_1.xls"
+"English","valence","Brysbaert, Warriner, & Kuperman_1.xlsx"
+"English","valence","Warriner.csv"
+"English","valence","Mikels2005_ReadMe.txt"
+"English","valence","Mikels2005negativenorms.txt"
+"English","valence","Mikels2005positivenorms.txt"
+"English","valence",
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_6.xlsx"
+"English","familiar","Garrido, Lopes, Prada, Rodrigues, Jeronimo, & Mourao_8.xlsx"
+"English","valence","Calvo-Avero(2009)_Appx-A.xls"
+"English","valence","CalvoEtAl-APP-A.xls"
+"English","valence","Calvo-Avero(2009)_Appx-A.xls"
+"English","valence","CalvoEtAl-APP-A.xls"
+"English","valence","Gruhn-Scheibe_2008_PictureData.txt"
+"English","valence","Gruhn-Scheibe_2008_ReadMe.txt"
+"English","valence","Gruhn-Smith_2008_AGE.txt"
+"English","valence","Gruhn-Smith_2008_ReadMe.txt"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_1.xlsx"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_2.xlsx"
+"English","valence","Dawel, Wright, Irons, Dumbleton, Palermo, O'Kearney, & McKone_3.xlsx"
+"English","valence","Palermo_AppendixA.xls"
+"French","AOA  familiar","Bonin, Meot, & Bugaiska_2.xls"
+"French","AOA   imagine","Bonin, Meot, Millotte, & Bugaiska_1.xlsx"
+"French","AOA   imagine","Bonin, Meot, Ferrand, & Bugaiska_1.xlsx"
+"French","imagine valence","Monnier & Syssau_2.xlsx"
+"French","AOA    valence","Bonin, Meot, & Bugaiska_2.txt"
+"French","AOA    valence","Bonin, Meot, & Bugaiska_3.xlsx"
+"French","AOA","Cannard_appendix2008.xls"
+"French","familiar","CordierEtAl(2005).xls"
+"French","AOA   imagine","Bonin, Meot, Ferrand, & Bugaiska_1.xlsx"
+"French","AOA   imagine","Ferrand(2008).xls"
+"French","AOA","schwitter2004norms.xls"
+"French","AOA  familiar","AlarioEtAl(1999)App-A.xls"
+"French","AOA  familiar","AlarioEtAl(1999)App-B.xls"
+"French","imagine",
+"French","valence","Monnier & Syssau_2.xlsx"
+"French","valence","syssau_monnier_norms.xls"
+"French","AOA  familiar","Bonin, Meot, & Bugaiska_2.txt"
+"French","AOA  familiar","Bonin, Meot, & Bugaiska_2.xls"
+"French","AOA  familiar","Bonin, Meot, & Bugaiska_3.xlsx"
+"French","AOA  familiar","Bonin, Meot, Ferrand, & Bugaiska_1.xlsx"
+"French","AOA  familiar","Bonin, Meot, Millotte, & Bugaiska_1.xlsx"
+"French","AOA  familiar","Tsaparina, Bonin, & Meot_1.xls"
+"French","AOA  familiar","Tsaparina, Bonin, & Meot_2.xls"
+"German","AOA  familiar","Schroder, Gemballa, Ruppin, & Wartenburger_1.xls"
+"German","imagine valence","Schmidtke, Schroder, Jacobs, & Conrad_1.xlsx"
+"German","AOA","Birchenough, Davies, & Connelly_1.csv"
+"German","concrete familiar  valence","Citron, Cacciari, Kucharski, Beck, Conrad, & Jacobs_2.xls"
+"German","valence","Schauenburg, Ambrasat, Schroder, von Scheve, & Conrad_1.xlsx"
+"German","valence","Briesemeister, Kuchinke, & Jacobs_1.xls"
+"German","AOA","Smolka & Eulitz_3.csv"
+"German","imagine","Gruhn-Scheibe_2008_PictureData.txt"
+"German","imagine","Gruhn-Scheibe_2008_ReadMe.txt"
+"German","imagine","Gruhn-Smith_2008_AGE.txt"
+"German","imagine","Gruhn-Smith_2008_ReadMe.txt"
+"German","concrete   valence","Kanske_LANG_database.txt"
+"German","concrete   valence","Kanske_LANG_rating-instructions.txt"
+"Greek","AOA","Dimitropoulou_2009_AppA.pdf"
+"Greek","AOA","Dimitropoulou_2009_AppB.pdf"
+"Italian","familiar","Montefinese, Ambrosini, Fairfield, & Mammarella_1.xls"
+"Italian","AOA  familiar","Tabossi, Arduino, & Fanari_1.xls"
+"Italian","AOA  familiar","Tabossi, Arduino, & Fanari_2.xls"
+"Italian","AOA   imagine","Rinaldi_CFV-lexvar.xls"
+"Italian","AOA","Barbarotto-Description&Data.txt"
+"Italian","AOA concrete familiar imagine","DellaRosaEtAl_norms.xls"
+"Italian","AOA  familiar","Lotto_Appendix_A.xls"
+"Italian","AOA  familiar","Lotto_Appendix_B.xls"
+"Japanese","familiar imagine","Nishimoto, Ueda, Miyawaki, Une, & Takahashi_1.xlsx"
+"Japanese","valence","Yang, Makita, Nakao, Kanayama, Machizawa, Sasaoka, Sugata, Kobayashi, Hiramoto, Yamawaki, Iwanaga, & Miyatani_1.xlsx"
+"Japanese","AOA  familiar","Nishimoto_appendix_a.xls"
+"Japanese","AOA  familiar","Nishimoto, Ueda, Miyawaki, Une, & Takahashi_1.xlsx"
+"Japanese","familiar imagine","Nishimoto_appendix_a.xls"
+"Japanese","familiar imagine","Nishimoto, Ueda, Miyawaki, Une, & Takahashi_1.xlsx"
+"Persian","AOA   imagine","Bakhtiar, Nilipour, & Weekes_1.xlsx"
+"Persian","AOA  familiar","Ghasisn, Yadegari, Rahgozar, Nazari, & Rastegarianzade_1.xlsx"
+"Polish","valence","Marchewka, Zurawski, Jednorog, & Grabowska_1.xls"
+"Polish","valence","Marchewka, Zurawski, Jednorog, & Grabowska_2.xlsx"
+"Polish","valence","Imbir_1.xls"
+"Polish","imagine valence","Riegel, Wierzba, Wypych, Zurawski, Jednorog, Grabowska, & Marchewka_1.xlsx"
+"Portuguese","valence","Soares, Pinheiro, Costa, Frade, Comesana, & Pureza_1.xls"
+"Portuguese","valence","Soares, Comesana, Pinheiro, Simoes, & Frade_1.xls"
+"Portuguese","concrete  imagine","Soares, Costa, Machado, Comesana, & Oliveira_1.xlsx"
+"Portuguese","AOA concrete familiar imagine","MarquesetalBRM.xls"
+"Portuguese","AOA","Cameirao_AOA 1749 Portuguese Words.csv"
+"Russian","AOA  familiar imagine","Grigoriev & Oshhepkov_1.xls"
+"Spanish","valence","Ferre, Guasch, Moldovan, & Sanchez-Casas_1.xls"
+"Spanish","AOA  familiar","Moreno-Martinez, Montoro, & Rodriguez-Rojo_1.xls"
+"Spanish","AOA","Alonso, Diez, & Fernandez_1.xlsx"
+"Spanish","valence","Ferre, Guasch, Martinez-Garcia, Fraga, & Hinojosa_1.xls"
+"Spanish","concrete familiar imagine valence","Guasch, Ferre, & Fraga_1.xlsx"
+"Spanish","valence","Stadthagen-Gonzalez, Imbault, Sanchez, & Brysbaert_1.csv"
+"Spanish","concrete familiar","Diez-Alamo, Diez, Alonso,Vargas, & Fernandez_1.rar"
+"Spanish","AOA","Diez-Alamo, Diez, Wojcik, Alonso, & Fernandez_1.xlsx"
+"Spanish","valence","Stadthagen-Gonzalez, Ferre, Perez-Sanchez, Imbault, & Hinojosa_1.csv"
+"Spanish","AOA  familiar imagine","Izuranorms.xls"
+"Spanish","concrete familiar imagine valence","RealesEtAl(2002).xls"
+"Spanish","concrete familiar imagine valence","Redondo(2007).xls"
+"Spanish","AOA","Cuetos_actionpictures.xls"
+"Spanish","AOA  familiar imagine","Cuetos_actionpictures.xls"
+"Spanish","AOA  familiar","Manoiloff_APPENDIX_A.xls"
+"Spanish","AOA  familiar","Manoiloff_APPENDIX_B.xls"
+"Spanish","familiar","dasi_2004norms.txt"
+"Spanish","AOA","Alonso_SpanishAoA.txt"
+"Spanish","AOA","Alonso, Diez, & Fernandez_1.xlsx"
+"Spanish","AOA","Diez-Alamo, Diez, Wojcik, Alonso, & Fernandez_1.xlsx"
+"Turkish","AOA  familiar","Raman, Raman, & Mertan_1.xlsx"
+"Turkish","AOA  familiar","Raman, Raman, & Mertan_2.xlsx"

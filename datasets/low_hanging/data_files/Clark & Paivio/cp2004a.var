@@ -1,0 +1,57 @@
+Itm	Item Number (1-925)
+Ident	Item Number in Expanded Norms for 2,311 words
+Word
+Age	Age of Acquisition
+Amb	Number of Meanings	
+Assoc	Number of Associates	
+AvlKB	Log Keenan & Benjafield Availability (Note 1)
+AvlRF	Log Rubin & Friendly Availability (Note 2)
+Con	Concreteness (Note 3)
+ConAv	Context Availability
+Def	Ease of Definition
+Dict	Log Children's Dictionaries
+Emo	Emotionality
+EmoGd	Emotionality-Goodness
+EmoPl	Emotionality-Pleasantness
+Fam	Familiarity
+Fam2	Familiarity Replication
+FrqKF	Log Kucera & Francis Frequency
+FrqTL	Log Thorndike-Lorge Frequency
+Gdn	Goodness (Rubin & Friendly)
+Gend	Gender Ladenness
+Gend2	Gender Replication
+Img	Imagery (Note 3)
+Img2	Imagery Replication
+InSnd	Same Initial Sound
+Len	Length in Letters
+Let	Same Initial Letters
+LetBr	Log Number of Words in Brown Corpus with Same Initial Letters
+Look	Similar Looking Words
+Mng	Meaningfulness (Note 3)
+Pls	Pleasantness
+Pron	Pronounceability
+Rhy	Number Rhyming Words
+Sou	Similar Sounding Words
+Syl	Number of Syllables
+
+Note 1. Log10 of values obtained from John Benjafield and described in
+Keenan, T. R., & Benjafield, J. G. (1994). An additional measure of
+availability derived from the Oxford English Dictionary.  Psychonomic
+Bulletin & Review, 1, 255-257.  Reprinted with permission.
+
+Note 2. Log10 of values obtained from David Rubin and descripted in
+Rubin, D. C., & Friendly, M. (1986).  Predicting which words get
+recalled: Measures of free recall, availability, goodness,
+emotionality, and pronounceability for 925 nouns.  Memory & Cognition,
+14, 79-94.  Reprinted with permission.
+
+Note 3. Values obtained from Paivio, A. U., Yuille, J. C., & Madigan,
+S. A. (1968). Concreteness, imagery, and meaningfulness values for 925
+nouns. Journal of Experimental Psychology, 76(1, PT. 2),
+1-25.  Reprinted with permission of American Psychological Association
+and Allan Paivio.
+
+
+
+
+

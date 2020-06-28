@@ -1,0 +1,39 @@
+A full description can be found in the following article:
+
+De Deyne, S., Verheyen, S., Ameel, E., Vanpaemel, Dry, M., Voorspoels, & Storms G. (2008)
+Exemplar by Feature Applicability Matrices and Other Dutch Normative Data for Semantic Concepts, Behavior Research Methods, XX. XXX-XXX.
+
+The data are stored in Microsoft Excel (version 2003) files and comma separated text (csv) files.
+For each Excel file, the sheets were extracted and saved as a separate csv file.
+These files were named by the corresponding Excel data filename and name of the sheet.
+ 
+The files are grouped in 3 directories:
+1. Exemplar judgments 
+2. Pairwise similarity
+3. Exemplar feature judgments
+
+These directories contain following files [filename]:
+1. Exemplar judgments
+ - Exemplar Typicality Ratings [exemplarTypicalityRatings]
+ - Exemplar Goodness Ratings [exemplarGoodnessRatings]
+ - Exemplar Goodness Rank Order Ratings [exemplarGoodnessRatingsRankOrder]
+ - Exemplar Familiarity Ratings [exemplarFamiliarityRatings]
+ - Exemplar Imageability Ratings [exemplarImageabilityRatings]
+ - Exemplar Word Frequency Age of Acquisition and Percentage Known Ratings [exemplarWFAoAPercKnownRatings]
+ - Exemplar Generation and Association Frequencies [exemplarGenerationFreqAssociationFreq]
+ 
+2. Pairwise similarity	
+ - Pairwise Similarity Matrices [15 x pairwiseSimilarities(categoryname)]
+
+3. Exemplar feature judgments	
+ - Exemplar Feature Importance Ratings [exemplarFeatureImportanceRatings.xls] 
+ - Category Label Feature Importance Ratings [categoryFeatureImportanceRatings]
+ - Type I Exemplar Feature Matrices (including generation frequencies) [TypeI_ExemplarFeatureMatrices/exemplar(categoryname)DiagonalMatrices]
+ - Type II Animal Feature Matrix (including generation frequencies) [TypeIIAnimalExemplarFeatureMatrix]
+ - Type II Artifact Feature Matrix (including generation frequencies) [TypeIIArtifactsExemplarFeatureMatrix]
+ - Type III Category Label Feature Matrices [TypeIII_CategoryLabelFeatureMatrices/categoryLabel(categoryname)DiagonalMatrices]
+ - Type IV Animals Category Label Feature Matrix [TypeIVAnimalCategoryFeaturesMatrix]
+ - Type IV Artifacts Category Label Feature Matrix [TypeIVArtifactsCategoryFeaturesMatrix]
+ 
+ 
+ 
