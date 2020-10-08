@@ -41,6 +41,28 @@ def download(source, language):
             f.write(chunk)
     print("Download complete.")
 
+class sentences(object):
+    """
+    Return lines from a full corpus text file as a sequence
+    using the generator pattern (an iterable)
+    """
+    def __init__(self, language):
+        self.myfile = open(f'corpus-{language}.txt', 'r')
+
+    def __iter__(self):
+        return self
+
+    # Python 3 compatibility
+    def __next__(self):
+        return self.next()
+
+    def next(self):
+        line = self.myfile.readline()
+        if line:
+            tok = [w for w in line.rstrip().split(' ') if len(w) > 0]
+            return tok
+
+        raise StopIteration()
 
 class articles(object):
     """
@@ -354,27 +376,20 @@ def predict_norms(vectors, norms, alpha=1.0):
         })
     return pd.DataFrame(scores)
 
+dimension_list = [50,100,200,300,500]
+window_list = [3,4,5,6,7,8,9,10,11,12,13]
+algo_list = [0,1]
 
-if __name__ == '__main__':
-    # Test download using English subtitles
-    # download('subtitles', 'en')
-    # Test download using English wikipedia
-    # download('wikipedia', 'en')
+def build_models(language):
+    for dim in dimension_list:
+        for win in window_list:
+            for alg in algo_list:
+                algo = 'cbow' if alg ==0 else 'sg'
+                base_file_name = f'{language}_{str(dim)}_{str(win)}_{algo}'
+                print("Building model " + base_file_name)
+                model = vectorize_stream(language, dim, win, alg)
+                #Write down the model?
+                words=list(model.wv.vocab)
+                wordsxdims = pd.DataFrame(model[words],words)
+                wordsxdims.to_csv(f'{base_file_name}_wxd.csv')
 
-    # Test cleaning English subtitles
-    # clean('subtitles', 'en')
-
-    # Test cleaning English wikipedia
-    clean('wikipedia', 'en')
-
-    # Concatenate cleaned source data into a single corpus
-    concatenate_corpus('en')
-
-    # Create vector model
-    model_en_100_3_cbow = vectorize_stream('en', dim=100, win=3, alg=0)
-    words=list(model_en_100_3_cbow.wv.vocab)
-    wordsXdims_en_100_3_cbow = pd.DataFrame(model_en_100_3_cbow[words],words)
-
-    # Score model
-    scores = evaluate_norms('en', wordsXdims_en_100_3_cbow)
-    print(scores)
