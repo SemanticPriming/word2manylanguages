@@ -23,6 +23,7 @@ for dim in w.dimension_list:
                 print("Evaluating model " + base_file_name) 
                 path = os.path.join(basedir, f'{base_file_name}_wxd.csv')
                 wordsXdims = pd.read_csv(path)
+                wordsXdims.set_index('word', inplace=True)
                 scores = w.evaluate_norms(language, wordsXdims)
                 if scores == None:
                     print("No evaluation data for model.")
@@ -31,6 +32,6 @@ for dim in w.dimension_list:
                     if not os.path.exists(outdir):
                         os.makedirs(path)
                     for score in scores:
-                        fname = score['source'] + '_result_' + base_file_name + '.csv'
+                        fname = base_file_name + 'result.csv'
                         outfile = os.path.join(path, fname)
                         scores.to_csv(outfile)
