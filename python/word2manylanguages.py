@@ -47,7 +47,7 @@ class sentences(object):
     using the generator pattern (an iterable)
     """
     def __init__(self, language):
-        self.myfile = open(f'corpus-{language}.txt', 'r')
+        self.myfile = open(f'data/corpus-{language}.txt', 'r')
 
     def __iter__(self):
         return self
@@ -70,7 +70,7 @@ class articles(object):
     using the generator pattern (an iterable)
     """
     def __init__(self, language):
-        self.myfile = bz2.open(f'wikipedia-{language}.bz2', 'rt', encoding='utf-8')
+        self.myfile = bz2.open(f'data/wikipedia-{language}.bz2', 'rt', encoding='utf-8')
 
     def __iter__(self):
         return self
@@ -244,7 +244,6 @@ def prune(source, language):
     Remove duplicate documents from archive file using simhash.
     """
     input_file = zipfile.ZipFile(f'{source}-{language}-pre.zip', 'r')
-    output_file = zipfile.ZipFile(f'{source}-{language}-pruned.zip', 'a', zipfile.ZIP_DEFLATED)
 
     to_remove = []
     hash_list = []
@@ -258,6 +257,8 @@ def prune(source, language):
         hash_list.append(hash)
         hash_dict[hash] = f
             
+    input_file.close()
+
     blocks = 4
     distance = 2
     matches = simhash.find_all(hash_list, blocks, distance)
@@ -267,6 +268,8 @@ def prune(source, language):
         to_remove.append(hash_dict[match[1]])
     
     print(f'Found {len(to_remove)} files to prune.')
+    input_file = zipfile.ZipFile(f'data/{source}-{language}-pre.zip', 'r')
+    output_file = zipfile.ZipFile(f'data/{source}-{language}-pruned.zip', 'a', zipfile.ZIP_DEFLATED)
     
     for f in input_file.namelist():
         if f not in to_remove:
@@ -280,15 +283,18 @@ def concatenate_corpus(language):
     Reads pre-processed subtitle and wikipedia text, and creates a single
     text file containing all of the tokenized sentences.
     """
-    subs_input_file = zipfile.ZipFile(f'subtitles-{language}-pruned.zip', 'r')
-    wiki_input_file = zipfile.ZipFile(f'wikipedia-{language}-pruned.zip', 'r')
-    output_corpus = f'corpus-{language}.txt'
+    print(f"Concatenating {language} corpus.")
+    output_corpus = f'data/corpus-{language}.txt'
     with open(output_corpus, mode="w") as out:
+        subs_input_file = zipfile.ZipFile(f'data/subtitles-{language}-pre.zip', 'r')
         for f in subs_input_file.namelist():
             out.write(subs_input_file.open(f).read().decode("utf-8"))
+        subs_input_file.close()
+        wiki_input_file = zipfile.ZipFile(f'data/wikipedia-{language}-pre.zip', 'r')
         for f in wiki_input_file.namelist():
             out.write(wiki_input_file.open(f).read().decode("utf-8"))
-
+        wiki_input_file.close()
+   
     
     
 def clean_wikipedia(language):
@@ -387,9 +393,9 @@ def build_models(language):
                 algo = 'cbow' if alg ==0 else 'sg'
                 base_file_name = f'{language}_{str(dim)}_{str(win)}_{algo}'
                 print("Building model " + base_file_name)
-                model = vectorize_stream(language, dim, win, alg)
+                model = vectorize_stream(language, 5, dim, win, alg)
                 #Write down the model?
                 words=list(model.wv.vocab)
                 wordsxdims = pd.DataFrame(model[words],words)
-                wordsxdims.to_csv(f'{base_file_name}_wxd.csv')
+                wordsxdims.to_csv(f'{base_file_name}_wxd.csv',index_label='word')
 
