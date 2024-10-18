@@ -1,0 +1,566 @@
+---
+title: "My Title"
+shorttitle: "Short Title in Running Header"
+author:
+  - name: Jane Doe
+    corresponding: true
+    orcid: 0000-0000-0000-0001
+    email: janedoe@generic.edu
+    affiliations:
+      - name: Generic University
+        department: Department of Scholarly Studies
+        address: 1234 Capital St.
+        city: New York
+        region: NY
+        country: USA
+        postal-code: 12084-1234
+author-note:
+  status-changes: 
+    affiliation-change: ~
+    deceased: ~
+  disclosures:
+    study-registration: ~
+    data-sharing: ~
+    related-report: ~
+    conflict-of-interest: ~
+    financial-support: ~
+    gratitude: ~
+    authorship-agreements: ~
+abstract: "subs2vec (van Paridon & Thompson, 2021) provides word embeddings for fifty-five languages based on the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were created using the same computational structure for each language with seemingly no support for the choice of minimum word frequency, dimension size, or window size. Previous work by Mandera et al. (2017) suggests that English and Dutch were best conceptualized at different dimension and window sizes. In this study, we will create word embeddings using the Open Subtitles and Wikipedia corpora using techniques similar to those used in van Paridon and Thompson, instead, focusing on finding the appropriately tuned model for each language. We use the rich publication history of normed data, such as age of acquisition, valence, imageability, and concreteness, as a metric to select the best model for each language. We will demonstrate the results and explore the assumption of linguistic model similarity across languages. Word embeddings, programming code, and other computational tools are provided as a package for researcher use and exploration."
+keywords: [keyword1, keyword2, keyword3]
+bibliography: bibliography.bib
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf:
+    documentmode: man
+---
+
+## Linguistics 
+
+2.1 Linguistics
+Linguistics, literally speaking, is the scientific study of language (Lyons, 1968).  That said, there are several different views of what constitutes language as a science:
+The American structuralist conception of linguistics as a science is characterized by the view that linguistics is the application of the inductive methods to the collection and analysis of language data. The generativist conception of linguistics as a science is characterized by the view that the description of a language is a deductive theory in which the sentences of the language are generated from rules of grammar. The language that is studied by a linguist is characterized as "human" and "natural." These terms are examined: human language as opposed to animal communication; and natural language as opposed to artificial and scientific language. Finally, linguistics is distinguished from other disciplines which are also concerned with human language by the fact that language is the primary object of study in linguistics, while in other disciplines language is ancillary (Garvin, 1974, p. 1).
+The study of linguistics can be traced back to ancient Greece (Robins, 1997), where the writings of Herodotus (Miletti, 2008) show that the Greeks were aware of the effects of speaking a common language on the unity of Greek culture (Giannakis, 2013).  The Renaissance, however, is seen as the birth of modern history, and a period that had a direct effect on the path of linguistic study (Robins, 1997).  More recently, language study has diverged into a multiplicity of fields, sometimes referred to as hyphenated-linguistics (Spolsky, 1978), such as theoretical linguistics, applied linguistics, educational linguistics, neurolinguistics, psycholinguistics, and sociolinguistics (Spolsky & Hult, 2008).  
+Our current practices in the study of linguistics began at the turn of the 20th century (Chovanec, 2014). Around that time, the focus shifted from primarily studying historical, or diachronic, linguistics, in which most investigation was into the history of languages and their relationships and the reconstruction of proto-languages that were the precursors of modern language, to what is now known as ‘synchronic linguistics’, the analysis of languages as communicative systems (Sampson, 1980).
+One of the most influential linguists of this era, Franz Boas, founded the Descriptivist school of linguistic study (Sampson, 1980).  Boaz, a noted anthropologist, discovered through his study of Native American culture that language was one of the most important aspects of understanding groups of people, more so than geographical or material concerns (Boas, 1911).  His techniques for analyzing language focused not on attempting to discover the nature and structure of language, but on creating a body of techniques for describing the observed characteristics of language (Sampson, 1980).
+Also in 1911, Czech linguist and scholar Vilém Mathesius, a professor of English language at the Faculty of Arts in Prague, founded another school of linguistic study, known as the Prague School tradition, or functional linguistics (Chovanec, 2014).  This school of thought focused on analyzing a language based on the respective functions of the various structural components of the language (Sampson, 1980).  While Mathesius argued against the purely diachronic study of language, he believed that diachronic and synchronic studies were complimentary, as synchronic oscillation (changes in the ways speakers use language) are the cause of diachronic language change, so linguists should study the way individual speakers use language in order to understand the structure and evolution of the language (Chovanec, 2014). 
+In 1957, Noam Chomsky published his first book, Syntactic Structures, in which he proposed that we should treat a language as a particular subset of all possible sequences of the items in its dictionary (Chomsky, 1957; Sampson, 1980).  Chomsky posits a set of constituency rules and transformational rules from which any sentence that is possible in a language can be derived from (Chomsky, 1957).  These ideas began what has been called a revolution in linguistics and forms the basis of the Generative school of linguistic study (Sampson, 1980).  Indeed, although there are other offshoots of linguistic study in use today, those schools of thought are generally categorized as pro-Chomsky or anti-Chomsky, emphasizing the importance of this work (Sampson, 1980).
+Along with the development of these linguistic schools of thought in the early to mid-20th century came the development of the field of Natural Language Processing (NLP) – the use of computers to manipulate natural human language (Jones, 1994), which is also known as computational linguistics (Wilks, 2005).  While statistical machine translation of language was the original task of NLP (Jones, 1994), other major tasks include question answering, information extraction, and document summarization (Wilks, 2005).  Related NLP tasks are more closely related to linguistic theory, such as word-sense disambiguation (Yarowsky, 1995), syntactic analysis and part-of-speech tagging (Wilks, 2005), and textual entailment (Bird et al., 2009). 
+Computational linguistics is the intersection of computers, cognition, and linguistic study.  Psychologists and neurophysiologists are among those who are interested in testing theories of language functioning (Wilks, 2005).  Studies involving linguistic data and techniques benefit society in areas ranging from early childhood development (Kunnari, 2002; Singh, 2014) to researching, detecting and diagnosing ailments affecting the elderly, such as Parkinson’s disease (Copland, 2003; Walsh & Smith, 2011) and Alzheimer’s disease (Eyigoz et al., 2020; Fraser et al., 2016).  Applications such as Sentiment Analysis (or Opinion Mining) help in many different domains, from sales and marketing to investing and finance, and even public safety and law enforcement (Medhat & Korashy, 2014; Wankhade et al., 2020). Computational linguistics research in recent years has also led to the Transformer model (Vaswani et al., 2017), from which ChatGPT was developed (Brown et al., 2020), which is arguably the most significant advancement in natural language processing in decades.
+
+## Sources of Data 
+
+2.2 Linguistic Data
+Linguistic data used in natural language processing research takes many forms, from raw, unprocessed text data to human provided subjective rating data, to data enhanced by computers with calculated and predicted attributes. Researchers use this data for a wide variety of tasks, ranging from simple statistical analysis of word usage, such as lexical diversity measures (Bird et al., 2009) and predicting the readability of text (Pilter & Nenkova, 2008) to more complex tasks such as text generation (Clark et al., 2018) and machine translation (Koehn, 2005). This data forms the basis for experiments in the fields of neurophysiology (Pereira et al., 2018), sociology (Garg et al., 2018), and psychology (van Paridon & Thompson, 2021) among many others. 
+ 
+Figure 2: Example TextInspector statistics
+For example, the TextInspector tool (https://textinspector.com/) performs statistical analysis of text, as in Figure 2 – which shows an analysis of the first paragraph of this manuscript.  The Flesch-Kincaid readability grade uses measures such as word and sentence length to indicate how difficult a passage of text is to understand and was first used to grade the readability of US Army technical manuals (Flesch, 2007).  The lexical diversity measure uses several indices such as the variability of tokens, the total number of words in the text, and the dispersion of tokens to give an indication of the lexical richness of the text (Jarvis, 2013).  Tokens, in this context, refer to unique instances of word types (the stem words) found in the text (Ogden & Richards, 1923), for example in the first paragraph, the words prediction, predicting, and predicted are all unique tokens of the type predict.  By comparison, Figure 3 shows an analysis of A Tale of Two Cities (Dickens, 1859) and demonstrates differences between academic and literary writing.
+ 
+Figure 3: Example TextInspector statistics for A Tale of Two Cities
+
+In the next three sections, we will discuss linguistic resources and methods relevant to this experiment, including text corpora, objective norms, and subjective norms.
+
+### Corpora 
+
+2.2.1 Text Corpora
+Text for linguistic study is composed of tokens. A token is a unique instance of a word type (Ogden & Richards, 1923), which is in turn made up of letters or characters representing one or more of the sounds used in language (Oxford English Dictionary, 2024), depending on the writing system (as logographic languages, such as Chinese, include many linguistic components in one character). Phonemes are the units of sound that cannot be broken into smaller units (Oxford English Dictionary, 2024), which make up syllables, defined as a sound or set of sounds expressed in a single articulation (Oxford English Dictionary, 2024), and which may contain one or multiple phonemes (Treiman, 1989). From these tokens, we may assemble a large body of text, often structured in some fashion to facilitate linguistic study, which may also contain metadata about the text (Bird et al., 2009).  A corpus is a body of text that is assembled in some principled format to be used for language research (Johansson & Oksefjell, 1998).  
+Corpora can be assembled as a product of research where language data is acquired from human subjects and analyzed to evaluate a hypothesis or to develop a tool or technology (Bird et al., 2009), such as with the Linguistic Inquiry and Word Count (LIWC) tool example shown later in this section (Tausczik & Pennebaker, 2010), or the norms data gathered by psycholinguistic experiments (Buchanan et al., 2019a).  Corpora are also assembled as a reference for a given language, such as the American National Corpus (ANC) and British National Corpus (BNC) (Bird et al., 2009).
+Corpora may be assembled for specific research and released into the public domain, from which they can evolve and change, or they can be curated by the creator and maintained, sometimes for decades as a reference (Bird et al., 2009), such as the Brown corpus described below. Figure 4 shows an example of how a corpus may evolve over time.
+ 
+Figure 4: Evolution of a Corpus (Bird et al., 2009)
+
+An example of a corpus of unprocessed text data can be found at Project Gutenberg, an online library of public domain electronic books founded in 1971 (Hart, 1992). Project Gutenberg contains over 60,000 books available in plain text format. This corpus is popular among linguistic researchers, especially those doing statistical analysis of language, due to the large volume of open data. In 2018, researchers released the Standardized Project Gutenberg Corpus (SPGC), which includes the raw text of more than 50,000 books as well as 3x109 word tokens and other metadata (Gerlach & Font-Clos, 2018).
+ 
+Figure 5: Gutenberg Corpus, A Tale of Two Cities
+The Standard Sample of Present-Day American English corpus was initially published in 1964 by Brown University (Francis & Kucera, 1979). This corpus, now popularly known as the Brown Corpus, contains 500 samples of prose published by native English speakers, each containing at least 2000 words, divided into several categories, such as Press Reportage, Popular Lore, Religion, Skills and Hobbies, and others. The corpus is published in several forms, including raw word tokens, both with and without punctuation, and with each token tagged with a grammatical category tag (e.g., noun, verb, or adjective) (Francis & Kucera, 1979). Therefore, these corpora are valuable for many tasks for natural language processing including training for part of speech tagging, frequency estimates, and word embeddings. 
+Wikipedia is an open-source, community-edited encyclopedia website maintained by the non-profit Wikimedia Foundation, which is a corpus as defined above. It contains over six million distinct articles in English, and well over a million articles in most other languages. Because of the size of the dataset, Wikipedia data is used in a diverse set of linguistic studies (van Paridon & Thompson, 2021). Mesgari et. Al. (2014) provide a systematic review of 110 peer-reviewed publications in which Wikipedia content was used as a source of knowledge, while Medelyan et al. (2009) addressed the use of Wikipedia data for natural language processing, information retrieval, information extraction, and ontology building (Mehdi et al., 2017). Both van Paridon and Thompson (2021) and Mandera at al. (2017) used linguistic data to create large-scale language models from Wikipedia as well. Wikipedia data is obtained in the form of a single compressed eXtensible Markup Language (XML) file per language containing all the articles and metadata for that language, and this data is refreshed at least once per month. The download dates for data used in this experiment are listed in the appendix to aid in reproducibility.
+The OpenSubtitles corpus database consists of over 3 million subtitles, where a subtitle refers to a single spoken line, from movies and television episodes in over 60 languages (Lison & Tiedemann, 2016). The data is obtained in compressed archives containing the data and metadata for each film or episode in XML format, arranged by year. The OpenSubtitles project releases a new version of the data periodically, with 2018 being the most recent release available to use for this experiment, and the raw data used to compile the corpus is sourced from https://www.opensubtitles.org. OpenSubtitles data, and more specifically, word frequency information extracted from the corpus, has been used in various studies, such as lexical complexity (Smolenska et al., 2021) and neural dialog generation (Nakamura et al., 2018).
+
+### Objective Norms 
+
+2.2.2 Objective Norms
+Lexical features of words such as word length and number of syllables are easily observed (Griffiths et al., 2015), while phonemes, morphemes, and phonological and orthographic neighborhoods, a group of words that are highly similar to each other along shared linguistic features such as semantics, phonology, or orthography, can be calculated from the words themselves (Marian, 2017). These norms are used to explore the structure of language and semantic memory (Buchanan et al., 2019a), are produced in frequency calculation projects such as SUBTLEX-UK (van Heuven et al., 2014), and are used in studies to study morphology and lexical knowledge storage for bi-and multi-lingual individuals. For example, these databases can help demonstrate that participants formed higher-frequency conjugations of verbs faster than lower-frequency or irregular forms (Bowden et al., 2010).
+These objective norms are often used in measures of linguistic complexity.  For example, it has been shown that languages with more speakers tend to have higher phoneme inventory (more phonemes available to construct word-sounds), larger numbers of phonemes per syllable, and lower word and clause length (Fenk-Oczlon & Pilz, 2021).  Other uses include the study of language development in children, including the number of mono- and disyllabic words, and the truncation of polysyllabic words in children learning to speak Finnish, suggesting that these features of a target language influence the strategies that children use when first learning to speak (Kunnari, 2002).
+Phonological neighborhoods consist of sets of similar-sounding words (Vitevitch & Luce, 2016).  Research in word recognition shows that words are more quickly recognized when similar-sounding words are activated in memory (Marslen-Wilson, 1987), and that a higher phonological neighborhood density has a positive effect on language production (Taler et al., 2010).  Orthographic neighborhoods consist of words that look similar in written form (Buchanan et al., 2001).  Numerous studies such as Andrews (1992) and Snodgrass & Mintzer (1993) investigate the effects of the orthographic or lexical similarity of words on visual word recognition.
+Objective measurements like word frequency and total word counts in documents, like those shown in Figure 3,  can be used to further calculate norms of vocabulary richness, including lexical diversity – the percentage of unique word tokens used in a document – and the use of less-common words, which can be indicators of the development language proficiency (Malvern et al., 2004).  These combined with word and sentence length measurements contribute to the calculation of lexical difficulty ratings and readability scores such as the Flesch-Kincaid Readability Test (Flesch, 2007).
+
+### Subjective Norms 
+
+2.2.3 Subjective Norms
+More subjective norms such as feature-based norms require ratings from humans, often by soliciting participants in studies, providing them with lists of words, and asking them to list the features or properties of the words  (Buchanan et al., 2019a). These studies gather various kinds of feature data for words, such as property data (“wing” and “feather” for bird, “mink” and “rain” for coat) (Ashcraft, 1978), and ratings of concepts such as the age that a concept is learned (age of acquisition) (Hernandez & Li, 2007), the clarity of a reference of a word to a material object (concreteness) (Mkrtychian et al., 2019), and the amount of emotion in a concept (valence, dominance, and arousal) (Atmaja & Akagi, 2020). Databases of these norms can be found in Kuperman et al. (2012),  Warriner et al. (2013), Brysbaert et al. (2014), and many others (Buchanan et al., 2019b).
+Age of acquisition norms – the perceived age one learned a word – have become useful in predicting word recognition times  (Kuperman et al., 2012; Brysbaert & Ghyselinck, 2006).  Previously, age of acquisition ratings were difficult to use in research due to the paucity of data available (Stadthagen-Gonzalez & Davis, 2006), but Kuperman et. al. (2012) has shown that using crowdsourcing such as Amazon’s Mechanical Turk can help to provide reliable data. Further, the prediction mechanisms used in van Paridon and Thompson (2021) and this experiment can help to fill in gaps.
+Another subjective norm of interest is familiarity, a measure of how common an object is in a language speaker’s experience (Boukadi et al., 2016).  Familiarity ratings are also often interpreted as a measure of the frequency of exposure to a word (Stadthagen-Gonzalez & Davis, 2006). Research has shown that using examples from low and middle familiarity priming words causes a long-term priming effect on target words from the same low and middle familiarity categories (Ray & Bly, 2010).
+Imageability is a related subjective norm that measures the ease with which a word evokes a mental image in a listener or reader (Boukadi et al., 2016).  Like familiarity and age of acquisition, imageability is a reflection of personal experience and has a measurable impact on the speed and accuracy of word recognition and recall in semantic priming research subjects (Stadthagen-Gonzalez & Davis, 2006). However, some research has shown that the effects are unstable across various studies, possibly because of variation in how participants rate imageability when the norms are gathered (Dymarska et al., 2023). 
+Concreteness is an intuitive rating of how closely a concept applies or relates to a physical object (Lohr, 2022).  Relative to abstract words, subjects typically respond more quickly to words with a high concreteness rating when making lexical decisions on whether a word is a “real” word or a pseudoword (Schwanenflugel, 1991).   Concrete words and abstract words can vary substantially in familiarity, with concrete words tending to have higher familiarity ratings than abstract words (Barber et al., 2013).
+Valence is a rating of how pleasant a stimulus is (Warriner et al., 2013) – a low valence indicates a negative stimulus and a high valence a positive one. The arousal norm measures the intensity of the emotion provoked by the stimulus (Warriner et al., 2013).  These two norms are often used together in semantic priming tasks – called “affective priming” (Orlić et al., 2014).  Valence, for example, can affect the amount of time that a study participant takes to categorize a target word as positive or negative; if the priming word had the same valence as the target, less time was needed to categorize the target word (Fazio et al., 1986).
+An example of a corpus containing both objective and subjective ratings can be found in the dictionaries of words used by the Linguistic Inquiry and Word Count software system (Tausczik & Pennebaker, 2010). These dictionaries contain words divided into 80 categories, including objective lexical categories like “article” and “pronoun”, and subjective emotional categories representing the emotional and social meanings of the words, like “anger”, “sadness”, “inclusive”, and “exclusive”. The words were assigned to these subjective categories by iterative review of panels of judges (Tausczik & Pennebaker, 2010). Figure 6 shows an example of LIWC output. The MRC Psycholinguistic Database (Wilson, 1988) contains over 150,000 English words with lexical characteristics (letters, phonemes, syllables) and ratings of familiarity, concreteness, imageability, and meaningfulness, among others (Paivio et al., 1968)  (Gilhooly & Logie, 1980). Further, databases containing both objective and subjective ratings are frequently published in journals like Behavior Research Methods for open-source reuse (Buchanan et al., 2019b). 
+ 
+Figure 6: LIWC Output for A Tale of Two Cities (Tausczik & Pennebaker, 2010)
+
+	These lexical resources work together – from the corpora we build linguistic models, as discussed in the next section, and observe and calculate the objective norms.  Using the subjective norms, we can test how well the models work, as we show in Chapter 3.
+	
+## Modeling Language 
+
+2.3 Linguistic Modeling
+Large corpora are used to create word vector models, which are numerical representations of lexical semantics. Researchers have developed several different models that map words, phrases, sentences, paragraphs, or entire documents into dimensional space. For example, Latent Semantic Analysis (LSA) takes as its input a matrix consisting of a matrix of rows of unique events by columns of contexts where instances of those events occur – the events might be unique words, and the contexts might be paragraphs the words occur in (Landauer & Dumais, 1997). This system, shown in Figure 7, is often called a bag-of-words feature extraction or representation method, as it converts documents into a matrix of word(s) frequency counts for each document, where each row of the matrix corresponds to a single word that appears at least once in the document (Rogers, 2008). This matrix is then analyzed using a technique known as Singular Value Decomposition which emphasizes the contexts that words do and do not appear in (Mikolov et al., 2013) (Cree & Armstrong, 2012), and results in the events and contexts being represented as vectors in a high-dimensional abstract space (Landauer & Dumais, 1997).
+ 
+Figure 7: Latent Semantic Analysis (Kulkarni et al., 2014)
+
+This high-dimensional representation, sometimes called Word Space (Schutze, 1993), is based on a geometric metaphor of meaning, in which words which are semantically similar to each other are close together in the vector space (Sahlgren, 2006). Because each word is represented as a vector of feature values, distance between vectors can be measured by the cosine of the angle between the vectors, and these vectors can be manipulated using simple algebraic techniques for example, it can be demonstrated that vector(“King”) – vector(“Man”) + vector(“Woman”) will yield a vector close to the representation of vector(“Queen”) (Mikolov et al., 2013). These models are useful for a number of tasks in computational linguistics, such as predicting human judgement of lexical norms, word similarity, and analogies (van Paridon & Thompson, 2021), as well as research into semantic typology (Thompson et al., 2018), and change (Hamilton et al., 2016), and linguistic representation of social biases (Garg et al., 2018). Of particular interest to this research is the prediction of lexical and subjective norms. Collecting subjective norms such as valence, arousal, age of acquisition, concreteness, etc. by manual means is very time consuming, as it often includes recruitment of diverse samples of participants through various means as well as creating, collecting, and scoring surveys (Nolte et al., 2015). Researchers who need normative data may not have the time or the means to use these collection methods, so reliable prediction of these norms is very valuable (Bestgen & Vincze, 2012).
+
+Modern word embedding models are based on the concept of distributional semantics, which posits that words that have similar meanings are used in similar contexts (Harris, 1954). A number of different methods have evolved over the years to model words in context, many of which are labor-intensive (Schutze, 1993), for example term frequency/inverse document frequency (TF/IDF) and K-means clustering are used in similarity measures, but are unwieldy for large corpora (Mohammed et al., 2020).  Term frequency measures how many times a term appears in a document relative to the total number of words in the document.  Inverse Document Frequency weights the importance of words in a document (high-frequency words are seen as less important).  The TF-IDF measure is the product of the two and is a measure of the relevance of key words to a document (Qaiser & Ali, 2018).
+The fundamental data structure of the word embedding model is the co-occurrence matrix – given a corpus containing n words, the matrix is an n x n collection of the number of times a given word occurs next (or in a window of words with) to another given word, or alternatively, a term-document matrix, which counts occurrences of words (rows) in the documents in the corpus (columns). The rows of the matrix form the word vectors (Sahlgren, 2006). 
+ 
+Table 1: Co-occurrence Matrix (Sahlgren, 2006)
+
+The co-occurrence matrix will obviously become very large as the size of the corpus on which it is based grows, and the matrix itself will be sparsely populated, since there will be many words which do not occur within the same context. High dimensionality and sparse population pose a mathematical challenge: a small corpus of data will not provide enough statistical evidence to construct a usable vector space, while a large corpus of data will make creating and using the models computationally expensive (Sahlgren, 2006). Various methods of dimensionality reduction have been developed to address these challenges. These methods, such as Latent Semantic Analysis (Landauer et al., 1998) (See Figure 8), Hyperspace Analogue to Language (Lund et al., 1995), Random Indexing (Kanerva et al., 2000), and Latent Dirichlet Allocation (Blei et al., 2003) use various mathematical transformations such as log-entropy or singular value decomposition to condense a sparse cooccurrence matrix into tens or hundreds of meaningful dimensions (Mandera et al., 2017).
+ 
+Figure 8: LSA Topic model – resultant vectors can be used to predict subjective norms
+
+ 
+	
+Figure 9: Dimensionality reduction such as in LSA (Figure 6) produces new data that captures the most important information from the high-dimensional space, using fewer features to represent the original information (Goldinlocks, 2024).
+In 2013, four researchers from Google published a paper describing two new approaches to representing words in vector space that addressed both the accuracy of the then-current models, and the issue of computational efficiency over large data sets and implemented these approaches as the word2vec package. Previous model architectures were limited to data sets of a few hundred million words, and vectors of no more than 50-100 dimensions. The goal of this research was to create models from data sets of billions of words, with larger dimensionality (Mikolov et al., 2013),  The models described in this paper included Skip-Gram and Continuous Bag of Words (CBOW) algorithms to create the word embeddings for model representation.
+ 
+Figure 10: Neural structure of word2vec model (Ali, 2019)
+
+Both the Skip-Gram and CBOW models use a simple neural network structure to learn word representations from the text corpus and improve upon previous bag-of-words models with reduced complexity (log-linear rather than linear or quadratic) (Mikolov et al., 2013). These algorithms focus on occurrences of words within a limited window – for example, a window of 5 would indicate that a given word’s context occurs within the 5 words before and the 5 words after that word. The goal of the skip-gram algorithm is to predict the context of a word, given the word itself, while the CBOW algorithm predicts a word given the context by taking a sum of the vectors of the surrounding words. 
+ 
+Figure 11: CBOW vs Skip-gram (Mikolov et al., 2013)
+
+The skip-gram model attempts to maximize the classification of a word, with the assumption that words more distant from the target word are less related to the target word, and so are given less weight in the resulting vector. In the CBOW model, word order is not considered, instead the vectors of all the words in the window surrounding the target window are summed and projected into the same space (Mikolov et al., 2013). Figure 11 shows the differences in visual form between these embedding algorithms. 
+Mikolov et. Al. released the implementation of their new algorithms as a package named word2vec in the C programming language (Mikolov et al., 2013), and subsequent implementations and wrappers in various languages such as C++, Python, and R have become available. In 2016, Bojanowski et. Al. built on this work by modifying the Skip-Gram algorithm to consider internal word structure (Bojanowski et al., 2016). This technique learns embeddings for character n-grams rather than words, then computes the vectors of words by summing the vectors of the contained n-grams. The authors tested this method on nine languages and discovered that the algorithm out-performed both CBOW and Skip-Gram in predicting analogies. Further, the authors discovered that different languages performed better with differing lengths of sub-word n-grams (Bojanowski et al., 2016). The implementation of this algorithm was provided as the fastText library. Additionally, given the focus on character n-grams, rather than word n-grams, the fastText implementation can also handle new tokens not previously seen. 
+Řehůřek and Sojka  (2010) of the Natural Language Processing Laboratory at Masaryk University consolidated a number of these disparate approaches to dealing with vector space representation of large corpora into a single framework and Python package known as genism. The design goals of their framework were to be able to work with corpora larger than available computer memory, to have an intuitive interface, to provide easy deployment of the software, and to cover most popular algorithms (Řehůřek & Sojka, 2010). Originally including weighting algorithms such as Term Frequency – Inverse Document Frequency (TF-IDF) as well as Latent Semantic Analysis and Latent Dirichlet Allocation, the package has been expanded to include implementations of word2vec and fastText. 
+2.4 Summary
+
+This experiment builds on the rich history of linguistic inquiry and research described here in order to first answer our questions about the best parameters for modeling the various languages of interest, and then to be able to best predict the subjective norms of interest to the SPAML project and future linguistic research, which we hope will help to address the difficulties in acquiring or generating quality norms data, as well as to increase understanding of accurate representation of language in vector space.
+
+## Predicting Objective and Subjective Data
+
+van P versus Mandera
+
+## Replication and Extension 
+
+Regarding computational models, van Paridon and Thompson (2021) provided a methodology for producing word embedding models from spoken language across many languages, using the OpenSubtitles corpus (Lison & Tiedemann, 2016) and the fastText implementation of word2vec (Mikolov et al., 2013). Previous work in producing multi-lingual word embeddings has focused on using data from Wikipedia, given the large body of written text in over 100 languages (Al-Rfou et al., 2014). While Wikipedia-based models are valuable for their high coverage of words, written language is less representative of the experience of language learning than spoken language, thus the use of spoken language data will be more valuable for psycholinguistic research (New et al., 2007).
+ 
+Figure 1: Bag of Words Model – Word embeddings are based on the concept of transforming sentences into matrices (AIML.com, 2023)
+van Paridon and Thompson’s word embedding models were built using source data in 55 languages, with the fastText implementation adapted from Mikolov et. al. All of the models were built using the same set of parameters regardless of the size of the corpus used (parameters shown in Figure 3). Other research suggests that different window sizes, dimensions, and algorithms may produce better models, as measured by their use in predicting linguistic norms. For example, Mandera et. al. compared results of models built with English and Dutch corpora, with the top English results resulting from a model with 300 dimensions and a window size of 6, and the top Dutch results with 200 dimensions and a window size of 10 (Mandera et al., 2017).
+
+The SPAML project required large corpora in multiple languages in order to match word-pair conditions based on both word similarity and word frequency across languages (Buchanan et al., 2021).  These fastText models allowed the researchers to build the experimental stimuli for the experiment to elucidate priming effects by using controlled stimuli across languages (Buchanan et al., 2021). Given the need for controlled stimuli for the SPAML project (and other natural language processing linguistic research), we will generate word embeddings for 59 languages (the same languages from the original paper, plus Japanese, Thai, and the Mandarin and Taiwanese variants of Chinese). In order to investigate the (implied) claim that all languages can be represented with the same model embeddings, we will generate matrices for a set of combinations of dimensions (50, 100, 200, 300, 500), window sizes (1, 2, 3, 4, 5, 6), and embedding algorithms (CBOW, Skip-Gram). The range of dimensions was chosen because these parameters are commonly observed in linguistic studies (e.g., Mandera et al., 2017).  We chose the range of window sizes after preliminary experimentation using values up to 13 showed that window sizes larger than 6 had little effect on the resulting scores.  The matrices will be built without limiting the corpus size as compared to Al-Rfou et. al. (2014) limiting to 10,000 words, van Paridon and Thompson (2021) to 1 million words. We will then test the models by predicting subjective database norms to determine the combination of parameters that give the best predictive results for each language, and thus, what models should be used to for future studies.
+
+# Method
+
+This experiment will test the assumption that disparate languages should be modeled using the same parameters, as in (van Paridon & Thompson, 2021). We will build 60 words-by-dimensions models for each language by systematically varying each parameter as described in the technical implementation below, and then test and rank the resulting models by their r-squared score. The best model for each language will be chosen, with best defined as the highest R2 with the lowest window size and least dimensions. The following sections will expand on the specific steps to gather and clean the input data, create the corpora, build the models from the corpora, and then perform the various tests on the resulting models.
+3.1 Technical Implementation
+The fastText model (Bojanowski et al., 2016) from the genism version 3.8.3 Python package (Řehůřek & Sojka, 2010) was used to generate the embeddings from the concatenated corpus files. We varied the dimension, window size, and algorithm parameters to the model, while holding the remaining parameters constant. Dimensions represent the abstract features that the model will learn from the words in the corpus in their context and will correspond to the size of the hidden layer of the underlying neural network (Mikolov et al., 2013). We used 50, 100, 200, 300, and 500 as our test values. We varied window size from 1 to 6, that is, 1 word before and after the target word up to 6 words before and after the target word. We tested both the continuous bag of words (CBOW) and Skip-Gram algorithms. These parameter variations resulted in 60 possible combinations per language. Remaining parameter settings were matched to those used in the subs2vec experiment as shown in Table 2 below.
+
+
+
+Parameter	Value	Description
+minCount	5	Minimum number of word occurrences
+minn	3	Minimum length of subword ngram
+maxn	6	Maximum length of subword ngram
+t	.0001	Sampling threshold
+lr	.05	Learning rate
+lrUpdateRate	100	Rate of updating the learning rate
+dim	300	Dimensions
+ws	5	Size of context window
+epoch	10	Number of epochs
+Neg	10	Number of negatives sampled in the loss function
+
+Table 2: fastText parameter settings from subs2vec (van Paridon & Thompson, 2021)
+
+Figure 12 below details the process of acquiring the data, preprocessing the text and creating the corpora, then creating the words-by-dimensions matrices for each combination of parameters.  Each step was implemented as a Python language function, the output of which becomes the input for the next step.  Each intermediate product was saved for historical and debugging purposes, such that errors encountered in a given step do not require all previous steps to be repeated.
+The Python functions for each step in the experiment pipeline are explained below.  These functions are based on the Python code provided with the subs2vec paper (van Paridon & Thompson, 2021), modified to fit the needs of this experiment. The source code will be made available as a GitHub repository at the completion of the experiment.  The functions shown below along with supporting utility functions can be found in the Python source file named word2manylanguages.py.
+ 
+Figure 12: Process Flow
+3.1.1 Acquiring the data
+The source data for the experiment (described in section 3.2) were downloaded using the download() function, shown in Figure 12.  The download function takes three parameters: source, language, and overwrite.  The source parameter indicates whether to download from the OpenSubtitles site or the Wikipedia site.  The language parameter takes the ISO3166 country code of the language to download.  The overwrite parameter, which defaults to False, indicates whether or not the function should re-download a file that already exists in the data download directory.  These parameters allow for granular acquisition of data as well as recovering from an interruption if the caller is using a looping function to download all of the data at once.
+
+3.1.2 Cleaning the Data
+The downloaded data contains markup in eXtensible Markup Language (XML) that must be removed prior to creating the corpus. Markup tokens do not represent natural language content and will skew the frequency counts, thus are unwanted in the corpus (Bird et al., 2009). We used regular expression processing to remove the markup, including tags, punctuation, links, and extraneous white space.  In the case of Wikipedia data, we also removed metadata such as category labels, references, tables, and image tags.  
+
+Figure 14 above shows the regular expression patterns used to clean OpenSubtitle data. Figure 15 shows the patterns for cleaning Wikipedia data, which contains comparatively much more complicated markup.  See Section 3.2 for examples of the data both before and after the cleaning process.  Figure 16 shows the simple cleaning function clean_text(), which takes two parameters: text and pattern. The text parameter is a character string containing the contents of a source data file, and the pattern is one of the two patterns shown here, depending on the source file.  This function applies the patterns to the text, converts all text to lower case, and returns the cleaned contents.  The clean_text() function is called for every downloaded data file by a pair of functions: clean_subtitles() and clean_wikipedia() (not shown here – refer to word2manylanguages.py) which iterate over the source data and produce the cleaned data which will be assembled into the corpus for each language.
+
+
+
+3.1.3 Data Deduplication
+The process described in van Paridon and Thompson included sentence level deduplication within each subtitle and Wikipedia document. This deduplication was performed to reduce the impact of commonly used phrases (van Paridon & Thompson, 2021). We feel that it serves our purposes better to include these duplicated phrases, such as “Thank you”, specifically because of how common they are in spoken language. Document level deduplication was used in this context because there is no value in including exactly the same document more than once; however, the data sources used here are well-curated and the likelihood of document duplication is low. We have included a prune function in our processes for document level deduplication, shown in Figure 17, since this process may be used in the future to model less well-curated models where document duplication is more likely.
+
+3.1.4 Corpus Concatenation
+The output of the previous steps of the pipeline was a set of plain-text files that are ready to be combined into a corpus.  One corpus file was produced per language, with each file containing one sentence per line.  These corpus files were the input to the model building step.  Figure 18 shows the function concatenate_corpus() which takes two parameters: language and overwrite.  The language parameter expects the ISO3166 country code of the language to process, and the overwrite parameter, which defaults to False, tells the function whether or not to -re-process a corpus that already exists.
+ 
+Figure 18: Corpus Concatenation Function.
+
+3.1.5 Model Building
+Once the corpora were prepared, the next step was to build the words-by-dimensions matrices.  The function vectorize_stream(), shown in Figure 19, created a model based on its parameters:  language, min_freq, dim, win, and alg.  The language parameter accepts the ISO3166 country code for the language to process.  The min_freq parameter denotes the minimum number of times a token must appear in the corpus to be included in the words-by-dimensions matrix.  In this experiment, we used a minimum frequency of 5 occurrences across all documents.  The dim parameter stands for dimensions, which corresponds to the size of the hidden layer in the model’s neural network, and the number of values in the resulting word vectors.  The win parameter denotes window size, or the number of words before and after the target word that the model will consider.  Finally, the alg parameter accepts a 1 or 0 value.  If the value is 1, the model will be built using the skip-gram algorithm, and if it is 0, the continuous bag of words (CBOW) model will be used.  The model is constructed by the fastText algorithm (Mikolov et al., 2013) as discussed in the previous chapter.
+
+
+The models were built for every combination of dimension, window size, and algorithms using a control function called build_models() that takes the parameters language and overwrite.  The language parameter accepts the ISO3166 country code for the desired language to build, and the overwrite parameter, which defaults to False, specifies whether or not to rebuild a model for which an output file already exists.  Figure 20 shows the code for the function.
+
+The next section describes the data and gives examples of both Wikipedia and OpenSubtitles data before and after the processing described above.  The following section details the methodology for evaluating the models.
+3.2 Data
+This experiment included datasets in 59 languages for which evaluation data were available. The languages included match the languages in the van Paridon and Thompson study, along with Japanese, Thai, and vernacular Mandarin Chinese and Taiwan Chinese. All languages are  listed in Appendix A along with the unique sentence and token count from each. Corpora for this experiment were built from Wikipedia dump files and OpenSubtitles archives for each language. Wikipedia dump files are downloaded from the URL http://dumps.wikimedia.your.org/{language}wiki/latest/{language}wiki-latest-pages-meta-current.xml.bz2, substituting in the ISO3166 country code for {language}, for example, ‘en’ for English, or ‘de’ for German. The table in Appendix A indicates the date the archives were downloaded. Files were saved locally in the format ‘wikipedia-{language}.xml.bz2’. Wikipedia is organized by language, for example the English version of Wikipedia is accessed through the URL https://en.wikipedia.org, then by articles presented as individual web pages. The Wikipedia dumps are also organized by language, resulting in a single large file per language that contains eXtensible Markup Language (XML) formatted data and metadata for each article page in that language. The following example shows a sample of the raw data from the English dump file for the article page entitled Anarchism.
+  <page>
+    <title>Anarchism</title>
+    <ns>0</ns>
+    <id>12</id>
+    <revision>
+      <id>979267494</id>
+      <parentid>979267436</parentid>
+      <timestamp>2020-09-19T19:49:54Z</timestamp>
+      <contributor>
+        <username>Favonian</username>
+        <id>7007500</id>
+      </contributor>
+      <minor />
+      <comment>Reverted 1 edit by [[Special:Contributions/Trump2022002202020|Trump2022002202020]] ([[User talk:Trump2022002202020|talk]]) to last revision by ClueBot NG</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text bytes="88697" xml:space="preserve">{{short description|Political philosophy and movement}}
+{{redirect2|Anarchist|Anarchists|other uses|Anarchists (disambiguation)}}
+{{pp-move-indef}}
+{{good article}}
+{{use dmy dates|date=March 2020}}
+{{use British English|date=January 2014}}
+{{anarchism sidebar}}
+{{basic forms of government}}
+'''Anarchism''' is a [[political philosophy]] and [[Political movement|movement]] that rejects all involuntary, coercive forms of [[hierarchy]]. It calls for the abolition of the [[State (polity)|state]] which it holds to be undesirable, unnecessary and harmful. It is usually described alongside [[libertarian Marxism]] as the [[libertarian]] wing ([[libertarian socialism]]) of the [[socialist movement]] and as having a historical association with [[anti-capitalism]] and [[socialism]].
+…
+Figure 21: Example of raw Wikipedia data
+The cleaning process traverses the <article> tags extracting the text and removing embedded wiki markup, special characters, and text marked as XML comments or wiki ‘no_include’ tags. That text is then subjected to regular expression-based cleaning to remove references and reference links, tables, galleries, KML tags, HTML links, category links, timestamps, parentheses, and lines that do not begin with either alphanumeric characters, quotes, or brackets. Sentences were broken at periods, with one sentence per line in the output file. The resulting text for each article was then saved in an individual text file, which was then included in a compressed file containing the entire cleaned dump for each language. Figure 22 shows the English Wikipedia Anarchism article after cleaning.
+Anarchism
+0
+12
+979267494
+979267436
+2020 09 19T194954Z
+Favonian
+7007500
+Reverted 1 edit by talk to last revision by ClueBot NG
+wikitext
+text x wiki
+Anarchism is a political philosophy and movement that rejects all involuntary coercive forms of hierarchy
+It calls for the abolition of the state which it holds to be undesirable unnecessary and harmful
+It is usually described alongside libertarian Marxism as the libertarian wing of the socialist movement and as having a historical association with anti capitalism and socialism
+Figure 22: Example of cleaned Wikipedia data.
+
+Open Subtitles files were downloaded from the URL http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/raw/{language}.zip, substituting the ISO3166 country code for {language}. Files were saved locally in the format ‘subtitles-{language}.zip’. The table in Appendix A indicates the date the archives were downloaded. The OpenSubtitles files contain XML-formatted files for each movie or episode subdivided by year. The movie/episode names are not included in the data, and the order of the sentences is randomized to avoid copyright violation. Figure 23 shows an example of an English language subtitle file.
+
+<?xml version="1.0" encoding="utf-8"?>
+<document id="6081152">
+  <s id="1">
+    <time id="T1S" value="00:01:46,970" />
+What's the matter?
+    <time id="T1E" value="00:01:48,219" />
+  </s>
+  <s id="2">
+    <time id="T2S" value="00:01:49,090" />
+Come on, spill it.
+    <time id="T2E" value="00:01:50,498" />
+  </s>
+  <s id="3">
+    <time id="T3S" value="00:01:51,157" />
+I've been watching you ever since you sat down here.
+    <time id="T3E" value="00:01:52,820" />
+  </s>
+  <s id="4">
+    <time id="T4S" value="00:01:53,084" />
+You look like you were rehearsing an act or something.
+  </s>
+Figure 23: Example of raw OpenSubtitles data
+The cleaning process read in each movie subtitle file, stripped the XML tags, any HTTP links, parentheses, hyphens, apostrophes, and slashes. Empty lines and excessive white space were removed, and the sentences were broken at periods, with one sentence per line. The resulting text was saved in an individual text file per movie, which was then included in a compressed file containing the entire subtitle corpus for each language. The following example shows the same English subtitle file after cleaning in Figure 24.
+what s the matter
+come on spill it
+i ve been watching you ever since you sat down here
+you look like you were rehearsing an act or something
+Figure 24: Example of cleaned OpenSubtitles data
+Once the source data was cleaned for both Wikipedia and Open Subtitles for a language, the concatenated corpus was produced. This corpus contains all the sentences from each of the sources in a single uncompressed text file, of the pattern ‘corpus-{language}.txt’. The following section details the process for evaluating the models built from this data.
+3.3 Data Analysis 
+The word embeddings generated in the vectorization step were evaluated by using them to predict norms in various data sets, shown in Appendix B, which include the datasets used by van Paridon and Thompson (2021) as an equivalent comparison, objective norms, and norms datasets collected in conjunction with the Semantic Priming Across Multiple Languages (SPAML) project (Buchanan et al., 2021). We chose a set of representative subjective norms, including age of acquisition, valence, arousal, concreteness, and familiarity, for their value in psycholinguistic studies (Alario & Ferrand, 1999). Each of the data sets that pertain to a given language are shuffled to remove any ordering bias, then processed to remove unused columns before building the regression model. A regression model is built for each dataset collected for a given language, with the results concatenated into a single report per language. Table 3 shows an example data set for the English language.
+ 
+Table 3: Example lexical norm data set (Altarriba et al., 1999)
+
+K-fold Ridge regression was used to predict the norms, with k = 10. Word embedding models are susceptible to multicollinearity issues (Kaveh-Yazdy & Zarifzadeh, 2021), and ridge regression has been shown to reduce the mean squared error of regression models built from word embeddings (Yeh et al., 2020). This analysis was consistent with the process used in the evaluation of subs2vec (van Paridon & Thompson, 2021).  The code snippet in Figure 25 demonstrates the creation of the regression model using the predict_norms() function, which takes the parameters vectors, norms, and alpha.  The vectors parameter represents one of the models built by the processes in Section 3.1.  The norms parameter represents a dataframe containing the norms data, as shown in Table 3.  The alpha parameter controls the level of optimization of regression coefficients – higher values reduce overfitting, too high can induce underfitting.  Here we default this parameter to 1, mirroring the values used in (van Paridon & Thompson, 2021).
+
+
+Since some languages are not well-represented in database norms literature, we will use another method to analyze all of the languages. This method will use objective data unigram frequency data, also obtained from subs2vec (van Paridon & Thompson, 2021). We will use the same regression technique to attempt to predict word frequency from the words-by-dimensions models for each language. The justification for this method follows from the use of word vectors to predict reaction times (RTs) (van Paridon & Thompson, 2021), along with the use of word frequency data to predict RTs (Brysbaert & New, 2009), which suggests that word frequencies may be predicted from word vectors.  Figure 26 shows the function predict_counts(), which takes three parameters, vectors, freqs, and alpha.  The vectors parameter represents one of the words-by-dimensions models as described above.  The freqs parameter contains a dataframe containing word frequencies for the same language as the model, obtained from the subs2vec repository.  The alpha parameter controls the level of optimization of regression coefficients – higher values reduce overfitting, too high can induce underfitting.  Here we default this parameter to 1, mirroring the values used in (van Paridon & Thompson, 2021).
+
+
+The tests will be performed in three stages:  direct replication, the frequency data extension (objective data), and the larger norms data extension (subjective data).  Each stage will be evaluated individually to determine the best result, then the results will be combined and evaluated to choose the best overall set of parameters for each language, and for different categories of norms data to answer Research Question 1 (are all parameters the same?) and Research Question 2 (if not, what is best for each variable and language). Research Question 3 was answered by examining the combined results and visualizing result patterns. 
+We chose the simplest embedding model within one percent of the highest R2 value, with “simplest” defined as fewest dimensions, then smallest window. Table 4 shows a preliminary example of regression results for a subset of the English language test data, before sorting. The R2 value is the direct output of the regression model, from which the square root is taken to populate the r column. The adjusted r and r-squared columns are derived by calculating the percentage of words in the test datasets that do not appear in the words-by-dimensions matrix and multiplying the r and r-squared by that percentage (van Paridon & Thompson, 2021). 
+Table 4: Unsorted results
+Table 5 shows the same set of results sorted first by the adjusted R2 value, and then by the source column. The model naming convention of language, dimensions, window size, algorithm allowed us to quickly sort the models into the order that represents our selection criteria. 
+ 
+Table 5: Sorted Results
+We can see in this example that there are four models with an adjusted r-squared in the 68th percentile band. Of these, the least number of dimensions is 100, with a window size of 2 (parameters referenced in the source name). We would select this model as our “best” model for the English language. Using this process, the words-by-dimensions matrices for each language were analyzed, and the results reported. From the aggregated results, we were able to answer the research question (1-2) if it is reasonable to model all the languages using the same parameters, or if there is a significant difference in the predictive ability of the models at different parameters. We examined if there are any relationships between groups of languages that predict best using similar parameters (Research Question 3). These results, along with the generated words-by-dimensions matrices and the source code for the modeling and evaluation processes will be provided for use in subsequent research efforts.
+
+# Results
+
+4 Results
+4.1 Direct Replication
+For the first set of tests, each language model was evaluated using the same datasets used in van Paridon and Thompson (2019) (see appendix B for list). The same analysis methodology as the original manuscript was employed, as described in the data analysis section: ridge regression using output vectors from the model to predict database norms matched by token. Table 6 shows the top three results by adjusted r-squared for each language included. The results clearly demonstrate that the selected dimension and window size used in the original experiment (300 dimensions, 5 window size) are likely not the optimal parameters to use across different languages. In fact, the original dimension and window size parameters for the fastText model do not appear in the top three scores for any prediction in any of their tested languages (Research Question 1).
+Language 	Dimensions	Window	Algorithm	Norm	Score 
+German	300	1	Skip-gram	imageability (older adults)	0.672
+German	500	1	Skip-gram	imageability (older adults)	0.665
+German	200	1	CBOW	imageability (older adults)	0.659
+English	500	1	Skip-gram	concreteness	0.661
+English	500	2	Skip-gram	concreteness	0.653
+English	300	2	Skip-gram	concreteness	0.646
+Spanish	500	3	Skip-gram	pleasant taste	0.653
+Spanish	500	2	Skip-gram	pleasant taste	0.647
+Spanish	300	2	Skip-gram	pleasant taste	0.643
+Persian	100	1	CBOW	imageability	0.479
+Persian	100	2	CBOW	imageability	0.451
+Persian	50	1	CBOW	imageability	0.443
+Finnish	500	5	Skip-gram	offensiveness	0.651
+Finnish	500	3	Skip-gram	concreteness	0.643
+Finnish	500	3	Skip-gram	offensiveness	0.625
+French	200	2	Skip-gram	concreteness	0.619
+French	500	4	Skip-gram	concreteness	0.619
+French	100	2	Skip-gram	concreteness	0.618
+Indonesian	100	1	Skip-gram	concreteness	0.599
+Indonesian	100	2	Skip-gram	concreteness	0.589
+Indonesian	200	1	Skip-gram	concreteness	0.582
+Italian	100	3	Skip-gram	haptic	0.479
+Italian	100	2	Skip-gram	haptic	0.475
+Italian	100	1	Skip-gram	haptic	0.474
+Malay	100	1	Skip-gram	lexical decision time	0.330
+Malay	50	1	CBOW	lexical decision time	0.315
+Malay	50	1	Skip-gram	lexical decision time	0.301
+Dutch	100	6	Skip-gram	gustatory	0.689
+Dutch	100	4	Skip-gram	gustatory	0.676
+Dutch	100	5	Skip-gram	gustatory	0.670
+Polish	200	1	Skip-gram	concreteness	0.701
+Polish	300	2	Skip-gram	concreteness	0.697
+Polish	300	1	Skip-gram	concreteness	0.696
+Portuguese	100	3	Skip-gram	valence	0.446
+Portuguese	100	2	Skip-gram	valence	0.443
+Portuguese	200	4	Skip-gram	valence	0.414
+Turkish	50	1	Skip-gram	concreteness	0.599
+Turkish	50	3	Skip-gram	concreteness	0.592
+Turkish	50	4	Skip-gram	concreteness	0.591
+Table 6: Direct Replication Results
+	
+The heatmaps below show the top three predictions broken down by algorithm. The CBOW map shows a strong trend towards simpler models, with the largest cluster at 50 dimensions with a window size of 1 (Figure 27). The Skip-Gram map (Figure 28) is less heavily biased towards the very simplest of models as it shows a more even distribution across number of dimensions, but is still biased towards low window sizes, with the majority of results being size 3 and under.
+
+ 
+Figure 27: Top three predictions for CBOW
+ 
+Figure 28: Top three predictions for Skip-gram
+4.2 Word Frequencies Extension
+The second set of tests were designed to address the limitation of finding normed datasets for all of the languages that we modeled, as the previous work in this area does not test all languages that were provided as data from the manuscript. Word frequency is strongly related to many linguistic phenomena, and unigram (i.e., single) token frequency counts were available for all models as they are directly calculated from the same data as the model. The unigram frequency data initially presented challenges; it contained ligatures and diacritics that did not match the more normalized words in the words-by-dimensions matrices. Therefore, this data required an extra cleaning step using Unicode normalization and case folding – a process for making case equal for comparison in internationalized text (W3C Working Group, 2021) - before it could be predicted by the dimensionality data. There were still a large number of unmatched words, largely attributable to the minimum frequency of five occurrences in the words-by-dimensions matrices, as opposed to no minimums in the unigram frequency data. 
+The frequency data was separated into Wikipedia data and OpenSubtitles data, and so was analyzed separately with the combined models created for this manuscript. Table 7 below shows a sample of the top three scores per algorithm for Afrikaans and Arabic.  For complete results, see Table 15 in Appendix C. Note that negative scores are the result of penalizing the model for words that were present in the unigram frequency data but not in the vector data.
+		Wikipedia				OpenSubtitles 	
+Language 	Algorithm	Dimensions	Window	Score	 	Dimensions	Window	Score
+Afrikaans	CBOW	50	3	0.002216	 	300	6	0.091156
+Afrikaans	CBOW	100	2	0.002162	 	100	2	0.090525
+Afrikaans	CBOW	50	4	0.002115	 	200	3	0.090448
+Afrikaans	Skip-gram	500	5	0.001710	 	500	6	0.068206
+Afrikaans	Skip-gram	300	4	0.001540	 	500	4	0.062775
+Afrikaans	Skip-gram	200	5	0.001497	 	200	6	0.061730
+Arabic	CBOW	50	5	-0.000002	 	50	5	0.000008
+Arabic	CBOW	50	6	-0.000025	 	50	6	0.000004
+Arabic	CBOW	50	4	-0.000025	 	50	4	0.000002
+Arabic	Skip-gram	50	6	-0.000007	 	50	6	0.000004
+Arabic	Skip-gram	50	3	-0.000012	 	50	5	0.000001
+Arabic	Skip-gram	50	5	-0.000015	 	50	4	-0.000005
+Table 7: Example results from frequency prediction
+
+We see from these results that the unigram frequencies were more difficult to predict from the word embeddings than database norms.  We know that lexical categories are not normally distributed across languages, with nouns being much more heavily represented than other categories (Fellbaum, 1998), and that lexical categories are difficult to predict statistically without context (Roth & Zelenko, 1998), so it may be difficult to predict the uncontextualized frequencies of unigrams from the contextualized word embeddings. These results vary by language (see Table 15). 
+The first two heatmaps below (Figures 18 and 19) show the top three scores for Wikipedia data, again separated by algorithm (CBOW and Skip-gram). Much like the norms data in the first set of tests, these results heavily favored low dimensionality and window sizes, with CBOW favoring the 50 dimensions and 1 window size combination, and Skip-gram being more scattered but still biased towards the lower window and dimension values.
+ 
+Figure 29: Top three predictions for Wikipedia data (CBOW)
+ 
+Figure 30:Top three predictions for Wikipedia data (Skip-gram)
+The next set of heatmaps show the top 3 scores for OpenSubtitles data (Figures 20 and 21). An interesting difference in the CBOW results was that the bias for low window size was the same; however, the results seemed to cluster around higher dimensionality. Again, the results for Skip-gram were more scattered, but here there was a tendency towards high dimensionality with low window size or high window size with low dimensionality, with only sparse results in between.
+ 
+Figure 31: Top three predictions for OpenSubtitles data (CBOW)
+ 
+Figure 32: Top three predictions for OpenSubtitiles data (Skip-gram)
+
+
+This difference in the distribution of results for Wikipedia and OpenSubtitles data suggested an interesting possibility. While van Paridon and Thompson (2021) demonstrated that models built from Wikipedia data (more formal written language) and OpenSubtitles (less formal spoken language) together improved the resulting predictive power of the word vectors, this difference in the predictive power of the combined model over solely Wikipedia-derived test data and solely OpenSubtitles-derived test data suggested that matching the type of dataset the model was built from to the type of language in the test data may yield better results than a combined model, if it is practical to build the model to match.
+	
+4.3 Larger Norm Set Extension
+The third set of tests was examined on datasets collected in conjunction with the SPAML project (Buchanan et al., 2021). These datasets contain normed psycholinguistic data similar to that contained in the datasets from the replication group but cover more languages and norms. The datasets are outlined in Appendix B. The following table shows an example of the top three results per by language and algorithm for Arabic and Bulgarian. Full results can be found in Appendix C, Table 16. Once again, the wide variation of results shows that no single set of parameters can adequately represent all languages.
+Language	Dimensions	Window	Algorithm	Norm	Score
+Arabic	200	1	CBOW	imaginability	0.150
+Arabic	50	1	CBOW	imaginability	0.141
+Arabic	100	1	CBOW	imaginability	0.140
+Arabic	200	1	Skip-gram	imaginability	0.141
+Arabic	500	1	Skip-gram	imaginability	0.134
+Arabic	300	1	Skip-gram	imaginability	0.133
+Bulgarian	200	1	CBOW	complexity	0.468
+Bulgarian	100	1	CBOW	complexity	0.404
+Bulgarian	50	4	CBOW	complexity	0.352
+Bulgarian	300	2	Skip-gram	complexity	0.521
+Bulgarian	300	3	Skip-gram	complexity	0.518
+Bulgarian	300	5	Skip-gram	complexity	0.511
+Table 8: Example of top three results per language and algorithm
+The two heatmaps below (Figures 22 and 23), again divided by algorithm, showed similar results to the replication set. The CBOW results showed a bias towards simpler models, although the largest cluster was around 100 dimensions rather than 50 for the original CBOW results. Skip-gram was again more scattered than CBOW, with the bias toward smaller window sizes, but higher dimensionality.
+ 
+Figure 33: Top three predictions (CBOW)
+ 
+Figure 34: Top three predictions (Skip-gram)
+
+
+# Discussion
+
+This experiment has shown that the structure and programming of the word embedding model is important. van Paridon and Thompson originally demonstrated that training models with more data (i.e., using both Wikipedia and OpenSubtitles data to build a combined model) usually performs better than Wikipedia data alone (van Paridon & Thompson, 2021), and Wang, et. al. (2021) showed that classic embeddings such as those generated by fastText compare favorably to and sometimes outperform newer, more complicated convolutional networks and transformer-based models for some tasks, which indicates that these classic embedding models are still useful even in this era of GPT-based models.
+We provide the models generated in this study along with the detailed results of the testing.  These data will benefit others who lack the time, expertise, and computational resources to determine the optimal model parameters for their own research tasks or to generate the models themselves.  We also provide the source code to create the models for those who do wish to explore the parameters independently now that it is evident that using pre-trained models with fixed structures may not provide optimal results for every task.
+5.1 Research Question 1
+	The results from all three tests show that there is a wide variation in the best-scoring parameter values across the languages tested, which answers the question whether one set of parameters can adequately represent many languages. This result was not surprising given the differences in writing system, word length, syntax, use of determiners, and other differences between languages, as well as the number of unique words in each language and the amount of text to build corpora from. Indeed, it would be surprising if there were less variation in the ideal parameters. The following table shows the aggregate best result – that is, the simplest model with the highest score – for each language across the three tests. If one were to wish to build the best predictive model for database norms for a given language, these would be the parameters to use.
+Language	Dimensions	Window	Algorithm	Score
+Afrikaans	300	6	CBOW	0.0912
+Arabic	200	1	CBOW	0.1496
+Bulgarian	300	2	Skip-gram	0.5211
+Bengali	100	1	CBOW	0.0042
+Breton	50	2	CBOW	0.1251
+Bosnian	200	1	CBOW	0.0020
+Catalan	100	1	CBOW	0.0335
+Czech	50	1	CBOW	0.0008
+Danish	500	1	CBOW	0.0054
+German	500	1	Skip-gram	0.7221
+Greek	100	2	Skip-gram	0.5297
+English	500	4	Skip-gram	0.8368
+Esperanto	100	1	CBOW	0.0371
+Spanish	500	3	Skip-gram	0.6534
+Estonian	300	1	CBOW	0.0020
+Basque	500	3	CBOW	0.0122
+Persian	100	1	CBOW	0.4791
+Finnish	500	5	Skip-gram	0.6513
+French	200	2	Skip-gram	0.6188
+Galician	500	1	CBOW	0.0239
+Hebrew	100	1	CBOW	0.0002
+Hindi	100	5	CBOW	0.0053
+Croatian	500	1	CBOW	0.0014
+Hungarian	100	2	CBOW	0.0005
+Armenian	100	3	Skip-gram	0.0009
+Indonesian	100	1	Skip-gram	0.5994
+Icelandic	300	1	Skip-gram	0.2611
+Italian	300	2	Skip-gram	0.5851
+Japanese	200	6	CBOW	0.0646
+Georgian	50	3	CBOW	0.0000
+Kazakh	200	3	Skip-gram	0.0006
+Korean	300	1	CBOW	0.0019
+Lithuanian	500	5	CBOW	0.0077
+Latvian	300	1	CBOW	0.0084
+Macedonian	50	5	Skip-gram	0.0005
+Malayalam	50	3	CBOW	0.0002
+Malay	100	1	Skip-gram	0.3297
+Dutch	100	6	Skip-gram	0.6886
+Norwegian	200	5	Skip-gram	0.5041
+Polish	200	1	Skip-gram	0.7008
+Portuguese	50	2	Skip-gram	0.7900
+Romanian	300	1	Skip-gram	0.0023
+Russian	300	3	Skip-gram	0.5160
+Sinhalese	50	3	CBOW	0.0022
+Slovak	300	1	CBOW	0.0019
+Slovenian	500	5	Skip-gram	0.0028
+Albanian	500	1	CBOW	0.0119
+Serbian	300	4	CBOW	0.0675
+Swedish	500	1	CBOW	0.0043
+Tamil	50	1	CBOW	0.0001
+Telugu	100	2	Skip-gram	0.0005
+Tagalog	300	2	CBOW	0.0980
+Turkish	50	1	Skip-gram	0.5991
+Ukrainian	50	5	Skip-gram	0.0006
+Urdu	50	6	Skip-gram	0.0000
+Vietnamese	50	1	CBOW	0.0122
+Chinese	100	3	Skip-gram	0.2498
+Table 9: Overall best scores per language
+5.2 Research Question 2
+Table 10 below shows a summary of the best combination of dimension and window size parameters for predicting word frequency (both in Wikipedia data and Subtitles data), as well as norms for imaginability, age of acquisition, and valence.  Again, it becomes clear that no one set of model parameters was ideal for every task, even for the same language.  Indeed, it would be better to choose a set of parameters based on the kind of data (formal writing versus informal speech) and the kind of variable to be predicted (as imaginability, age of acquisition, and valence are unrelated concepts).  
+Language	Frequency: Wikipedia	Frequency: Subtitles	Imaginability	Age of Acquisition	Valence
+Afrikaans	50-3	300-6			
+Arabic	50-5	50-5	200-1	200-1	
+Bulgarian	50-1	100-2			
+Bengali	50-3	100-1			
+Breton	50-5	50-2			
+Bosnian	200-1	300-1			
+Catalan	200-1	100-1			
+Czech	50-1	50-1			
+Danish	500-1	500-1			
+German	500-1	500-1	200-1	200-1	500-1
+Greek	100-1	100-1			
+English	500-6	500-1	500-4	500-3	500-3
+Esperanto	50-1	100-1			
+Spanish	100-1	50-1	200-1	300-2	500-4
+Estonian	100-1	300-1			
+Basque	100-3	500-3			
+Persian	50-1	50-4			
+Finnish	100-2	100-1			500-4
+French	300-1	500-1	100-2	300-6	500-3
+Galician	100-1	500-1			
+Hebrew	100-1	50-5			
+Hindi	50-3	100-5			
+Croatian	300-3	500-1			
+Hungarian	100-6	100-2			
+Armenian	50-4	100-3			
+Indonesian	500-1	300-1			100-3
+Icelandic	50-1	100-3			
+Italian	300-1	50-1	300-2	500-6	
+Japanese			300-5	200-6	
+Georgian	50-3	50-6			
+Kazakh	100-1	200-3			
+Korean	50-2	300-1			
+Lithuanian	50-1	500-5			
+Latvian	50-1	300-1			
+Macedonian	50-3	50-5			
+Malayalam	50-3	50-6			
+Maylay	200-2	200-1			
+Dutch	500-1	500-1	500-1	100-1	100-4
+Norwegian	50-1	500-1			
+Polish	300-1	500-1	300-2		500-2
+Portuguese	100-1	100-1	300-1	500-1	100-3
+Romanian	50-1	300-1			
+Russian	100-4	100-1	200-2	300-6	
+Sinhalese	50-3	50-2			
+Slovak	100-2	300-1			
+Slovenian	100-1	500-5			
+Albanian	200-1	500-1			
+Serbian	500-1	500-1			
+Swedish	300-1	500-1			
+Tamil	50-1	50-1			
+Telugu	50-2	100-2			
+Tagalog	50-4	300-2			
+Turkish	50-1	500-1		500-3	
+Ukrainian	50-2	50-5			
+Urdu	50-6	50-5			
+Vietnamese	100-1	50-1			
+Chinese			200-6	100-3	50-6
+Table 10: Summary of best parameters per language and variable (empty cells indicate no norms data available for testing)
+
+Given the wide variety of tasks that these word embeddings are used for as discussed earlier in this manuscript, more testing of parameters by task, variable, and type of data is necessary to discover the optimal parameters for building useful models.
+5.3 Research Question 3
+Some interesting questions have arisen from this experiment. Since we now know that different languages need different parameters, are there other relationships that we can learn from the results. Do languages from the same family use similar parameters?  Do languages from nearby geographical regions use similar parameters regardless of their linguistic relationship?  These are questions we plan to continue to pursue as we refine this research in the future.
+For example, the following chloropleths show the best dimensions and window size mapped to the countries where each language is spoken, drawn from the best model list above (Figure 35 shows dimensions, Figure 36 shows window size).
+ 
+Figure 35: Best dimensions by country's official language
+ 
+Figure 36: Best window size by country's official language
+From Figures 35 and 36, it does not appear that there is a great deal of regional homogeneity of either dimension or window size, as the map is drawn with most common language by country/region. There is some amount of overlap in central European areas such as France and Italy, suggesting that the language family might have more of an influence than simple geography. Once only spoken language data from OpenSubtitles is used to predict as shown in Figure 37, there appears to be slightly more of an effect. This phenomenon bears further research.  
+ 
+Figure 37: Best dimensions using only OpenSubtitles data for prediction
+
+
+5.4 Limitations
+While this experiment was able to build upon van Paridon and Thompson’s (2021) work by building a wide range of models for 59 languages, we were still not able to test all of those models with verified norms data, due to the difficulty in finding norms data, particularly for lower-resource languages.  As noted in Section 5.5, we intend to address this by testing with any new norms data that becomes available as work on the SPAML project continues.  We also noted that the prediction task and the type of input data showed an effect on which parameters predicted best, so the results shown in this manuscript must be considered to optimal only for the tasks we tested here, and more testing would be required for different kinds of tasks and data.
+Additionally, we were unable to find convincing relationships between geographically-adjacent languages, or for language families and the ideal parameters for modeling them (see Research Question 3) and hope to continue to search for connections in future research.	 
+
+5.5 Future Work
+The SPAML project, which this data investigation supports, is still gathering norms data and will need models with which to predict norms for various languages. We will continue to refine the evaluation of models with new data as it is acquired. The source code for this experiment along with the generated models will also be released as a Python package so that others can replicate and build on the work. These models will be released with the publication of this manuscript for interested researchers to apply to their own work. 
+Given the results of Research Question 3, another area of future exploration is the difference between separate dialects of languages.  While more than one dialect of Chinese was included in this experiment, only one variant of English was explored (ignoring British, Irish, Canadian, and Australian dialects, among others) and one variant each of Portuguese, Spanish and Korean.  Only a few languages from Africa and India were included.  While this is partially because of the difficulty in finding datasets from languages with less representation in the literature, it is worth exploring the differences where data is available. Finally, it would be interesting to understand why these differences exist, and what other variables might contribute to the wide variety of best results both between and within languages.
+
+# References
+
+<!-- References will auto-populate in the refs div below -->
+
+::: {#refs}
+:::
+
+# Appendix
+
+# Title for Appendix
