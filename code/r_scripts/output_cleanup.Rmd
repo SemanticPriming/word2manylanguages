@@ -1,0 +1,72 @@
+---
+title: "Output Cleanup"
+author: "Erin M. Buchanan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The purpose of this file is to normalize the output files created during the original analysis/processing of the data. 
+
+## Libraries
+
+```{r}
+library(rio)
+library(dplyr)
+library(tidyr)
+```
+
+## Data
+
+### Frequency Tests `count_evals`
+
+```{r}
+count.files <- list.files(path = "../../data/count_evals",
+                          pattern = "*.csv",
+                          full.names = TRUE)
+count.dfs <- lapply(count.files, import)
+count.full <- bind_rows(count.dfs) %>% 
+  select(-V1) %>% 
+  mutate(data_source = ifelse(
+    grepl("wiki", dataset), "Wikipedia", "Subtitles"
+  )) %>% 
+  separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
+
+export(count.full, "../../data/count_evals_formatted.csv", row.names = F)
+```
+
+### Replication Tests `rep_evals`
+
+```{r}
+rep.files <- list.files(path = "../../data/rep_evals",
+                          pattern = "*.csv",
+                          full.names = TRUE)
+rep.dfs <- lapply(rep.files, import)
+rep.full <- bind_rows(rep.dfs) %>% 
+  select(-V1) %>% 
+  rename(dataset = source, 
+         var = norm) %>% 
+  mutate(source = rep(rep.files, times = lapply(rep.dfs, nrow)),
+         source = gsub("../../data/rep_evals/|_wxd_eval.csv|_eval.csv", "", source)) %>% 
+  separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
+
+export(rep.full, "../../data/rep_evals_formatted.csv", row.names = F)
+```
+
+### Extension Tests `extension_evals`
+
+```{r}
+extension.files <- list.files(path = "../../data/extension_evals",
+                          pattern = "*.csv",
+                          full.names = TRUE)
+extension.dfs <- lapply(extension.files, import)
+extension.full <- bind_rows(extension.dfs) %>% 
+  select(-V1) %>% 
+  rename(var = norm) %>% 
+  separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
+
+export(extension.full, "../../data/extension_evals_formatted.csv", row.names = F)
+```
