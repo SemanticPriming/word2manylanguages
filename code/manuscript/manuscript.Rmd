@@ -1,40 +1,65 @@
 ---
-title: "My Title"
-shorttitle: "Short Title in Running Header"
-author:
-  - name: Jane Doe
-    corresponding: true
-    orcid: 0000-0000-0000-0001
-    email: janedoe@generic.edu
-    affiliations:
-      - name: Generic University
-        department: Department of Scholarly Studies
-        address: 1234 Capital St.
-        city: New York
-        region: NY
-        country: USA
-        postal-code: 12084-1234
-author-note:
-  status-changes: 
-    affiliation-change: ~
-    deceased: ~
-  disclosures:
-    study-registration: ~
-    data-sharing: ~
-    related-report: ~
-    conflict-of-interest: ~
-    financial-support: ~
-    gratitude: ~
-    authorship-agreements: ~
-abstract: "subs2vec (van Paridon & Thompson, 2021) provides word embeddings for fifty-five languages based on the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were created using the same computational structure for each language with seemingly no support for the choice of minimum word frequency, dimension size, or window size. Previous work by Mandera et al. (2017) suggests that English and Dutch were best conceptualized at different dimension and window sizes. In this study, we will create word embeddings using the Open Subtitles and Wikipedia corpora using techniques similar to those used in van Paridon and Thompson, instead, focusing on finding the appropriately tuned model for each language. We use the rich publication history of normed data, such as age of acquisition, valence, imageability, and concreteness, as a metric to select the best model for each language. We will demonstrate the results and explore the assumption of linguistic model similarity across languages. Word embeddings, programming code, and other computational tools are provided as a package for researcher use and exploration."
-keywords: [keyword1, keyword2, keyword3]
-bibliography: bibliography.bib
-format:
-  apaquarto-docx: default
-  apaquarto-html: default
-  apaquarto-pdf:
-    documentmode: man
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - "Writing - Review & Editing"
+      - "Supervision"
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  subs2vec (van Paridon & Thompson, 2021) provides word embeddings for fifty-five languages based on the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were created using the same computational structure for each language with seemingly no support for the choice of minimum word frequency, dimension size, or window size. Previous work by Mandera et al. (2017) suggests that English and Dutch were best conceptualized at different dimension and window sizes. In this study, we will create word embeddings using the Open Subtitles and Wikipedia corpora using techniques similar to those used in van Paridon and Thompson, instead, focusing on finding the appropriately tuned model for each language. We use the rich publication history of normed data, such as age of acquisition, valence, imageability, and concreteness, as a metric to select the best model for each language. We will demonstrate the results and explore the assumption of linguistic model similarity across languages. Word embeddings, programming code, and other computational tools are provided as a package for researcher use and exploration.
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "r-references.bib"
+
+floatsintext      : no
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
 ---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
 
 ## Linguistics 
 
@@ -554,13 +579,9 @@ Additionally, we were unable to find convincing relationships between geographic
 The SPAML project, which this data investigation supports, is still gathering norms data and will need models with which to predict norms for various languages. We will continue to refine the evaluation of models with new data as it is acquired. The source code for this experiment along with the generated models will also be released as a Python package so that others can replicate and build on the work. These models will be released with the publication of this manuscript for interested researchers to apply to their own work. 
 Given the results of Research Question 3, another area of future exploration is the difference between separate dialects of languages.  While more than one dialect of Chinese was included in this experiment, only one variant of English was explored (ignoring British, Irish, Canadian, and Australian dialects, among others) and one variant each of Portuguese, Spanish and Korean.  Only a few languages from Africa and India were included.  While this is partially because of the difficulty in finding datasets from languages with less representation in the literature, it is worth exploring the differences where data is available. Finally, it would be interesting to understand why these differences exist, and what other variables might contribute to the wide variety of best results both between and within languages.
 
+\newpage
+
 # References
 
-<!-- References will auto-populate in the refs div below -->
-
-::: {#refs}
+::: {#refs custom-style="Bibliography"}
 :::
-
-# Appendix
-
-# Title for Appendix
