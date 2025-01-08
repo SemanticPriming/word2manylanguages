@@ -16,6 +16,15 @@ data_combined <- bind_rows(
   count_evals %>% mutate(source = "Count")
 )
 
+# Clean ranking metric columns: filter invalid values, round negatives to 0, and values > 1 to 1
+data_combined <- data_combined %>%
+  mutate(
+    adjusted_r_squared = pmin(pmax(adjusted_r_squared, 0), 1),
+    r_squared = pmin(pmax(r_squared, 0), 1),
+    adjusted_r = pmin(pmax(adjusted_r, 0), 1),
+    r = pmin(pmax(r, 0), 1)
+  )
+
 # Map abbreviations to full names for language and algorithm
 data_combined <- data_combined %>%
   mutate(
@@ -86,7 +95,7 @@ data_ui <- fluidPage(
                  downloadButton("download_best_models", "Download Best Models", class = "btn-success")
         ),
         tabPanel("Bar Chart",
-                 h3("Top Models by Ranking Metric"),
+                 h3("Average Models by Ranking Metric"),
                  plotOutput("bar_chart")
         ),
         tabPanel("Heatmap",
@@ -106,7 +115,7 @@ data_ui <- fluidPage(
 data_server <- function(input, output, session) {
   best_models <- eventReactive(input$find_best, {
     data <- data_combined
-
+    
     if (input$var != "All") {
       data <- data %>% filter(var == input$var)
     }
@@ -121,48 +130,55 @@ data_server <- function(input, output, session) {
     if (input$source != "All") {
       data <- data %>% filter(source == input$source)
     }
-
-    # Identify the best models based on the selected ranking metric
+    
+    # Ensure the selected ranking metric exists and is valid
     ranking_metric <- input$ranking_metric
-    data <- data %>%
-      arrange(desc(.data[[ranking_metric]])) %>%
-      distinct(var, window, language, algo, .keep_all = TRUE)
-
+    if (!ranking_metric %in% names(data)) {
+      stop("The selected ranking metric is not valid.")
+    }
+    
+    # Filter to include only the selected ranking metric
+    data <- data %>% select(var, language, algo, source, window, dim, all_of(ranking_metric))
+    
     return(data)
   })
-
+  
   output$best_models_table <- renderDT({
     datatable(best_models(), options = list(pageLength = 10))
   })
-
+  
   output$bar_chart <- renderPlot({
-    data <- best_models()
-    ggplot(data, aes(x = reorder(paste(var, language, algo), -adjusted_r), y = .data[[input$ranking_metric]])) +
+    data <- best_models() %>%
+      group_by(var, language, algo, source, window, dim) %>%
+      summarise(avg_metric = mean(.data[[input$ranking_metric]], na.rm = TRUE), .groups = 'drop')
+    ggplot(data, aes(x = reorder(paste(var, language, algo, source, "Win: ", window, "Dim: ", dim), -avg_metric), y = avg_metric)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       coord_flip() +
-      labs(x = "Model", y = "Ranking Metric", title = "Top Models by Ranking Metric") +
+      labs(x = "Model (with Window Size and Dimensions)", y = "Average Metric", title = "Average Models by Ranking Metric") +
       theme_minimal()
   })
-
+  
   output$heatmap <- renderPlot({
     data <- best_models() %>%
-      group_by(window, dim) %>%
-      summarise(avg_metric = mean(.data[[input$ranking_metric]], na.rm = TRUE))
-    ggplot(data, aes(x = window, y = dim, fill = avg_metric)) +
+      group_by(var, source, window, dim) %>%
+      summarise(avg_metric = mean(.data[[input$ranking_metric]], na.rm = TRUE), .groups = 'drop')
+    ggplot(data, aes(x = paste(var, "Win: ", window, "Dim: ", dim), y = source, fill = avg_metric)) +
       geom_tile() +
       scale_fill_gradient(low = "white", high = "steelblue") +
-      labs(x = "Window Size", y = "Dimensions", fill = "Avg Metric", title = "Heatmap of Average Performance") +
-      theme_minimal()
+      labs(x = "Variable (with Window Size and Dimensions)", y = "Source", fill = "Avg Metric", title = "Heatmap of Average Performance") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
   })
-
+  
   output$scatter_plot <- renderPlot({
     data <- best_models()
-    ggplot(data, aes(x = dim, y = .data[[input$ranking_metric]], color = language)) +
+    ggplot(data, aes(x = paste(algo, "Win: ", window, "Dim: ", dim), y = .data[[input$ranking_metric]], color = language)) +
       geom_point(size = 3) +
-      labs(x = "Dimensions", y = "Ranking Metric", title = "Scatter Plot of Metrics") +
-      theme_minimal()
+      labs(x = "Algorithm (with Window Size and Dimensions)", y = "Ranking Metric", title = "Scatter Plot of Metrics") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
   })
-
+  
   output$download_best_models <- downloadHandler(
     filename = function() {
       paste("best_models.csv")
