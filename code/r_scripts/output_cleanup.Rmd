@@ -35,7 +35,7 @@ count.full <- bind_rows(count.dfs) %>%
   )) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(count.full, "../../data/count_evals_formatted.csv", row.names = F)
+export(count.full, "../../data/formatted_data/count_evals_formatted.csv", row.names = F)
 ```
 
 ### Replication Tests `rep_evals`
@@ -53,7 +53,7 @@ rep.full <- bind_rows(rep.dfs) %>%
          source = gsub("../../data/rep_evals/|_wxd_eval.csv|_eval.csv", "", source)) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(rep.full, "../../data/rep_evals_formatted.csv", row.names = F)
+export(rep.full, "../../data/formatted_data/rep_evals_formatted.csv", row.names = F)
 ```
 
 ### Extension Tests `extension_evals`
@@ -68,5 +68,5 @@ extension.full <- bind_rows(extension.dfs) %>%
   rename(var = norm) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(extension.full, "../../data/extension_evals_formatted.csv", row.names = F)
+export(extension.full, "../../data/formatted_data/extension_evals_formatted.csv", row.names = F)
 ```

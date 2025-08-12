@@ -11,7 +11,7 @@
 
 <meta name="author" content="Erin M. Buchanan" />
 
-<meta name="date" content="2024-12-12" />
+<meta name="date" content="2025-08-11" />
 
 <title>Output Cleanup</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Output Cleanup</h1>
 <h4 class="author">Erin M. Buchanan</h4>
-<h4 class="date">2024-12-12</h4>
+<h4 class="date">2025-08-11</h4>
 
 </div>
 
@@ -388,7 +388,7 @@ count.full &lt;- bind_rows(count.dfs) %&gt;%
   )) %&gt;% 
   separate(source, into = c(&quot;language&quot;, &quot;dim&quot;, &quot;window&quot;, &quot;algo&quot;), sep = &quot;_&quot;)
 
-export(count.full, &quot;../../data/count_evals_formatted.csv&quot;, row.names = F)</code></pre>
+export(count.full, &quot;../../data/formatted_data/count_evals_formatted.csv&quot;, row.names = F)</code></pre>
 </div>
 <div id="replication-tests-rep_evals" class="section level3">
 <h3>Replication Tests <code>rep_evals</code></h3>
@@ -404,7 +404,7 @@ rep.full &lt;- bind_rows(rep.dfs) %&gt;%
          source = gsub(&quot;../../data/rep_evals/|_wxd_eval.csv|_eval.csv&quot;, &quot;&quot;, source)) %&gt;% 
   separate(source, into = c(&quot;language&quot;, &quot;dim&quot;, &quot;window&quot;, &quot;algo&quot;), sep = &quot;_&quot;)
 
-export(rep.full, &quot;../../data/rep_evals_formatted.csv&quot;, row.names = F)</code></pre>
+export(rep.full, &quot;../../data/formatted_data/rep_evals_formatted.csv&quot;, row.names = F)</code></pre>
 </div>
 <div id="extension-tests-extension_evals" class="section level3">
 <h3>Extension Tests <code>extension_evals</code></h3>
@@ -417,7 +417,7 @@ extension.full &lt;- bind_rows(extension.dfs) %&gt;%
   rename(var = norm) %&gt;% 
   separate(source, into = c(&quot;language&quot;, &quot;dim&quot;, &quot;window&quot;, &quot;algo&quot;), sep = &quot;_&quot;)
 
-export(extension.full, &quot;../../data/extension_evals_formatted.csv&quot;, row.names = F)</code></pre>
+export(extension.full, &quot;../../data/formatted_data/extension_evals_formatted.csv&quot;, row.names = F)</code></pre>
 </div>
 </div>
 
