@@ -30,12 +30,9 @@ authornote: |
   Enter author note here.
 
 abstract: |
-  subs2vec (van Paridon & Thompson, 2021) provides word embeddings for fifty-five languages based on the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were created using the same computational structure for each language with seemingly no support for the choice of minimum word frequency, dimension size, or window size. Previous work by Mandera et al. (2017) suggests that English and Dutch were best conceptualized at different dimension and window sizes. In this study, we will create word embeddings using the Open Subtitles and Wikipedia corpora using techniques similar to those used in van Paridon and Thompson, instead, focusing on finding the appropriately tuned model for each language. We use the rich publication history of normed data, such as age of acquisition, valence, imageability, and concreteness, as a metric to select the best model for each language. We will demonstrate the results and explore the assumption of linguistic model similarity across languages. Word embeddings, programming code, and other computational tools are provided as a package for researcher use and exploration.
+  subs2vec (van Paridon & Thompson, 2021) provides word embeddings for 55 languages, derived from the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were generated using the same computational parameters for all languages, without adjusting key hyperparameters such as minimum word frequency, vector dimension, or context window size. Prior work (Mandera et al., 2017) indicates that optimal parameters can differ across languages—for example, English and Dutch perform best at different dimensions and window sizes. In this study, we replicate the general approach of van Paridon and Thompson, but optimize embeddings for each language individually using the same corpora. Model quality is evaluated using published lexical norms (e.g., age of acquisition, valence, imageability, concreteness) as benchmarks, selecting the best-performing configuration per language. We present the results, examine the assumption of cross-linguistic similarity in embedding structure, and release all embeddings, code, and tools as an open package for researchers.
   
-keywords          : "keywords"
-wordcount         : "X"
-
-bibliography      : "r-references.bib"
+keywords          : "embeddings, psycholinguistics, modeling"
 
 floatsintext      : no
 linenumbers       : yes
@@ -48,12 +45,32 @@ footnotelist      : no
 
 classoption       : "man"
 output            : papaja::apa6_pdf
+appendix          : "appendix.Rmd"
 bibliography: references.bib
 ---
 
 ```{r setup, include = FALSE}
-library("papaja")
-r_refs("r-references.bib")
+library(papaja)
+library(trackdown)
+library(dplyr)
+library(rio)
+library(ggplot2)
+library(ISOcodes)
+library(tidyr)
+library(patchwork)
+
+# helper: expand two-letter language codes to names
+expand_lang <- function(codes) {
+  # keep just the language part if things look like "en-US"
+  codes_clean <- sub("^([A-Za-z]{2}).*$", "\\1", codes)
+  tibble(code = tolower(codes_clean)) %>%
+    left_join(
+      ISOcodes::ISO_639_2 |> 
+        dplyr::select(Alpha_2, Name) |> 
+        dplyr::rename(code = Alpha_2, language = Name),
+      by = "code"
+    )
+}
 ```
 
 ```{r analysis-preferences}
@@ -97,11 +114,9 @@ The OpenSubtitles corpus, comprising over three million subtitles from films and
 
 ## Objective Data
 
-Objective lexical norms capture measurable features of words, such as word length, syllable count, and phonological or orthographic neighborhoods, which are groups of words sharing similar linguistic attributes [@griffiths2015, @marian2017]. These norms are critical for exploring language structure, semantic memory, and bilingual lexical storage [@buchanan2019]. Tools like SUBTLEX-UK calculate frequency-based metrics, demonstrating, for example, that higher-frequency verb conjugations are processed faster than irregular forms [@vanheuven2014, @bowden2010]. Additionally, linguistic complexity measures reveal trends, such as languages with larger speaker populations exhibiting higher phoneme inventories and shorter clause lengths [@fenk-oczlon2021]. Such findings also illuminate language development strategies in children, as seen in the truncation of polysyllabic words during early Finnish language acquisition [@kunnari2002].
+Objective lexical norms capture measurable features of words, such as word length, syllable count, and phonological or orthographic neighborhoods, which are groups of words sharing similar linguistic attributes [@griffiths2015, @marian2017]. These norms are critical for exploring language structure, semantic memory, and bilingual lexical storage [@buchanan2019]. Tools like SUBTLEX-UK calculate frequency-based metrics, demonstrating, for example, that higher-frequency verb conjugations are processed faster than irregular forms [@vanheuven2014, @bowden2010]. While frequency provides a core measure of lexical accessibility, other corpus-derived metrics capture the breadth and variability of word use. Contextual diversity, the number of distinct contexts in which a word appears, often predicts lexical processing as well as or better than frequency [@adelman2006]. Semantic diversity indexes the variability of a word’s usage across contexts and is linked to effects of ambiguity and polysemy [@hoffman2013]. Finally, word length remains a robust factor that interacts with frequency and neighborhood structure [@brysbaert2011].
 
-Phonological and orthographic neighborhoods, which respectively include similar-sounding and visually similar words, play a role in word recognition and production [@vitevitch2016, @buchanan2001]. For instance, words in dense phonological neighborhoods are recognized and produced more efficiently [@marslen-wilson1987, @taler2010]. Normative measurements like word frequency, lexical diversity, and sentence complexity inform linguistic richness and proficiency [@malvern2004]. Combined with metrics such as the Flesch-Kincaid Readability Test, these norms provide valuable insights into vocabulary development and document complexity [@flesch1948]. These objective norms, therefore, serve as foundational tools for studying linguistic phenomena and assessing language proficiency.
-
-contextual diversity / semantic diversity / semantic neighborhood word length
+Phonological and orthographic neighborhoods, which respectively include similar-sounding and visually similar words, play a role in word recognition and production [@vitevitch2016, @buchanan2001]. For instance, words in dense phonological neighborhoods are recognized and produced more efficiently [@marslen-wilson1987, @taler2010]. Likewise, semantic neighborhood density reflects how many words in a semantic space have meanings similar to a given word. Using distributional models such as BEAGLE [@jones2007], researchers can estimate how crowded a word’s "meaning neighborhood" is, providing a meaning-level counterpart to phonological and orthographic neighborhoods and capturing competition or facilitation effects based on semantic similarity [@jones2012]. Normative measurements like word frequency, lexical diversity, and sentence complexity inform linguistic richness and proficiency [@malvern2004]. Combined with metrics such as the Flesch-Kincaid Readability Test, these norms provide valuable insights into vocabulary development and document complexity [@flesch1948]. These objective norms, therefore, serve as foundational tools for studying linguistic phenomena and assessing language proficiency.
 
 ## Subjective Data
 
@@ -137,93 +152,309 @@ This approach will identify the optimal combination of parameters for each langu
 
 ## Technical Implementation
 
-The fastText model [@bojanowski2016] from the *genism* version 3.8.3 Python package [@rehurek2010] was used to generate the embeddings from the concatenated corpus files (described below). We varied the dimension (50, 100, 200, 300, 500), window size (1, 2, 3, 4, 5, 6), and algorithm parameters to the model (SG: SkipGram, CBOW: Continuous Bag of Words), while holding the remaining parameters constant. The dimensions, window size, and algorithm were chosen as the parameters of interest based on previous research showing they varied between datasets [@mandera2017; @mikolov2013; @bojanowski2017; ]
+The fastText model [@bojanowski2016] from the *genism* version 3.8.3 Python package [@rehurek2010] was used to generate the embeddings from the concatenated corpus files (described below). We varied the dimension (50, 100, 200, 300, 500), window size (1, 2, 3, 4, 5, 6), and algorithm parameters to the model (SG: SkipGram, CBOW: Continuous Bag of Words), while holding the remaining parameters constant. The dimensions, window size, and algorithm were chosen as the parameters of interest based on previous research showing they varied between datasets [@mandera2017; @mikolov2013; @bojanowski2016].
 
-
-These parameter variations resulted in 60 possible combinations per language. Remaining parameter settings were matched to those used in the subs2vec experiment: 
-  1) minimum word count: 5, 
-  2) minimum length of subword ngram: 3, 
-  3) maximum length of subword ngram: 6, 
-  4) sampling threshold: .0001, 
-  5) learning rate: .05, 
-  6) rate of updating the learning rate: 100, 
-  7) epochs: 10, 
-  8) number of negatives sampled in the loss function: 10.
+These parameter variations resulted in 60 possible combinations per language. Remaining parameter settings were matched to those used in the subs2vec experiment: 1) minimum word count: 5, 2) minimum length of subword ngram: 3, 3) maximum length of subword ngram: 6, 4) sampling threshold: .0001, 5) learning rate: .05, 6) rate of updating the learning rate: 100, 7) epochs: 10, 8) number of negatives sampled in the loss function: 10.
 
 Figure \@ref(fig:tech-details) outlines the workflow for data acquisition, text preprocessing, corpus creation, and the generation of word-by-dimension matrices for each parameter combination. These procedures build on the original Python code from the subs2vec paper, with modifications tailored to the needs of this experiment. The full source code is available at <https://github.com/SemanticPriming/word2manylanguages>, and a working example of the pipeline can be found at XXCODE OCEAN HEREXX.
 
-```{r}
+```{r tech-details, fig.cap="Flow chart representation of data processing, model creation, and prediction for this study."}
 knitr::include_graphics("figures/process_flow.png")
 ```
 
 ### Data Acquisition
 
-This experiment used datasets in 59 languages for which evaluation data were available. The language set includes those from the van Paridon and Thompson study, along with Japanese, Thai, Mandarin, and Cantonese. A full list of languages, along with unique sentence and token counts, is provided in Appendix A. Corpora were built from Wikipedia and OpenSubtitles archives. Open Subtitles files were downloaded from the URL <http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/raw/%7Blanguage%7D.zip>, substituting the ISO3166 country code for {language}. The OpenSubtitles archive has updated since original download, but a working example of the file download is provided on the CODE OCEAN page. The OpenSubtitles files contain XML-formatted files for each movie or episode subdivided by year. The movie/episode names are not included in the data, and the order of the sentences is randomized to avoid copyright violation. Wikipedia is organized by language, with each language’s content compiled into a single XML file containing article text and metadata. Wikipedia dump files were downloaded from
-http://dumps.wikimedia.your.org/{language}wiki/latest/{language}wiki-latest-pages-meta-current.xml.bz2, where {language} is the ISO 3166 code (e.g., en for English, de for German). The download dates for each archive are listed in Appendix A. 
+This experiment used datasets in 59 languages for which evaluation data were available. The language set includes those from the van Paridon and Thompson study, along with Japanese, Thai, Mandarin, and Cantonese. A full list of languages, along with unique sentence and token counts, is provided in Appendix A. Corpora were built from Wikipedia and OpenSubtitles archives. Open Subtitles files were downloaded from the URL <http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/raw/%7Blanguage%7D.zip>, substituting the ISO3166 country code for {language}. The OpenSubtitles archive has updated since original download, but a working example of the file download is provided on the CODE OCEAN page. The OpenSubtitles files contain XML-formatted files for each movie or episode subdivided by year. The movie/episode names are not included in the data, and the order of the sentences is randomized to avoid copyright violation. Wikipedia is organized by language, with each language’s content compiled into a single XML file containing article text and metadata. Wikipedia dump files were downloaded from <http://dumps.wikimedia.your.org/%7Blanguage%7Dwiki/latest/%7Blanguage%7Dwiki-latest-pages-meta-current.xml.bz2>, where {language} is the ISO 3166 code (e.g., en for English, de for German). The download dates for each archive are listed in Appendix A.
 
 ### Data Processing
 
 The downloaded data included markup in eXtensible Markup Language (XML), which was removed prior to corpus creation. Markup tokens do not reflect natural language content and can distort frequency counts [@bird2009]. We used regular expressions to strip out markup elements such as tags, punctuation (parentheses, hyphens, apostrophes, slashes, etc.), links, and extraneous whitespace. For Wikipedia data specifically, additional elements like category labels, references, tables, and image tags were also removed. All text was lowercased to normalize the data.
 
-van Paridon and Thompson [-@vanParidon2021] applied sentence-level deduplication within each subtitle and Wikipedia document to reduce the influence of commonly repeated phrases. In contrast, we chose to retain these frequent phrases—such as "Thank you" because of their prevalence in spoken language, which we consider relevant to our analysis. We did apply document-level deduplication to avoid including exact duplicates, though given the curated nature of our data sources, the likelihood of such duplication was low. One corpus file was produced per language, with each file containing one sentence per line. 
+van Paridon and Thompson [-@vanparidon2021] applied sentence-level deduplication within each subtitle and Wikipedia document to reduce the influence of commonly repeated phrases. In contrast, we chose to retain these frequent phrases—such as "Thank you" because of their prevalence in spoken language, which we consider relevant to our analysis. We did apply document-level deduplication to avoid including exact duplicates, though given the curated nature of our data sources, the likelihood of such duplication was low. One corpus file was produced per language, with each file containing one sentence per line.
 
 ## Data Analysis
 
-The word embeddings generated during model training were evaluated based on their ability to predict psycholinguistic variables relevant to our research questions. For the direct replication (Research Question 1), we used the same norm datasets employed by @vanParidon2021. To enable evaluation across all languages, we also included word frequency prediction for Research Question 2 [see @Brysbaert2009]. Finally, we extended the analysis to additional normed datasets not used in the original study. These included a representative set of subjective norms: age of acquisition, valence, arousal, concreteness, and familiarity, selected for their widespread use in psycholinguistic research [@alario1999].
+The word embeddings generated during model training were evaluated based on their ability to predict psycholinguistic variables relevant to our research questions. For the direct replication (Research Question 1), we used the same norm datasets employed by @vanparidon2021. To enable evaluation across all languages, we also included word frequency prediction for Research Question 2 [see @brysbaert2009]. Finally, we extended the analysis to additional normed datasets not used in the original study. These included a representative set of subjective norms: age of acquisition, valence, arousal, concreteness, and familiarity, selected for their widespread use in psycholinguistic research [@alario1999].
 
-We used 10-fold ridge regression (k = 10) to predict norm values from the embeddings. Ridge regression was chosen due to its effectiveness in mitigating multicollinearity which is a common issue in word embedding models [@Kaveh-Yazdy2021], and its demonstrated ability to improve mean squared error performance in this context [@yeh2020]. This approach follows the evaluation procedure used in the original subs2vec study. The ridge regression alpha parameter, which controls the regularization strength, was set to the default value of 1 to balance bias and variance, consistent with prior work.
+We used 10-fold ridge regression (*k* = 10) to predict norm values from the embeddings. Ridge regression was chosen due to its effectiveness in mitigating multicollinearity which is a common issue in word embedding models [@kaveh-yazdy], and its demonstrated ability to improve mean squared error performance in this context [@yeh2020]. This approach follows the evaluation procedure used in the original subs2vec study. The ridge regression alpha parameter, which controls the regularization strength, was set to the default value of 1 to balance bias and variance, consistent with prior work.
 
-For each norm prediction task, we selected the simplest model whose $R^2$ value fell within 1% of the best-performing model. Simplicity was defined by the fewest embedding dimensions and the smallest window size. The adjusted $R^2$ value accounts for out-of-vocabulary coverage by multiplying the $R^2$ by the proportion of test words present in the embedding matrix. All model outputs are available in the supplemental materials. Given the volume of results, we developed a Shiny application [CITE SHINY] to help researchers explore and select optimal models for specific languages and variables of interest.
+For each norm prediction task, we selected the simplest model whose $R^2$ value fell within 1% of the best-performing model. Simplicity was defined by the fewest embedding dimensions and the smallest window size. The adjusted $R^2$ value accounts for out-of-vocabulary coverage by multiplying the $R^2$ by the proportion of test words present in the embedding matrix. All model outputs are available in the supplemental materials. Given the volume of results, we developed a Shiny application [@chang2021] to help researchers explore and select optimal models for specific languages and variables of interest.
 
 # Results
 
 ## Research Question 1
 
-For the first set of evaluations, each language model was tested using the same normed datasets @vanParidon2019 (see Appendix B for the full list). We applied the same analysis approach as the original study which was ridge regression using the model's output vectors to predict norm values for matched tokens, as detailed in the data analysis section. Table XX presents the top three models per language ranked by adjusted $R^2$. These results indicate that the parameter settings used in the original fastText models (300 dimensions, window size of 5) are unlikely to be optimal across languages. Notably, those original settings do not appear in the top three results for any language or prediction task under Research Question 1. The heatmaps shown in Figures X and X visualize the top three performing models for each algorithm. For CBOW, there is a clear trend favoring simpler models, with the most frequent configuration being 50 dimensions and a window size of 1. In contrast, the Skip-Gram results show a more balanced spread across dimensionalities, though still skewed toward smaller window sizes—most commonly size 3 or smaller.
+For the first set of evaluations, each language model was tested using the same normed datasets @vanparidon2021 (see Appendix B for the full list). We applied the same analysis approach as the original study which was ridge regression using the model's output vectors to predict norm values for matched tokens, as detailed in the data analysis section. Because all tables are very large, we recommend examining prediction for specific language, algorithm, and dataset combinations on our online resources or shiny application. The heatmaps shown in Figure \@ref(fig:r1-fig) visualize the top three performing models for each algorithm. For CBOW, there is a clear trend favoring simpler models, with the most frequent configuration being 50 dimensions and a window size of 1. In contrast, the Skip-Gram results show a more balanced spread across dimensionalities, though still skewed toward smaller window sizes, most commonly size 3 or smaller. These results indicate that the parameter settings used in the original fastText models (300 dimensions, window size of 5) are unlikely to be optimal across languages. Notably, those original settings do not appear in the top three results for any language or prediction task under Research Question 1.
 
-```{r}
-# table
-```
-
-```{r}
+```{r r1-fig, fig.cap="Heatmaps showing the number of languages achieving their best performance for each combination of embedding dimension (x-axis) and context window size (y-axis) for the CBOW (left) and skip-gram (right) algorithms. For CBOW, optimal configurations are concentrated at lower dimensions and smaller window sizes, whereas skip-gram tends to favor higher dimensions and moderately larger windows. Numbers inside tiles indicate the count of languages for that parameter combination."}
 # heat map 
+df1.both <- import("../../data/formatted_data/rep_evals_formatted.csv") %>% 
+  group_by(language, algo) %>% 
+  arrange(desc(`adjusted r-squared`)) %>% 
+  slice_head(n = 3)
+
+# Get all possible dim-window combos
+dims <- sort(unique(df1.both$dim))
+wins <- sort(unique(df1.both$window))
+
+cbow.grid <- df1.both %>%
+  filter(algo == "cbow") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  )
+
+cbow.fig1 <- 
+  ggplot(cbow.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black",
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("CBOW")
+
+sg.grid <- df1.both %>%
+  filter(algo == "sg") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  ) 
+
+sg.fig1 <- 
+  ggplot(sg.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black", 
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("SKIP-GRAM")
+
+cbow.fig1 + sg.fig1
 ```
 
 ## Research Question 2
 
-The second set of tests addressed a key limitation: the lack of normed datasets for many of the languages modeled in this and previous studies. While prior work did not evaluate all available languages, word frequency was available for all models, and word frequency is known to correlate with numerous linguistic phenomena [@brysbaert2009]. Unigram (i.e., single-token) frequency counts were directly extracted from the same corpora used to train the embeddings. However, this frequency data initially posed challenges: it included ligatures and diacritics that did not align with the normalized forms in the word-by-dimension matrices. To address this, we applied Unicode normalization and case folding—a standard approach for harmonizing case and character representation in internationalized text [@w3c2021]. Despite these steps, a substantial number of words remained unmatched, primarily due to the minimum frequency threshold of five tokens in the word embeddings, in contrast to no such threshold in the raw unigram frequency data.
+The second set of tests addressed a key limitation: the lack of normed datasets for many of the languages modeled in this and previous studies. While prior work did not evaluate all available languages, word frequency was available for all models, and word frequency is known to correlate with numerous linguistic phenomena [@brysbaert2009]. Unigram (i.e., single-token) frequency counts were directly extracted from the same corpora used to train the embeddings. However, this frequency data initially posed challenges: it included ligatures and diacritics that did not align with the normalized forms in the word-by-dimension matrices. To address this, we applied Unicode normalization and case folding, a standard approach for harmonizing case and character representation in internationalized text. Despite these steps, a substantial number of words remained unmatched, primarily due to the minimum frequency threshold of five tokens in the word embeddings, in contrast to no such threshold in the raw unigram frequency data.
 
-To evaluate performance, frequency data from Wikipedia and OpenSubtitles were analyzed separately, using the combined models built for this study. Table XX presents sample results for Afrikaans and Arabic, showing the top three models per algorithm. Full results are provided in Table 15 (Appendix C). Note that negative $R^2$ values indicate a penalty for the model failing to represent words found in the frequency data but missing from the vector space. Overall, unigram frequencies proved more difficult to predict from word embeddings than normed psycholinguistic variables. This finding may reflect known challenges in predicting lexical properties without context, such that lexical categories are unevenly distributed across languages [e.g., nouns dominate in most corpora; @fellbaum1998], and statistical prediction of part-of-speech or frequency is limited when embeddings lack contextual framing [@roth1998]. These limitations likely contributed to lower predictive performance, with substantial variation across languages.
+To evaluate performance, frequency data from Wikipedia and OpenSubtitles were analyzed separately, using the combined models built for this study. Full results can be found online and on our interactive shiny application. Note that negative $R^2$ values indicate a penalty for the model failing to represent words found in the frequency data but missing from the vector space. Overall, unigram frequencies proved more difficult to predict from word embeddings than normed psycholinguistic variables. This pattern may reflect the known challenges of estimating lexical properties from decontextualized representations, where static embeddings carry far less explanatory power than context-aware models [@ethayarajh]. These limitations likely contributed to lower predictive performance, with substantial variation across languages.
 
-Figures XX and XX display the top-performing models for predicting frequencies, separated by algorithm. As in the norm prediction tasks, simpler models again dominated. CBOW strongly favored the combination of 50 dimensions and a window size of 1. Skip-gram results were more varied but still leaned toward lower dimensionalities and small window sizes. Interestingly, differences in predictive performance between Wikipedia and OpenSubtitles suggest that dataset type matters. While @vanParidon2021 showed that combining formal (Wikipedia) and informal (OpenSubtitles) corpora can improve overall model performance, our findings suggest that matching the style of the model's training data to the test data may be even more effective if practical. These results raise the possibility that corpus-specific models may outperform general-purpose models for certain applications.
+Figures \@ref(fig:r2-fig1) and \@ref(fig:r2-fig2) display the top-performing models for predicting frequencies, separated by algorithm. As in the norm prediction tasks, simpler models again dominated. CBOW strongly favored the combination of 50 dimensions and a window size of 1. Skip-gram results were more varied but still leaned toward lower dimensionalities and small window sizes. Interestingly, differences in predictive performance between Wikipedia and OpenSubtitles suggest that dataset type matters. While @vanparidon2021 showed that combining formal (Wikipedia) and informal (OpenSubtitles) corpora can improve overall model performance, our findings suggest that matching the style of the model's training data to the test data may be even more effective if practical. These results raise the possibility that corpus-specific models may outperform general-purpose models for certain applications.
 
-```{r}
-# table
+```{r r2-fig1, fig.cap = "Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) yielded the best predictive performance for subtitle-based word frequency norms. Numbers within tiles indicate the count of languages achieving the top 3 highest prediction for that parameter combination."}
+# heat map 
+df2.both <- import("../../data/formatted_data/count_evals_formatted.csv") %>% 
+  filter(data_source == "Subtitles") %>% 
+  group_by(language, algo) %>% 
+  arrange(desc(`adjusted r-squared`)) %>% 
+  slice_head(n = 3)
+
+# Get all possible dim-window combos
+dims <- sort(unique(df2.both$dim))
+wins <- sort(unique(df2.both$window))
+
+cbow.grid <- df2.both %>%
+  filter(algo == "cbow") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  )
+
+cbow.fig2 <- 
+  ggplot(cbow.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black",
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("CBOW")
+
+sg.grid <- df2.both %>%
+  filter(algo == "sg") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  ) 
+
+sg.fig2 <- 
+  ggplot(sg.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black", 
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("SKIP-GRAM")
+
+cbow.fig2 + sg.fig2
 ```
 
-```{r}
+```{r r2-fig2, fig.cap= "Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three highest adjusted $R^2$ when predicting Wikipedia-based word frequency norms."}
 # heat map 
+df2.both <- import("../../data/formatted_data/count_evals_formatted.csv") %>% 
+  filter(data_source == "Wikipedia") %>% 
+  group_by(language, algo) %>% 
+  arrange(desc(`adjusted r-squared`)) %>% 
+  slice_head(n = 3)
+
+# Get all possible dim-window combos
+dims <- sort(unique(df2.both$dim))
+wins <- sort(unique(df2.both$window))
+
+cbow.grid <- df2.both %>%
+  filter(algo == "cbow") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  )
+
+cbow.fig3 <- 
+  ggplot(cbow.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black",
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("CBOW")
+
+sg.grid <- df2.both %>%
+  filter(algo == "sg") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  ) 
+
+sg.fig3 <- 
+  ggplot(sg.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black", 
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("SKIP-GRAM")
+
+cbow.fig3 + sg.fig3
 ```
 
 ## Research Question 3
 
-The third set of evaluations used datasets from the Linguistic Annotated Bibliography [@buchanan2019], which contain normed psycholinguistic data similar to those used in the replication set, but cover a broader range of languages and norm types. A full overview of these datasets is provided in Appendix B. Table XX presents a sample of the top three models per algorithm for Arabic and Bulgarian; full results are available in Appendix C. As with previous tests, the results show substantial variation across languages, reinforcing the conclusion that no single parameter configuration performs best across all contexts. The heatmaps in Figures XX and XX, separated by algorithm, reflect patterns similar to those observed in the replication analysis. CBOW models again favored simpler configurations, though the most common cluster shifted to 100 dimensions (compared to 50 in the earlier CBOW results). Skip-gram models remained more distributed, with a consistent preference for smaller window sizes but somewhat higher dimensionalities overall.
+The third set of evaluations used datasets from the Linguistic Annotated Bibliography [@buchanan2019], which contain normed psycholinguistic data similar to those used in the replication set, but cover a broader range of languages and norm types. A full overview of these datasets is provided in our online materials and shiny application. As with previous tests, the results show substantial variation across languages, reinforcing the conclusion that no single parameter configuration performs best across all contexts. The heatmaps in Figure \@ref(fig:r3-fig), separated by algorithm, reflect patterns similar to those observed in the replication analysis. CBOW models again favored simpler configurations, though the most common cluster shifted to 100 dimensions (compared to 50 in the earlier CBOW results). Skip-gram models remained more distributed, with a consistent preference for smaller window sizes but somewhat higher dimensionalities overall.
 
-```{r}
-# table
-```
-
-```{r}
+```{r r3-fig, fig.cap="Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three predictive values when predicting across an extended set of avaliable norms."}
 # heat map 
+df3.both <- import("../../data/formatted_data/extension_evals_formatted.csv") %>% 
+  group_by(language, algo) %>% 
+  arrange(desc(`adjusted r-squared`)) %>% 
+  slice_head(n = 3)
+
+# Get all possible dim-window combos
+dims <- sort(unique(df3.both$dim))
+wins <- sort(unique(df3.both$window))
+
+cbow.grid <- df3.both %>%
+  filter(algo == "cbow") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  )
+
+cbow.fig4 <- 
+  ggplot(cbow.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black",
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("CBOW")
+
+sg.grid <- df3.both %>%
+  filter(algo == "sg") %>% 
+  distinct(language, dim, window) %>%
+  group_by(dim, window) %>%
+  summarise(n = n_distinct(language), .groups = "drop") %>%
+  complete(dim = dims, window = wins, fill = list(n = 0)) %>%  # fill missing with 0
+  mutate(
+    dim    = factor(dim,    levels = dims),
+    window = factor(window, levels = wins)
+  ) 
+
+sg.fig4 <- 
+  ggplot(sg.grid, aes(x = dim, y = window, fill = n)) +
+  geom_tile(color = "grey60") +
+  geom_text(aes(label = n), 
+            color = "black", 
+            size = 5, fontface = "bold") +
+  scale_fill_viridis_c(option = "C", begin = 0.05, end = 0.95) +
+  coord_fixed() +
+  labs(x = "Dimension", y = "Window") + 
+  theme_minimal(base_size = 12) +
+  theme(panel.grid = element_blank(), legend.position = "none") + 
+  ggtitle("SKIP-GRAM")
+
+cbow.fig4 + sg.fig4
 ```
 
 # Discussion
 
-This experiment demonstrates that the structure and parameterization of word embedding models significantly impact their performance, and that these effects vary across languages and tasks. While @vanParidon2021 showed that combining formal and informal language sources (Wikipedia and OpenSubtitles) improves predictive accuracy over models trained on Wikipedia alone, our findings go further: even with the same training data, the optimal embedding parameters, such as vector dimensionality and window size, differ markedly across languages and tasks. This finding reinforces the importance of customizing model configurations rather than relying on default or pre-trained settings.
+This experiment demonstrates that the structure and parameterization of word embedding models significantly impact their performance, and that these effects vary across languages and tasks. While @vanparidon2021 showed that combining formal and informal language sources (Wikipedia and OpenSubtitles) improves predictive accuracy over models trained on Wikipedia alone, our findings go further: even with the same training data, the optimal embedding parameters, such as vector dimensionality and window size, differ markedly across languages and tasks. This finding reinforces the importance of customizing model configurations rather than relying on default or pre-trained settings.
 
-Despite the rise of transformer-based models, recent studies have shown that classic word embedding approaches such as fastText remain competitive and in some cases outperform deep learning models on specific tasks [@wang2021]. These classic models are more interpretable, computationally efficient, and resource-accessible—making them ideal for researchers without access to extensive compute infrastructure. To support the broader research community, we have made available the full set of models and evaluation results from this study, along with open-source code for training and evaluating embeddings across languages and tasks. These materials will be particularly valuable for researchers working with lower-resource languages, or those conducting multilingual studies where model retraining from scratch may be impractical.
+Despite the rise of transformer-based models, recent studies have shown that classic word embedding approaches such as fastText remain competitive and in some cases outperform deep learning models on specific tasks [@wang2020]. These classic models are more interpretable, computationally efficient, and resource-accessible, making them ideal for researchers without access to extensive compute infrastructure. To support the broader research community, we have made available the full set of models and evaluation results from this study, along with open-source code for training and evaluating embeddings across languages and tasks. These materials will be particularly valuable for researchers working with lower-resource languages, or those conducting multilingual studies where model retraining from scratch may be impractical.
 
-Across all three sets of evaluations—norm prediction replication, frequency prediction, and extended norm prediction using the Linguistic Annotated Bibliography datasets, our results consistently show wide variation in optimal parameters. These results answer our first research question: no single configuration generalizes well across languages. This result is consistent with linguistic theory. Languages differ not only in script and morphology, but also in typological features such as word order, determiners, affixation, and compounding [@dryer2013]. These differences shape token distributions and word co-occurrence patterns, which are central to embedding learning. Additionally, corpus size and the lexical diversity of the source text contribute to how embeddings are learned, especially in low-resource or morphologically rich languages [@vania2017].
+Across all three sets of evaluations, norm prediction replication, frequency prediction, and extended norm prediction using the Linguistic Annotated Bibliography datasets, our results consistently show wide variation in optimal parameters. These results answer our first research question: no single configuration generalizes well across languages. This result is consistent with linguistic theory. Languages differ not only in script and morphology, but also in typological features such as word order, determiners, affixation, and compounding [@wals-81]. These differences shape token distributions and word co-occurrence patterns, which are central to embedding learning. Additionally, corpus size and the lexical diversity of the source text contribute to how embeddings are learned, especially in low-resource or morphologically rich languages [@vania].
 
 Our shiny application allows researchers to review the optimal parameter settings for each language and task. Even within a single language, the best settings for predicting word frequency in formal (Wikipedia) versus informal (OpenSubtitles) data diverged. Likewise, different psycholinguistic variables, such as valence, age of acquisition, and imageability, were best predicted by models with different configurations. This finding supports the view that parameter tuning should be context-dependent, aligned with both the source of the input data and the nature of the variable to be predicted. For example, emotional valence may be more prevalent in informal speech, while age of acquisition norms may be better reflected in formal, education-linked text.
 
@@ -231,13 +462,13 @@ Given the widespread use of word embeddings across psycholinguistics, natural la
 
 ## Limitations
 
-While this study extended prior work by building and testing word embedding models for 59 languages, we were limited by the availability of validated norm datasets. Norms are difficult to obtain for many languages, especially those with fewer computational and psycholinguistic resources. Language resources are frequently published in journals like *Behavior Research Methods* and *Language Resources and Evaluation* and should continue to evolved with increased computational power. New big team science initiatives, such as the ManyLanguages collaboration [@manylanguages], can improve the availability and diversity of languages published for research use. 
+While this study extended prior work by building and testing word embedding models for 59 languages, we were limited by the availability of validated norm datasets. Norms are difficult to obtain for many languages, especially those with fewer computational and psycholinguistic resources. Language resources are frequently published in journals like *Behavior Research Methods* and *Language Resources and Evaluation* and should continue to evolved with increased computational power. New big team science initiatives, such as the ManyLanguages collaboration [@manylang], can improve the availability and diversity of languages published for research use.
 
 Another key limitation is that our evaluation was task-specific. While we tested prediction of norm variables and frequency data, other important tasks (e.g., analogy solving, named entity recognition, semantic similarity judgments) may yield different optimal configurations. Thus, while our models provide strong baselines for norm-based prediction, further tuning may be required for other applications. Finally, we were unable to identify consistent patterns linking optimal parameters to geographic proximity or language families (Research Question 3). While this may reflect the complex, multidimensional nature of linguistic structure and usage, it also suggests the need for deeper investigation, potentially incorporating sociolinguistic and typological data to uncover more subtle patterns.
 
 ## Future Work
 
-One promising direction for future research is to explore variation within languages, particularly across dialects. While this study included multiple dialects of Chinese (e.g., Mandarin and Cantonese), only one variant was used for most other languages, such as English, Spanish, and Portuguese. Previous research has shown that dialectal variation can significantly affect lexical choice, syntax, and even semantic interpretation [@blodgett2016; @joshi2025], suggesting that word embeddings trained on different dialects may vary in both structure and performance. Future studies should investigate how embedding performance differs across dialects, particularly in languages with widespread regional variation. Additionally, expanding coverage to underrepresented languages, especially those from Africa, South Asia, and the Pacific, remains a critical goal. While initiatives like Masakhane [@nekoto2020] and the AI4D project [CITE] have made progress in this area, many languages still lack sufficient corpora or standardized benchmarks for evaluation. As more multilingual and open-access corpora become available, we can begin to build and test embeddings for these languages and assess whether the same variability in optimal parameters holds. Finally, understanding why certain parameter configurations work better for particular languages or tasks remains an open question. Factors such as morphological complexity [@cotterell2018], word frequency distributions [@zipf1949], and syntactic structure [@dryer2013] likely influence embedding learning and performance. Future work that integrates computational modeling with linguistic typology could provide insights into the underlying mechanics of embedding optimization, helping to develop more universal or adaptive modeling strategies.
+One promising direction for future research is to explore variation within languages, particularly across dialects. While this study included multiple dialects of Chinese (e.g., Mandarin and Cantonese), only one variant was used for most other languages, such as English, Spanish, and Portuguese. Previous research has shown that dialectal variation can significantly affect lexical choice, syntax, and even semantic interpretation [@blodgett; @joshi2025], suggesting that word embeddings trained on different dialects may vary in both structure and performance. Future studies should investigate how embedding performance differs across dialects, particularly in languages with widespread regional variation. Additionally, expanding coverage to underrepresented languages, especially those from Africa, South Asia, and the Pacific, remains a critical goal. While initiatives like Masakhane [@nekoto] and the AI4D project [@mann2020] have made progress in this area, many languages still lack sufficient corpora or standardized benchmarks for evaluation. As more multilingual and open-access corpora become available, we can begin to build and test embeddings for these languages and assess whether the same variability in optimal parameters holds. Finally, understanding why certain parameter configurations work better for particular languages or tasks remains an open question. Factors such as morphological complexity [@cotterell], word frequency distributions [@brysbaert2009; @brysbaert2011], and syntactic structure [@wals-81] likely influence embedding learning and performance. Future work that integrates computational modeling with linguistic typology could provide insights into the underlying mechanics of embedding optimization, helping to develop more universal or adaptive modeling strategies.
 
 \newpage
 
@@ -245,3 +476,8 @@ One promising direction for future research is to explore variation within langu
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
+# (APPENDIX) Appendix {.unnumbered}
+
+```{r child = "appendix.Rmd"}
+```

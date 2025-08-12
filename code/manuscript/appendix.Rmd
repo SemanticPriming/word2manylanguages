@@ -1,0 +1,20 @@
+# Reproducibility
+
+## Manuscript
+
+We used `r sessionInfo()$R.version$version.string` to create this manuscript with the following packages:
+
+```{r echo = FALSE, results = 'asis'}
+# Grab only packages you explicitly loaded (attached packages)
+my_pkgs <- sessioninfo::session_info()$packages %>% as.data.frame()
+my_pkgs <- subset(my_pkgs, attached) %>% 
+  select(package, loadedversion) 
+
+apa_table(
+  my_pkgs,
+  colnames = c("Package", "Version"),
+  caption = "R packages and versions used in the analyses.",
+  note = "Versions correspond to the computational environment at the time of knitting.",
+  placement = "H"
+)
+```

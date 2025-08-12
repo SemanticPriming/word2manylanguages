@@ -1,0 +1,64 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:r1-table}}
+
+\begin{tabular}{lcccc}
+\toprule
+language & \multicolumn{1}{c}{adjusted r-squared} & \multicolumn{1}{c}{dim} & \multicolumn{1}{c}{window} & \multicolumn{1}{c}{algo}\\
+\midrule
+German & 0.672 & 300 & 1 & sg\\
+German & 0.665 & 500 & 1 & sg\\
+German & 0.659 & 200 & 1 & cbow\\
+English & 0.661 & 500 & 1 & sg\\
+English & 0.653 & 500 & 2 & sg\\
+English & 0.646 & 300 & 2 & sg\\
+Spanish & 0.653 & 500 & 3 & sg\\
+Spanish & 0.647 & 500 & 2 & sg\\
+Spanish & 0.643 & 300 & 2 & sg\\
+Persian & 0.479 & 100 & 1 & cbow\\
+Persian & 0.451 & 100 & 2 & cbow\\
+Persian & 0.443 & 50 & 1 & cbow\\
+Finnish & 0.651 & 500 & 5 & sg\\
+Finnish & 0.643 & 500 & 3 & sg\\
+Finnish & 0.625 & 500 & 3 & sg\\
+French & 0.619 & 200 & 2 & sg\\
+French & 0.619 & 500 & 4 & sg\\
+French & 0.618 & 100 & 2 & sg\\
+Indonesian & 0.599 & 100 & 1 & sg\\
+Indonesian & 0.589 & 100 & 2 & sg\\
+Indonesian & 0.582 & 200 & 1 & sg\\
+Italian & 0.479 & 100 & 3 & sg\\
+Italian & 0.475 & 100 & 2 & sg\\
+Italian & 0.474 & 100 & 1 & sg\\
+Malay & 0.330 & 100 & 1 & sg\\
+Malay & 0.315 & 50 & 1 & cbow\\
+Malay & 0.301 & 50 & 1 & sg\\
+Dutch & 0.689 & 100 & 6 & sg\\
+Dutch & 0.676 & 100 & 4 & sg\\
+Dutch & 0.670 & 100 & 5 & sg\\
+Polish & 0.701 & 200 & 1 & sg\\
+Polish & 0.697 & 300 & 2 & sg\\
+Polish & 0.696 & 300 & 1 & sg\\
+Portuguese & 0.446 & 100 & 3 & sg\\
+Portuguese & 0.443 & 100 & 2 & sg\\
+Portuguese & 0.414 & 200 & 4 & sg\\
+Turkish & 0.599 & 50 & 1 & sg\\
+Turkish & 0.592 & 50 & 3 & sg\\
+Turkish & 0.591 & 50 & 4 & sg\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} \scriptsize}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}

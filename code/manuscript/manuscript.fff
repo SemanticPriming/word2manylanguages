@@ -1,0 +1,33 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\includegraphics[width=2.96in]{figures/process_flow} \caption{Flow chart representation of data processing, model creation, and prediction for this study.}\label{fig:tech-details}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{manuscript_files/figure-latex/r1-fig-1.pdf}}
+\caption{\label{fig:r1-fig}Heatmaps showing the number of languages achieving their best performance for each combination of embedding dimension (x-axis) and context window size (y-axis) for the CBOW (left) and skip-gram (right) algorithms. For CBOW, optimal configurations are concentrated at lower dimensions and smaller window sizes, whereas skip-gram tends to favor higher dimensions and moderately larger windows. Numbers inside tiles indicate the count of languages for that parameter combination.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{manuscript_files/figure-latex/r2-fig1-1.pdf}}
+\caption{\label{fig:r2-fig1}Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) yielded the best predictive performance for subtitle-based word frequency norms. Numbers within tiles indicate the count of languages achieving the top 3 highest prediction for that parameter combination.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{manuscript_files/figure-latex/r2-fig2-1.pdf}}
+\caption{\label{fig:r2-fig2}Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three highest adjusted \(R^2\) when predicting Wikipedia-based word frequency norms.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{manuscript_files/figure-latex/r3-fig-1.pdf}}
+\caption{\label{fig:r3-fig}Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three predictive values when predicting across an extended set of avaliable norms.}
+\end{figure*}
