@@ -41,3 +41,4 @@ vignettes/*.pdf
 .DS_Store
 /code/python_scripts/.ipynb_checkpoints
 /code/python_scripts/__pycache__
+/deal with
