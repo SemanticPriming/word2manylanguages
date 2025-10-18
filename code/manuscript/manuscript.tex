@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  man]{apa6}
+  man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
 \ifPDFTeX
@@ -189,12 +189,6 @@
 {}{\PatchFailed}
 \makeatother
 \keywords{embeddings, psycholinguistics, modeling}
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-\DeclareDelayedFloatFlavor{lltable}{table}
-\DeclareDelayedFloatFlavor*{longtable}{table}
-\makeatletter
-\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
-\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -306,7 +300,7 @@ These parameter variations resulted in 60 possible combinations per language. Re
 Figure \ref{fig:tech-details} outlines the workflow for data acquisition, text preprocessing, corpus creation, and the generation of word-by-dimension matrices for each parameter combination. These procedures build on the original Python code from the subs2vec paper, with modifications tailored to the needs of this experiment. The full source code is available at \url{https://github.com/SemanticPriming/word2manylanguages}, and a working example of the pipeline can be found at XXCODE OCEAN HEREXX.
 
 \begin{figure}
-\includegraphics[width=2.96in]{figures/process_flow} \caption{Flow chart representation of data processing, model creation, and prediction for this study.}\label{fig:tech-details}
+\includegraphics[width=1\linewidth]{figures/process_flow} \caption{Flow chart representation of data processing, model creation, and prediction for this study.}\label{fig:tech-details}
 \end{figure}
 
 \subsubsection{Data Acquisition}\label{data-acquisition}

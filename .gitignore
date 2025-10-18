@@ -39,3 +39,4 @@ vignettes/*.pdf
 .Renviron
 ~$data_cross_comparison.xlsx
 .DS_Store
+/code/python_scripts/.ipynb_checkpoints
