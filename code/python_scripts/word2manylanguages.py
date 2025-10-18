@@ -15,6 +15,8 @@ import zipfile
 from lxml import etree
 from gensim.models import FastText
 import glob
+import unicodedata
+from unidecode import unidecode
 
 
 ###### define directories ######
@@ -559,7 +561,7 @@ def evaluate_counts(lang, alpha=1.0):
     # Concatenate the results
     if len(scores) > 0:
         scores = pd.concat(scores)
-        outpath = os.path.join(basedir, evaldir, f'{lang}_count_eval.csv')
+        outpath = os.path.join(basedir, evaldir, countdir, f'{lang}_eval.csv')
         scores.to_csv(outpath)
 
 def predict_counts(vectors, freqs, alpha=1.0):
@@ -751,7 +753,7 @@ def evaluate_norms(lang, alpha=1.0):
     # Concatenate the results
     if len(scores) > 0:
         scores = pd.concat(scores)
-        outpath = os.path.join(basedir, evaldir, f'{lang}_eval.csv')
+        outpath = os.path.join(basedir, evaldir, normsdir, f'{lang}_eval.csv')
         with open(outpath, 'a') as f:
             scores.to_csv(f, mode='a', header=f.tell()==0)
 
@@ -772,7 +774,7 @@ def list_norm_columns(df):
 
 
 ##### function to combine all scores together #####
-def score(language, typedir):
+def score_vp(language, typedir):
     rows = []
     base_file_name = f'{language}*_eval.csv'
     evalpath = os.path.join(basedir, evaldir, typedir)
@@ -810,6 +812,93 @@ def score(language, typedir):
     dataframe = pd.DataFrame(rows)
     
     # Ensure all sort columns exist
+    expected_cols = {'Score', 'Dimensions', 'Window'}
+    if not expected_cols.issubset(dataframe.columns):
+        print(f"❌ Missing columns in DataFrame: {expected_cols - set(dataframe.columns)}")
+        return
+
+    dataframe.sort_values(by=['Score', 'Dimensions', 'Window'], ascending=[False, True, True], inplace=True)
+
+    outfilename = f'{language}_scores.csv'
+    outfile = os.path.join(basedir, scoredir, typedir, outfilename)
+    
+    os.makedirs(os.path.dirname(outfile), exist_ok=True)
+    dataframe.to_csv(outfile, index=False)
+    print(f"✅ Saved sorted results to {outfile}")
+
+def score_norms(language, typedir):
+    rows = []
+    base_file_name = f'{language}_eval.csv'
+    outfilename = f'{language}_scores.csv'
+    print("Loading eval " + base_file_name) 
+    path = os.path.join(basedir, evaldir, typedir, base_file_name)
+    eval = pd.read_csv(path)
+
+    for index, stuff in eval.iterrows():
+        row = dict()
+        model = stuff['source']
+        parts = model.split('_')
+    
+        row['Language'] = language
+        row['Dimensions'] = parts[1]
+        row['Window'] = parts[2]
+        row['Algorithm'] = parts[3]
+        row['Norm'] = stuff['norm']
+        row['Score'] = stuff['adjusted r-squared']
+        rows.append(row)
+
+    dataframe = pd.DataFrame(rows)   
+
+    dataframe.sort_values(by=['Score',"Dimensions","Window"], ascending=[False, True, True], inplace=True)
+
+    print(dataframe)
+
+    outfile = os.path.join(basedir, scoredir, typedir, outfilename)
+    dataframe.to_csv(outfile)
+
+def score_counts(language, typedir):
+    rows = []
+    base_file_name = f'{language}*_eval.csv'
+    evalpath = os.path.join(basedir, evaldir, typedir)
+    files = glob.glob(os.path.join(evalpath, base_file_name))
+    
+    for file in files:    
+        print("Loading eval " + file) 
+        
+        parts = os.path.basename(file).split('_')
+
+        eval_df = pd.read_csv(file, header=0)
+
+        if 'adjusted r-squared' not in eval_df.columns:
+            print(f"⚠️ 'adjusted r-squared' column missing in: {file}")
+            continue
+        if 'var' not in eval_df.columns:
+            print(f"⚠️ 'var' column missing in: {file}")
+            continue
+
+        for _, row_data in eval_df.iterrows():
+            parts = row_data['source'].split('_')
+            
+            if len(parts) < 4:
+                print(f"⚠️ Skipping row with bad source format: {row_data['source']}")
+                continue
+        
+            row = {
+                'Language': language,
+                'Dimensions': parts[1],
+                'Window': parts[2],
+                'Algorithm': parts[3],
+                'Var': row_data['var'],
+                'Score': row_data['adjusted r-squared']
+            }
+            rows.append(row)
+
+    if not rows:
+        print(f"❌ No valid data found for language '{language}' in '{typedir}'")
+        return
+
+    dataframe = pd.DataFrame(rows)
+    
     expected_cols = {'Score', 'Dimensions', 'Window'}
     if not expected_cols.issubset(dataframe.columns):
         print(f"❌ Missing columns in DataFrame: {expected_cols - set(dataframe.columns)}")

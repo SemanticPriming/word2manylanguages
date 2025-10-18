@@ -44,3 +44,8 @@ vignettes/*.pdf
 /deal with
 /data/processing_example/evals/replication/.ipynb_checkpoints
 /data/processing_example/scores/replication/.ipynb_checkpoints
+/data/processing_example/datasets/.ipynb_checkpoints
+/data/processing_example/evals/counts/.ipynb_checkpoints
+/data/processing_example/evals/norms/.ipynb_checkpoints
+/data/processing_example/scores/counts/.ipynb_checkpoints
+/data/processing_example/scores/norms/.ipynb_checkpoints
