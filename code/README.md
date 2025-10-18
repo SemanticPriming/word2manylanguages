@@ -31,7 +31,7 @@ The Shiny app in this folder provides an **interactive interface** for exploring
 You can launch the app locally using R:
 
 ```r
-shiny::runApp("shiny/")
+shiny::runApp("code/shiny/") # assuming you are in the main Rproject folder 
 ```
 
 📦 Reproducibility Notes
