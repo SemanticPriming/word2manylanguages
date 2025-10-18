@@ -42,3 +42,5 @@ vignettes/*.pdf
 /code/python_scripts/.ipynb_checkpoints
 /code/python_scripts/__pycache__
 /deal with
+/data/processing_example/evals/replication/.ipynb_checkpoints
+/data/processing_example/scores/replication/.ipynb_checkpoints
