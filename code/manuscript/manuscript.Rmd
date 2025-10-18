@@ -2,32 +2,175 @@
 title             : "Modeling Languages with Their Own Parameters: A Response to subs2vec"
 shorttitle        : "Response subs2vec"
 
-author: 
-  - name          : "First Author"
-    affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
-      - "Conceptualization"
-      - "Writing - Original Draft Preparation"
-      - "Writing - Review & Editing"
-  - name          : "Ernst-August Doelle"
-    affiliation   : "1,2"
-    role:
-      - "Writing - Review & Editing"
-      - "Supervision"
+author:
+    - name: Philip A. Grim III
+      affiliation: '1'
+      role:
+        - Conceptualization
+        - Data curation
+        - Formal analysis
+        - Investigation
+        - Methodology
+        - Resources
+        - Software
+        - Validation
+        - Visualization
+        - Writing - original draft
+        - Writing - review & editing
+      corresponding: no
+      email: pgrim@harrisburgu.edu
+    - name: Jason Geller
+      affiliation: '2'
+      role:
+        - Data curation
+        - Resources
+        - Software
+        - Visualization
+        - Writing - review & editing
+      corresponding: no
+      email: Drjasongeller@gmail.com
+    - name: Ekaterina Pronizius
+      affiliation: '3'
+      role:
+        - Data curation
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: ekaterina.pronizius@univie.ac.at
+    - name: Savannah C. Lewis
+      affiliation: '4,5'
+      role:
+        - Project administration
+        - Writing - review & editing
+      corresponding: no
+      email: slewis5920@gmail.com
+    - name: Julia Valeiro Paterlini
+      affiliation: '5'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: jupaterlini@gmail.com
+    - name: Mahmoud M. Elsherif
+      affiliation: '6,7'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: mahmoud.medhat.elsherif@gmail.com
+    - name: Jack E. Taylor
+      affiliation: '8'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: Taylor@psych.uni-frankfurt.de
+    - name: Steven Verheyen
+      affiliation: '9'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: verheyen@essb.eur.nl
+    - name: Bradley J. Baker
+      affiliation: '10'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: bradley.baker@temple.edu
+    - name: Patrícia Arriaga
+      affiliation: '11'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: patricia.arriaga@iscte-iul.pt
+    - name: Susana Ruiz-Fernandez
+      affiliation: '12'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: ruizfern@b-tu.de
+    - name: Ali H. Al-Hoorie
+      affiliation: '13'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: hoorie_a@rcjy.edu.sa
+    - name: F. Elif Müjdeci
+      affiliation: '14'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: mujdecifatmaelif@gmail.com
+    - name: Debora I. Burin
+      affiliation: '15,16'
+      role: 
+        - Resources
+        - Writing - review & editing
+      corresponding: no
+      email: dburin@psi.uba.ar
+    - name: Erin M. Buchanan
+      affiliation: '17'
+      role:
+        - Conceptualization
+        - Data curation
+        - Formal analysis
+        - Investigation
+        - Methodology
+        - Project administration
+        - Resources
+        - Software
+        - Validation
+        - Visualization
+        - Writing - original draft
+        - Writing - review & editing
+      corresponding: yes
+      email: ebuchanan@harrisburgu.edu
+      address: 326 Market St., Harrisburg, PA, 17101
 
 affiliation:
-  - id            : "1"
-    institution   : "Wilhelm-Wundt-University"
-  - id            : "2"
-    institution   : "Konstanz Business School"
+  - id: 1
+    institution: Computer and Information Sciences, Harrisburg University of Science and Technology, Harrisburg, United States of America
+  - id: 2
+    institution: Department of Psychology and Neuroscience, Boston College, Boston, United States of America
+  - id: 3
+    institution: Department of Cognition, Emotion, and Methods in Psychology, Faculty of Psychology, University of Vienna, Vienna, Austria
+  - id: 4
+    institution: Department of Psychology, The University of Alabama - Tuscaloosa, Tuscaloosa, United States of America
+  - id: 5
+    institution: Department of Psychology, Ashland University, Ashland, United States of America
+  - id: 6
+    institution: Department of Psychology, University of Birmingham, Birmingham, United Kingdom
+  - id: 7
+    institution: Department of Vision Sciences, University of Leicester, Leicester, United Kingdom
+  - id: 8
+    institution: Department of Psychology, Goethe University Frankfurt, Frankfurt, Germany
+  - id: 9
+    institution: Department of Psychology, Education and Child Studies, Erasmus University Rotterdam, Rotterdam, The Netherlands
+  - id: 10
+    institution: Department of Sport, Tourism and Hospitality Management, Temple University, Philadelphia, United States of America
+  - id: 11
+    institution: Department of Psychology, Cis_Iscte, University Institute of Lisbon, Lisbon, Portugal
+  - id: 12
+    institution: Department of Psychology, Brandenburg University of Technology Cottbus-Senftenberg, Cottbus-Senftenberg, Germany
+  - id: 13
+    institution: Royal Commission for Jubail and Yanbu, Jubail Industrial City, Saudi Arabia
+  - id: 14
+    institution: Department of Psychology, Bilkent University, Ankara, Turkey
+  - id: 15
+    institution: Faculty of Psychology, CONICET, University of Buenos Aires, Buenos Aires, Argentina
+  - id: 16
+    institution: Department of Psychology, University of Palermo, Buenos Aires, Argentina
+  - id: 17
+    institution: Analytics, Harrisburg University of Science and Technology, Harrisburg, United States of America
 
 authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
+  
 
 abstract: |
   subs2vec (van Paridon & Thompson, 2021) provides word embeddings for 55 languages, derived from the Open Subtitles (Lison & Tiedemann, 2016) and Wikipedia (Wikimedia Downloads, 2018) corpora. However, these models were generated using the same computational parameters for all languages, without adjusting key hyperparameters such as minimum word frequency, vector dimension, or context window size. Prior work (Mandera et al., 2017) indicates that optimal parameters can differ across languages—for example, English and Dutch perform best at different dimensions and window sizes. In this study, we replicate the general approach of van Paridon and Thompson, but optimize embeddings for each language individually using the same corpora. Model quality is evaluated using published lexical norms (e.g., age of acquisition, valence, imageability, concreteness) as benchmarks, selecting the best-performing configuration per language. We present the results, examine the assumption of cross-linguistic similarity in embedding structure, and release all embeddings, code, and tools as an open package for researchers.
@@ -44,7 +187,7 @@ tablelist         : no
 footnotelist      : no
 
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 appendix          : "appendix.Rmd"
 bibliography: references.bib
 ---
@@ -158,7 +301,7 @@ These parameter variations resulted in 60 possible combinations per language. Re
 
 Figure \@ref(fig:tech-details) outlines the workflow for data acquisition, text preprocessing, corpus creation, and the generation of word-by-dimension matrices for each parameter combination. These procedures build on the original Python code from the subs2vec paper, with modifications tailored to the needs of this experiment. The full source code is available at <https://github.com/SemanticPriming/word2manylanguages>, and a working example of the pipeline can be found at XXCODE OCEAN HEREXX.
 
-```{r tech-details, fig.cap="Flow chart representation of data processing, model creation, and prediction for this study.", out.width="100"}
+```{r tech-details, fig.cap="Flow chart representation of data processing, model creation, and prediction for this study.", out.width="100%"}
 knitr::include_graphics("figures/process_flow.png")
 ```
 

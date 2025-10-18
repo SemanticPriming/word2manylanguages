@@ -49,3 +49,6 @@ vignettes/*.pdf
 /data/processing_example/evals/norms/.ipynb_checkpoints
 /data/processing_example/scores/counts/.ipynb_checkpoints
 /data/processing_example/scores/norms/.ipynb_checkpoints
+/code/manuscript/authorship
+/code/manuscript/manuscript_files
+code/manuscript/~$dataset_list.xlsx
