@@ -40,3 +40,4 @@ vignettes/*.pdf
 ~$data_cross_comparison.xlsx
 .DS_Store
 /code/python_scripts/.ipynb_checkpoints
+/code/python_scripts/__pycache__
