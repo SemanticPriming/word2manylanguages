@@ -19,8 +19,27 @@ apa_table(
 )
 ```
 
-## Reproducible Code
+## Reproducible Model Code
 
-## Shiny App
+The computational models reported in this manuscript can be fully reproduced using the scripts and notebooks provided in the project repository under `code/python_scripts/`. The primary modeling workflow is implemented in an IPython notebook, which documents the end-to-end process—from data loading and preprocessing to model training, evaluation, and output generation.
 
-## Data 
+To reproduce the models, users should create a compatible Python environment (see the provided requirements at the top of the notebook) and execute the notebook sequentially. The data and models created in this project are too large to share within GitHub, so we include a table below of how to obtain the word embeddings created in this project. The data downloads for Wikipedia and OpenSubtitles are provided within the python code. 
+
+# Shiny App
+
+COMING SOON
+
+# Data 
+
+You can find the word by dimensions embeddings using the following DOIs.  
+
+WE ARE STILL WORKING ON THIS. 
+
+```{r data-table, results='asis'}
+df <- rio::import("dataset_list.xlsx") %>% 
+  dplyr::arrange(Language)
+
+papaja::apa_table(df, 
+          caption = "DOIs for Word Embeddings", 
+          col.names = c("Language", "Models", "DOI"))
+```
