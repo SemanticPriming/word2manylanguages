@@ -52,7 +52,7 @@ data_combined <- data_combined %>%
 # ---- 2) UI ------------------------------------------------------------------
 data_ui <- fluidPage(
   theme = shinytheme("cerulean"),
-  titlePanel("Best Models Selector"),
+  titlePanel("Word2ManyLanguages Explorer"),
   sidebarLayout(
     sidebarPanel(
       h4("Filter and Select"),
