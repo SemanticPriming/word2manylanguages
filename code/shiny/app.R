@@ -51,7 +51,7 @@ data_combined <- data_combined %>%
 
 # ---- 2) UI ------------------------------------------------------------------
 data_ui <- fluidPage(
-  theme = shinytheme("cerulean"),
+  theme = shinytheme("flatly"),
   titlePanel("Word2ManyLanguages Explorer"),
   sidebarLayout(
     sidebarPanel(
@@ -299,8 +299,7 @@ data_server <- function(input, output, session) {
       )
 
     # Red box highlight at window=5, dim=500 (if present)
-    highlight <- d_sum %>% filter(window == 5, dim == 500)
-
+    highlight <- d_sum %>% filter(window == 5, dim == 300)
     ggplot(d_sum, aes(x = dim_f, y = window_f, fill = avg_metric)) +
       geom_tile(color = "grey70") +
       geom_text(aes(label = sprintf("%.3f", avg_metric)),
@@ -315,17 +314,20 @@ data_server <- function(input, output, session) {
         NULL
       }) +
       facet_wrap(~algo_panel, nrow = 1) +
-      ggplot2::scale_fill_viridis_c(option = "D", direction = 1, na.value = "grey90") +
+      scale_fill_viridis_c(option = "D", direction = 1, na.value = "grey90") +
       labs(
-        x = "Dimension", y = "Window",
+        x = "Dimension",
+        y = "Window",
         fill = "Avg (rounded)",
-        title = paste("Average", metric, "by Window × Dimension")
+        title = paste("Average", metric, "by Window × Dimension"),
+        subtitle = "Red box indicates original model dimensions and windows"
       ) +
       theme_minimal(base_size = 13) +
       theme(
         strip.text    = element_text(face = "bold", size = 16),
         panel.grid    = element_blank(),
-        panel.spacing = unit(0.8, "lines")
+        panel.spacing = unit(0.8, "lines"),
+        plot.subtitle = element_text(size = 12, face = "italic", hjust = 0.5, margin = margin(t = 8))
       )
   })
 
