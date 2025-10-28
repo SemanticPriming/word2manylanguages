@@ -298,7 +298,7 @@ data_server <- function(input, output, session) {
         window_f = factor(window, levels = window_levels)
       )
 
-    # Red box highlight at window=5, dim=500 (if present)
+    # Red box highlight at window=5, dim=300 (if present)
     highlight <- d_sum %>% filter(window == 5, dim == 300)
     ggplot(d_sum, aes(x = dim_f, y = window_f, fill = avg_metric)) +
       geom_tile(color = "grey70") +
