@@ -33,5 +33,5 @@ This folder outlines the expected directory structure for running the full Word2
 
 ## 📦 Notes
 
-- This structure is expected automatically by the Python pipeline - you may edit it in the python_scripts folder.
+- This structure is expected automatically by the Python pipeline - you may edit it in the `code/01_corpus_preprocessing/`, `code/02_model_training/`, and `code/03_evaluation/` folders.
 - If you are running the pipeline manually or modifying it, follow this structure for compatibility with existing scripts.

@@ -39,8 +39,10 @@ vignettes/*.pdf
 .Renviron
 ~$data_cross_comparison.xlsx
 .DS_Store
-/code/python_scripts/.ipynb_checkpoints
-/code/python_scripts/__pycache__
+/code/.ipynb_checkpoints
+/code/01_corpus_preprocessing/__pycache__
+/code/02_model_training/__pycache__
+/code/03_evaluation/__pycache__
 /deal with
 /data/processing_example/evals/replication/.ipynb_checkpoints
 /data/processing_example/scores/replication/.ipynb_checkpoints
@@ -49,7 +51,8 @@ vignettes/*.pdf
 /data/processing_example/evals/norms/.ipynb_checkpoints
 /data/processing_example/scores/counts/.ipynb_checkpoints
 /data/processing_example/scores/norms/.ipynb_checkpoints
-/code/manuscript/authorship
-/code/manuscript/manuscript_files
-code/manuscript/~$dataset_list.xlsx
-code/manuscript/~$nuscript.docx
+/code/06_manuscript/authorship
+/code/06_manuscript/manuscript_files
+code/06_manuscript/~$dataset_list.xlsx
+code/06_manuscript/~$nuscript.docx
+.env
