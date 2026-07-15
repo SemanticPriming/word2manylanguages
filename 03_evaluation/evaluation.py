@@ -1,17 +1,16 @@
-###### libraries ######
+# Libraries
 import bz2
 import numpy as np
 import os
 import pandas as pd
 import sklearn.linear_model
 import sklearn.model_selection
-import sklearn.preprocessing
 import sklearn.utils
 import unicodedata
 from unidecode import unidecode
 
-###### define directories ######
-# basedir defined in main file
+
+# Define directories
 modeldir = 'models'
 evaldir = 'eval_results'
 datasetsdir = "eval_inputs"
@@ -24,7 +23,7 @@ dimension_list = [50,100,200,300,500]
 window_list = [1,2,3,4,5,6]
 algo_list = ['cbow','sg']
 
-##### load one trained model at a time #####
+# Load one trained model at a time 
 def load_model(lang, dim, win, alg):
     """
     Loads a single trained word-by-dimension model file. Transparently reads
@@ -70,7 +69,7 @@ def normalize_vectors(vectors):
     """L2-normalizes each word's vector to unit length."""
     return vectors / np.linalg.norm(vectors, axis=1).reshape(-1, 1)
 
-##### shared ridge regression prediction #####
+# Shared ridge regression prediction 
 def predict(vectors, targets, alpha=1.0, label_col='norm'):
     """
     Ridge regression function to use the embeddings to predict target values
@@ -118,7 +117,7 @@ def predict_norms(vectors, norms, alpha=1.0):
 def predict_counts(vectors, freqs, alpha=1.0):
     return predict(vectors, freqs, alpha, label_col='var')
 
-##### load ground-truth evaluation datasets once per language #####
+# Load ground-truth evaluation datasets once per language 
 def load_replication_norms(lang):
     """Loads every replication norms file for this language once."""
     norms_path = os.path.join(basedir, datasetsdir, replicationdir)
@@ -317,7 +316,7 @@ def evaluate_counts(wordsXdims, count_freqs, alpha=1.0):
         return pd.concat(scores)
     return None
 
-##### write output incrementally, one file per language per evaluation type #####
+# Write output incrementally, one file per language per evaluation type 
 def append_scores(outfile, scores):
     """Appends a scores dataframe to a per-language eval file, writing the header only once."""
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
@@ -325,7 +324,7 @@ def append_scores(outfile, scores):
     with open(outfile, 'a') as f:
         scores.to_csv(f, mode='a', header=write_header, index=False)
 
-##### main driver: one pass per language, one model load per configuration #####
+# Main driver: one pass per language, one model load per configuration 
 def evaluate_language(lang, alpha=1.0, overwrite=False):
     """
     For a given language, loads each trained model exactly once and runs it

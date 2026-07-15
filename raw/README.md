@@ -32,7 +32,7 @@ The full corpora, trained models, and per-language evaluation outputs for all 59
 - `preprocessed/`, `corpora/` — gitignored; running the pipeline against the `raw/` files above regenerates them (see their own READMEs for what to expect: [preprocessed/README.md](../preprocessed/README.md), [corpora/README.md](../corpora/README.md))
 - `eval_results/` — empty except for a `.gitkeep` placeholder; running the pipeline against the `eval_inputs/` files above will populate it
 
-For the real, full-scale corpora, trained models, and frequency-count data for all 59 languages — either from the lab's MinIO storage or the public Zenodo archives — see [`download/README.md`](../download/README.md).
+For the real, full-scale raw corpus text, trained models, frequency counts, and evaluation norm datasets for all 59 languages — from the lab's MinIO storage, the public Zenodo archives, or upstream sources like the Linguistic Annotated Bibliography and subs2vec — see [`download/README.md`](../download/README.md).
 
 ## 📝 Notes
 
