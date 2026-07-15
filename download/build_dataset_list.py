@@ -14,10 +14,17 @@ Part numbers are assigned by the ORDER a DOI appears in the cell, not by the
 over the printed label sidesteps that.
 
 Outputs:
-  zenodo_dois.csv           one row per (language, part, doi) -- what
-                             zenodo_download.py reads
-  ../05_manuscript/dataset_list.xlsx   one row per language, DOIs joined
-                             consistently, for the manuscript appendix table
+  zenodo_dois.csv           one row per (language, part, file, doi) -- one
+                             row per actual model file (chunked large files
+                             collapsed back to their logical name), the
+                             detailed/machine-readable version
+  ../05_manuscript/dataset_list.xlsx   one row per (language, part), with a
+                             short "included" summary instead of every
+                             filename -- the manuscript appendix table
+
+Building the file-level detail means querying the Zenodo API once per
+(language, part) record in addition to parsing the PDF, so this takes a
+while and makes ~100 HTTP requests.
 
 Usage:
   python build_dataset_list.py
@@ -26,13 +33,18 @@ Usage:
 import csv
 import os
 import re
+import time
 
 import pdfplumber
+
+import zenodo_common as zc
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCE_PDF = os.path.join(HERE, "source", "dataset_list_source.pdf")
 DOIS_CSV = os.path.join(HERE, "zenodo_dois.csv")
 DATASET_LIST_XLSX = os.path.join(HERE, "..", "05_manuscript", "dataset_list.xlsx")
+
+MODEL_FILENAME_PATTERN = re.compile(r"^[a-z]{2}_(\d+)_(\d+)_(cbow|sg)_wxd\.csv\.bz2$")
 
 # Zenodo record IDs in this table are consistently 8 digits, wrapped across
 # PDF lines with stray whitespace/newlines in between. Bounding to exactly 8
@@ -96,33 +108,70 @@ def build_doi_table(pdf_path):
     return entries
 
 
-def write_dois_csv(entries, path):
+def build_file_table(entries):
+    """
+    Queries Zenodo for each (language, part) record's actual file list and
+    returns a list of dicts: {language, part, file, doi} -- one row per
+    logical model file (chunked large files collapsed to their single
+    logical name via zenodo_common.group_logical_files).
+    """
+    file_rows = []
+    for e in entries:
+        record_id = e["doi"].rsplit(".", 1)[-1]
+        print(f"Querying Zenodo record {record_id} ({e['language']} part {e['part']})...")
+        groups = zc.group_logical_files(zc.list_files(record_id))
+        if not groups:
+            print(f"WARNING: no model files found in record {record_id} ({e['language']} part {e['part']})")
+        for logical_name in sorted(groups):
+            file_rows.append({"language": e["language"], "part": e["part"], "file": logical_name, "doi": e["doi"]})
+        time.sleep(0.25)  # be polite to the Zenodo API across ~100 records
+    return file_rows
+
+
+def write_dois_csv(file_rows, path):
     with open(path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["language", "part", "doi"])
+        writer = csv.DictWriter(f, fieldnames=["language", "part", "file", "doi"])
         writer.writeheader()
-        writer.writerows(entries)
-    print(f"Wrote {len(entries)} rows to {path}")
+        writer.writerows(file_rows)
+    print(f"Wrote {len(file_rows)} rows to {path}")
 
 
-def write_dataset_list_xlsx(entries, path):
+def summarize_files(filenames):
+    """
+    Returns a short human-readable description of a set of model filenames,
+    e.g. "12 files (dim 200; window 3-6; cbow,sg)". Parts aren't split along
+    clean dim/window/algo boundaries (just upload size limits), so this lists
+    what's actually present rather than implying full rectangular coverage.
+    """
+    dims, windows, algos = set(), set(), set()
+    for name in filenames:
+        m = MODEL_FILENAME_PATTERN.match(name)
+        if m:
+            dims.add(int(m.group(1)))
+            windows.add(int(m.group(2)))
+            algos.add(m.group(3))
+    dim_str = ",".join(str(d) for d in sorted(dims))
+    win_str = ",".join(str(w) for w in sorted(windows))
+    algo_str = ",".join(sorted(algos))
+    return f"{len(filenames)} files (dim {dim_str}; window {win_str}; {algo_str})"
+
+
+def write_dataset_list_xlsx(file_rows, path):
     import openpyxl
 
-    by_language = {}
-    for e in entries:
-        by_language.setdefault(e["language"], []).append(e)
+    by_part = {}
+    for row in file_rows:
+        by_part.setdefault((row["language"], row["part"]), []).append(row)
 
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Sheet1"
-    ws.append(["Language", "Parts", "DOI"])
-    for lang, parts in by_language.items():
-        if len(parts) == 1:
-            doi_display = parts[0]["doi"]
-        else:
-            doi_display = "; ".join(f"Part {p['part']}: {p['doi']}" for p in parts)
-        ws.append([lang, len(parts), doi_display])
+    ws.append(["Language", "Part", "Included", "DOI"])
+    for (lang, part) in sorted(by_part):
+        rows = by_part[(lang, part)]
+        ws.append([lang, part, summarize_files([r["file"] for r in rows]), rows[0]["doi"]])
     wb.save(path)
-    print(f"Wrote {len(by_language)} languages to {path}")
+    print(f"Wrote {len(by_part)} language/part rows to {path}")
 
 
 def report_anomalies(entries):
@@ -138,5 +187,6 @@ def report_anomalies(entries):
 if __name__ == "__main__":
     entries = build_doi_table(SOURCE_PDF)
     report_anomalies(entries)
-    write_dois_csv(entries, DOIS_CSV)
-    write_dataset_list_xlsx(entries, DATASET_LIST_XLSX)
+    file_rows = build_file_table(entries)
+    write_dois_csv(file_rows, DOIS_CSV)
+    write_dataset_list_xlsx(file_rows, DATASET_LIST_XLSX)

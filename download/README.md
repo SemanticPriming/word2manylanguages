@@ -52,6 +52,8 @@ python download/minio_download.py --prefix models/af_ --dest models/   # every a
 
 Trained models are also permanently archived on Zenodo, one DOI per language (or several "part" DOIs for languages whose files didn't fit a single upload's size limit). `zenodo_download.py` resolves a language to its DOI(s) via `zenodo_dois.csv` and downloads directly — no credentials needed, these are public records.
 
+Some individual models were themselves too large for a single Zenodo file and got split into `_part_aa`/`_part_ab`/... chunks within the record; `zenodo_download.py` downloads every chunk and reassembles them automatically, so you always end up with the real `{lang}_{dim}_{window}_{algo}_wxd.csv.bz2`, never raw chunks.
+
 ```bash
 pip install requests
 python download/zenodo_download.py --language af --dest models/
@@ -60,16 +62,16 @@ python download/zenodo_download.py --language af --dest models/ --pattern af_50_
 
 #### Where `zenodo_dois.csv` comes from
 
-`source/dataset_list_source.pdf` is the source-of-truth DOI table (one row per language, multi-part languages listed as free text like "Part 1: ...\nPart 2: ..."). Hand-editing that into a spreadsheet is exactly what corrupted `../05_manuscript/dataset_list.xlsx` before — instead, regenerate both derived files straight from the PDF:
+`source/dataset_list_source.pdf` is the source-of-truth DOI table (one row per language, multi-part languages listed as free text like "Part 1: ...\nPart 2: ..."). Hand-editing that into a spreadsheet is exactly what corrupted `../05_manuscript/dataset_list.xlsx` before — instead, regenerate both derived files straight from the PDF (this also queries the Zenodo API once per record to list actual file contents, so it makes ~100 HTTP requests and takes a few minutes):
 
 ```bash
-pip install pdfplumber openpyxl
+pip install pdfplumber openpyxl requests
 python download/build_dataset_list.py
 ```
 
-This writes:
-- `zenodo_dois.csv` — one row per `(language, part, doi)`, what `zenodo_download.py` reads
-- `../05_manuscript/dataset_list.xlsx` — the manuscript appendix's "DOIs for Word Embeddings" table, one row per language, DOIs joined consistently
+This writes two views of the same data, both keyed on `(language, part, doi)`:
+- `zenodo_dois.csv` — the detailed, machine-readable one, one row per **model file** (`language,part,file,doi`; large files that Zenodo forced to be chunked are collapsed back to their single logical filename — see [`zenodo_common.py`](zenodo_common.py))
+- `../05_manuscript/dataset_list.xlsx` — the manuscript appendix's "DOIs for Word Embeddings" table, one row per `(language, part)` with a short `Included` summary (`language,part,included,doi`) instead of enumerating every file
 
 Known data issues in the source PDF:
 - **`es`** Part 2: the PDF lists the same DOI as Part 1 (`17450685`, a copy-paste error) — corrected in code via the `CORRECTIONS` dict in `build_dataset_list.py` (confirmed correct value: `17459793`)
