@@ -21,7 +21,7 @@ apa_table(
 
 ## Reproducible Model Code
 
-The computational models reported in this manuscript can be fully reproduced using the scripts and notebooks provided in the project repository under `code/01_corpus_preprocessing/`, `code/02_model_training/`, and `code/03_evaluation/`. The primary modeling workflow is implemented in an IPython notebook (`code/word2manylanguages_workflow.ipynb`), which documents the end-to-end process—from data loading and preprocessing to model training, evaluation, and output generation.
+The computational models reported in this manuscript can be fully reproduced using the scripts and notebooks provided in the project repository under `01_corpus_preprocessing/`, `02_model_training/`, and `03_evaluation/`. The primary modeling workflow is implemented in an IPython notebook (`word2manylanguages_workflow.ipynb`), which documents the end-to-end process—from data loading and preprocessing to model training, evaluation, and output generation.
 
 To reproduce the models, users should create a compatible Python environment (see the provided requirements at the top of the notebook) and execute the notebook sequentially. The data and models created in this project are too large to share within GitHub, so we include a table below of how to obtain the word embeddings created in this project. The data downloads for Wikipedia and OpenSubtitles are provided within the python code. 
 

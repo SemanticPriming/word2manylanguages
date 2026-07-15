@@ -24,7 +24,7 @@ library(tidyr)
 ### Frequency Tests `count_evals`
 
 ```{r}
-count.files <- list.files(path = "../../data/count_evals",
+count.files <- list.files(path = "../results/count_evals",
                           pattern = "*.csv",
                           full.names = TRUE)
 count.dfs <- lapply(count.files, import)
@@ -35,13 +35,13 @@ count.full <- bind_rows(count.dfs) %>%
   )) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(count.full, "../../data/formatted_data/count_evals_formatted.csv", row.names = F)
+export(count.full, "../results/formatted_data/count_evals_formatted.csv", row.names = F)
 ```
 
 ### Replication Tests `rep_evals`
 
 ```{r}
-rep.files <- list.files(path = "../../data/rep_evals",
+rep.files <- list.files(path = "../results/rep_evals",
                           pattern = "*.csv",
                           full.names = TRUE)
 rep.dfs <- lapply(rep.files, import)
@@ -50,16 +50,16 @@ rep.full <- bind_rows(rep.dfs) %>%
   rename(dataset = source, 
          var = norm) %>% 
   mutate(source = rep(rep.files, times = lapply(rep.dfs, nrow)),
-         source = gsub("../../data/rep_evals/|_wxd_eval.csv|_eval.csv", "", source)) %>% 
+         source = gsub("../results/rep_evals/|_wxd_eval.csv|_eval.csv", "", source)) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(rep.full, "../../data/formatted_data/rep_evals_formatted.csv", row.names = F)
+export(rep.full, "../results/formatted_data/rep_evals_formatted.csv", row.names = F)
 ```
 
 ### Extension Tests `extension_evals`
 
 ```{r}
-extension.files <- list.files(path = "../../data/extension_evals",
+extension.files <- list.files(path = "../results/extension_evals",
                           pattern = "*.csv",
                           full.names = TRUE)
 extension.dfs <- lapply(extension.files, import)
@@ -68,5 +68,5 @@ extension.full <- bind_rows(extension.dfs) %>%
   rename(var = norm) %>% 
   separate(source, into = c("language", "dim", "window", "algo"), sep = "_")
 
-export(extension.full, "../../data/formatted_data/extension_evals_formatted.csv", row.names = F)
+export(extension.full, "../results/formatted_data/extension_evals_formatted.csv", row.names = F)
 ```

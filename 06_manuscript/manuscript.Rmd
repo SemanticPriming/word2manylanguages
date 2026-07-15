@@ -345,7 +345,7 @@ For the first set of evaluations, each language model was tested using the same 
 
 ```{r r1-fig, fig.cap="Heatmaps showing the number of languages achieving their best performance for each combination of embedding dimension (x-axis) and context window size (y-axis) for the CBOW (left) and skip-gram (right) algorithms. For CBOW, optimal configurations are concentrated at lower dimensions and smaller window sizes, whereas skip-gram tends to favor higher dimensions and moderately larger windows. Numbers inside tiles indicate the count of languages for that parameter combination."}
 # heat map 
-df1.both <- import("../../data/formatted_data/rep_evals_formatted.csv") %>% 
+df1.both <- import("../results/formatted_data/rep_evals_formatted.csv") %>% 
   group_by(language, algo) %>% 
   arrange(desc(`adjusted r-squared`)) %>% 
   slice_head(n = 3)
@@ -415,7 +415,7 @@ Figures \@ref(fig:r2-fig1) and \@ref(fig:r2-fig2) display the top-performing mod
 
 ```{r r2-fig1, fig.cap = "Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) yielded the best predictive performance for subtitle-based word frequency norms. Numbers within tiles indicate the count of languages achieving the top 3 highest prediction for that parameter combination."}
 # heat map 
-df2.both <- import("../../data/formatted_data/count_evals_formatted.csv") %>% 
+df2.both <- import("../results/formatted_data/count_evals_formatted.csv") %>% 
   filter(data_source == "Subtitles") %>% 
   group_by(language, algo) %>% 
   arrange(desc(`adjusted r-squared`)) %>% 
@@ -478,7 +478,7 @@ cbow.fig2 + sg.fig2
 
 ```{r r2-fig2, fig.cap= "Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three highest adjusted $R^2$ when predicting Wikipedia-based word frequency norms."}
 # heat map 
-df2.both <- import("../../data/formatted_data/count_evals_formatted.csv") %>% 
+df2.both <- import("../results/formatted_data/count_evals_formatted.csv") %>% 
   filter(data_source == "Wikipedia") %>% 
   group_by(language, algo) %>% 
   arrange(desc(`adjusted r-squared`)) %>% 
@@ -545,7 +545,7 @@ The third set of evaluations used datasets from the Linguistic Annotated Bibliog
 
 ```{r r3-fig, fig.cap="Heatmaps showing the number of languages for which each combination of embedding dimension (x-axis) and context window size (y-axis) produced the top three predictive values when predicting across an extended set of avaliable norms."}
 # heat map 
-df3.both <- import("../../data/formatted_data/extension_evals_formatted.csv") %>% 
+df3.both <- import("../results/formatted_data/extension_evals_formatted.csv") %>% 
   group_by(language, algo) %>% 
   arrange(desc(`adjusted r-squared`)) %>% 
   slice_head(n = 3)

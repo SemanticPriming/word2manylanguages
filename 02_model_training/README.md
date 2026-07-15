@@ -6,7 +6,7 @@ Trains fastText word embedding models (via Gensim) on the corpus produced by [`0
 
 - `model_training.py` — `build_models` loops over dimensions (50–500), window sizes (1–6), and algorithms (`cbow`, `sg`), calling `vectorize_stream` to train each Gensim `FastText` model and writing a `{language}_{dim}_{window}_{algo}_wxd.csv` word-by-dimension matrix per configuration.
 
-See [`code/word2manylanguages_workflow.ipynb`](../word2manylanguages_workflow.ipynb) for a walk-through that drives this module alongside the other two stages.
+See [`word2manylanguages_workflow.ipynb`](../word2manylanguages_workflow.ipynb) for a walk-through that drives this module alongside the other two stages.
 
 ## 📦 Requirements
 

@@ -6,7 +6,7 @@ Downloads raw Wikipedia and OpenSubtitles data, cleans/normalizes it, and concat
 
 - `corpus_preprocessing.py` — `download`, `clean` (`clean_subtitles`/`clean_wikipedia`), `prune` (optional deduplication), `concatenate_corpus`, and the supporting text-cleaning helpers.
 
-See [`code/word2manylanguages_workflow.ipynb`](../word2manylanguages_workflow.ipynb) for a walk-through that drives this module alongside the other two stages.
+See [`word2manylanguages_workflow.ipynb`](../word2manylanguages_workflow.ipynb) for a walk-through that drives this module alongside the other two stages.
 
 ## 📦 Requirements
 
