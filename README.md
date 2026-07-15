@@ -29,8 +29,8 @@ Code is organized by pipeline stage, in the order the workflow actually runs:
 - `04_visualization/`: the Shiny app for interactive exploration
 - `05_manuscript/`: the manuscript and supporting materials
 - `06_presentations/`: presentations from conferences on this project
-- `results/`: final evaluation results and processed data from the modeling
 - `raw/`, `preprocessed/`, `corpora/`, `models/`, `eval_inputs/`, `eval_results/`: working folders for the Python pipeline, checked in with a single-language (Afrikaans) worked example — see [raw/README.md](raw/README.md)
+- `download/`: scripts for pulling trained models from either lab-internal storage (MinIO) or the public Zenodo archives — see [download/README.md](download/README.md)
 
 ## 🚀 Get Started
 

@@ -1,4 +1,5 @@
 ###### libraries ######
+import bz2
 import numpy as np
 import os
 import pandas as pd
@@ -18,208 +19,117 @@ countdir = "counts"
 normsdir = "norms"
 replicationdir = "replication"
 datasetsindex = "datasets.csv"
-dimensions = ["500", "300", "200", "100", "50"]
-windows = ["1", "2", "3","4", "5", "6"]
 
 dimension_list = [50,100,200,300,500]
 window_list = [1,2,3,4,5,6]
 algo_list = ['cbow','sg']
 
-##### evaluate replication #####
-def loop_norms_vp(language):
+##### load one trained model at a time #####
+def load_model(lang, dim, win, alg):
     """
-    1. Loops through the saved models
-    2. Uses evaluate_norms_vp to compare to the files within the replication folder
-    3. Uses predict norms to calculate the ridge regression
+    Loads a single trained word-by-dimension model file. Transparently reads
+    either a plain .csv or a bz2-compressed .csv.bz2 (as downloaded from
+    storage) without decompressing to disk first.
+    Returns (words, vectors) as numpy arrays, or (None, None) if this
+    dim/window/algorithm combination was never trained.
     """
-    for dim in dimensions:
-        for win in windows:
-            for algo in ['cbow', 'sg']:
-                base_file_name = f'{language}_{str(dim)}_{str(win)}_{algo}'
-                print("Evaluating model " + base_file_name)
-                path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv')
-                wordsXdims = pd.read_csv(path)
-                wordsXdims.set_index('word', inplace=True)
-                scores = evaluate_norms_vp(language, wordsXdims)
+    base_file_name = f'{lang}_{dim}_{win}_{alg}'
+    plain_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv')
+    compressed_path = plain_path + '.bz2'
 
-                outpath = os.path.join(basedir, evaldir, replicationdir)
-                fname = base_file_name + '_eval.csv'
-                outfile = os.path.join(outpath, fname)
-                scores.to_csv(outfile)
+    if os.path.exists(plain_path):
+        opener, input_path = open, plain_path
+    elif os.path.exists(compressed_path):
+        opener, input_path = bz2.open, compressed_path
+    else:
+        print(f'Model {base_file_name} not found, skipping.')
+        return None, None
 
-def evaluate_norms_vp(lang, wordsXdims, alpha=1.0):
+    with opener(input_path, 'rt', encoding='utf-8') as vecfile:
+        # skip header
+        next(vecfile)
+        # initialize arrays
+        vectors = np.zeros((10000000, dim))
+        words = np.empty(10000000, dtype=object)
+        i = -1
+        for i, line in enumerate(vecfile):
+            # Limit to 10 million, although it looks like 7.5 million is the largest
+            if i >= 10000000:
+                break
+            rowentries = line.rstrip('\n').split(',')
+            words[i] = rowentries[0].casefold()
+            vectors[i] = rowentries[1:dim + 1]
+
+        # truncate empty part of arrays, if necessary
+        vectors = vectors[:i + 1]
+        words = words[:i + 1]
+
+    return words, vectors
+
+def normalize_vectors(vectors):
+    """L2-normalizes each word's vector to unit length."""
+    return vectors / np.linalg.norm(vectors, axis=1).reshape(-1, 1)
+
+##### shared ridge regression prediction #####
+def predict(vectors, targets, alpha=1.0, label_col='norm'):
     """
-    1. Loops through the normed replication data folder
-    2. Uses predict norms to calculate the ridge regression
-    3. Returns scores to function for saving
+    Ridge regression function to use the embeddings to predict target values
+    (psycholinguistic norms, replication norms, or frequency counts).
     """
-    norms_path = os.path.join(basedir, datasetsdir, replicationdir)
+    cols = targets.columns.values
+    df = targets.join(vectors, how='inner')
+
+    # compensate for missing ys somehow
+    total = len(targets)
+    missing = len(targets) - len(df)
+    penalty = (total - missing) / total
+    print(f'missing vectors for {missing} out of {total} words')
+    df = sklearn.utils.shuffle(df)  # shuffle is important for unbiased results on ordered datasets!
+
+    model = sklearn.linear_model.Ridge(alpha=alpha)  # use ridge regression models
+    cv = sklearn.model_selection.RepeatedKFold(n_splits=5, n_repeats=10)
+
+    # compute crossvalidated prediction scores
     scores = []
-    for norms_fname in os.listdir(norms_path):
-        if norms_fname.startswith(lang):
-            print(f'predicting norms from {norms_fname}')
-            norms = pd.read_csv(os.path.join(norms_path, norms_fname), sep='\t', comment='#')
-            norms = norms.set_index('word')
-            score = predict_norms(wordsXdims, norms, alpha)
-            score['source'] = norms_fname
-            scores.append(score)
-
-    if len(scores) > 0:
-        scores = pd.concat(scores)
-        return scores
+    for col in cols:
+        # set dependent variable and calculate 10-fold mean fit/predict scores
+        df_subset = df.loc[:, vectors.columns.values]  # use .loc[] so copy is created and no setting with copy warning is issued
+        df_subset[col] = df[col]
+        df_subset = df_subset.dropna()  # drop NaNs for this specific y
+        x = df_subset[vectors.columns.values]
+        y = df_subset[col]
+        cv_scores = sklearn.model_selection.cross_val_score(model, x, y, cv=cv)
+        median_score = np.median(cv_scores)
+        penalized_score = median_score * penalty
+        ars = np.sqrt(penalized_score) if penalized_score > 0 else 0
+        rs = np.sqrt(median_score) if median_score > 0 else 0
+        scores.append({
+            label_col: col,
+            'adjusted r': ars,
+            'adjusted r-squared': penalized_score,
+            'r-squared': median_score,
+            'r': rs
+        })
+    return pd.DataFrame(scores)
 
 def predict_norms(vectors, norms, alpha=1.0):
-    """
-    Ridge regression function to use the embeddings to predict norms (replication or new).
-    """
-    cols = norms.columns.values
-    df = norms.join(vectors, how='inner')
-
-    # compensate for missing ys somehow
-    total = len(norms)
-    missing = len(norms) - len(df)
-    penalty = (total - missing) / total
-    print(f'missing vectors for {missing} out of {total} words')
-    df = sklearn.utils.shuffle(df)  # shuffle is important for unbiased results on ordered datasets!
-
-    model = sklearn.linear_model.Ridge(alpha=alpha)  # use ridge regression models
-    cv = sklearn.model_selection.RepeatedKFold(n_splits=5, n_repeats=10)
-
-    # compute crossvalidated prediction scores
-    scores = []
-    for col in cols:
-        # set dependent variable and calculate 10-fold mean fit/predict scores
-        df_subset = df.loc[:, vectors.columns.values]  # use .loc[] so copy is created and no setting with copy warning is issued
-        df_subset[col] = df[col]
-        df_subset = df_subset.dropna()  # drop NaNs for this specific y
-        x = df_subset[vectors.columns.values]
-        y = df_subset[col]
-        cv_scores = sklearn.model_selection.cross_val_score(model, x, y, cv=cv)
-        median_score = np.median(cv_scores)
-        penalized_score = median_score * penalty
-        ars = np.sqrt(penalized_score) if penalized_score > 0 else 0
-        rs = np.sqrt(median_score) if median_score > 0 else 0
-        scores.append({
-            'norm': col,
-            'adjusted r': ars,
-            'adjusted r-squared': penalized_score,
-            'r-squared': median_score,
-            'r': rs
-        })
-    return pd.DataFrame(scores)
-
-##### evaluate counts ######
-def evaluate_counts(lang, alpha=1.0):
-    """
-    Evaluate word frequency prediction for the given language
-    """
-    # Load the counts dataset for the language
-    datasetspath = os.path.join(basedir,datasetsdir,countdir)
-
-    flist = [f'dedup.{lang}.words.unigrams.tsv', f'dedup.{lang}wiki-meta.words.unigrams.tsv'];
-
-    # Predict for all of the matrices
-    # Make this the outer look because they take longer to read
-    scores = []
-    for dim in dimension_list:
-        for win in window_list:
-            for alg in algo_list:
-                # Load the words by dimensions matrix
-                base_file_name = f'{lang}_{str(dim)}_{str(win)}_{alg}'
-                input_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv')
-                print("Loading model " + base_file_name)
-                with open(input_path, 'r', encoding='utf-8') as vecfile:
-                    # skip header
-                    next(vecfile)
-                    # initialize arrays
-                    vectors = np.zeros((10000000, dim))
-                    words = np.empty(10000000, dtype=object) # fill arrays
-                    for i, line in enumerate(vecfile):
-                        # Limit to 10 million, although it looks like 7.5 million is the largest
-                        if i >= 10000000:
-                            break
-                        rowentries = line.rstrip('\n').split(',')
-                        words[i] = rowentries[0].casefold()
-                        vectors[i] = rowentries[1:dim+1]
-
-                    # truncate empty part of arrays, if necessary
-                    vectors = vectors[:i]
-                    words = words[:i]
-
-                    # normalize by L1 norm
-                    vectors = vectors / np.linalg.norm(vectors, axis=1).reshape(-1, 1)
-
-                    wordsXdims = pd.DataFrame(vectors)
-                    wordsXdims.set_index(words, inplace=True)
-
-                    # Do it for each language dataset
-                    for langfile in flist:
-                        print('Loading ' + langfile)
-                        datapath = os.path.join(datasetspath,langfile)
-                        freqs = pd.read_csv(datapath,sep='\t', comment='#', na_values=['-','–'])
-                        freqs.set_index('unigram', inplace=True)
-
-                        # Clean up the data
-                        print('Cleaning ' + langfile)
-                        freqs_index = list(freqs.index.values)
-                        for i in range(len(freqs_index)):
-                            if (isinstance(freqs_index[i], str)):
-                                freqs_index[i] = unicodedata.normalize("NFKD", freqs_index[i])
-                                freqs_index[i] = unidecode(freqs_index[i]).strip()
-
-                        freqs.index = freqs_index
-
-                        print('Evaluating ' + langfile)
-                        score = predict_counts(wordsXdims, freqs, alpha)
-                        score['source'] = base_file_name
-                        score['dataset'] = langfile
-                        scores.append(score)
-
-    # Concatenate the results
-    if len(scores) > 0:
-        scores = pd.concat(scores)
-        outpath = os.path.join(basedir, evaldir, countdir, f'{lang}_eval.csv')
-        scores.to_csv(outpath)
+    return predict(vectors, norms, alpha, label_col='norm')
 
 def predict_counts(vectors, freqs, alpha=1.0):
-    cols = freqs.columns.values
-    df = freqs.join(vectors, how='inner')
+    return predict(vectors, freqs, alpha, label_col='var')
 
-    # compensate for missing ys somehow
-    total = len(freqs)
-    missing = len(freqs) - len(df)
-    penalty = (total - missing) / total
-    print(f'vectors: {len(vectors)}  freqs: {total}  matches: {len(df)}')
-    print(f'missing vectors for {missing} out of {total} words')
-    df = sklearn.utils.shuffle(df)  # shuffle is important for unbiased results on ordered datasets!
+##### load ground-truth evaluation datasets once per language #####
+def load_replication_norms(lang):
+    """Loads every replication norms file for this language once."""
+    norms_path = os.path.join(basedir, datasetsdir, replicationdir)
+    loaded = []
+    for norms_fname in os.listdir(norms_path):
+        if norms_fname.startswith(lang):
+            norms = pd.read_csv(os.path.join(norms_path, norms_fname), sep='\t', comment='#')
+            norms = norms.set_index('word')
+            loaded.append((norms_fname, norms))
+    return loaded
 
-    model = sklearn.linear_model.Ridge(alpha=alpha)  # use ridge regression models
-    cv = sklearn.model_selection.RepeatedKFold(n_splits=5, n_repeats=10)
-
-    # compute crossvalidated prediction scores
-    scores = []
-    for col in cols:
-        # set dependent variable and calculate 10-fold mean fit/predict scores
-        df_subset = df.loc[:, vectors.columns.values]  # use .loc[] so copy is created and no setting with copy warning is issued
-        df_subset[col] = df[col]
-        df_subset = df_subset.dropna()  # drop NaNs for this specific y
-        x = df_subset[vectors.columns.values]
-        y = df_subset[col]
-        cv_scores = sklearn.model_selection.cross_val_score(model, x, y, cv=cv)
-        median_score = np.median(cv_scores)
-        penalized_score = median_score * penalty
-        ars = np.sqrt(penalized_score) if penalized_score > 0 else 0
-        rs = np.sqrt(median_score) if median_score > 0 else 0
-        scores.append({
-            'var': col,
-            'adjusted r': ars,
-            'adjusted r-squared': penalized_score,
-            'r-squared': median_score,
-            'r': rs
-        })
-    return pd.DataFrame(scores)
-
-##### evaluate norms #####
 # Map two-letter language code to language name.  Some data files have "word",
 # and others have "word_{language}" so we need to try both.
 code2lang = {'af':'afrikaans',
@@ -282,101 +192,6 @@ code2lang = {'af':'afrikaans',
              'vi':'vietnamese',
              'zh':'chinese'}
 
-# uses predict_norms defined above
-def evaluate_norms(lang, alpha=1.0):
-    """
-    Evaluate norms prediction for the given language
-    """
-    # Load the norms dataset for the language
-    datasetspath = os.path.join(basedir,datasetsdir,datasetsindex)
-    datasets = pd.read_csv(datasetspath, sep=',', comment='#')
-
-    langfiles = datasets[datasets['language'] == lang].iat[0,1]
-    flist = langfiles.split('|');
-
-    # Predict for all of the matrices
-    # Make this the outer look because they take longer to read
-    scores = []
-    for dim in dimension_list:
-        for win in window_list:
-            for alg in algo_list:
-                # Load the words by dimensions matrix
-                base_file_name = f'{lang}_{str(dim)}_{str(win)}_{alg}'
-                input_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv')
-                print("Loading model " + base_file_name)
-                with open(input_path, 'r', encoding='utf-8') as vecfile:
-                    # skip header
-                    next(vecfile)
-                    # initialize arrays
-                    vectors = np.zeros((10000000, dim))
-                    words = np.empty(10000000, dtype=object) # fill arrays
-                    for i, line in enumerate(vecfile):
-                        # Limit to 10 million, although it looks like 7.5 million is the largest
-                        if i >= 10000000:
-                            break
-                        rowentries = line.rstrip('\n').split(',')
-                        words[i] = rowentries[0]
-                        vectors[i] = rowentries[1:dim+1]
-
-                    # truncate empty part of arrays, if necessary
-                    vectors = vectors[:i]
-                    words = words[:i]
-
-                    # normalize by L1 norm
-                    vectors = vectors / np.linalg.norm(vectors, axis=1).reshape(-1, 1)
-
-                    wordsXdims = pd.DataFrame(vectors)
-                    wordsXdims.set_index(words, inplace=True)
-
-                    # Do it for each language dataset
-                    for langfile in flist:
-                        print('Evaluating ' + langfile)
-                        datapath = os.path.join(basedir,datasetsdir,normsdir,langfile)
-                        try:
-                            norms = pd.read_csv(datapath,sep=',', comment='#',na_values=['-','–'])
-
-                            # Get the subset of columns that we need for prediction
-                            cols = list_norm_columns(norms)
-                            # Get the column that has the words in it.  It might just be word, or
-                            # it might be word_{language_name}
-                            if 'word' in norms.columns:
-                                wordcol = 'word'
-                            else:
-                                wordcol = 'word_' + code2lang[lang]
-
-                            check = norms.columns
-                            if not wordcol in check:
-                                # There are some other special cases
-                                if wordcol + '_simple' in check:
-                                    wordcol = wordcol + '_simple'
-                                elif wordcol + '_uk' in check:
-                                    wordcol = wordcol + '_uk'
-                                elif lang == fa and 'word_persian' in check:
-                                    wordcol = 'word_persian'
-
-                            cols = [wordcol] + cols
-                            print("Considering columns " + str(cols))
-                            norms = norms[cols]
-                            norms.set_index(wordcol, inplace=True)
-
-                            score = predict_norms(wordsXdims, norms, alpha)
-                            score['source'] = base_file_name
-                            score['dataset'] = langfile
-                            scores.append(score)
-                        except Exception as ex:
-                            print("Error processing " + langfile)
-                            print(f"An exception of type {type(ex).__name__} occurred processing {langfile}. Arguments:\n{ex.args!r}")
-
-    # Concatenate the results
-    if len(scores) > 0:
-        scores = pd.concat(scores)
-        outpath = os.path.join(basedir, evaldir, normsdir, f'{lang}_eval.csv')
-        with open(outpath, 'a') as f:
-            scores.to_csv(f, mode='a', header=f.tell()==0)
-
-approved = ['AOA_M', 'FAMILIAR_M', 'CONCRETE_M', 'IMAGINE_M', 'DOMINATE_M', 'VALENCE_M',
-            'AROUSAL_M', 'IMAGEABILITY_M','TYPICAL_M', 'ANGRY_M', 'SAD_M']
-
 def list_norm_columns(df):
     """
     Returns a list of columns in the given data frame that end with _M,
@@ -389,3 +204,184 @@ def list_norm_columns(df):
             cols_out.append(col)
     return cols_out
 
+def load_extended_norms(lang):
+    """Loads and resolves the word column for every extended norms file for this language once."""
+    datasetspath = os.path.join(basedir, datasetsdir, datasetsindex)
+    datasets = pd.read_csv(datasetspath, sep=',', comment='#')
+    match = datasets[datasets['language'] == lang]
+    if len(match) == 0:
+        return []
+    flist = match.iat[0, 1].split('|')
+
+    loaded = []
+    for langfile in flist:
+        datapath = os.path.join(basedir, datasetsdir, normsdir, langfile)
+        try:
+            norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'])
+
+            # Get the subset of columns that we need for prediction
+            cols = list_norm_columns(norms)
+            # Get the column that has the words in it.  It might just be word, or
+            # it might be word_{language_name}
+            if 'word' in norms.columns:
+                wordcol = 'word'
+            else:
+                wordcol = 'word_' + code2lang[lang]
+
+            check = norms.columns
+            if wordcol not in check:
+                # There are some other special cases
+                if wordcol + '_simple' in check:
+                    wordcol = wordcol + '_simple'
+                elif wordcol + '_uk' in check:
+                    wordcol = wordcol + '_uk'
+                elif lang == 'fa' and 'word_persian' in check:
+                    wordcol = 'word_persian'
+
+            cols = [wordcol] + cols
+            norms = norms[cols]
+            norms.set_index(wordcol, inplace=True)
+            loaded.append((langfile, norms))
+        except Exception as ex:
+            print("Error loading " + langfile)
+            print(f"An exception of type {type(ex).__name__} occurred loading {langfile}. Arguments:\n{ex.args!r}")
+    return loaded
+
+def load_count_freqs(lang):
+    """
+    Loads and cleans both frequency-count datasets for this language once.
+    Transparently reads either a plain .tsv or a zip-compressed .tsv.zip (as
+    downloaded from storage) without decompressing to disk first.
+    """
+    datasetspath = os.path.join(basedir, datasetsdir, countdir)
+    flist = [f'dedup.{lang}.words.unigrams.tsv', f'dedup.{lang}wiki-meta.words.unigrams.tsv']
+
+    loaded = []
+    for langfile in flist:
+        plain_path = os.path.join(datasetspath, langfile)
+        compressed_path = plain_path + '.zip'
+        if os.path.exists(plain_path):
+            datapath = plain_path
+        elif os.path.exists(compressed_path):
+            datapath = compressed_path
+        else:
+            print(f'Counts file {langfile} not found, skipping.')
+            continue
+        freqs = pd.read_csv(datapath, sep='\t', comment='#', na_values=['-', '–'])
+        freqs.set_index('unigram', inplace=True)
+
+        # Clean up the data
+        freqs_index = list(freqs.index.values)
+        for i in range(len(freqs_index)):
+            if isinstance(freqs_index[i], str):
+                freqs_index[i] = unicodedata.normalize("NFKD", freqs_index[i])
+                freqs_index[i] = unidecode(freqs_index[i]).strip()
+        freqs.index = freqs_index
+        loaded.append((langfile, freqs))
+    return loaded
+
+##### evaluate one already-loaded model against one already-loaded dataset group #####
+def evaluate_replication(wordsXdims, replication_norms, alpha=1.0):
+    """Replicates the original van Paridon & Thompson norm predictions using ridge regression."""
+    scores = []
+    for norms_fname, norms in replication_norms:
+        print(f'predicting norms from {norms_fname}')
+        score = predict_norms(wordsXdims, norms, alpha)
+        score['source'] = norms_fname
+        scores.append(score)
+    if len(scores) > 0:
+        return pd.concat(scores)
+    return None
+
+def evaluate_norms(wordsXdims, extended_norms, alpha=1.0):
+    """Predicts extended psycholinguistic norms datasets (valence, AoA, concreteness, etc.)."""
+    scores = []
+    for langfile, norms in extended_norms:
+        print('Evaluating ' + langfile)
+        score = predict_norms(wordsXdims, norms, alpha)
+        score['dataset'] = langfile
+        scores.append(score)
+    if len(scores) > 0:
+        return pd.concat(scores)
+    return None
+
+def evaluate_counts(wordsXdims, count_freqs, alpha=1.0):
+    """Predicts word frequency counts."""
+    scores = []
+    for langfile, freqs in count_freqs:
+        print('Evaluating ' + langfile)
+        score = predict_counts(wordsXdims, freqs, alpha)
+        score['dataset'] = langfile
+        scores.append(score)
+    if len(scores) > 0:
+        return pd.concat(scores)
+    return None
+
+##### write output incrementally, one file per language per evaluation type #####
+def append_scores(outfile, scores):
+    """Appends a scores dataframe to a per-language eval file, writing the header only once."""
+    os.makedirs(os.path.dirname(outfile), exist_ok=True)
+    write_header = not os.path.exists(outfile)
+    with open(outfile, 'a') as f:
+        scores.to_csv(f, mode='a', header=write_header, index=False)
+
+##### main driver: one pass per language, one model load per configuration #####
+def evaluate_language(lang, alpha=1.0, overwrite=False):
+    """
+    For a given language, loads each trained model exactly once and runs it
+    against replication norms, extended norms, and frequency counts -- with
+    both the raw vectors and L2-normalized vectors, to compare the two --
+    writing results to one output file per evaluation type as each model
+    finishes, before moving on to the next model.
+    """
+    replication_out = os.path.join(basedir, evaldir, replicationdir, f'{lang}_eval.csv')
+    norms_out = os.path.join(basedir, evaldir, normsdir, f'{lang}_eval.csv')
+    counts_out = os.path.join(basedir, evaldir, countdir, f'{lang}_eval.csv')
+    outfiles = [replication_out, norms_out, counts_out]
+
+    if not overwrite and any(os.path.exists(f) for f in outfiles):
+        print(f'Evaluation output for {lang} already exists, and overwrite not specified. Skipping.')
+        return
+
+    for outfile in outfiles:
+        if os.path.exists(outfile):
+            os.remove(outfile)
+
+    replication_norms = load_replication_norms(lang)
+    extended_norms = load_extended_norms(lang)
+    count_freqs = load_count_freqs(lang)
+
+    for dim in dimension_list:
+        for win in window_list:
+            for alg in algo_list:
+                base_file_name = f'{lang}_{dim}_{win}_{alg}'
+                words, raw_vectors = load_model(lang, dim, win, alg)
+                if words is None:
+                    continue
+                print(f'Evaluating model {base_file_name}')
+
+                for normalized in (False, True):
+                    vectors = normalize_vectors(raw_vectors) if normalized else raw_vectors
+                    wordsXdims = pd.DataFrame(vectors)
+                    wordsXdims.set_index(words, inplace=True)
+
+                    if replication_norms:
+                        scores = evaluate_replication(wordsXdims, replication_norms, alpha)
+                        if scores is not None:
+                            scores['source'] = base_file_name
+                            scores['normalized'] = normalized
+                            append_scores(replication_out, scores)
+
+                    if extended_norms:
+                        scores = evaluate_norms(wordsXdims, extended_norms, alpha)
+                        if scores is not None:
+                            scores['source'] = base_file_name
+                            scores['normalized'] = normalized
+                            append_scores(norms_out, scores)
+
+                    if count_freqs:
+                        scores = evaluate_counts(wordsXdims, count_freqs, alpha)
+                        if scores is not None:
+                            scores['source'] = base_file_name
+                            scores['normalized'] = normalized
+                            append_scores(counts_out, scores)

@@ -53,3 +53,18 @@ vignettes/*.pdf
 05_manuscript/~$dataset_list.xlsx
 05_manuscript/~$nuscript.docx
 .env
+
+# downloaded trained models are large and re-downloadable (see download/README.md);
+# keep just one small one tracked as a worked example, matching raw/'s pattern
+/models/*.bz2
+!/models/af_50_1_cbow_wxd.csv.bz2
+
+# other languages' frequency-count data downloaded from MinIO's frequency_source/
+# (see download/README.md); keep the af/afwiki example tracked, in whichever of
+# the two formats evaluation.py's load_count_freqs reads (plain .tsv or .zip)
+/eval_inputs/counts/*.tsv
+/eval_inputs/counts/*.zip
+!/eval_inputs/counts/dedup.af.words.unigrams.tsv
+!/eval_inputs/counts/dedup.afwiki-meta.words.unigrams.tsv
+!/eval_inputs/counts/dedup.af.words.unigrams.tsv.zip
+!/eval_inputs/counts/dedup.afwiki-meta.words.unigrams.tsv.zip
