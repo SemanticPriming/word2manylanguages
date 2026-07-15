@@ -7,5 +7,5 @@ This Shiny app allows interactive exploration of model performance across langua
 In R or RStudio, run:
 
 ```r
-shiny::runApp("05_visualization") # if in base project directory
+shiny::runApp("04_visualization") # if in base project directory
 ```

@@ -1,6 +1,8 @@
 # Results Directory
 
-This folder contains the final model evaluation results for the full 59-language run — the outputs of [`03_evaluation/`](../03_evaluation/) and [`04_postprocessing/`](../04_postprocessing/). For a runnable example of the pipeline that *produces* results like these, see [`data/README.md`](../data/README.md) — the `data/`, `preprocessed/`, `corpora/`, `models/`, `datasets/`, `evals/`, and `scores/` folders at the repository root hold a single-language (Afrikaans) worked example.
+This folder contains the final model evaluation results for the full 59-language run — the outputs of [`03_evaluation/`](../03_evaluation/). For a runnable example of the pipeline that *produces* results like these, see [`raw/README.md`](../raw/README.md) — the `raw/`, `preprocessed/`, `corpora/`, `models/`, `eval_inputs/`, and `eval_results/` folders at the repository root hold a single-language (Afrikaans) worked example.
+
+`formatted_data/` below was produced by an R aggregation step (previously `04_postprocessing/`) that has since been removed pending a rewrite of `03_evaluation/` to output pre-formatted data directly; until that rewrite lands, `count_evals/`, `rep_evals/`, and `extension_evals/` cannot be re-combined into `formatted_data/` from scratch.
 
 ## 📁 Subfolders
 

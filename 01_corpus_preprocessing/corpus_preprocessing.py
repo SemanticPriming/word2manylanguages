@@ -10,7 +10,7 @@ from lxml import etree
 
 ###### define directories ######
 # basedir defined in main file
-datadir = "data"
+datadir = "raw"
 processdir = "preprocessed"
 corpusdir = "corpora"
 

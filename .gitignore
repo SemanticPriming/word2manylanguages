@@ -44,15 +44,12 @@ vignettes/*.pdf
 /02_model_training/__pycache__
 /03_evaluation/__pycache__
 /deal with
-/evals/replication/.ipynb_checkpoints
-/scores/replication/.ipynb_checkpoints
-/datasets/.ipynb_checkpoints
-/evals/counts/.ipynb_checkpoints
-/evals/norms/.ipynb_checkpoints
-/scores/counts/.ipynb_checkpoints
-/scores/norms/.ipynb_checkpoints
-/06_manuscript/authorship
-/06_manuscript/manuscript_files
-06_manuscript/~$dataset_list.xlsx
-06_manuscript/~$nuscript.docx
+/eval_results/replication/.ipynb_checkpoints
+/eval_inputs/.ipynb_checkpoints
+/eval_results/counts/.ipynb_checkpoints
+/eval_results/norms/.ipynb_checkpoints
+/05_manuscript/authorship
+/05_manuscript/manuscript_files
+05_manuscript/~$dataset_list.xlsx
+05_manuscript/~$nuscript.docx
 .env

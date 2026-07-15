@@ -26,12 +26,11 @@ We provide:
 Code is organized by pipeline stage, in the order the workflow actually runs:
 
 - `01_corpus_preprocessing/` → `02_model_training/` → `03_evaluation/`: the Python pipeline that builds corpora, trains embedding models, and evaluates them against psycholinguistic norms (see `word2manylanguages_workflow.ipynb` for a walk-through)
-- `04_postprocessing/`: R code that combines evaluation outputs for the Shiny app
-- `05_visualization/`: the Shiny app for interactive exploration
-- `06_manuscript/`: the manuscript and supporting materials
-- `07_presentations/`: presentations from conferences on this project
+- `04_visualization/`: the Shiny app for interactive exploration
+- `05_manuscript/`: the manuscript and supporting materials
+- `06_presentations/`: presentations from conferences on this project
 - `results/`: final evaluation results and processed data from the modeling
-- `data/`, `preprocessed/`, `corpora/`, `models/`, `datasets/`, `evals/`, `scores/`: working folders for the Python pipeline, checked in with a single-language (Afrikaans) worked example — see [data/README.md](data/README.md)
+- `raw/`, `preprocessed/`, `corpora/`, `models/`, `eval_inputs/`, `eval_results/`: working folders for the Python pipeline, checked in with a single-language (Afrikaans) worked example — see [raw/README.md](raw/README.md)
 
 ## 🚀 Get Started
 
