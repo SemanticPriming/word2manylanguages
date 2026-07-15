@@ -1,14 +1,13 @@
-###### libraries ######
+# Libraries
 import os
 import pandas as pd
 from gensim.models import FastText
 
-###### define directories ######
-# basedir defined in main file
+# Define locations
 corpusdir = "corpora"
 modeldir = 'models'
 
-##### read the concatenated corpus for gensim #####
+# Read the concatenated corpus for gensim 
 class sentences(object):
     """
     Return lines from a full corpus text file as a sequence
@@ -33,7 +32,7 @@ class sentences(object):
 
         raise StopIteration()
 
-##### build gensim models #####
+# Build gensim models
 def vectorize_stream(language, min_freq=5, dim=50, win=3, alg=0):
     """
     Creates the word2vec model using gensim.
@@ -59,13 +58,13 @@ def build_models(language,overwrite=False):
         for win in window_list:
             for alg in algo_list:
                 base_file_name = f'{language}_{str(dim)}_{str(win)}_{alg}'
-                output_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv')
+                output_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv.bz2')
                 if os.path.exists(output_path) and not overwrite:
-                    print(f'File {base_file_name}_wxd.csv exists, and overwrite not specified. Skipping.');
+                    print(f'File {base_file_name}_wxd.csv.bz2 exists, and overwrite not specified. Skipping.');
                 else:
                     print("Building model " + base_file_name)
                     model = vectorize_stream(language, 5, dim, win, alg)
                     #Write down the model?
                     words=list(model.wv.key_to_index)
                     wordsxdims = pd.DataFrame(model.wv[words],words)
-                    wordsxdims.to_csv(output_path,index_label='word')
+                    wordsxdims.to_csv(output_path,index_label='word',compression='bz2')

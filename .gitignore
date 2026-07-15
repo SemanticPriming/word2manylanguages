@@ -58,9 +58,12 @@ vignettes/*.pdf
 # "{filename}.{etag}.part.minio" while downloading, then renames on completion
 *.part.minio
 
-# downloaded trained models are large and re-downloadable (see download/README.md);
-# keep just one small one tracked as a worked example, matching raw/'s pattern
+# downloaded/trained models are large and re-downloadable (see download/README.md);
+# keep just one small one tracked as a worked example, matching raw/'s pattern.
+# build_models() writes .csv.bz2 directly; .csv is ignored too as a safety net
+# for stray uncompressed output (e.g. from an older copy of the script).
 /models/*.bz2
+/models/*.csv
 !/models/af_50_1_cbow_wxd.csv.bz2
 
 # other languages' frequency-count data downloaded from MinIO's frequency_source/

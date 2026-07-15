@@ -25,7 +25,10 @@ We provide:
 
 Code is organized by pipeline stage, in the order the workflow actually runs:
 
+[workflow](word2manylanguages_process.png)
+
 - `01_corpus_preprocessing/`: includes the code to download, clean, and concatenate the subtitles and wikipedia corpora into one large `.txt` file for the next stage of processing. 
+- `02_model_training`: takes the finalized corpus text and trains 60 models for each language varying the window size, dimensions, and algorithm. 
 
 
 - `01_corpus_preprocessing/` → `02_model_training/` → `03_evaluation/`: the Python pipeline that builds corpora, trains embedding models, and evaluates them against psycholinguistic norms (see `word2manylanguages_workflow.ipynb` for a walk-through)
