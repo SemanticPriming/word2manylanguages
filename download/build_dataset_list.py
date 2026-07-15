@@ -36,6 +36,7 @@ import re
 import time
 
 import pdfplumber
+import requests
 
 import zenodo_common as zc
 
@@ -51,7 +52,14 @@ MODEL_FILENAME_PATTERN = re.compile(r"^[a-z]{2}_(\d+)_(\d+)_(cbow|sg)_wxd\.csv\.
 # digits (rather than a greedy [\d\s]+) matters: some cells (e.g. language
 # "sv") have several bare DOIs back-to-back with no "Part N:" separator, and
 # a greedy match would swallow the next DOI's leading digits too.
-DOI_PATTERN = re.compile(r"10\.5281/zenodo\.\s*\d(?:\s*\d){7}")
+#
+# pdfplumber's text extraction can also inject a stray space *inside* the
+# constant "10.5281/zenodo." prefix itself (e.g. language "si"/"sq" extract
+# as "1 0.5281/zenodo...") -- tolerate whitespace between every character of
+# the prefix too, not just between the trailing record-id digits.
+_DOI_PREFIX = "10.5281/zenodo."
+_DOI_PREFIX_PATTERN = r"\s*".join(re.escape(ch) for ch in _DOI_PREFIX)
+DOI_PATTERN = re.compile(_DOI_PREFIX_PATTERN + r"\s*\d(?:\s*\d){7}")
 LANG_PATTERN = re.compile(r"^[a-z]{2}$")
 
 # Known-bad cells in the source PDF. The PDF itself isn't edited (kept as the
@@ -116,15 +124,27 @@ def build_file_table(entries):
     logical name via zenodo_common.group_logical_files).
     """
     file_rows = []
+    broken = []
     for e in entries:
         record_id = e["doi"].rsplit(".", 1)[-1]
         print(f"Querying Zenodo record {record_id} ({e['language']} part {e['part']})...")
-        groups = zc.group_logical_files(zc.list_files(record_id))
+        try:
+            groups = zc.group_logical_files(zc.list_files(record_id))
+        except requests.exceptions.HTTPError as ex:
+            print(f"WARNING: record {record_id} ({e['language']} part {e['part']}) is unreachable: {ex}")
+            broken.append((e["language"], e["part"], e["doi"]))
+            continue
         if not groups:
             print(f"WARNING: no model files found in record {record_id} ({e['language']} part {e['part']})")
         for logical_name in sorted(groups):
             file_rows.append({"language": e["language"], "part": e["part"], "file": logical_name, "doi": e["doi"]})
         time.sleep(0.25)  # be polite to the Zenodo API across ~100 records
+
+    if broken:
+        print(f"\n{len(broken)} record(s) failed and were skipped -- these DOIs need investigating, not silently trusting:")
+        for lang, part, doi in broken:
+            print(f"  {lang} part {part}: {doi}")
+
     return file_rows
 
 

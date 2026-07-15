@@ -43,6 +43,7 @@ vignettes/*.pdf
 /01_corpus_preprocessing/__pycache__
 /02_model_training/__pycache__
 /03_evaluation/__pycache__
+/download/__pycache__
 /deal with
 /eval_results/replication/.ipynb_checkpoints
 /eval_inputs/.ipynb_checkpoints
