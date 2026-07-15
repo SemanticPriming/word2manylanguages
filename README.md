@@ -25,6 +25,9 @@ We provide:
 
 Code is organized by pipeline stage, in the order the workflow actually runs:
 
+- `01_corpus_preprocessing/`: includes the code to download, clean, and concatenate the subtitles and wikipedia corpora into one large `.txt` file for the next stage of processing. 
+
+
 - `01_corpus_preprocessing/` → `02_model_training/` → `03_evaluation/`: the Python pipeline that builds corpora, trains embedding models, and evaluates them against psycholinguistic norms (see `word2manylanguages_workflow.ipynb` for a walk-through)
 - `04_visualization/`: the Shiny app for interactive exploration
 - `05_manuscript/`: the manuscript and supporting materials

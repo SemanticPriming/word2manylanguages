@@ -29,7 +29,8 @@ The full corpora, trained models, and per-language evaluation outputs for all 59
 - `raw/` — the real downloaded `wikipedia-af.bz2` and `subtitles-af.zip`
 - `eval_inputs/` — real reference files (`datasets.csv`, `datasets_original.csv`, and example norms/counts data, including a synthetic `af-fake-2025` dataset for testing the norm-prediction code path)
 - `models/` — one real trained model (`af_50_1_cbow_wxd.csv.bz2`) kept as a worked example; the other 59 dim/window/algo combinations for `af`, and every other language, are download-on-demand (see below)
-- `preprocessed/`, `corpora/`, `eval_results/` — empty except for `.gitkeep` placeholders; running the notebook against the `raw/` and `eval_inputs/` files above will populate them
+- `preprocessed/`, `corpora/` — gitignored; running the pipeline against the `raw/` files above regenerates them (see their own READMEs for what to expect: [preprocessed/README.md](../preprocessed/README.md), [corpora/README.md](../corpora/README.md))
+- `eval_results/` — empty except for a `.gitkeep` placeholder; running the pipeline against the `eval_inputs/` files above will populate it
 
 For the real, full-scale corpora, trained models, and frequency-count data for all 59 languages — either from the lab's MinIO storage or the public Zenodo archives — see [`download/README.md`](../download/README.md).
 

@@ -14,7 +14,7 @@ datadir = "raw"
 processdir = "preprocessed"
 corpusdir = "corpora"
 
-###### downloading subtitles and/or wikipedia dumps ######
+# Downloading subtitles and/or wikipedia dumps 
 def download(source, language, overwrite=False):
     """
     Download data by source and language.
@@ -54,7 +54,7 @@ def download(source, language, overwrite=False):
                 f.write(chunk)
         print("Download complete.")
 
-###### clean up files ######
+# Clean up files and prepare for processing
 class articles(object):
     """
     Read a wikipedia dump file and return one article at a time
@@ -99,10 +99,10 @@ def clean(source, language):
 
     if ('subtitles' == source):
         clean_subtitles(language)
-        #prune(source, language)
+        prune(source, language)
     else:
         clean_wikipedia(language)
-        #prune(source, language)
+        prune(source, language)
 
 
 def sub_xml_to_text(xml, parser):
@@ -241,42 +241,50 @@ def clean_wikipedia(language, overwrite=False):
 
 def get_hash(tokens):
     """
-    Creates the simhash for the given list of tokens
+    Creates the simhash for the given list of tokens.
+    Builds the same 4-character shingles as the original shingle-then-hash
+    implementation, and passes them as an unweighted, ungrouped list:
+    Simhash()'s own text-mode groups repeated shingles and weights them by
+    count, which overflows numpy's uint8 arithmetic on highly repetitive text.
     """
-    shingles = [''.join(shingle) for shingle in
-                    simhash.shingle(''.join(tokens), 4)]
-    hashes = [simhash.unsigned_hash(s.encode('utf8')) for s in shingles]
-    return simhash.compute(hashes)
+    text = ''.join(tokens)
+    shingles = [text[i:i + 4] for i in range(max(len(text) - 3, 1))]
+    return simhash.Simhash(shingles)
 
-def prune(source, language):
+def prune(source, language, overwrite=False):
     """
-    Remove duplicate documents from archive file using simhash.
+    Remove near-duplicate documents from archive file using simhash.
+    Files within `distance` Hamming bits of an earlier (kept) file are pruned.
     """
-    input_path = os.path.join(basedir,datadir,f'{source}-{language}-pre.zip')
-    output_path = os.path.join(basedir,datadir,f'{source}-{language}-pruned.zip')
+    input_path = os.path.join(basedir,processdir,f'{source}-{language}-pre.zip')
+    output_path = os.path.join(basedir,processdir,f'{source}-{language}-pruned.zip')
+
+    if os.path.exists(output_path) and not overwrite:
+        print(f'File {source}-{language}-pruned.zip exists, and overwrite not specified. Skipping.');
+        return
+
     input_file = zipfile.ZipFile(input_path, 'r')
 
-    to_remove = []
-    hash_list = []
-    hash_dict = dict()
-
     print("Checking for duplicates.")
+    hashes = []
     for f in input_file.namelist():
         text = str(input_file.open(f).read())
         tokens = re.split(r'\W+', text.lower(), flags=re.UNICODE)
-        hash = get_hash(tokens)
-        hash_list.append(hash)
-        hash_dict[hash] = f
+        hashes.append((f, get_hash(tokens)))
 
     input_file.close()
 
-    blocks = 4
     distance = 2
-    matches = simhash.find_all(hash_list, blocks, distance)
-    print(f'Got {len(matches)} matches')
-    for match in matches:
-        print(f'({hash_dict[match[0]]}, {hash_dict[match[1]]})')
-        to_remove.append(hash_dict[match[1]])
+    index = simhash.SimhashIndex(hashes, k=distance)
+
+    to_remove = set()
+    for f, h in hashes:
+        if f in to_remove:
+            continue
+        for dup in index.get_near_dups(h):
+            if dup != f:
+                print(f'({f}, {dup})')
+                to_remove.add(dup)
 
     print(f'Found {len(to_remove)} files to prune.')
     input_file = zipfile.ZipFile(input_path, 'r')
@@ -288,14 +296,14 @@ def prune(source, language):
 
     output_file.close()
 
-###### after cleaning, put together the whole corpus into one big text ######
+# After cleaning, put together the whole corpus into one big text 
 def concatenate_corpus(language,overwrite=False):
     """
-    Reads pre-processed subtitle and wikipedia text, and creates a single
-    text file containing all of the tokenized sentences.
+    Reads pruned (deduplicated) subtitle and wikipedia text, and creates a
+    single text file containing all of the tokenized sentences.
     """
-    subs_input_path = os.path.join(basedir,processdir,f'subtitles-{language}-pre.zip')
-    wiki_input_path = os.path.join(basedir,processdir,f'wikipedia-{language}-pre.zip')
+    subs_input_path = os.path.join(basedir,processdir,f'subtitles-{language}-pruned.zip')
+    wiki_input_path = os.path.join(basedir,processdir,f'wikipedia-{language}-pruned.zip')
     corpus_output_path = os.path.join(basedir,corpusdir,f'corpus-{language}.txt')
     if os.path.exists(corpus_output_path) and not overwrite:
         print(f'File corpus-{language}.txt exists, and overwrite not specified. Skipping.');
