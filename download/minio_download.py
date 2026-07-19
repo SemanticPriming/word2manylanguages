@@ -16,10 +16,15 @@ Usage:
 import argparse
 import os
 import sys
+import time
 from pathlib import Path
 
 from minio import Minio
 from minio.error import S3Error
+from urllib3.exceptions import ProtocolError
+
+MAX_RETRIES = 5
+RETRY_BACKOFF_SECONDS = 5
 
 
 def get_client() -> Minio:
@@ -44,8 +49,22 @@ def get_client() -> Minio:
 
 
 def download_object(client: Minio, bucket: str, object_name: str, dest: Path) -> None:
+    if dest.exists() and dest.stat().st_size == client.stat_object(bucket, object_name).size:
+        print(f"{dest} already downloaded, skipping.")
+        return
+
     dest.parent.mkdir(parents=True, exist_ok=True)
-    client.fget_object(bucket, object_name, str(dest))
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            client.fget_object(bucket, object_name, str(dest))
+            break
+        except (ProtocolError, ConnectionError) as e:
+            if attempt == MAX_RETRIES:
+                raise
+            wait = RETRY_BACKOFF_SECONDS * attempt
+            print(f"  connection dropped ({e}), retrying in {wait}s ({attempt}/{MAX_RETRIES})...")
+            time.sleep(wait)
     print(f"Downloaded {bucket}/{object_name} -> {dest}")
 
 
@@ -63,11 +82,19 @@ def download_prefix(client: Minio, bucket: str, prefix: str, dest_dir: Path) -> 
     if not objects:
         sys.exit(f"No objects found under {bucket}/{prefix}")
 
+    failed = []
     for obj in objects:
         if obj.is_dir:
             continue
         dest = dest_dir / os.path.basename(obj.object_name)
-        download_object(client, bucket, obj.object_name, dest)
+        try:
+            download_object(client, bucket, obj.object_name, dest)
+        except (S3Error, ProtocolError, ConnectionError) as e:
+            print(f"  giving up on {obj.object_name} after {MAX_RETRIES} attempts: {e}")
+            failed.append(obj.object_name)
+
+    if failed:
+        sys.exit(f"{len(failed)} object(s) failed to download: {', '.join(failed)}")
 
 
 def main() -> None:
@@ -89,7 +116,7 @@ def main() -> None:
             download_object(client, args.bucket, args.object, Path(args.dest))
         else:
             download_prefix(client, args.bucket, args.prefix, Path(args.dest))
-    except S3Error as e:
+    except (S3Error, ProtocolError, ConnectionError) as e:
         sys.exit(f"MinIO error: {e}")
 
 

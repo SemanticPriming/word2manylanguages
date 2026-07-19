@@ -1,0 +1,215 @@
+dataset,language,variable_normed,variable_original
+de-grandy-2020.tsv,german,imageability,imageability (young adults)
+de-grandy-2020.tsv,german,imageability,imageability (older adults)
+de-grandy-2020.tsv,german,emotion,emotionality (young adults)
+de-grandy-2020.tsv,german,emotion,emotionality (older adults)
+de-kanske-2010.tsv,german,valence,valence
+de-kanske-2010.tsv,german,arousal,arousal
+de-kanske-2010.tsv,german,concreteness,concreteness
+de-schauenburg-2015.tsv,german,dominance,potency
+de-schauenburg-2015.tsv,german,other,authority
+de-schauenburg-2015.tsv,german,other,community
+de-schauenburg-2015.tsv,german,arousal,arousal
+de-schauenburg-2015.tsv,german,valence,valence
+en-binder-2016.tsv,english,other,mean r
+en-binder-2016.tsv,english,sensory,vision
+en-binder-2016.tsv,english,sensory,bright
+en-binder-2016.tsv,english,sensory,dark
+en-binder-2016.tsv,english,sensory,color
+en-binder-2016.tsv,english,sensory,pattern
+en-binder-2016.tsv,english,sensory,large
+en-binder-2016.tsv,english,sensory,small
+en-binder-2016.tsv,english,sensory,motion
+en-binder-2016.tsv,english,sensory,biomotion
+en-binder-2016.tsv,english,sensory,fast
+en-binder-2016.tsv,english,sensory,slow
+en-binder-2016.tsv,english,sensory,shape
+en-binder-2016.tsv,english,sensory,complexity
+en-binder-2016.tsv,english,sensory,face
+en-binder-2016.tsv,english,sensory,body
+en-binder-2016.tsv,english,sensory,touch
+en-binder-2016.tsv,english,sensory,temperature
+en-binder-2016.tsv,english,sensory,texture
+en-binder-2016.tsv,english,sensory,weight
+en-binder-2016.tsv,english,sensory,pain
+en-binder-2016.tsv,english,sensory,audition
+en-binder-2016.tsv,english,sensory,loud
+en-binder-2016.tsv,english,sensory,low
+en-binder-2016.tsv,english,sensory,high
+en-binder-2016.tsv,english,sensory,sound
+en-binder-2016.tsv,english,sensory,music
+en-binder-2016.tsv,english,sensory,speech
+en-binder-2016.tsv,english,sensory,taste
+en-binder-2016.tsv,english,sensory,smell
+en-binder-2016.tsv,english,sensory,head
+en-binder-2016.tsv,english,sensory,upperlimb
+en-binder-2016.tsv,english,sensory,lowerlimb
+en-binder-2016.tsv,english,sensory,practice
+en-binder-2016.tsv,english,other,landmark
+en-binder-2016.tsv,english,other,path
+en-binder-2016.tsv,english,sensory,scene
+en-binder-2016.tsv,english,sensory,near
+en-binder-2016.tsv,english,sensory,toward
+en-binder-2016.tsv,english,sensory,away
+en-binder-2016.tsv,english,other,number
+en-binder-2016.tsv,english,other,time
+en-binder-2016.tsv,english,other,duration
+en-binder-2016.tsv,english,other,long
+en-binder-2016.tsv,english,other,short
+en-binder-2016.tsv,english,other,caused
+en-binder-2016.tsv,english,other,consequential
+en-binder-2016.tsv,english,other,social
+en-binder-2016.tsv,english,other,human
+en-binder-2016.tsv,english,other,communication
+en-binder-2016.tsv,english,other,self
+en-binder-2016.tsv,english,other,cognition
+en-binder-2016.tsv,english,other,benefit
+en-binder-2016.tsv,english,other,harm
+en-binder-2016.tsv,english,valence,pleasant
+en-binder-2016.tsv,english,valence,unpleasant
+en-binder-2016.tsv,english,emotion,happy
+en-binder-2016.tsv,english,emotion,sad
+en-binder-2016.tsv,english,emotion,angry
+en-binder-2016.tsv,english,emotion,disgusted
+en-binder-2016.tsv,english,emotion,fearful
+en-binder-2016.tsv,english,emotion,surprised
+en-binder-2016.tsv,english,other,drive
+en-binder-2016.tsv,english,other,needs
+en-binder-2016.tsv,english,other,attention
+en-binder-2016.tsv,english,arousal,arousal
+en-binder-2016.tsv,english,other,word length
+en-binder-2016.tsv,english,other,word frequency
+en-binder-2016.tsv,english,other,word log10 frequency
+en-brysbaert-2014.tsv,english,concreteness,concreteness
+en-brysbaert-2019.tsv,english,other,prevalence
+en-engelthaler-2018.tsv,english,other,humorousness
+en-janschewitz-2008.tsv,english,familiarity,familiarity
+en-janschewitz-2008.tsv,english,emotion,tabooness
+en-janschewitz-2008.tsv,english,other,personal use
+en-janschewitz-2008.tsv,english,emotion,offensiveness
+en-keuleers-2012.tsv,english,other,lexical decision time
+en-kuperman-2012.tsv,english,aoa,age of acquisition
+en-lynott-2019.tsv,english,sensory,auditory
+en-lynott-2019.tsv,english,sensory,gustatory
+en-lynott-2019.tsv,english,sensory,haptic
+en-lynott-2019.tsv,english,sensory,interoceptive
+en-lynott-2019.tsv,english,sensory,olfactory
+en-lynott-2019.tsv,english,sensory,visual
+en-lynott-2019.tsv,english,sensory,foot and leg
+en-lynott-2019.tsv,english,sensory,hand and arm
+en-lynott-2019.tsv,english,sensory,head
+en-lynott-2019.tsv,english,sensory,mouth
+en-lynott-2019.tsv,english,sensory,torso
+en-lynott-2019.tsv,english,sensory,perceptual exclusivity
+en-lynott-2019.tsv,english,sensory,action exclusivity
+en-lynott-2019.tsv,english,sensory,sensorimotor exclusivity
+en-pexman-2019.tsv,english,sensory,body object interaction
+en-scott-2019.tsv,english,arousal,arousal
+en-scott-2019.tsv,english,valence,valence
+en-scott-2019.tsv,english,dominance,dominance
+en-scott-2019.tsv,english,concreteness,concreteness
+en-scott-2019.tsv,english,imageability,imageability
+en-scott-2019.tsv,english,familiarity,familiarity
+en-scott-2019.tsv,english,aoa,age of acquisition
+en-scott-2019.tsv,english,other,semantic size
+en-scott-2019.tsv,english,other,gender association
+en-warriner-2013.tsv,english,valence,valence
+en-warriner-2013.tsv,english,arousal,arousal
+en-warriner-2013.tsv,english,dominance,dominance
+es-diez-alamo-2018.tsv,spanish,sensory,color vividness
+es-diez-alamo-2018.tsv,spanish,sensory,visual motion
+es-diez-alamo-2018.tsv,spanish,sensory,graspability
+es-diez-alamo-2018.tsv,spanish,sensory,risk of pain
+es-diez-alamo-2018.tsv,spanish,sensory,sound intensity
+es-diez-alamo-2018.tsv,spanish,sensory,pleasant taste
+es-diez-alamo-2018.tsv,spanish,sensory,smell intensity
+es-diez-alamo-2019.tsv,spanish,sensory,sensory experience
+es-guasch-2016.tsv,spanish,valence,valence
+es-guasch-2016.tsv,spanish,arousal,arousal
+es-guasch-2016.tsv,spanish,concreteness,concreteness
+es-guasch-2016.tsv,spanish,imageability,imageability
+es-guasch-2016.tsv,spanish,other,context availability
+es-guasch-2016.tsv,spanish,familiarity,familiarity
+es-san-miguel-abella-2019.tsv,spanish,sensory,motor content
+es-san-miguel-abella-2019.tsv,spanish,aoa,age of acquisition
+es-stadthagen-gonzalez-2017.tsv,spanish,valence,valence
+es-stadthagen-gonzalez-2017.tsv,spanish,arousal,arousal
+es-stadthagen-gonzalez-2018.tsv,spanish,emotion,happiness
+es-stadthagen-gonzalez-2018.tsv,spanish,emotion,disgust
+es-stadthagen-gonzalez-2018.tsv,spanish,emotion,anger
+es-stadthagen-gonzalez-2018.tsv,spanish,emotion,fear
+es-stadthagen-gonzalez-2018.tsv,spanish,emotion,sadness
+es-stadthagen-gonzalez-2018.tsv,spanish,valence,valence
+es-stadthagen-gonzalez-2018.tsv,spanish,arousal,arousal
+fa-bakhtiar-2015.tsv,farsi,aoa,age of acquisition
+fa-bakhtiar-2015.tsv,farsi,familiarity,familiarity
+fa-bakhtiar-2015.tsv,farsi,imageability,imageability
+fi-eilola-2010.tsv,finnish,familiarity,familiarity
+fi-eilola-2010.tsv,finnish,valence,valence
+fi-eilola-2010.tsv,finnish,emotion,emotional charge
+fi-eilola-2010.tsv,finnish,emotion,offensiveness
+fi-eilola-2010.tsv,finnish,concreteness,concreteness
+fi-soderholm-2013.tsv,finnish,arousal,arousal
+fi-soderholm-2013.tsv,finnish,valence,valence
+fr-bonin-2018.tsv,french,concreteness,concreteness
+fr-bonin-2018.tsv,french,other,context availability
+fr-bonin-2018.tsv,french,valence,valence
+fr-bonin-2018.tsv,french,arousal,arousal
+fr-chedid-2019a.tsv,french,familiarity,familiarity
+fr-chedid-2019b.tsv,french,sensory,visual perceptual strength
+fr-chedid-2019b.tsv,french,sensory,auditory perceptual strength
+fr-desrochers-2009.tsv,french,imageability,imageability
+fr-ferrand-2010.tsv,french,other,lexical decision time
+fr-monnier-2014.tsv,french,arousal,arousal
+fr-monnier-2014.tsv,french,valence,valence
+id-sianipar-2016.tsv,indonesian,valence,valence
+id-sianipar-2016.tsv,indonesian,arousal,arousal
+id-sianipar-2016.tsv,indonesian,dominance,dominance
+id-sianipar-2016.tsv,indonesian,other,predicability
+id-sianipar-2016.tsv,indonesian,concreteness,concreteness
+it-vergallito-2020.tsv,italian,other,lexical decision time
+it-vergallito-2020.tsv,italian,other,naming time
+it-vergallito-2020.tsv,italian,sensory,auditory
+it-vergallito-2020.tsv,italian,sensory,gustatory
+it-vergallito-2020.tsv,italian,sensory,haptic
+it-vergallito-2020.tsv,italian,sensory,olfactory
+it-vergallito-2020.tsv,italian,sensory,visual
+it-vergallito-2020.tsv,italian,sensory,modality exclusivity
+ms-yap-2010.tsv,malay,other,lexical decision time
+nl-brysbaert-2014.tsv,dutch,aoa,age of acquisition
+nl-brysbaert-2014.tsv,dutch,concreteness,concreteness
+nl-keuleers-2015.tsv,dutch,other,prevalence
+nl-roest-2018.tsv,dutch,arousal,arousal
+nl-roest-2018.tsv,dutch,valence,valence
+nl-roest-2018.tsv,dutch,emotion,taboo (general)
+nl-roest-2018.tsv,dutch,emotion,taboo (personal)
+nl-roest-2018.tsv,dutch,emotion,insulting
+nl-speed-2017.tsv,dutch,sensory,auditory
+nl-speed-2017.tsv,dutch,sensory,gustatory
+nl-speed-2017.tsv,dutch,sensory,olfactory
+nl-speed-2017.tsv,dutch,sensory,tactile
+nl-speed-2017.tsv,dutch,sensory,visual
+nl-speed-2017.tsv,dutch,sensory,modality exclusivity
+nl-speed-2017.tsv,dutch,arousal,arousal
+nl-speed-2017.tsv,dutch,dominance,dominance
+nl-speed-2017.tsv,dutch,valence,valence
+nl-verheyen-2019.tsv,dutch,aoa,age of acquisition
+nl-verheyen-2019.tsv,dutch,arousal,arousal
+nl-verheyen-2019.tsv,dutch,concreteness,concreteness
+nl-verheyen-2019.tsv,dutch,dominance,dominance
+nl-verheyen-2019.tsv,dutch,familiarity,familiarity
+nl-verheyen-2019.tsv,dutch,imageability,imageability
+nl-verheyen-2019.tsv,dutch,valence,valence
+pl-imbir-2016.tsv,polish,valence,valence
+pl-imbir-2016.tsv,polish,arousal,arousal
+pl-imbir-2016.tsv,polish,dominance,dominance
+pl-imbir-2016.tsv,polish,concreteness,concreteness
+pl-imbir-2016.tsv,polish,imageability,imageability
+pl-imbir-2016.tsv,polish,aoa,age of acquisition
+pt-cameirao-2010.tsv,portuguese,aoa,age of acquisition
+pt-soares-2012.tsv,portuguese,valence,valence
+pt-soares-2012.tsv,portuguese,arousal,arousal
+pt-soares-2012.tsv,portuguese,dominance,dominance
+tr-goz-2017.tsv,turkish,aoa,age of acquisition
+tr-goz-2017.tsv,turkish,imageability,imagery
+tr-goz-2017.tsv,turkish,concreteness,concreteness
