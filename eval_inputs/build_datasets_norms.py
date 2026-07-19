@@ -133,7 +133,16 @@ BARE_ROOTS = {
 }
 
 
+# Compounds that would otherwise prefix-match a sensory root (e.g.
+# "visual_complexity_mean" starts with "visual_") but measure something
+# else entirely -- picture-naming visual complexity, not how strongly a
+# word evokes visual sensory experience. Checked before prefix fallback.
+EXCLUDE_CONCEPTS = {'visual_complexity', 'visualcomplexity'}
+
+
 def normalize_concept(concept, stat):
+    if concept in EXCLUDE_CONCEPTS:
+        return None
     if stat == '':
         if concept not in BARE_ROOTS:
             return None

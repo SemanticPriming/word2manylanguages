@@ -8,7 +8,7 @@ Everything the pipeline reads that's too large (or too numerous) to check into t
 4. [Extended psycholinguistic norms](#4-extended-norms-eval_inputsnorms) → `eval_inputs/norms/`
 5. [Replication norms](#5-replication-norms-eval_inputsreplication) → `eval_inputs/replication/`
 
-Each destination folder is checked in with just an Afrikaans (`af`)-scale worked example — real data for 1–3, a synthetic `af-fake-2025` file for 4–5 (there's no real Afrikaans data in the LAB or subs2vec's replication set) — see [`raw/README.md`](../raw/README.md) for the full rundown of what's checked in vs. gitignored across all these working folders.
+Each destination folder is checked in with just an Afrikaans (`af`)-scale worked example — real data for 1–4 (for 4, that's `Luniewska2016.csv`, the one LAB dataset with an Afrikaans column), nothing but a README for 5 (there's no Afrikaans data anywhere in subs2vec's replication set, real or synthetic) — see [`raw/README.md`](../raw/README.md) for the full rundown of what's checked in vs. gitignored across all these working folders.
 
 ## 1. Raw corpus text (`raw/`)
 
@@ -94,15 +94,17 @@ python download/minio_download.py --prefix frequency_source/dedup.bg --dest eval
 
 ## 4. Extended norms (`eval_inputs/norms/`)
 
-Psycholinguistic norm datasets from Buchanan, Valentine, & Maxwell's (2019) [**Linguistic Annotated Bibliography (LAB)**](https://doi.org/10.3758/s13428-018-1130-8) — used by `evaluation.py`'s `load_extended_norms`/`predict_norms` (Research Question 3, extended norm prediction beyond the original subs2vec replication set). `eval_inputs/norms/` ships with only a synthetic `af-fake-2025.csv` for exercising this code path — the real per-dataset files (`Riegel2015.csv`, `Torrance2018.csv`, `Alario1999.csv`, etc., ~300 files, one per cited study) are published as release assets on the [`SemanticPriming/semanticprimeR`](https://github.com/SemanticPriming/semanticprimeR) repo, release [`v0.0.1` ("LAB-data")](https://github.com/SemanticPriming/semanticprimeR/releases/tag/v0.0.1).
+Psycholinguistic norm datasets from Buchanan, Valentine, & Maxwell's (2019) [**Linguistic Annotated Bibliography (LAB)**](https://doi.org/10.3758/s13428-018-1130-8) — used by `evaluation.py`'s `load_extended_norms`/`predict_norms` (Research Question 3, extended norm prediction beyond the original subs2vec replication set). `eval_inputs/norms/` ships with only `Luniewska2016.csv` for exercising this code path (the one LAB dataset with an Afrikaans column) — the rest of the per-dataset files (`Riegel2015.csv`, `Torrance2018.csv`, `Alario1999.csv`, etc., ~300 files, one per cited study) are published as release assets on the [`SemanticPriming/semanticprimeR`](https://github.com/SemanticPriming/semanticprimeR) repo, release [`v0.0.1` ("LAB-data")](https://github.com/SemanticPriming/semanticprimeR/releases/tag/v0.0.1).
 
-`eval_inputs/datasets.csv` maps each language to the pipe-separated list of filenames `load_extended_norms` expects for it (`eval_inputs/datasets_original.csv` is the same mapping before some renaming/consolidation). Download with the [GitHub CLI](https://cli.github.com/):
+`eval_inputs/datasets_norms.csv` is the full catalog `load_extended_norms` reads: one row per `(dataset, language, variable)`, already filtered to the mean-valued columns for the constructs the pipeline predicts (valence, arousal, dominance, concreteness, familiarity, imageability, aoa, emotion, sensory) and mapped to those normalized names — see [`eval_inputs/build_datasets_norms.py`](../eval_inputs/build_datasets_norms.py) for how it's generated and re-run it after adding new dataset files. Download with the [GitHub CLI](https://cli.github.com/):
 
 ```bash
 # every dataset (~300 files, all languages)
 gh release download v0.0.1 --repo SemanticPriming/semanticprimeR --dir eval_inputs/norms/
 
-# just the files needed for one language -- look them up in datasets.csv first
+# just the files needed for one language -- look them up in datasets_norms.csv first
+awk -F, -v lang=german '$2==lang || index($2,"|"lang) || index($2,lang"|") {print $1}' \
+  eval_inputs/datasets_norms.csv | sort -u
 gh release download v0.0.1 --repo SemanticPriming/semanticprimeR --dir eval_inputs/norms/ \
   --pattern 'Riegel2015.csv' --pattern 'Russell1970.csv' --pattern 'Schauenburg2015.csv'
 ```

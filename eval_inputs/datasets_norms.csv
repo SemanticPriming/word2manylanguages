@@ -11,7 +11,6 @@ Altarriba1999.csv,english,imageability,imagine_mean,,imagine_mean
 Alvarez2007.csv,spanish|english,aoa,aoa_mean,,aoa_mean
 Alyahya2015.csv,english|arabic,imageability,imagine_mean,,imagine_mean
 Alyahya2015.csv,english|arabic,aoa,aoa_mean,,aoa_mean
-Alyahya2015.csv,english|arabic,sensory,visual_complexity_mean,,visual_complexity_mean
 Alyahya2015.csv,english|arabic,imageability,imagine_mean,synonym,imagine_mean_synonym
 Alyahya2015.csv,english|arabic,aoa,aoa_mean,synonym,aoa_mean_synonym
 Amsel2012.csv,english,familiarity,familiar_mean,,familiar_mean
@@ -166,13 +165,10 @@ Briesemeister2011.csv,german,emotion,sad_mean,,sad_mean
 Briesemeister2011.csv,german,emotion,fear_mean,,fear_mean
 Briesemeister2011.csv,german,emotion,disgust_mean,,disgust_mean
 Brodeur2010.csv,english,familiarity,familiar_mean,,familiar_mean
-Brodeur2010.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean
 Brodeur2010.csv,english,sensory,manipulability_mean,,manipulability_mean
 Brodeur2012.csv,french,familiarity,familiar_mean,,familiar_mean
-Brodeur2012.csv,french,sensory,visual_complexity_mean,,visual_complexity_mean
 Brodeur2012.csv,french,sensory,manipulability_mean,,manipulability_mean
 Brodeur2014.csv,english,familiarity,familiar_mean,,familiar_mean
-Brodeur2014.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean
 Brodeur2014.csv,english,sensory,manipulability_mean,,manipulability_mean
 Brown1969.csv,english,valence,pleasant_mean,,pleasant_mean
 Brown1969.csv,english,emotion,emotionality_mean,,emotionality_mean
@@ -236,7 +232,6 @@ Clark2004.csv,english,emotion,emotionality_goodness_mean,,emotionality_goodness_
 Clark2004.csv,english,familiarity,familiar_mean,replication,familiar_mean_replication
 Clark2004.csv,english,imageability,imagine_mean,replication,imagine_mean_replication
 Clarke2018.csv,english|thai,familiarity,familiar_mean,,familiar_mean
-Clarke2018.csv,english|thai,sensory,visual_complexity_mean,,visual_complexity_mean
 Clarke2018.csv,english|thai,sensory,grasp_mean,,grasp_mean
 Clarke2018.csv,english|thai,sensory,mime_mean,,mime_mean
 Clarke2018.csv,english|thai,aoa,aoa_mean,,aoa_mean
@@ -280,7 +275,6 @@ Cuetos1999.csv,spanish|english,aoa,aoa_mean,,aoa_mean
 Cuetos2003.csv,spanish|english,imageability,imagine_mean,,imagine_mean
 Cuetos2003.csv,spanish|english,familiarity,familiar_mean,,familiar_mean
 Cuetos2003.csv,spanish|english,aoa,aoa_mean,,aoa_mean
-Cuetos2003.csv,spanish|english,sensory,visual_complexity_mean,,visual_complexity_mean
 Dasi2004.csv,spanish,familiarity,familiar_mean,,familiar_mean
 Davies2016a_en.csv,english,aoa,aoa_mean,,aoa_mean
 Davies2016a_en.csv,english,imageability,imagine_mean,,imagine_mean
@@ -322,7 +316,6 @@ Diez-Alamo2018a.csv,spanish,sensory,smell_mean,,smell_mean
 Diez-Alamo2018a.csv,spanish,sensory,boi_mean,,boi_mean
 Diez-Alamo2018a.csv,spanish,concreteness,concrete_mean,,concrete_mean
 Diez-Alamo2018a.csv,spanish,imageability,imagine_mean,,imagine_mean
-Dimitripoulou2009.csv,greek|english,sensory,visual_complexity_mean,,visual_complexity_mean
 Dimitripoulou2009.csv,greek|english,aoa,aoa_subjective_mean,,aoa_subjective_mean
 Dodds2011.csv,english,emotion,happiness_mean,,happiness_mean
 Duchon2013.csv,spanish,familiarity,familiar_mean,,familiar_mean
@@ -392,7 +385,6 @@ Ferre2017.csv,spanish|english,emotion,fear_mean,,fear_mean
 Ferre2017.csv,spanish|english,emotion,disgust_mean,,disgust_mean
 Ferstl2011.csv,english,valence,valence_mean,,valence_mean
 Fiez1997.csv,english,familiarity,familiar_mean,,familiar_mean
-Fiez1997.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean
 Friendly1982.csv,english,imageability,imagne_mean,,imagne_mean
 Friendly1982.csv,english,concreteness,concrete_mean,,concrete_mean
 Garnham2020.csv,english,valence,valence_mean,subtlex,valence_mean_subtlex
@@ -400,8 +392,6 @@ Ghasisin2015.csv,persian|english,familiarity,familiar_mean,middle_age,familiar_m
 Ghasisin2015.csv,persian|english,familiarity,familiar_mean,elderly,familiar_mean_elderly
 Ghasisin2015.csv,persian|english,aoa,aoa_mean,middle_age,aoa_mean_middle_age
 Ghasisin2015.csv,persian|english,aoa,aoa_mean,elderly,aoa_mean_elderly
-Ghasisin2015.csv,persian|english,sensory,visual_complexity_mean,middle_age,visual_complexity_mean_middle_age
-Ghasisin2015.csv,persian|english,sensory,visual_complexity_mean,elderly,visual_complexity_mean_elderly
 Ghyselinck2000.csv,dutch,aoa,aoa_mean,,aoa_mean
 Ghyselinck2003.csv,dutch,aoa,aoa_mean,,aoa_mean
 Gilhooly1977.csv,english,imageability,imagine_mean,,imagine_mean
@@ -539,7 +529,6 @@ Janschewitz2008.csv,english,arousal,arousal_mean,,arousal_mean
 Janschewitz2008.csv,english,imageability,imagine_mean,,imagine_mean
 Janssen2011.csv,english,familiarity,familiar_mean,,familiar_mean
 Janssen2011.csv,english,imageability,imagine_mean,,imagine_mean
-Janssen2011.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean
 Jasmin2012.csv,dutch,arousal,arousal_mean,,arousal_mean
 Jasmin2012.csv,dutch,concreteness,concrete_mean,,concrete_mean
 Jasmin2012.csv,dutch,dominance,dominance_mean,,dominance_mean
@@ -689,7 +678,6 @@ Mahjoubnavaz2024.csv,english,arousal,arousal_mean,female,arousal_mean_english_fe
 Mahjoubnavaz2024.csv,persian,arousal,arousal_mean,female,arousal_mean_persian_female
 Manoiloff2010.csv,spanish|english,familiarity,familiar_mean,,familiar_mean
 Manoiloff2010.csv,spanish|english,imageability,imagine_mean,,imagine_mean
-Manoiloff2010.csv,spanish|english,sensory,visual_complexity_mean,,visual_complexity_mean
 Manoiloff2010.csv,spanish|english,aoa,aoa_mean,,aoa_mean
 Marques1997.csv,portuguese,familiarity,familiar_mean,referent,familiar_mean_referent
 Marques1997.csv,portuguese,familiarity,familiar_mean,meaning,familiar_mean_meaning
@@ -704,7 +692,6 @@ Marques2007.csv,portuguese|english,imageability,imagine_mean,,imagine_mean
 Masterson1998.csv,english,familiarity,familiar_mean,,familiar_mean
 Masterson1998.csv,english,aoa,aoa_mean,,aoa_mean
 Masterson1998.csv,english,imageability,imagine_mean,,imagine_mean
-Masterson1998.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean
 McRae2005.csv,english,familiarity,familiar_mean,,familiar_mean
 Miklashevsky2018.csv,russian|english,sensory,visual_modality_mean,,visual_modality_mean
 Miklashevsky2018.csv,russian|english,sensory,auditory_modality_mean,,auditory_modality_mean
@@ -769,19 +756,15 @@ Moors2013.csv,dutch|english,aoa,aoa_mean,male_female,aoa_mean_male_female
 Moreno-Martinez2012.csv,english|spanish,aoa,aoa_mean,,aoa_mean
 Moreno-Martinez2012.csv,english|spanish,familiarity,familiar_mean,,familiar_mean
 Moreno-Martinez2012.csv,english|spanish,sensory,manip_mean,,manip_mean
-Moreno-Martinez2012.csv,english|spanish,sensory,visual_complexity_mean,,visual_complexity_mean
 Moreno-Martinez2014.csv,spanish|english,aoa,aoa_subjective_mean,,aoa_subjective_mean
 Moreno-Martinez2014.csv,spanish|english,familiarity,familiar_mean,,familiar_mean
 Moreno-Martinez2014.csv,spanish|english,sensory,manip_mean,,manip_mean
 Morrison1997.csv,,imageability,imagine_mean,,imagine_mean
 Morrison1997.csv,,familiarity,familiar_mean,,familiar_mean
-Morrison1997.csv,,sensory,visual_complexity_mean,,visual_complexity_mean
 Morrow2005.csv,english,familiarity,familiar_mean,older,familiar_mean_older
-Morrow2005.csv,english,sensory,visual_complexity_mean,older,visual_complexity_mean_older
 Morrow2005.csv,english,imageability,imagine_mean,older,imagine_mean_older
 Morrow2005.csv,english,aoa,aoa_mean,older,aoa_mean_older
 Morrow2005.csv,english,familiarity,familiar_mean,younger,familiar_mean_younger
-Morrow2005.csv,english,sensory,visual_complexity_mean,younger,visual_complexity_mean_younger
 Morrow2005.csv,english,imageability,imagine_mean,younger,imagine_mean_younger
 Morrow2005.csv,english,aoa,aoa_mean,younger,aoa_mean_younger
 Morucci2019.csv,italian,sensory,gustatory_mean,,gustatory_mean
@@ -796,7 +779,6 @@ Muraki2025.csv,,concreteness,concrete_mean,,concrete_mean
 Muraki2025.csv,,imageability,imagine_mean,,imagine_mean
 Muraki2025.csv,,valence,valence_mean,,valence_mean
 Navarrete2019.csv,english|italian,aoa,aoa_mean,,aoa_mean
-Navarrete2019.csv,english|italian,sensory,visual_complexity_mean,,visual_complexity_mean
 Navarrete2019.csv,english|italian,familiarity,familiar_mean,,familiar_mean
 Navarrete2019.csv,english|italian,sensory,manipulability_mean,,manipulability_mean
 Nelson2004.csv,english,concreteness,concrete_mean,,concrete_mean
@@ -873,8 +855,6 @@ Quadflieg2014.csv,french|english|german,familiarity,familiar_mean,,familiar_mean
 Quadflieg2014.csv,french|english|german,valence,valence_mean,,valence_mean
 Raman2014.csv,turkish|english,familiarity,familiar_mean,conceptual,familiar_mean_conceptual
 Raman2014.csv,turkish|english,aoa,aoa_mean,,aoa_mean
-Raman2014.csv,turkish|english,sensory,visual_complexity_mean,,visual_complexity_mean
-Rami2022.csv,arabic|english,sensory,visual_complexity_mean,,visual_complexity_mean
 Rami2022.csv,arabic|english,aoa,aoa_mean,,aoa_mean
 Rami2022.csv,arabic|english,imageability,imagine_mean,,imagine_mean
 Raslescu2023.csv,english,valence,valence_mean,,valence_mean
@@ -936,7 +916,6 @@ Roest2017.csv,dutch|english,emotion,taboo_mean,nonreligious,taboo_mean_nonreligi
 Roest2017.csv,dutch|english,emotion,taboo_personal_mean,nonreligious,taboo_personal_mean_nonreligious
 Roest2017.csv,dutch|english,emotion,insulting_mean,nonreligious,insulting_mean_nonreligious
 Rogic2013.csv,english|croatian,familiarity,familiar_mean,,familiar_mean
-Rogic2013.csv,english|croatian,sensory,visual_complexity_mean,,visual_complexity_mean
 Rossion2004.csv,english,familiarity,familiar_mean,line,familiar_mean_line
 Rossion2004.csv,english,familiarity,familiar_mean,gray,familiar_mean_gray
 Rossion2004.csv,english,familiarity,familiar_mean,color,familiar_mean_color
@@ -968,8 +947,6 @@ Salmon2010.csv,english,sensory,manip1_practice_mean,,manip1_practice_mean
 Salmon2010.csv,english,sensory,manip2_practice_mean,,manip2_practice_mean
 Sanfeliu1996.csv,spanish,familiarity,familiar_mean,,familiar_mean_spanish
 Sanfeliu1996.csv,english,familiarity,familiar_mean,,familiar_mean_english
-Sanfeliu1996.csv,spanish,sensory,visual_complexity_mean,,visual_complexity_mean_spanish
-Sanfeliu1996.csv,english,sensory,visual_complexity_mean,,visual_complexity_mean_english
 Sarli2022.csv,english|spanish,valence,valence_mean,all,valence_mean_all
 Sarli2022.csv,english|spanish,arousal,arousal_mean,all,arousal_mean_all
 Sarli2022.csv,english|spanish,dominance,dominance_mean,all,dominance_mean_all
@@ -1015,7 +992,6 @@ Scott2019.csv,english,concreteness,concrete_mean,,concrete_mean
 Scott2019.csv,english,imageability,imagine_mean,,imagine_mean
 Scott2019.csv,english,familiarity,familiar_mean,,familiar_mean
 Scott2019.csv,english,aoa,aoa_mean,,aoa_mean
-Shao2014.csv,dutch|english,sensory,visual_complexity_mean,,visual_complexity_mean
 Shao2014.csv,dutch|english,familiarity,familiar_mean,,familiar_mean
 Shao2014.csv,dutch|english,imageability,imagine_mean,,imagine_mean
 Shao2014.csv,dutch|english,aoa,aoa_mean,years,aoa_mean_years
@@ -1142,7 +1118,6 @@ Torrance2018_sr.csv,serbian,familiarity,familiar_mean,,familiar_mean
 Tsaparina2011.csv,english|french|russian,familiarity,familiar_mean,,familiar_mean
 Tsaparina2011.csv,english|french|russian,aoa,aoa_mean,,aoa_mean
 Tsaparina2011.csv,english|french|russian,imageability,imagine_mean,,imagine_mean
-Tsaparina2011.csv,english|french|russian,sensory,visual_complexity_mean,,visual_complexity_mean
 Valueva2025.csv,russian|english,aoa,aoa_mean,,aoa_mean
 Valueva2025.csv,russian|english,concreteness,concrete_mean,grigoriev2022,concrete_mean_grigoriev2022
 Valueva2025.csv,russian|english,concreteness,concrete_mean,soloviev2022_500,concrete_mean_soloviev2022_500
@@ -1208,7 +1183,6 @@ Warriner2013.csv,english,dominance,dominance_mean,high_education,dominance_mean_
 Webb2018.csv,,emotion,emotion_mean,,emotion_mean
 Weekes2007.csv,chinese|english|chinese_simplified,familiarity,familiar_mean,,familiar_mean
 Weekes2007.csv,chinese|english|chinese_simplified,imageability,imagine_mean,,imagine_mean
-Weekes2007.csv,chinese|english|chinese_simplified,sensory,visual_complexity_mean,,visual_complexity_mean
 Weekes2007.csv,chinese|english|chinese_simplified,aoa,aoa_mean,subjective,aoa_mean_subjective
 Whalen1994.csv,english,familiarity,familiar_mean,name,familiar_mean_name
 Whalen1994.csv,english,familiarity,familiar_mean,,familiar_mean

@@ -117,7 +117,7 @@ def predict_norms(vectors, norms, alpha=1.0):
 def predict_counts(vectors, freqs, alpha=1.0):
     return predict(vectors, freqs, alpha, label_col='var')
 
-# Load ground-truth evaluation datasets once per language 
+# Load ground-truth evaluation datasets once per language
 def load_replication_norms(lang):
     """Loads every replication norms file for this language once."""
     norms_path = os.path.join(basedir, datasetsdir, replicationdir)
@@ -126,6 +126,9 @@ def load_replication_norms(lang):
         if norms_fname.startswith(lang):
             norms = pd.read_csv(os.path.join(norms_path, norms_fname), sep='\t', comment='#')
             norms = norms.set_index('word')
+            # lowercase to match load_model's casefolded vector words, so the
+            # join in predict() doesn't silently drop case-mismatched rows
+            norms.index = norms.index.str.casefold()
             loaded.append((norms_fname, norms))
     return loaded
 
@@ -202,6 +205,20 @@ lang_aliases = {
     'chinese': {'chinese', 'chinese_simplified', 'chinese_traditional'},
 }
 
+# A handful of LAB source files predate UTF-8 becoming universal and were
+# saved in an OS-specific 8-bit encoding; everything else is plain UTF-8,
+# optionally with a BOM (utf-8-sig strips that transparently, and reads
+# identically to plain utf-8 when there's no BOM). Verified by decoding each
+# file with a few candidate encodings and checking the result against known
+# words in that language -- see conversation history / git blame for how
+# these were identified, in case more turn up as new datasets are added.
+norms_encoding_overrides = {
+    'Eilola2010.csv': 'mac_roman',
+    'Stadthagen-Gonzalez2017.csv': 'latin-1',
+    'Stadthagen-Gonzalez2017a.csv': 'latin-1',
+    'Kremer2011_de.csv': 'latin-1',
+}
+
 def load_extended_norms(lang):
     """
     Loads and resolves the word column for every extended norms file that
@@ -226,7 +243,9 @@ def load_extended_norms(lang):
     for langfile, group in match.groupby('dataset'):
         datapath = os.path.join(basedir, datasetsdir, normsdir, langfile)
         try:
-            norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'])
+            encoding = norms_encoding_overrides.get(langfile, 'utf-8-sig')
+            norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'],
+                                 encoding=encoding)
 
             # Get the column that has the words in it.  It might just be word, or
             # it might be word_{language_name}
@@ -258,6 +277,9 @@ def load_extended_norms(lang):
 
             norms = norms[[wordcol] + cols]
             norms.set_index(wordcol, inplace=True)
+            # lowercase to match load_model's casefolded vector words, so the
+            # join in predict() doesn't silently drop case-mismatched rows
+            norms.index = norms.index.str.casefold()
             loaded.append((langfile, norms))
         except Exception as ex:
             print("Error loading " + langfile)
@@ -293,6 +315,9 @@ def load_count_freqs(lang):
             if isinstance(freqs_index[i], str):
                 freqs_index[i] = unicodedata.normalize("NFKD", freqs_index[i])
                 freqs_index[i] = unidecode(freqs_index[i]).strip()
+                # lowercase to match load_model's casefolded vector words, so
+                # the join in predict() doesn't silently drop case-mismatched rows
+                freqs_index[i] = freqs_index[i].casefold()
         freqs.index = freqs_index
         loaded.append((langfile, freqs))
     return loaded
