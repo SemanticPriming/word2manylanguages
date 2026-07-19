@@ -17,7 +17,7 @@ datasetsdir = "eval_inputs"
 countdir = "counts"
 normsdir = "norms"
 replicationdir = "replication"
-datasetsindex = "datasets.csv"
+normscatalog = "datasets_norms.csv"
 
 dimension_list = [50,100,200,300,500]
 window_list = [1,2,3,4,5,6]
@@ -191,41 +191,49 @@ code2lang = {'af':'afrikaans',
              'vi':'vietnamese',
              'zh':'chinese'}
 
-def list_norm_columns(df):
-    """
-    Returns a list of columns in the given data frame that end with _M,
-    those being the columns that contain mean norms.
-    """
-    cols_out = []
-    cols = df.columns.values
-    for col in cols:
-        if col.endswith("_M") or "_M_" in col:
-            cols_out.append(col)
-    return cols_out
+# A few code2lang names don't match the literal language tokens found in
+# eval_inputs/datasets_norms.csv's `language` column (built from each
+# dataset's word_{language} column name, spelled as that paper's authors
+# wrote it) -- these are the mismatches that actually occur in the data.
+lang_aliases = {
+    'farsi': {'farsi', 'persian'},
+    'galacian': {'galacian', 'galician'},
+    'maylay': {'maylay', 'malay'},
+    'chinese': {'chinese', 'chinese_simplified', 'chinese_traditional'},
+}
 
 def load_extended_norms(lang):
-    """Loads and resolves the word column for every extended norms file for this language once."""
-    datasetspath = os.path.join(basedir, datasetsdir, datasetsindex)
-    datasets = pd.read_csv(datasetspath, sep=',', comment='#')
-    match = datasets[datasets['language'] == lang]
+    """
+    Loads and resolves the word column for every extended norms file that
+    has at least one target-construct mean column for this language, using
+    the pre-built catalog at eval_inputs/datasets_norms.csv (see
+    eval_inputs/build_datasets_norms.py) to know which file/column pairs to
+    read. The catalog is already filtered to mean-valued columns for the
+    constructs we predict (valence, arousal, dominance, concreteness,
+    familiarity, imageability, aoa, emotion, sensory), so no further column
+    filtering is needed here.
+    """
+    catalogpath = os.path.join(basedir, datasetsdir, normscatalog)
+    catalog = pd.read_csv(catalogpath)
+    langname = code2lang[lang]
+    accepted = lang_aliases.get(langname, {langname})
+    match = catalog[catalog['language'].fillna('').apply(
+        lambda cell: bool(accepted & set(cell.split('|'))))]
     if len(match) == 0:
         return []
-    flist = match.iat[0, 1].split('|')
 
     loaded = []
-    for langfile in flist:
+    for langfile, group in match.groupby('dataset'):
         datapath = os.path.join(basedir, datasetsdir, normsdir, langfile)
         try:
             norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'])
 
-            # Get the subset of columns that we need for prediction
-            cols = list_norm_columns(norms)
             # Get the column that has the words in it.  It might just be word, or
             # it might be word_{language_name}
             if 'word' in norms.columns:
                 wordcol = 'word'
             else:
-                wordcol = 'word_' + code2lang[lang]
+                wordcol = 'word_' + langname
 
             check = norms.columns
             if wordcol not in check:
@@ -236,9 +244,19 @@ def load_extended_norms(lang):
                     wordcol = wordcol + '_uk'
                 elif lang == 'fa' and 'word_persian' in check:
                     wordcol = 'word_persian'
+                elif lang == 'zh':
+                    for candidate in ('word_chinese_simplified', 'word_chinese_traditional'):
+                        if candidate in check:
+                            wordcol = candidate
+                            break
 
-            cols = [wordcol] + cols
-            norms = norms[cols]
+            # Catalog already tells us exactly which mean columns this
+            # dataset/language pair has -- just select them.
+            cols = [c for c in dict.fromkeys(group['variable_original']) if c in check]
+            if wordcol not in check or not cols:
+                continue
+
+            norms = norms[[wordcol] + cols]
             norms.set_index(wordcol, inplace=True)
             loaded.append((langfile, norms))
         except Exception as ex:
