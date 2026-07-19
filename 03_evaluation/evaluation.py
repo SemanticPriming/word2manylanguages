@@ -79,14 +79,27 @@ def normalize_vectors(vectors):
     """L2-normalizes each word's vector to unit length."""
     return vectors / np.linalg.norm(vectors, axis=1).reshape(-1, 1)
 
-# Shared ridge regression prediction 
-def predict(vectors, targets, alpha=1.0, label_col='norm'):
+# Shared ridge regression prediction
+def predict(vectors, targets, alpha=1.0, label_col='norm', fallback_index=None):
     """
     Ridge regression function to use the embeddings to predict target values
     (psycholinguistic norms, replication norms, or frequency counts).
+    `fallback_index` (currently only set for counts, see load_count_freqs) is
+    an alternate, Unicode-transliterated key tried only for words that don't
+    match `vectors` under `targets`'s own index, so a lossy fallback form
+    never displaces a real, direct match.
     """
     cols = targets.columns.values
     df = targets.join(vectors, how='inner')
+
+    if fallback_index is not None:
+        unmatched = ~targets.index.isin(df.index)
+        if unmatched.any():
+            fallback_targets = targets[unmatched].copy()
+            fallback_targets.index = fallback_index[unmatched]
+            fallback_df = fallback_targets.join(vectors, how='inner')
+            if len(fallback_df) > 0:
+                df = pd.concat([df, fallback_df])
 
     # compensate for missing ys somehow
     total = len(targets)
@@ -132,7 +145,7 @@ def predict_norms(vectors, norms, alpha=1.0):
     return predict(vectors, norms, alpha, label_col='norm')
 
 def predict_counts(vectors, freqs, alpha=1.0):
-    return predict(vectors, freqs, alpha, label_col='var')
+    return predict(vectors, freqs, alpha, label_col='var', fallback_index=freqs.attrs.get('fallback_index'))
 
 # Load ground-truth evaluation datasets once per language
 def load_replication_norms(lang):
@@ -326,16 +339,34 @@ def load_count_freqs(lang):
         freqs = pd.read_csv(datapath, sep='\t', comment='#', na_values=['-', '–'])
         freqs.set_index('unigram', inplace=True)
 
-        # Clean up the data
+        # lowercase to match load_model's casefolded vector words, so the
+        # join in predict() doesn't silently drop case-mismatched rows.
+        # Corpus preprocessing never transliterates, so the model vocabulary
+        # keeps whatever script/diacritics the source text used -- matching
+        # on the untouched word first (rather than an always-transliterated
+        # one) is what actually lines up with it.
         freqs_index = list(freqs.index.values)
         for i in range(len(freqs_index)):
             if isinstance(freqs_index[i], str):
-                freqs_index[i] = unicodedata.normalize("NFKD", freqs_index[i])
-                freqs_index[i] = unidecode(freqs_index[i]).strip()
-                # lowercase to match load_model's casefolded vector words, so
-                # the join in predict() doesn't silently drop case-mismatched rows
                 freqs_index[i] = freqs_index[i].casefold()
         freqs.index = freqs_index
+
+        # Unicode-normalize + transliterate as a *fallback* key only, tried
+        # in predict() solely for words that don't match directly. Applying
+        # this unconditionally used to actively destroy matches for
+        # non-Latin-script languages (e.g. Bengali words in native script
+        # transliterated to a romanization the model vocabulary never
+        # contains), while still occasionally rescuing a genuinely
+        # differently-encoded word for other languages.
+        fallback_index = []
+        for word in freqs_index:
+            if isinstance(word, str):
+                fallback = unidecode(unicodedata.normalize("NFKD", word)).strip().casefold()
+            else:
+                fallback = word
+            fallback_index.append(fallback)
+        freqs.attrs['fallback_index'] = pd.Index(fallback_index)
+
         loaded.append((langfile, freqs))
     return loaded
 
