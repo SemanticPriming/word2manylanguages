@@ -63,6 +63,16 @@ def load_model(lang, dim, win, alg):
         vectors = vectors[:i + 1]
         words = words[:i + 1]
 
+    # the training corpus isn't casefolded, so words that only differ in
+    # case (e.g. "Apple"/"apple") get separate vectors here; since words[]
+    # above is already casefolded, those collapse to duplicate entries,
+    # which would otherwise multiply rows on the join in predict(). Average
+    # each casefolded word's vectors down to one row.
+    if len(words) != len(set(words)):
+        deduped = pd.DataFrame(vectors, index=words).groupby(level=0).mean()
+        words = deduped.index.to_numpy()
+        vectors = deduped.to_numpy()
+
     return words, vectors
 
 def normalize_vectors(vectors):
