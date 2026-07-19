@@ -1245,6 +1245,3 @@ Zhao2025.csv,chinese_simplified,aoa,aoa_mean,,aoa_mean
 Zhao2025.csv,chinese_simplified,familiarity,familiar_mean,,familiar_mean
 Zhao2025.csv,chinese_simplified,valence,valence_mean,,valence_mean
 Zhao2025.csv,chinese_simplified,arousal,arousal_mean,,arousal_mean
-af-fake-2025.csv,afrikaans,valence,valence_mean,,valence_mean
-af-fake-2025.csv,afrikaans,arousal,arousal_mean,,arousal_mean
-af-fake-2025.csv,afrikaans,familiarity,familiar_mean,,familiar_mean
