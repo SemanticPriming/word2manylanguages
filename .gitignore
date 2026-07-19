@@ -95,3 +95,4 @@ vignettes/*.pdf
 # raw/'s checked-in worked example (see preprocessed/README.md, corpora/README.md)
 /preprocessed/*.zip
 /corpora/*.txt
+temp.md
