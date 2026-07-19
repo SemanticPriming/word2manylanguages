@@ -96,7 +96,8 @@ def predict(vectors, targets, alpha=1.0, label_col='norm'):
     df = sklearn.utils.shuffle(df)  # shuffle is important for unbiased results on ordered datasets!
 
     model = sklearn.linear_model.Ridge(alpha=alpha)  # use ridge regression models
-    cv = sklearn.model_selection.RepeatedKFold(n_splits=5, n_repeats=10)
+    n_splits = 5
+    cv = sklearn.model_selection.RepeatedKFold(n_splits=n_splits, n_repeats=10)
 
     # compute crossvalidated prediction scores
     scores = []
@@ -105,6 +106,12 @@ def predict(vectors, targets, alpha=1.0, label_col='norm'):
         df_subset = df.loc[:, vectors.columns.values]  # use .loc[] so copy is created and no setting with copy warning is issued
         df_subset[col] = df[col]
         df_subset = df_subset.dropna()  # drop NaNs for this specific y
+        if len(df_subset) < n_splits:
+            # RepeatedKFold needs at least n_splits samples; some norm/replication
+            # columns have very few non-missing values once joined to a language's
+            # vocabulary, so skip rather than let cross_val_score raise
+            print(f'skipping {col}: only {len(df_subset)} words have both a vector and a value, need at least {n_splits}')
+            continue
         x = df_subset[vectors.columns.values]
         y = df_subset[col]
         cv_scores = sklearn.model_selection.cross_val_score(model, x, y, cv=cv)
