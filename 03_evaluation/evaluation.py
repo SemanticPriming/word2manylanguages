@@ -410,7 +410,7 @@ def evaluate_counts(wordsXdims, count_freqs, alpha=1.0):
         return pd.concat(scores)
     return None
 
-# Write output incrementally, one file per language per evaluation type 
+# Write output incrementally, one file per language per evaluation type
 def append_scores(outfile, scores):
     """Appends a scores dataframe to a per-language eval file, writing the header only once."""
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
@@ -418,63 +418,94 @@ def append_scores(outfile, scores):
     with open(outfile, 'a') as f:
         scores.to_csv(f, mode='a', header=write_header, index=False)
 
-# Main driver: one pass per language, one model load per configuration 
+def load_done_combos(outfile):
+    """
+    Returns the set of (source, normalized) model/normalization combos already
+    written to outfile, so a run that quit partway through can pick back up
+    instead of redoing (or skipping) an entire language.
+    """
+    if not os.path.exists(outfile):
+        return set()
+    existing = pd.read_csv(outfile, usecols=['source', 'normalized'])
+    return set(zip(existing['source'], existing['normalized']))
+
+# Main driver: one pass per language, one model load per configuration
 def evaluate_language(lang, alpha=1.0, overwrite=False):
     """
     For a given language, loads each trained model exactly once and runs it
     against replication norms, extended norms, and frequency counts -- with
     both the raw vectors and L2-normalized vectors, to compare the two --
     writing results to one output file per evaluation type as each model
-    finishes, before moving on to the next model.
+    finishes, before moving on to the next model. Already-completed
+    model/normalization combos (per output file) are skipped, so a run that
+    got interrupted partway through a language resumes where it left off
+    instead of redoing finished work or being skipped entirely.
     """
     replication_out = os.path.join(basedir, evaldir, replicationdir, f'{lang}_eval.csv')
     norms_out = os.path.join(basedir, evaldir, normsdir, f'{lang}_eval.csv')
     counts_out = os.path.join(basedir, evaldir, countdir, f'{lang}_eval.csv')
     outfiles = [replication_out, norms_out, counts_out]
 
-    if not overwrite and any(os.path.exists(f) for f in outfiles):
-        print(f'Evaluation output for {lang} already exists, and overwrite not specified. Skipping.')
-        return
-
-    for outfile in outfiles:
-        if os.path.exists(outfile):
-            os.remove(outfile)
+    if overwrite:
+        for outfile in outfiles:
+            if os.path.exists(outfile):
+                os.remove(outfile)
 
     replication_norms = load_replication_norms(lang)
     extended_norms = load_extended_norms(lang)
     count_freqs = load_count_freqs(lang)
 
+    done_replication = load_done_combos(replication_out) if replication_norms else set()
+    done_norms = load_done_combos(norms_out) if extended_norms else set()
+    done_counts = load_done_combos(counts_out) if count_freqs else set()
+
     for dim in dimension_list:
         for win in window_list:
             for alg in algo_list:
                 base_file_name = f'{lang}_{dim}_{win}_{alg}'
+
+                # Skip loading this model entirely if every combo it would
+                # produce is already recorded in every relevant output file.
+                work_remaining = any(
+                    (replication_norms and (base_file_name, normalized) not in done_replication) or
+                    (extended_norms and (base_file_name, normalized) not in done_norms) or
+                    (count_freqs and (base_file_name, normalized) not in done_counts)
+                    for normalized in (False, True)
+                )
+                if not work_remaining:
+                    continue
+
                 words, raw_vectors = load_model(lang, dim, win, alg)
                 if words is None:
                     continue
                 print(f'Evaluating model {base_file_name}')
 
                 for normalized in (False, True):
+                    key = (base_file_name, normalized)
                     vectors = normalize_vectors(raw_vectors) if normalized else raw_vectors
                     wordsXdims = pd.DataFrame(vectors)
                     wordsXdims.set_index(words, inplace=True)
 
-                    if replication_norms:
+                    if replication_norms and key not in done_replication:
                         scores = evaluate_replication(wordsXdims, replication_norms, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             append_scores(replication_out, scores)
+                        done_replication.add(key)
 
-                    if extended_norms:
+                    if extended_norms and key not in done_norms:
                         scores = evaluate_norms(wordsXdims, extended_norms, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             append_scores(norms_out, scores)
+                        done_norms.add(key)
 
-                    if count_freqs:
+                    if count_freqs and key not in done_counts:
                         scores = evaluate_counts(wordsXdims, count_freqs, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             append_scores(counts_out, scores)
+                        done_counts.add(key)
