@@ -117,7 +117,10 @@ def predict(vectors, targets, alpha=1.0, label_col='norm', fallback_index=None):
     for col in cols:
         # set dependent variable and calculate 10-fold mean fit/predict scores
         df_subset = df.loc[:, vectors.columns.values]  # use .loc[] so copy is created and no setting with copy warning is issued
-        df_subset[col] = df[col]
+        # some norms files mark missing values with non-numeric placeholders
+        # (e.g. '.', '…..') that aren't caught by na_values at load time;
+        # coerce to numeric here so those become NaN and get dropped below
+        df_subset[col] = pd.to_numeric(df[col], errors='coerce')
         df_subset = df_subset.dropna()  # drop NaNs for this specific y
         if len(df_subset) < n_splits:
             # RepeatedKFold needs at least n_splits samples; some norm/replication
