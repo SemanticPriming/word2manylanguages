@@ -42,6 +42,6 @@ Code is organized by pipeline stage, in the order the workflow actually runs:
 
 ### Requirements
 
-- Python 3.10+
+- Python 3.10+ — see [`requirements.txt`](requirements.txt) for the full pinned list (`pip install -r requirements.txt`)
 - fastText (via Gensim 3.8.3)
 - R 4.4.2 for reproducible manuscript analysis

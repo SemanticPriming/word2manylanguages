@@ -92,6 +92,17 @@ python download/minio_download.py --prefix frequency_source/dedup.bg --dest eval
 
 (There's no Zenodo path for this one — the `frequency_source/` data isn't part of the DOI-archived deposits, only the trained models are. The original public source is van Paridon's own [subs2vec](https://github.com/jvparidon/subs2vec) project; the lab's MinIO bucket is a mirror of those counts, kept alongside the trained models for convenience.)
 
+**Languages subs2vec never covered** (Japanese, Chinese, Thai — none of them use whitespace to separate words, so counting unigrams needs a real segmenter, not just a split) have no `frequency_source/` entry to download at all. For those, [`eval_inputs/build_counts_tokenized.py`](../eval_inputs/build_counts_tokenized.py) builds the same `dedup.{language}.words.unigrams.tsv.zip` / `dedup.{language}wiki-meta.words.unigrams.tsv.zip` pair locally, straight from `preprocessed/{subtitles,wikipedia}-{language}-pruned.zip` (Stage 1's deduplicated output — see [`01_corpus_preprocessing/README.md`](../01_corpus_preprocessing/README.md)):
+
+```python
+import sys
+sys.path.insert(0, 'eval_inputs')
+import build_counts_tokenized as bc
+
+bc.basedir = '.'
+bc.build_counts('ja')   # requires preprocessed/{subtitles,wikipedia}-ja-pruned.zip to already exist
+```
+
 ## 4. Extended norms (`eval_inputs/norms/`)
 
 Psycholinguistic norm datasets from Buchanan, Valentine, & Maxwell's (2019) [**Linguistic Annotated Bibliography (LAB)**](https://doi.org/10.3758/s13428-018-1130-8) — used by `evaluation.py`'s `load_extended_norms`/`predict_norms` (Research Question 3, extended norm prediction beyond the original subs2vec replication set). `eval_inputs/norms/` ships with only `Luniewska2016.csv` for exercising this code path (the one LAB dataset with an Afrikaans column) — the rest of the per-dataset files (`Riegel2015.csv`, `Torrance2018.csv`, `Alario1999.csv`, etc., ~300 files, one per cited study) are published as release assets on the [`SemanticPriming/semanticprimeR`](https://github.com/SemanticPriming/semanticprimeR) repo, release [`v0.0.1` ("LAB-data")](https://github.com/SemanticPriming/semanticprimeR/releases/tag/v0.0.1).

@@ -1,0 +1,32 @@
+# Python dependencies for the word2manylanguages pipeline (01_corpus_preprocessing
+# -> 02_model_training -> 03_evaluation), download/, and eval_inputs/ build scripts.
+# Tested against Python 3.11 (see the `word2manylanguages` conda env).
+#
+#   pip install -r requirements.txt
+
+# --- 01_corpus_preprocessing/corpus_preprocessing.py ---
+requests==2.34.2
+lxml==6.1.1
+simhash==2.1.2
+
+# --- 02_model_training/model_training.py ---
+gensim==4.3.3
+numpy==1.26.4
+pandas==3.0.3
+
+# --- 03_evaluation/evaluation.py ---
+scikit-learn==1.9.0
+Unidecode==1.4.0
+
+# --- eval_inputs/build_counts_tokenized.py ---
+# Segmenters for languages with no whitespace word boundaries (Japanese,
+# Chinese, Thai) -- needed only for the languages that need tokenized
+# unigram counts built locally instead of downloaded from frequency_source/.
+fugashi[unidic-lite]==1.5.2
+jieba==0.42.1
+pythainlp==5.3.4
+
+# --- download/ ---
+minio>=7.2          # minio_download.py (MinIO, lab-internal)
+pdfplumber>=0.11     # build_dataset_list.py (parses source/dataset_list_source.pdf)
+openpyxl>=3.1        # build_dataset_list.py (writes 05_manuscript/dataset_list.xlsx)
