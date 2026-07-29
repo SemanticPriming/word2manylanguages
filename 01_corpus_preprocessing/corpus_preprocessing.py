@@ -116,6 +116,32 @@ def sub_xml_to_text(xml, parser):
     return etree.tostring(tree, encoding=str, method='text')
 
 
+_ns_re = re.compile(r'<ns>(\d+)</ns>')
+_text_re = re.compile(r'(?s)<text[^>]*>(.*?)</text>')
+
+def extract_wiki_text(article):
+    """
+    Pulls just the actual wikitext payload out of a raw <page>...</page>
+    block, discarding page/revision metadata (title, timestamps, revision
+    ids, contributor names, edit comments, and especially <model>/<format>,
+    whose inner text -- e.g. "wikitext" from <model>wikitext</model>, or
+    "text/x-wiki" from <format>text/x-wiki</format> -- would otherwise leak
+    into the corpus as bogus high-frequency "words" once <.*?> strips just
+    the tag brackets around them. Also drops non-main-namespace pages
+    (Talk:, User:, File:, Wikipedia: upload logs, etc. -- anything with a
+    <ns> other than 0), which aren't article prose either.
+    Returns None to signal "skip this page" (wrong namespace, or no <text>
+    payload at all, e.g. a deleted/oversighted revision).
+    """
+    ns_match = _ns_re.search(article)
+    if ns_match and ns_match.group(1) != '0':
+        return None
+    text_match = _text_re.search(article)
+    if not text_match:
+        return None
+    return text_match.group(1)
+
+
 def wiki_strip_circumflex(txt):
     """
     Removes the (deeply nested) circumflex characters from wiki text.
@@ -197,6 +223,8 @@ def clean_subtitles(language,overwrite=False):
         print(f'File subtitles-{language}-pre.zip exists, and overwrite not specified. Skipping.');
     else:
         input_file = zipfile.ZipFile(input_path, 'r')
+        if os.path.exists(output_path):
+            os.remove(output_path)  # 'a' mode below would otherwise append to stale content on overwrite=True
         output_file = zipfile.ZipFile(output_path, 'a', zipfile.ZIP_DEFLATED)
 
         xmlparser = etree.XMLParser(recover=True, encoding='utf-8')
@@ -221,13 +249,18 @@ def clean_wikipedia(language, overwrite=False):
     if os.path.exists(wiki_output_path) and not overwrite:
         print(f'File wikipedia-{language}-pre.zip exists, and overwrite not specified. Skipping.');
     else:
+        if os.path.exists(wiki_output_path):
+            os.remove(wiki_output_path)  # 'a' mode below would otherwise append to stale content on overwrite=True
         with zipfile.ZipFile(wiki_output_path, 'a', zipfile.ZIP_DEFLATED) as output_archive:
             i = 0
             print(f'Preprocessing {language} Wikipedia dump.')
             for article in articles(language):
+                text = extract_wiki_text(article)
+                if text is None:
+                    continue
                 filename = f'wiki-{language}-{str(i)}.txt'
-                txt = article.lower()
-                txt = wiki_strip_circumflex(article) if ((not txt.startswith('#'))
+                txt = text.lower()
+                txt = wiki_strip_circumflex(text) if ((not txt.startswith('#'))
                                      and ('<noinclude>' not in txt)
                                      and ('__noindex__' not in txt)
                                      ) else ''
@@ -288,6 +321,8 @@ def prune(source, language, overwrite=False):
 
     print(f'Found {len(to_remove)} files to prune.')
     input_file = zipfile.ZipFile(input_path, 'r')
+    if os.path.exists(output_path):
+        os.remove(output_path)  # 'a' mode below would otherwise append to stale content on overwrite=True
     output_file = zipfile.ZipFile(output_path, 'a', zipfile.ZIP_DEFLATED)
 
     for f in input_file.namelist():

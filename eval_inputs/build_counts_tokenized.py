@@ -41,10 +41,28 @@ countdir = os.path.join("eval_inputs", "counts")
 _taggers = {}
 
 
+# MeCab's C++ parser segfaults on a single parse call above ~193,357
+# characters (bisected empirically -- not controllable via the `-b` input
+# buffer flag). Wikipedia articles routinely exceed that as one blob, so
+# chunk defensively; comfortably under the observed threshold.
+_JA_MAX_CHARS = 100_000
+
 def _tokenize_ja(text):
     import fugashi
-    tagger = _taggers.setdefault("ja", fugashi.Tagger())
-    return [word.surface for word in tagger(text)]
+    # NOT _taggers.setdefault("ja", fugashi.Tagger()) -- setdefault evaluates
+    # its default argument unconditionally, so that would construct a fresh
+    # Tagger (reloading the ~260MB MeCab dictionary) on every single call.
+    if "ja" not in _taggers:
+        _taggers["ja"] = fugashi.Tagger()
+    tagger = _taggers["ja"]
+    tokens = []
+    # split on the corpus's own sentence-per-line breaks first (semantically
+    # correct for MeCab either way), then hard-chunk any line still too long
+    for line in text.split("\n"):
+        for start in range(0, max(len(line), 1), _JA_MAX_CHARS):
+            chunk = line[start:start + _JA_MAX_CHARS]
+            tokens.extend(word.surface for word in tagger(chunk))
+    return tokens
 
 
 def _tokenize_zh(text):
