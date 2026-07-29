@@ -105,3 +105,4 @@ vignettes/*.pdf
 /preprocessed/*.zip
 /corpora/*.txt
 temp.md
+eval_inputs/__pycache__/build_counts_tokenized.cpython-311.pyc
