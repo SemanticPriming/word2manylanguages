@@ -1,6 +1,7 @@
 ###### libraries ######
 import bz2
 import html
+import logging
 import os
 import re
 import requests
@@ -8,6 +9,13 @@ import simhash
 import unicodedata
 import zipfile
 from lxml import etree
+
+# simhash.SimhashIndex logs a "Big bucket found" warning per oversized
+# bucket during indexing -- harmless (just means many documents share that
+# bucket's key) but produces millions of lines on large corpora, drowning
+# out everything else. Silence it here rather than needing every caller to
+# know to do so.
+logging.getLogger("simhash").setLevel(logging.ERROR)
 
 ###### define directories ######
 # basedir defined in main file
@@ -44,9 +52,12 @@ def download(source, language, version='2018', overwrite=False):
     elif language == 'zh':
         language_tran = 'zh_cn'
 
+    # version is a bare '2018'/'2024' everywhere else (filenames, callers) --
+    # OPUS's own URL scheme needs a 'v' prefix, so translate just for the URL.
+    url_version = f'v{version}'
     sources = {
-                #'subtitles': f'http://opus.nlpl.eu/download.php?f=OpenSubtitles/{version}/raw/{language_tran}.zip',
-                'subtitles': f'https://object.pouta.csc.fi/OPUS-OpenSubtitles/{version}/raw/{language_tran}.zip',
+                #'subtitles': f'http://opus.nlpl.eu/download.php?f=OpenSubtitles/{url_version}/raw/{language_tran}.zip',
+                'subtitles': f'https://object.pouta.csc.fi/OPUS-OpenSubtitles/{url_version}/raw/{language_tran}.zip',
                 'wikipedia': f'http://dumps.wikimedia.your.org/{language}wiki/latest/{language}wiki-latest-pages-meta-current.xml.bz2'
     }
     extensions = {
@@ -62,6 +73,11 @@ def download(source, language, version='2018', overwrite=False):
         print(f'File {file_name} exists, and overwrite not specified. Skipping.');
     else:
         r = requests.get(sources[source], stream=True)
+        # NOT checking this used to silently write S3/HTTP error bodies (e.g.
+        # a "NoSuchKey" XML response) to disk as if they were the real file --
+        # every downstream step would then fail confusingly, much later, on
+        # "not a valid zip/bz2" instead of on the actual missing-file cause here.
+        r.raise_for_status()
         with open(path_name, "wb") as f:
             for chunk in r.iter_content(chunk_size=1024):
                 f.write(chunk)
@@ -355,8 +371,7 @@ def prune(source, language, overwrite=False):
             continue
         for dup in index.get_near_dups(h):
             if dup != f:
-                print(f'({f}, {dup})')
-                to_remove.add(dup)
+                to_remove.add(dup)  # per-pair logging removed -- millions of lines on large corpora; see the summary count below
 
     print(f'Found {len(to_remove)} files to prune.')
     input_file = zipfile.ZipFile(input_path, 'r')
