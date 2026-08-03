@@ -31,15 +31,23 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DOIS_CSV = os.path.join(HERE, "zenodo_dois.csv")
 
 
-def load_records_for_language(language):
-    """Returns the list of Zenodo record IDs, in part order, for a language."""
+def load_records_for_language(language, version="2018"):
+    """
+    Returns the list of Zenodo record IDs, in part order, for a language.
+    version distinguishes corpus vintage -- "2018" (the original replication
+    corpus, including any corrected/retrained versions published as new
+    Zenodo *versions* of the same DOI) vs "2024" (the newer OpenSubtitles
+    add-on corpus, or 2024-only languages that have no 2018 counterpart at
+    all). Defaults to "2018" since that's every pre-existing row in
+    zenodo_dois.csv.
+    """
     record_id_by_part = {}
     with open(DOIS_CSV) as f:
         for row in csv.DictReader(f):
-            if row["language"] == language:
+            if row["language"] == language and row.get("version", "2018") == version:
                 record_id_by_part[int(row["part"])] = row["doi"].rsplit(".", 1)[-1]
     if not record_id_by_part:
-        sys.exit(f"No Zenodo DOI found for language '{language}' in {DOIS_CSV}")
+        sys.exit(f"No Zenodo DOI found for language '{language}' version '{version}' in {DOIS_CSV}")
     return [record_id_by_part[part] for part in sorted(record_id_by_part)]
 
 
@@ -89,11 +97,12 @@ def main():
     parser.add_argument("--language", required=True, help="two-letter language code, e.g. 'af'")
     parser.add_argument("--dest", required=True, help="local directory to download files into")
     parser.add_argument("--pattern", help="only download models whose filename contains this substring, e.g. 'af_50_'")
+    parser.add_argument("--version", default="2018", help="corpus vintage: '2018' (default) or '2024'")
     args = parser.parse_args()
 
     dest_dir = Path(args.dest)
-    record_ids = load_records_for_language(args.language)
-    print(f"{args.language}: {len(record_ids)} Zenodo record(s): {', '.join(record_ids)}")
+    record_ids = load_records_for_language(args.language, args.version)
+    print(f"{args.language} ({args.version}): {len(record_ids)} Zenodo record(s): {', '.join(record_ids)}")
 
     for record_id in record_ids:
         groups = zc.group_logical_files(zc.list_files(record_id))

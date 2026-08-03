@@ -5,6 +5,7 @@ import os
 import re
 import requests
 import simhash
+import unicodedata
 import zipfile
 from lxml import etree
 
@@ -14,16 +15,27 @@ datadir = "raw"
 processdir = "preprocessed"
 corpusdir = "corpora"
 
-# Downloading subtitles and/or wikipedia dumps 
-def download(source, language, overwrite=False):
+# Downloading subtitles and/or wikipedia dumps
+def download(source, language, version='2018', overwrite=False):
     """
     Download data by source and language.
     Source must be one of {'subtitles', 'wikipedia'}.
     Language must be a valid ISO3166 country code (lower case)
+    version is the OpenSubtitles corpus vintage ('2018' or '2024', see
+    https://opus.nlpl.eu/OpenSubtitles/) -- only meaningful for source=
+    'subtitles'. Wikipedia has no equivalent dated-vintage concept (the URL
+    below always serves whatever is currently "latest"), so wikipedia
+    downloads ignore version entirely and are shared/reused across a
+    language's 2018- and 2024-subtitle-paired corpus builds rather than
+    being fetched twice.
 
-    Output file will be named in the pattern 'source-language.extension'.
+    Output file will be named 'source-language.extension' for version=2018
+    (unchanged, for backward compatibility with every 2018-era file already
+    on disk) or 'source-language-version.extension' for any other version.
     Subtitle files use the 'zip' extension, while Wikipedia dumps use 'bz2'.
-    For example, download('subtitles', 'fr') will result in a file called 'subtitles-fr.zip'
+    For example, download('subtitles', 'fr') will result in a file called
+    'subtitles-fr.zip'; download('subtitles', 'fr', version='2024') will
+    result in 'subtitles-fr-2024.zip'.
     """
     # Special case for OpenSubtitles names for Chinese variants
     language_tran = language
@@ -33,15 +45,16 @@ def download(source, language, overwrite=False):
         language_tran = 'zh_cn'
 
     sources = {
-                #'subtitles': f'http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/raw/{language_tran}.zip',
-                'subtitles': f'https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2018/raw/{language}.zip',
+                #'subtitles': f'http://opus.nlpl.eu/download.php?f=OpenSubtitles/{version}/raw/{language_tran}.zip',
+                'subtitles': f'https://object.pouta.csc.fi/OPUS-OpenSubtitles/{version}/raw/{language_tran}.zip',
                 'wikipedia': f'http://dumps.wikimedia.your.org/{language}wiki/latest/{language}wiki-latest-pages-meta-current.xml.bz2'
     }
     extensions = {
         'subtitles': 'zip',
         'wikipedia': 'bz2'
     }
-    file_name = f'{source}-{language}.{extensions[source]}'
+    suffix = '' if (source == 'wikipedia' or version == '2018') else f'-{version}'
+    file_name = f'{source}-{language}{suffix}.{extensions[source]}'
     print(f'Remote file {sources[source]}, Local file {file_name}')
     path_name = os.path.join(basedir, datadir, file_name)
 
@@ -91,15 +104,18 @@ class articles(object):
         raise StopIteration()
 
 
-def clean(source, language):
+def clean(source, language, version='2018'):
     """
     Start the cleaning process for a given source and language.
     Routes to the appropriate file handing functions for the given source.
+    version only affects the subtitles branch (see clean_subtitles()) --
+    wikipedia has no dated-vintage concept, always "latest" regardless.
     """
 
     if ('subtitles' == source):
-        clean_subtitles(language)
-        prune(source, language)
+        subs_key = language if version == '2018' else f'{language}-{version}'
+        clean_subtitles(language, version=version)
+        prune(source, subs_key)
     else:
         clean_wikipedia(language)
         prune(source, language)
@@ -196,6 +212,18 @@ wiki_expressions = [
 ]
 wiki_patterns = [(re.compile(expression[0], re.IGNORECASE), expression[1]) for expression in wiki_expressions]
 
+def _is_kept_char(c):
+    """
+    True for anything that should survive final cleanup: alphanumerics,
+    whitespace, and Unicode combining marks (category M*). NOT just
+    isalnum()/isspace() -- str.isalnum() only recognizes Letter/Number
+    categories, not Mark, so combining tone marks and vowel signs (e.g.
+    Thai's MAI THO/MAI EK/etc., category Mn) would otherwise be silently
+    stripped even though they're essential, meaning-changing parts of the
+    base letter they attach to.
+    """
+    return c.isalnum() or c.isspace() or unicodedata.category(c).startswith('M')
+
 def clean_text(text, patterns):
     """
     Applies the given patterns to the input text. Ensures lower-casing of all text.
@@ -203,12 +231,14 @@ def clean_text(text, patterns):
     txt = text
     for pattern in patterns:
         txt = pattern[0].sub(pattern[1], txt)
-    txt = ''.join([letter for letter in txt if (letter.isalnum() or letter.isspace())])
+    txt = ''.join([letter for letter in txt if _is_kept_char(letter)])
     return txt.lower()
 
-def clean_subtitles(language,overwrite=False):
+def clean_subtitles(language,version='2018',overwrite=False):
     """
-    Prepare subtitle files for processing.
+    Prepare subtitle files for processing. version picks which vintage of
+    raw/subtitles-{language}[-{version}].zip to read (see download()) --
+    only affects filenames, not the zh/tw internal-folder translation below.
     """
     # Special case for OpenSubtitles names for Chinese variants
     language_tran = language
@@ -216,11 +246,13 @@ def clean_subtitles(language,overwrite=False):
         language_tran = 'zh_tw'
     elif language == 'zh':
         language_tran = 'zh_cn'
-    input_path = os.path.join(basedir,datadir,f'subtitles-{language}.zip')
-    output_path = os.path.join(basedir,processdir,f'subtitles-{language}-pre.zip')
+    suffix = '' if version == '2018' else f'-{version}'
+    input_path = os.path.join(basedir,datadir,f'subtitles-{language}{suffix}.zip')
+    output_name = f'subtitles-{language}{suffix}-pre.zip'
+    output_path = os.path.join(basedir,processdir,output_name)
 
     if os.path.exists(output_path) and not overwrite:
-        print(f'File subtitles-{language}-pre.zip exists, and overwrite not specified. Skipping.');
+        print(f'File {output_name} exists, and overwrite not specified. Skipping.');
     else:
         input_file = zipfile.ZipFile(input_path, 'r')
         if os.path.exists(output_path):
@@ -267,7 +299,7 @@ def clean_wikipedia(language, overwrite=False):
                 for pattern in wiki_patterns:
                     txt = pattern[0].sub(pattern[1], txt)
 
-                output_archive.writestr(filename, ''.join([letter for letter in txt if (letter.isalnum() or letter.isspace())]))
+                output_archive.writestr(filename, ''.join([letter for letter in txt if _is_kept_char(letter)]))
                 i += 1
 
             print("Complete")
@@ -301,7 +333,14 @@ def prune(source, language, overwrite=False):
     print("Checking for duplicates.")
     hashes = []
     for f in input_file.namelist():
-        text = str(input_file.open(f).read())
+        # NOT str(bytes) -- that gives the escaped repr ("b'\\xe0\\xb8...'")
+        # instead of decoding, so every non-ASCII script's actual characters
+        # get replaced by hex-escape fragments before shingling/simhashing.
+        # Scripts confined to a narrow Unicode block (e.g. Thai, where nearly
+        # every character shares the same UTF-8 lead bytes) then collapse to
+        # near-identical fingerprints regardless of real content, causing
+        # massive false-positive "duplicate" pruning.
+        text = input_file.open(f).read().decode('utf-8', errors='replace')
         tokens = re.split(r'\W+', text.lower(), flags=re.UNICODE)
         hashes.append((f, get_hash(tokens)))
 
@@ -332,18 +371,24 @@ def prune(source, language, overwrite=False):
     output_file.close()
 
 # After cleaning, put together the whole corpus into one big text 
-def concatenate_corpus(language,overwrite=False):
+def concatenate_corpus(language,version='2018',overwrite=False):
     """
     Reads pruned (deduplicated) subtitle and wikipedia text, and creates a
     single text file containing all of the tokenized sentences.
+    version picks which subtitle vintage to merge in (see clean()/download())
+    -- the output filename and subtitles side both carry the version suffix,
+    but the wikipedia side always reads the shared, version-agnostic
+    wikipedia-{language}-pruned.zip (wikipedia has no dated-vintage concept).
     """
-    subs_input_path = os.path.join(basedir,processdir,f'subtitles-{language}-pruned.zip')
+    subs_key = language if version == '2018' else f'{language}-{version}'
+    corpus_key = language if version == '2018' else f'{language}-{version}'
+    subs_input_path = os.path.join(basedir,processdir,f'subtitles-{subs_key}-pruned.zip')
     wiki_input_path = os.path.join(basedir,processdir,f'wikipedia-{language}-pruned.zip')
-    corpus_output_path = os.path.join(basedir,corpusdir,f'corpus-{language}.txt')
+    corpus_output_path = os.path.join(basedir,corpusdir,f'corpus-{corpus_key}.txt')
     if os.path.exists(corpus_output_path) and not overwrite:
-        print(f'File corpus-{language}.txt exists, and overwrite not specified. Skipping.');
+        print(f'File corpus-{corpus_key}.txt exists, and overwrite not specified. Skipping.');
     else:
-        print(f"Concatenating {language} corpus.")
+        print(f"Concatenating {corpus_key} corpus.")
         with open(corpus_output_path, mode="w") as out:
             subs_input_file = zipfile.ZipFile(subs_input_path, 'r')
             for f in subs_input_file.namelist():

@@ -25,6 +25,7 @@ Unidecode==1.4.0
 fugashi[unidic-lite]==1.5.2
 jieba==0.42.1
 pythainlp==5.3.4
+opencc==1.4.1        # simplified->Taiwan-traditional conversion for tw's Wikipedia counts (no tw wiki exists)
 
 # --- download/ ---
 minio>=7.2          # minio_download.py (MinIO, lab-internal)

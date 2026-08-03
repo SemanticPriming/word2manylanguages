@@ -18,7 +18,10 @@ CHUNK_PATTERN = re.compile(r"^(?P<base>.+)_part_[a-z]{2,}$")
 
 # Only files matching this are trained models (or chunks of one) -- anything
 # else in a deposit (README.md, FileChunker.ps1, ...) is packaging, not data.
-MODEL_PATTERN = re.compile(r"^[a-z]{2}_\d+_\d+_(cbow|sg)_wxd(\.csv\.bz2|_part_[a-z]{2,})$")
+# The language segment allows an optional "-2024"-style corpus-vintage
+# suffix (see corpus_preprocessing.py's version param) alongside the plain
+# 2-letter code every 2018-era file already uses.
+MODEL_PATTERN = re.compile(r"^[a-z]{2}(-[a-z0-9]+)?_\d+_\d+_(cbow|sg)_wxd(\.csv\.bz2|_part_[a-z]{2,})$")
 
 
 def list_files(record_id):

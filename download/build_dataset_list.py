@@ -137,7 +137,10 @@ def build_file_table(entries):
         if not groups:
             print(f"WARNING: no model files found in record {record_id} ({e['language']} part {e['part']})")
         for logical_name in sorted(groups):
-            file_rows.append({"language": e["language"], "part": e["part"], "file": logical_name, "doi": e["doi"]})
+            # source/dataset_list_source.pdf only ever documented the original
+            # 2018-corpus deposits -- see zenodo_upload.py for how 2024-corpus
+            # and corrected-2018 (new-version) deposits get their own rows.
+            file_rows.append({"language": e["language"], "version": "2018", "part": e["part"], "file": logical_name, "doi": e["doi"]})
         time.sleep(0.25)  # be polite to the Zenodo API across ~100 records
 
     if broken:
@@ -150,7 +153,7 @@ def build_file_table(entries):
 
 def write_dois_csv(file_rows, path):
     with open(path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["language", "part", "file", "doi"])
+        writer = csv.DictWriter(f, fieldnames=["language", "version", "part", "file", "doi"])
         writer.writeheader()
         writer.writerows(file_rows)
     print(f"Wrote {len(file_rows)} rows to {path}")

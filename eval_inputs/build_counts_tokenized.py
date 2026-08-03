@@ -1,11 +1,15 @@
 """
-Builds unigram frequency counts for languages that download/README.md's
-section 3 (eval_inputs/counts/, mirrored from van Paridon & Thompson's
-subs2vec frequency_source/) has no data for at all: Japanese, Chinese, Thai.
-None of the three use whitespace to separate words, so the counts can't be
-produced by splitting on whitespace like the rest of the pipeline assumes --
-they need an actual segmenter first. Add one to TOKENIZE_FUNCS to cover a
-new language.
+Builds unigram frequency counts for every language directly from this
+project's own cleaned/deduplicated corpus, rather than relying on
+download/README.md's section 3 (eval_inputs/counts/, mirrored from van
+Paridon & Thompson's subs2vec frequency_source/) -- so the frequency
+baseline is always self-consistent with whatever corpus actually trained
+that language's embeddings, and doesn't depend on trusting an external
+pipeline's own (unaudited) cleaning history.
+
+Most languages split on whitespace fine (_tokenize_whitespace, the default).
+Japanese, Chinese, Traditional Chinese, and Thai don't use whitespace to
+separate words at all, so they need a real segmenter -- see TOKENIZE_FUNCS.
 
 Reads preprocessed/{subtitles,wikipedia}-{language}-pruned.zip -- the same
 deduplicated per-document archives 01_corpus_preprocessing's
@@ -17,7 +21,10 @@ same two-column (unigram, unigram_freq) tsv format, zip-compressed the same
 way, so evaluation.py's load_count_freqs reads it with no changes.
 
 Requires per-language segmenters:
-    pip install fugashi[unidic-lite] jieba pythainlp
+    pip install fugashi[unidic-lite] jieba pythainlp opencc
+
+tw (Traditional Chinese / Taiwan) is a special case with no Wikipedia of its
+own to download -- see build_tw_wiki_counts()'s docstring.
 
 Usage (basedir set the same way as 01_corpus_preprocessing/corpus_preprocessing.py):
     import sys
@@ -75,27 +82,50 @@ def _tokenize_th(text):
     return word_tokenize(text)
 
 
+def _tokenize_whitespace(text):
+    """
+    Default for every language whose script already separates words with
+    whitespace (i.e. everything except the entries in TOKENIZE_FUNCS below).
+    Matches how the rest of the pipeline treats corpus text -- 02_model_training's
+    sentences() class splits on whitespace the same way.
+    """
+    return text.split()
+
+
 TOKENIZE_FUNCS = {
     "ja": _tokenize_ja,
     "zh": _tokenize_zh,
+    "tw": _tokenize_zh,  # Traditional Chinese -- same jieba tokenizer as zh
     "th": _tokenize_th,
 }
 
 
-def count_unigrams(source, language, overwrite=False):
+def count_unigrams(source, language, overwrite=False, read_language=None, convert=None):
     """
-    Tokenizes preprocessed/{source}-{language}-pruned.zip with the
-    language-appropriate segmenter and writes unigram counts to
-    eval_inputs/counts/dedup.{language}[wiki-meta].words.unigrams.tsv.zip.
-    """
-    if language not in TOKENIZE_FUNCS:
-        raise ValueError(
-            f"No tokenizer registered for '{language}'. "
-            f"Add one to TOKENIZE_FUNCS in this file."
-        )
-    tokenize = TOKENIZE_FUNCS[language]
+    Tokenizes preprocessed/{source}-{read_language or language}-pruned.zip
+    with the language-appropriate segmenter (or a plain whitespace split for
+    languages not in TOKENIZE_FUNCS) and writes unigram counts to
+    eval_inputs/counts/dedup.{language}[wiki-meta].words.unigrams.tsv.zip --
+    built from this project's own cleaned corpus rather than relying on
+    download/README.md's downloaded frequency_source/ mirror, so the
+    frequency baseline always matches whatever corpus actually trained the
+    embeddings for that language.
 
-    input_path = os.path.join(basedir, processdir, f"{source}-{language}-pruned.zip")
+    read_language: read a *different* language's preprocessed archive than
+        the one being labeled/output -- used for tw's Wikipedia counts,
+        which have no Wikipedia of their own (see build_tw_wiki_counts()).
+    convert: optional text -> text transform applied before tokenizing (e.g.
+        OpenCC simplified-to-traditional conversion for tw).
+    """
+    # strip a possible "-2024"-style version suffix before the tokenizer
+    # lookup (e.g. "ja-2024" should still get fugashi, not fall through to
+    # whitespace splitting just because the exact suffixed string isn't a
+    # literal key in TOKENIZE_FUNCS) -- doesn't affect output naming, which
+    # still uses the full, possibly-suffixed `language` as given
+    base_language = language.split("-")[0]
+    tokenize = TOKENIZE_FUNCS.get(base_language, _tokenize_whitespace)
+
+    input_path = os.path.join(basedir, processdir, f"{source}-{read_language or language}-pruned.zip")
     stem = language if source == "subtitles" else f"{language}wiki-meta"
     tsv_name = f"dedup.{stem}.words.unigrams.tsv"
     output_path = os.path.join(basedir, countdir, tsv_name + ".zip")
@@ -110,6 +140,8 @@ def count_unigrams(source, language, overwrite=False):
         print(f"Tokenizing {len(names)} {language} {source} files.")
         for name in names:
             text = archive.read(name).decode("utf-8", errors="replace")
+            if convert is not None:
+                text = convert(text)
             counts.update(token for token in tokenize(text) if token and not token.isspace())
 
     with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as out:
@@ -118,6 +150,71 @@ def count_unigrams(source, language, overwrite=False):
         out.writestr(tsv_name, "\n".join(lines) + "\n")
 
     print(f"Wrote {len(counts)} unigrams to {tsv_name}.zip")
+
+
+_opencc_converters = {}
+
+
+def build_tw_wiki_counts(overwrite=False):
+    """
+    tw (Traditional Chinese / Taiwan) has no Wikipedia of its own to
+    download -- ISO 639-1 "tw" is Twi, an unrelated Ghanaian language
+    (raw/wikipedia-tw.bz2 in this repo really is the Twi wiki; don't use it
+    here). Chinese Wikipedia only exists as the single "zh" wiki, mixing
+    simplified/traditional script per article as each editor happened to
+    write it. tw's wiki counts are instead built from zh's already-cleaned
+    Wikipedia text (preprocessed/wikipedia-zh-pruned.zip), converted to
+    Taiwan-standard Traditional Chinese -- script AND phrasing, e.g.
+    "software" becomes 軟體 (Taiwan usage) not 软件/軟件 (mainland) -- via
+    OpenCC's s2twp config, then tokenized with jieba same as zh.
+
+    Unlike Wikipedia, OpenSubtitles' zh_tw subtitles ARE independently
+    authored in Traditional Chinese already (a different fansub community
+    than zh_cn's), so tw's subtitles need no conversion -- just call
+    count_unigrams('subtitles', 'tw') directly for those.
+    """
+    import opencc
+    if "s2twp" not in _opencc_converters:
+        _opencc_converters["s2twp"] = opencc.OpenCC("s2twp")
+    converter = _opencc_converters["s2twp"]
+    count_unigrams(
+        "wikipedia", "tw", overwrite=overwrite,
+        read_language="zh", convert=converter.convert,
+    )
+
+
+def materialize_tw_wikipedia_pruned(overwrite=False):
+    """
+    Writes preprocessed/wikipedia-tw-pruned.zip by OpenCC-converting every
+    document in preprocessed/wikipedia-zh-pruned.zip to Traditional Chinese
+    (same s2twp config as build_tw_wiki_counts() -- see that docstring for
+    why tw has no real Wikipedia of its own). This is the *training corpus*
+    counterpart to build_tw_wiki_counts(): once this file exists,
+    01_corpus_preprocessing's concatenate_corpus('tw') and 02_model_training's
+    build_models('tw') work completely unmodified, same as any language with
+    genuine Wikipedia data -- they never need to know tw's wiki side is
+    derived rather than downloaded.
+    """
+    import opencc
+    input_path = os.path.join(basedir, processdir, "wikipedia-zh-pruned.zip")
+    output_path = os.path.join(basedir, processdir, "wikipedia-tw-pruned.zip")
+
+    if os.path.exists(output_path) and not overwrite:
+        print("File wikipedia-tw-pruned.zip exists, and overwrite not specified. Skipping.")
+        return
+
+    if "s2twp" not in _opencc_converters:
+        _opencc_converters["s2twp"] = opencc.OpenCC("s2twp")
+    converter = _opencc_converters["s2twp"]
+
+    with zipfile.ZipFile(input_path, "r") as src, zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as out:
+        names = src.namelist()
+        print(f"Converting {len(names)} zh wikipedia documents to Traditional Chinese for tw's corpus.")
+        for name in names:
+            text = src.read(name).decode("utf-8", errors="replace")
+            out.writestr(name, converter.convert(text))
+
+    print("Wrote preprocessed/wikipedia-tw-pruned.zip")
 
 
 def build_counts(language, overwrite=False):
