@@ -103,3 +103,10 @@ __pycache__/
 /preprocessed/*.zip
 /corpora/*.txt
 temp.md
+
+# experiments/fasttext_vs_word2vec/'s trained vectors are throwaway pilot
+# artifacts, regenerable by rerunning compare_algorithms.ipynb -- unlike
+# models/'s real trained embeddings, they're not the point. Only the
+# timing/rsa/predictive CSVs and the generated report are the actual
+# evidence this experiment exists to produce; keep those tracked.
+/experiments/fasttext_vs_word2vec/models/
