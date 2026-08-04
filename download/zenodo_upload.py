@@ -262,6 +262,17 @@ def _new_version(existing_record_id):
     return r2.json()
 
 
+def _discard_draft(deposit_id):
+    """Best-effort delete of an unpublished version draft -- called when a
+    later step in upload_batch_as_new_version fails, so a crash doesn't
+    leave an orphaned draft blocking the next newversion call (see
+    zenodo_dois.csv / DOI-history note above; this bit us once already)."""
+    try:
+        requests.delete(f"{API}/deposit/depositions/{deposit_id}", headers=_headers())
+    except Exception as e:
+        print(f"  warning: failed to discard draft {deposit_id} after error -- clean it up manually: {e}")
+
+
 def _clear_files(deposit):
     """New-version drafts inherit the old published files by default (Zenodo's
     own documented behavior) -- must delete before uploading replacements."""
@@ -269,7 +280,7 @@ def _clear_files(deposit):
     for f in r.json():
         _retry(
             lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers()),
-            f"delete old file {f['key']}",
+            f"delete old file {f['filename']}",
         )
 
 
@@ -309,7 +320,7 @@ def _publish(deposit_id):
 def _append_dois_csv(rows):
     file_exists = os.path.exists(DOIS_CSV)
     with open(DOIS_CSV, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["language", "version", "part", "file", "doi"])
+        writer = csv.DictWriter(f, fieldnames=["language", "version", "part", "file", "doi", "zenodo_version"])
         if not file_exists:
             writer.writeheader()
         writer.writerows(rows)
@@ -329,17 +340,21 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
 
 def upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing_record_id):
     deposit = _new_version(existing_record_id)
-    _clear_files(deposit)
-    bucket_url = deposit["links"]["bucket"]
-    for spec in batch:
-        _upload_spec(bucket_url, spec, chunk_dir)
-    published = _publish(deposit["id"])
+    try:
+        _clear_files(deposit)
+        bucket_url = deposit["links"]["bucket"]
+        for spec in batch:
+            _upload_spec(bucket_url, spec, chunk_dir)
+        published = _publish(deposit["id"])
+    except Exception:
+        _discard_draft(deposit["id"])
+        raise
     doi = published["doi"]
     print(f"Published new version of {language} {version} part {part}: {doi}")
     return doi
 
 
-def logical_rows_for_batch(language, version, part, batch, doi):
+def logical_rows_for_batch(language, version, part, batch, doi, zenodo_version):
     """Maps a batch's ChunkSpecs (whole files or chunks) back to the
     logical model filenames they represent, for zenodo_dois.csv -- which
     always stores logical names; zenodo_common.group_logical_files() does
@@ -349,7 +364,7 @@ def logical_rows_for_batch(language, version, part, batch, doi):
         m = zc.CHUNK_PATTERN.match(spec.name)
         logical_names.add(f"{m.group('base')}.csv.bz2" if m else spec.name)
     return [
-        {"language": language, "version": version, "part": part, "file": name, "doi": doi}
+        {"language": language, "version": version, "part": part, "file": name, "doi": doi, "zenodo_version": zenodo_version}
         for name in sorted(logical_names)
     ]
 
@@ -365,6 +380,22 @@ def existing_records_for(language, version):
             if row["language"] == language and row.get("version", "2018") == version:
                 record_id_by_part[int(row["part"])] = row["doi"].rsplit(".", 1)[-1]
     return record_id_by_part
+
+
+def _next_zenodo_version_for(language, version, part):
+    """How many distinct DOIs a part already has in zenodo_dois.csv, plus
+    one -- 'v1' for a brand-new record, 'v2'+ for each Zenodo new-version
+    republish, so the CSV makes it obvious why a language can have more
+    than one DOI (a correction/retrain) rather than looking like a
+    duplicate or a mistake."""
+    if not os.path.exists(DOIS_CSV):
+        return "v1"
+    dois = set()
+    with open(DOIS_CSV) as f:
+        for row in csv.DictReader(f):
+            if row["language"] == language and row.get("version", "2018") == version and int(row["part"]) == part:
+                dois.add(row["doi"])
+    return f"v{len(dois) + 1}"
 
 
 def sync_language(language, version, models_dir, dry_run=False):
@@ -409,6 +440,7 @@ def sync_language(language, version, models_dir, dry_run=False):
     new_rows = []
     for i, batch in enumerate(batches, start=1):
         part = i
+        zenodo_version = _next_zenodo_version_for(language, version, part)
         if part in existing:
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
         else:
@@ -430,7 +462,7 @@ def sync_language(language, version, models_dir, dry_run=False):
                 "keywords": [*reference_metadata.get("keywords", []), f"opensubtitles-{version}"],
             }
             doi = upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata)
-        new_rows.extend(logical_rows_for_batch(language, version, part, batch, doi))
+        new_rows.extend(logical_rows_for_batch(language, version, part, batch, doi, zenodo_version))
 
     extra_old_parts = set(existing) - set(range(1, len(batches) + 1))
     if extra_old_parts:
