@@ -122,6 +122,13 @@ MEAN_STATS = {'', 'mean'}
 BARE_ROOTS = {
     'valence', 'arousal', 'dominance', 'concrete', 'familiar', 'imagine',
     'aoa',
+    # 'blup' is also in STAT_WORDS (for generic "_blup" secondary-stat
+    # columns on OTHER concepts), which would otherwise make split_stat()
+    # truncate this compound to concept='familiar', stat='blup' -- 'blup'
+    # isn't in MEAN_STATS, so the column would be silently dropped even
+    # though it's explicitly registered as a target concept below. See the
+    # matching guard in split_stat().
+    'familiar_blup',
     'happiness', 'happy', 'anger', 'sad', 'sadness', 'fear', 'disgust', 'surprise',
     'emotionality', 'taboo', 'offensiveness', 'emotion',
     'boi', 'body_object_interaction', 'auditory', 'visual', 'haptic',
@@ -188,6 +195,18 @@ def find_language_in_tokens(tokens):
 
 
 def split_stat(tokens):
+    # A token sequence that's already a registered compound concept key in
+    # CONCEPT_MAP (e.g. "familiar_blup") must not be split just because one
+    # of its OWN tokens ("blup") also happens to be a generic STAT_WORDS
+    # suffix -- the scan below would otherwise truncate it to concept=
+    # "familiar", stat="blup", and since "blup" isn't in MEAN_STATS the
+    # column gets silently dropped despite being explicitly registered as a
+    # concept we want. Checked as a whole-string match first so this only
+    # protects genuinely registered compounds, not arbitrary "_blup" columns
+    # on other concepts (those should still be dropped as non-mean stats).
+    joined = '_'.join(tokens)
+    if joined in CONCEPT_MAP:
+        return joined, '', []
     for i in range(1, len(tokens)):
         if tokens[i] in STAT_WORDS:
             return '_'.join(tokens[:i]), tokens[i], tokens[i + 1:]

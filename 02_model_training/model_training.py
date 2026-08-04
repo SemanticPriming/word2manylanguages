@@ -45,7 +45,7 @@ def vectorize_stream(corpus, min_freq=5, dim=50, win=3, alg=0):
     """
     algo = 1 if alg == "sg" else 0
     print(f"Training model {dim} {win} {alg}")
-    model = FastText(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=1e-2, negative=10, alpha=0.05, min_n=3, max_n=6, workers=workers)
+    model = FastText(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=0.0001, negative=10, alpha=0.05, min_n=3, max_n=6, workers=workers)
     model.build_vocab(corpus_iterable=corpus)
     total_examples = model.corpus_count
     model.train(corpus_iterable=corpus, total_examples=total_examples, epochs=10)

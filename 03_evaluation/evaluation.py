@@ -97,6 +97,13 @@ def predict(vectors, targets, alpha=1.0, label_col='norm', fallback_index=None):
         if unmatched.any():
             fallback_targets = targets[unmatched].copy()
             fallback_targets.index = fallback_index[unmatched]
+            # An unmatched word's transliterated fallback key can coincide
+            # with a DIFFERENT word that already matched directly (e.g.
+            # unmatched 'café' -> fallback 'cafe', while some other word
+            # already matched 'cafe' directly) -- exclude those so the same
+            # vector row doesn't end up attached twice under one key with
+            # two different, contradictory target values.
+            fallback_targets = fallback_targets[~fallback_targets.index.isin(df.index)]
             fallback_df = fallback_targets.join(vectors, how='inner')
             if len(fallback_df) > 0:
                 df = pd.concat([df, fallback_df])
@@ -104,7 +111,6 @@ def predict(vectors, targets, alpha=1.0, label_col='norm', fallback_index=None):
     # compensate for missing ys somehow
     total = len(targets)
     missing = len(targets) - len(df)
-    penalty = (total - missing) / total
     print(f'missing vectors for {missing} out of {total} words')
     df = sklearn.utils.shuffle(df)  # shuffle is important for unbiased results on ordered datasets!
 
@@ -128,6 +134,15 @@ def predict(vectors, targets, alpha=1.0, label_col='norm', fallback_index=None):
             # vocabulary, so skip rather than let cross_val_score raise
             print(f'skipping {col}: only {len(df_subset)} words have both a vector and a value, need at least {n_splits}')
             continue
+        # NOT the single penalty computed above from the vector-join alone --
+        # columns vary widely in how many rows their own dropna() just
+        # dropped (a norm/replication file's columns can have very different
+        # missingness), so the penalty must be recomputed per column against
+        # how many of this specific column's values actually survived,
+        # otherwise a column fit on a handful of rows gets penalized as if
+        # nearly all of `targets` were present, overstating its reliability.
+        col_missing = total - len(df_subset)
+        penalty = (total - col_missing) / total
         x = df_subset[vectors.columns.values]
         y = df_subset[col]
         cv_scores = sklearn.model_selection.cross_val_score(model, x, y, cv=cv)
@@ -306,6 +321,13 @@ def load_extended_norms(lang):
             # dataset/language pair has -- just select them.
             cols = [c for c in dict.fromkeys(group['variable_original']) if c in check]
             if wordcol not in check or not cols:
+                # Unlike every other skip path in this file (load_model,
+                # load_count_freqs), this used to continue with no printed
+                # trace at all -- a catalog-matched language/file pair could
+                # silently vanish from evaluation entirely, with nothing in
+                # the output to show it was ever expected to contribute.
+                reason = f"no usable word column (tried '{wordcol}')" if wordcol not in check else "no matching value columns"
+                print(f'Skipping {langfile} for {lang}: {reason}.')
                 continue
 
             norms = norms[[wordcol] + cols]
@@ -362,6 +384,19 @@ def load_count_freqs(lang, subs_key=None):
                 freqs_index[i] = freqs_index[i].casefold()
         freqs.index = freqs_index
 
+        # Case-variant duplicates (e.g. "Apple"/"apple") collapse onto the
+        # same casefolded key -- raw corpus counts routinely contain both.
+        # load_model() guards the equivalent collision for vectors (by
+        # averaging); here the right merge is SUM, not mean: these are
+        # independent occurrence tallies of what's really one word, not
+        # competing estimates of one value. Without this, predict()'s join
+        # would attach the same (deduped) vector row to multiple duplicate-
+        # keyed count rows carrying different, un-summed frequencies --
+        # feeding the regression contradictory (x, y) pairs for one word.
+        if len(freqs_index) != len(set(freqs_index)):
+            freqs = freqs.groupby(level=0).sum()
+            freqs_index = list(freqs.index.values)
+
         # Unicode-normalize + transliterate as a *fallback* key only, tried
         # in predict() solely for words that don't match directly. Applying
         # this unconditionally used to actively destroy matches for
@@ -388,7 +423,15 @@ def evaluate_replication(wordsXdims, replication_norms, alpha=1.0):
     for norms_fname, norms in replication_norms:
         print(f'predicting norms from {norms_fname}')
         score = predict_norms(wordsXdims, norms, alpha)
-        score['source'] = norms_fname
+        # NOT 'source' -- evaluate_language() sets that to the model config
+        # name (base_file_name) below, which would silently clobber this per-
+        # file value if it used the same column. 'dataset' matches the column
+        # evaluate_norms()/evaluate_counts() already use for the same purpose
+        # (which model's 'source' column) doesn't collide with (which file's
+        # 'dataset' column) -- so replication results, unlike norms/counts,
+        # were losing which of a language's multiple replication files each
+        # row actually came from.
+        score['dataset'] = norms_fname
         scores.append(score)
     if len(scores) > 0:
         return pd.concat(scores)

@@ -179,7 +179,17 @@ def extract_wiki_text(article):
 
 def wiki_strip_circumflex(txt):
     """
-    Removes the (deeply nested) circumflex characters from wiki text.
+    Removes the (deeply nested) content of {{circumflex}} template blocks
+    from wiki text, e.g. citation/infobox templates.
+
+    A stray unmatched '}' is left in place as a literal character (harmless
+    -- _is_kept_char filters it out downstream same as any other punctuation)
+    rather than being treated as a sign the whole article is corrupt: this
+    used to let circumflex go negative on any bare '}' anywhere in the
+    article -- common in ordinary prose (emoticons, math/code snippets,
+    discussion of the character itself) as well as genuinely malformed
+    templates -- and the handler for that case discarded the ENTIRE
+    article's text, not just the unmatched brace.
     """
     circumflex = 0
     txt = list(txt)
@@ -187,14 +197,11 @@ def wiki_strip_circumflex(txt):
         if txt[i] == '{':
             circumflex += 1
         elif txt[i] == '}':
-            circumflex -= 1
-            txt[i] = ''
+            if circumflex > 0:
+                circumflex -= 1
+                txt[i] = ''
         if circumflex > 0:
             txt[i] = ''
-        elif circumflex < 0:
-            # discard unmatched
-            txt = []
-            break
     return ''.join(txt)
 
 # Regular expressions for cleaning subtitle text
@@ -202,7 +209,10 @@ subs_expressions = [
     (r'<.*?>', ''),  # xml tags
     (r'http.*?(?:[\s\n\]]|$)', ''),  # links
     (r'\s\(.*?\)', ''),  # parentheses
-    (r'([^\s]{2,})[\.\!\?\:\;]+?[\s\n]|$', '\\1\n'),  # break sentences at periods
+    # See the identical fix in wiki_expressions below for why this can't be
+    # '...[\s\n]|$': that leaves the last sentence's terminal punctuation
+    # glued to the last word whenever it falls at true end-of-string.
+    (r'([^\s]{2,})[\.\!\?\:\;]+?(?:[\s\n]|$)', '\\1\n'),  # break sentences at periods
     (r"[-–—/']", ' '),  # hyphens, apostrophes and slashes
     (r'\s*\n\s*', '\n'),  # empty lines
     (r'\s{2,}', ' '),  # excessive spaces
@@ -218,13 +228,28 @@ wiki_expressions = [
     (r'(?s)<kml.*?</kml>', ''),  # strip KML tags
     (r'<.*?>', ''),  # strip other xml tags
     (r'http.*?(?:[\s\n\]]|$)', ''),  # strip external http(s) links
+    # Category links must be dropped entirely -- including any sort key after
+    # a '|' (e.g. "[[Category:People|Smith, John]]") -- BEFORE the next
+    # pattern runs: that one's generic "namespaced link with a pipe -> keep
+    # the part after the pipe as a label" rule (meant for File:/Image:
+    # captions) doesn't distinguish Category: links from those, so it used
+    # to leak every category's sort key into the corpus as if it were prose.
+    (r'\[\[category:[^\]]*?\]\]', ''),  # strip category links (with or without a sort key)
     (r'\[\[[^\]]*?:.*\|(.*?)\]\]', '\\1'),  # strip links to files, etc. but keep labels
-    (r'\[\[[^\]]*?:(.*?)\]\]', ''),  # strip category links
+    (r'\[\[[^\]]*?:(.*?)\]\]', ''),  # strip remaining (unpiped) namespaced links
     (r'\[\[[^\]]*?\|(.*?)\]\]', '\\1'),  # convert labeled links to just labels
     (r'(?m)^[\s]*[!?*;:=+\-|#_].*?$', ''),  # strip lines that do not start with alphanumerics, quotes, or brackets
     (r'(?m)^.*?\(UTC\).*?$', ''),  # strip lines containing a time stamp
     (r'\s\(.*?\)', ''),  # remove everything in parentheses
-    (r'([^\s.!?:;]{2})[.!?:;]+?[\s\n]|$', '\\1\n'),  # break sentences at periods
+    # NOT '...[\s\n]|$' -- with the [\s\n] requirement outside the
+    # optional-terminator group, a sentence ending at true end-of-string
+    # (no trailing whitespace to match) falls through to the bare `$`
+    # alternative, which matches zero-width and never uses the capture
+    # group -- so the final "sentence" of every document keeps its
+    # terminal punctuation glued to the last word instead of being split
+    # into its own line, silently creating a distinct vocabulary token from
+    # the same word appearing without trailing punctuation elsewhere.
+    (r'([^\s.!?:;]{2})[.!?:;]+?(?:[\s\n]|$)', '\\1\n'),  # break sentences at periods
     (r"[-–—/']", ' '),  # replace hyphens, apostrophes and slashes with spaces
     (r'\s*\n\s*', '\n'),  # strip empty lines and lines containing whitespace
     (r'\s{2,}', ' '),  # strip excessive spaces
@@ -311,7 +336,12 @@ def clean_wikipedia(language, overwrite=False):
                     continue
                 filename = f'wiki-{language}-{str(i)}.txt'
                 txt = text.lower()
-                txt = wiki_strip_circumflex(text) if ((not txt.startswith('#'))
+                # NOT wiki_strip_circumflex(text) -- that would strip circumflexes
+                # from the original mixed-case text and then never lowercase the
+                # result, leaving Wikipedia-sourced corpus text mixed-case while
+                # clean_text() (the subtitle side) always lowercases. Training
+                # would then see "The" and "the" as unrelated vocabulary items.
+                txt = wiki_strip_circumflex(txt) if ((not txt.startswith('#'))
                                      and ('<noinclude>' not in txt)
                                      and ('__noindex__' not in txt)
                                      ) else ''

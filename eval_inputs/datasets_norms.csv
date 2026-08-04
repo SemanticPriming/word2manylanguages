@@ -249,6 +249,7 @@ Conca2024.csv,turkish|italian|english,imageability,imagine_mean,,imagine_mean
 Conca2024.csv,turkish|italian|english,arousal,arousal_mean,,arousal_mean
 Conca2024.csv,turkish|italian|english,valence,valence_mean,,valence_mean
 Conde2026_familiar_human.csv,german,familiarity,familiar_mean,,familiar_mean
+Conde2026_familiar_human.csv,german,familiarity,familiar_blup,,familiar_blup
 Cordier2005.csv,french,familiarity,familiar_mean,,familiar_mean
 Cortese2004.csv,english,imageability,imagine_mean,,imagine_mean
 Cortese2008.csv,english,aoa,aoa_subjective_mean,,aoa_subjective_mean
