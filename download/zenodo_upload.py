@@ -8,7 +8,14 @@ Two upload paths, chosen automatically per language+version:
   languages, since it's a correction of the same dataset, not a new one.
 - No prior DOI? Creates a brand-new record -- for 2024-corpus uploads
   (new languages, or a 2024 supplement to an existing one) and for any
-  language's first-ever upload.
+  language's first-ever upload. Its metadata is the language-specific
+  title/description plus boilerplate (creators, license, communities,
+  related_identifiers, version) copied from REFERENCE_RECORD_ID, an
+  existing published record -- so new records carry the same
+  authorship/license/community/manuscript-link info as the project's
+  existing ones instead of just a bare title. (A new-*version* upload
+  needs none of this -- Zenodo's newversion draft already inherits the
+  prior version's full metadata automatically.)
 
 Handles what zenodo_download.py's docstring describes from the other side:
 oversized model files get split into "{base}_part_aa"/"_part_ab"/... chunks
@@ -65,6 +72,15 @@ MAX_BYTES_PER_RECORD = int(45 * 1000**3)  # Zenodo caps at 50GB (decimal); leave
 MAX_RETRIES = 5
 RETRY_BACKOFF_SECONDS = 5  # doubles each retry: 5, 10, 20, 40, 80s
 
+# A known-good already-published record (af, 2018, part 1) whose boilerplate
+# metadata -- creators, license, communities, related_identifiers, version
+# -- is reused verbatim for every brand-new record this script creates, so
+# newly published languages carry the same authorship/license/community/
+# manuscript-link info as the project's existing records instead of just a
+# bare title/description. Override with the ZENODO_REFERENCE_RECORD env var
+# if that record ever gets superseded.
+REFERENCE_RECORD_ID = "17328169"
+
 
 def _token():
     token = os.environ.get("ZENODO_TOKEN")
@@ -78,6 +94,47 @@ def _headers(json=False):
     if json:
         h["Content-Type"] = "application/json"
     return h
+
+
+_reference_metadata_cache = None
+
+
+def _reference_metadata():
+    """
+    Fetches the boilerplate deposit metadata (creators, license,
+    communities, related_identifiers, version) from REFERENCE_RECORD_ID and
+    translates it from the public /records/ display shape (what GET
+    returns) back into the shape /deposit/depositions/ needs on create --
+    e.g. license as a bare id string rather than {"id": ...}, communities
+    keyed by "identifier" rather than "id". Cached for the life of the
+    process: this is called once per brand-new record, and the reference
+    record's metadata doesn't change mid-run.
+    """
+    global _reference_metadata_cache
+    if _reference_metadata_cache is not None:
+        return _reference_metadata_cache
+
+    record_id = os.environ.get("ZENODO_REFERENCE_RECORD", REFERENCE_RECORD_ID)
+    r = _retry(lambda: requests.get(f"{API}/records/{record_id}"), "fetch reference record metadata")
+    m = r.json()["metadata"]
+
+    boilerplate = {}
+    if m.get("creators"):
+        boilerplate["creators"] = [
+            {k: v for k, v in c.items() if k in ("name", "affiliation", "orcid") and v}
+            for c in m["creators"]
+        ]
+    if m.get("license", {}).get("id"):
+        boilerplate["license"] = m["license"]["id"]
+    if m.get("communities"):
+        boilerplate["communities"] = [{"identifier": c["id"]} for c in m["communities"]]
+    if m.get("related_identifiers"):
+        boilerplate["related_identifiers"] = m["related_identifiers"]
+    if m.get("version"):
+        boilerplate["version"] = m["version"]
+
+    _reference_metadata_cache = boilerplate
+    return boilerplate
 
 
 def _retry(fn, description):
@@ -342,15 +399,12 @@ def sync_language(language, version, models_dir, dry_run=False):
 
     chunk_dir = models_dir / f".zenodo_upload_chunks_{language}_{version}"
     existing = existing_records_for(language, version)
-    metadata_base = {
-        "upload_type": "dataset",
-        "title": f"word2manylanguages: {language} FastText embeddings ({version} corpus)",
-        "description": (
-            f"FastText word embeddings for '{language}', trained on the {version} "
-            f"OpenSubtitles + Wikipedia corpus. See {REPO_URL} for the full pipeline."
-        ),
-        "access_right": "open",
-    }
+
+    # Only fetched (one network call) if at least one batch actually needs a
+    # brand-new record -- a language whose parts are all already published
+    # never touches this, same as before.
+    needs_new_record = any(i not in existing for i in range(1, len(batches) + 1))
+    reference_metadata = _reference_metadata() if needs_new_record else {}
 
     new_rows = []
     for i, batch in enumerate(batches, start=1):
@@ -358,7 +412,24 @@ def sync_language(language, version, models_dir, dry_run=False):
         if part in existing:
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
         else:
-            doi = upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata_base)
+            title = f"word2manylanguages: {language} FastText embeddings ({version} corpus)"
+            if len(batches) > 1:
+                title += f" Part {part}"
+            metadata = {
+                "upload_type": "dataset",
+                "title": title,
+                "description": (
+                    f"FastText word embeddings for '{language}', trained on the {version} "
+                    f"OpenSubtitles + Wikipedia corpus. See {REPO_URL} for the full pipeline."
+                ),
+                "access_right": "open",
+                **reference_metadata,
+                # Marks corpus vintage as a queryable field, not just prose in the
+                # title/description above -- 2018 and 2024 records are otherwise
+                # identical (same creators/license/communities/related_identifiers).
+                "keywords": [*reference_metadata.get("keywords", []), f"opensubtitles-{version}"],
+            }
+            doi = upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata)
         new_rows.extend(logical_rows_for_batch(language, version, part, batch, doi))
 
     extra_old_parts = set(existing) - set(range(1, len(batches) + 1))

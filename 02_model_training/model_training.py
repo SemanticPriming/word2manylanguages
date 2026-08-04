@@ -7,42 +7,48 @@ from gensim.models import FastText
 corpusdir = "corpora"
 modeldir = 'models'
 
-# Read the concatenated corpus for gensim 
-class sentences(object):
+# Read the concatenated corpus for gensim
+def load_corpus(language):
     """
-    Return lines from a full corpus text file as a sequence
-    using the generator pattern (an iterable)
+    Reads corpora/corpus-{language}.txt into memory once, pre-tokenized the
+    same way the old streaming `sentences` generator did (rstrip + split on
+    ' ', dropping empty tokens; blank lines still yield an empty list, same
+    as before, so corpus_count/training behavior is unchanged).
+
+    build_models() calls this exactly once per language and reuses the
+    result across all up-to-60 (dim, window, algo) configs. The old
+    `sentences(language)` generator reopened and re-read the corpus file
+    from scratch for *every* build_vocab() and every train() call -- two
+    full-file passes per config, 120 total for a full sweep -- through a
+    slow per-line Python readline()/split() loop. A language's corpus is
+    small enough to hold in memory (a list of token lists) relative to the
+    300GB+ RAM this pipeline runs on, so read it once and hand the same
+    in-memory list to gensim every time instead.
     """
-    def __init__(self, language):
-        path_name = os.path.join(basedir,corpusdir,f'corpus-{language}.txt')
-        self.myfile = open(path_name, 'r')
+    path_name = os.path.join(basedir, corpusdir, f'corpus-{language}.txt')
+    with open(path_name, 'r') as f:
+        return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
-    def __iter__(self):
-        return self
-
-    # Python 3 compatibility
-    def __next__(self):
-        return self.next()
-
-    def next(self):
-        line = self.myfile.readline()
-        if line:
-            tok = [w for w in line.rstrip().split(' ') if len(w) > 0]
-            return tok
-
-        raise StopIteration()
+# Number of gensim training threads. Default leaves one core free for the OS/
+# Jupyter kernel itself; gensim's own default (3) badly underuses a large
+# machine -- override this (e.g. `mt.workers = 32`) for a bigger server.
+workers = max(1, (os.cpu_count() or 1) - 1)
 
 # Build gensim models
-def vectorize_stream(language, min_freq=5, dim=50, win=3, alg=0):
+def vectorize_stream(corpus, min_freq=5, dim=50, win=3, alg=0):
     """
     Creates the word2vec model using gensim.
+    `corpus` is a pre-tokenized list of token lists, as returned by
+    load_corpus() -- passed in (rather than a language string) so
+    build_models() can load the corpus once and reuse it across every
+    config instead of re-reading the corpus file from disk for each one.
     """
     algo = 1 if alg == "sg" else 0
-    print(f"Training model {language} {dim} {win} {alg}")
-    model = FastText(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=1e-2, negative=10, alpha=0.05, min_n=3, max_n=6)
-    model.build_vocab(corpus_iterable=sentences(language))
+    print(f"Training model {dim} {win} {alg}")
+    model = FastText(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=1e-2, negative=10, alpha=0.05, min_n=3, max_n=6, workers=workers)
+    model.build_vocab(corpus_iterable=corpus)
     total_examples = model.corpus_count
-    model.train(corpus_iterable=sentences(language), total_examples=total_examples, epochs=10)
+    model.train(corpus_iterable=corpus, total_examples=total_examples, epochs=10)
 
     return model
 
@@ -54,17 +60,35 @@ def build_models(language,overwrite=False):
     """
     Loops over model requirements and uses vectorize stream to create gensim models.
     """
-    for dim in dimension_list:
-        for win in window_list:
-            for alg in algo_list:
-                base_file_name = f'{language}_{str(dim)}_{str(win)}_{alg}'
-                output_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv.bz2')
-                if os.path.exists(output_path) and not overwrite:
-                    print(f'File {base_file_name}_wxd.csv.bz2 exists, and overwrite not specified. Skipping.');
-                else:
-                    print("Building model " + base_file_name)
-                    model = vectorize_stream(language, 5, dim, win, alg)
-                    #Write down the model?
-                    words=list(model.wv.key_to_index)
-                    wordsxdims = pd.DataFrame(model.wv[words],words)
-                    wordsxdims.to_csv(output_path,index_label='word',compression='bz2')
+    configs = [
+        (dim, win, alg)
+        for dim in dimension_list
+        for win in window_list
+        for alg in algo_list
+    ]
+
+    remaining = [
+        (dim, win, alg) for dim, win, alg in configs
+        if overwrite or not os.path.exists(
+            os.path.join(basedir, modeldir, f'{language}_{dim}_{win}_{alg}_wxd.csv.bz2')
+        )
+    ]
+    if not remaining:
+        print(f'All {len(configs)} configs for {language} already exist, and overwrite not specified. Skipping.')
+        return
+
+    print(f"Loading {language} corpus.")
+    corpus = load_corpus(language)
+
+    for dim, win, alg in configs:
+        base_file_name = f'{language}_{str(dim)}_{str(win)}_{alg}'
+        output_path = os.path.join(basedir, modeldir, f'{base_file_name}_wxd.csv.bz2')
+        if os.path.exists(output_path) and not overwrite:
+            print(f'File {base_file_name}_wxd.csv.bz2 exists, and overwrite not specified. Skipping.');
+        else:
+            print("Building model " + base_file_name)
+            model = vectorize_stream(corpus, 5, dim, win, alg)
+            #Write down the model?
+            words=list(model.wv.key_to_index)
+            wordsxdims = pd.DataFrame(model.wv[words],words)
+            wordsxdims.to_csv(output_path,index_label='word',compression='bz2')

@@ -13,7 +13,7 @@ Evaluates the word-by-dimension models produced by [`02_model_training/`](../02_
   - `predict` — the shared ridge regression helper: joins vectors to targets on the (casefolded) word index, then for each target column runs `RepeatedKFold` cross-validated `Ridge` regression, penalizing the score for words the model has no vector for; `predict_norms`/`predict_counts` just fix `label_col` for their respective output shape
   - `evaluate_replication` / `evaluate_norms` / `evaluate_counts` — score one already-loaded model against one already-loaded ground-truth set via `predict`
   - `append_scores` — appends a scores `DataFrame` to a per-language output file, writing the header only the first time
-  - `evaluate_language` — the driver: loops over every model configuration for a language, loads each model once, runs all three evaluation types with both raw and L2-normalized vectors, and appends results as it goes; set `overwrite=True` to force re-running a language that already has output
+  - `evaluate_language` — the driver: loops over every model configuration for a language, loads each model once, runs all three evaluation types with both raw and L2-normalized vectors, and appends results as it goes; set `overwrite=True` to force re-running a language that already has output. `lang` is always the bare two-letter code; pass `version='2024'` (default `'2018'`) to evaluate that corpus vintage's models instead -- see below
 
 ## 📦 Requirements
 
@@ -55,6 +55,16 @@ ev.evaluate_language('af')
 ```
 
 Each output file is skipped (with a printed message) if it already exists; pass `overwrite=True` to force a re-run: `ev.evaluate_language('af', overwrite=True)`.
+
+## 🕒 2018 vs. 2024 corpus vintage
+
+Languages trained from the newer OpenSubtitles 2024 add-on corpus (see [`01_corpus_preprocessing`](../01_corpus_preprocessing)'s `version` param) have their models and counts under a `{lang}-2024` key, not bare `{lang}` -- pass `version='2024'` so `evaluate_language` reads the right models (`models/{lang}-2024_*`) and counts (`eval_inputs/counts/dedup.{lang}-2024.words.unigrams.tsv*`) and writes to the right, non-colliding output files (`eval_results/{replication,norms,counts}/{lang}-2024_eval.csv`):
+
+```python
+ev.evaluate_language('en', version='2024')
+```
+
+Ground truth (replication norms, extended norms) has no corpus-vintage concept, so it's unaffected -- both versions are scored against the same norms files. Every output row also carries a `version` column, so 2018 and 2024 results stay distinguishable even after being concatenated together for the manuscript/visualization stages.
 
 To evaluate a single already-loaded model against a single already-loaded dataset directly, without the full `evaluate_language` sweep:
 

@@ -79,7 +79,10 @@ def download(source, language, version='2018', overwrite=False):
         # "not a valid zip/bz2" instead of on the actual missing-file cause here.
         r.raise_for_status()
         with open(path_name, "wb") as f:
-            for chunk in r.iter_content(chunk_size=1024):
+            # 1MB, not 1KB -- wikipedia dumps run several GB (e.g. zh is
+            # ~3GB compressed), and a 1KB chunk size means millions of
+            # Python-level loop iterations just to write one file.
+            for chunk in r.iter_content(chunk_size=1 << 20):
                 f.write(chunk)
         print("Download complete.")
 
@@ -101,7 +104,7 @@ class articles(object):
         return self.next()
 
     def next(self):
-        article = ""
+        lines = []
         body = False
         line = self.myfile.readline()
         while line:
@@ -109,10 +112,10 @@ class articles(object):
                 body = True
 
             if "</page>" in line:
-                return html.unescape(html.unescape(article))
+                return html.unescape(html.unescape("".join(lines)))
 
             if body:
-                article = article + line
+                lines.append(line)
 
             line = self.myfile.readline()
 

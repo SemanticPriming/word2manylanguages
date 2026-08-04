@@ -319,14 +319,22 @@ def load_extended_norms(lang):
             print(f"An exception of type {type(ex).__name__} occurred loading {langfile}. Arguments:\n{ex.args!r}")
     return loaded
 
-def load_count_freqs(lang):
+def load_count_freqs(lang, subs_key=None):
     """
     Loads and cleans both frequency-count datasets for this language once.
     Transparently reads either a plain .tsv or a zip-compressed .tsv.zip (as
     downloaded from storage) without decompressing to disk first.
+
+    `lang` is the bare two-letter code, used for the wikipedia-side file --
+    Wikipedia counts are never version-suffixed, since Wikipedia has no
+    dated-vintage concept (see corpus_preprocessing.py's version param).
+    `subs_key` is the (possibly version-suffixed, e.g. 'en-2024') key used
+    for the subtitles-side file; defaults to `lang` for plain 2018-vintage
+    languages, where the two are the same string.
     """
+    subs_key = subs_key or lang
     datasetspath = os.path.join(basedir, datasetsdir, countdir)
-    flist = [f'dedup.{lang}.words.unigrams.tsv', f'dedup.{lang}wiki-meta.words.unigrams.tsv']
+    flist = [f'dedup.{subs_key}.words.unigrams.tsv', f'dedup.{lang}wiki-meta.words.unigrams.tsv']
 
     loaded = []
     for langfile in flist:
@@ -430,7 +438,7 @@ def load_done_combos(outfile):
     return set(zip(existing['source'], existing['normalized']))
 
 # Main driver: one pass per language, one model load per configuration
-def evaluate_language(lang, alpha=1.0, overwrite=False):
+def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
     """
     For a given language, loads each trained model exactly once and runs it
     against replication norms, extended norms, and frequency counts -- with
@@ -440,10 +448,23 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
     model/normalization combos (per output file) are skipped, so a run that
     got interrupted partway through a language resumes where it left off
     instead of redoing finished work or being skipped entirely.
+
+    `lang` is always the bare two-letter code (norms/replication ground
+    truth has no corpus-vintage concept, and code2lang only has bare-code
+    keys). `version` selects which trained models/counts to evaluate --
+    '2018' (default) reads models/{lang}_*, matching every already-published
+    DOI; any other version (e.g. '2024') reads models/{lang}-{version}_*
+    instead, same version-suffix convention as corpus_preprocessing.py's
+    subs_key. Output files are named after that same (possibly suffixed)
+    key, so 2018 and 2024 results for a language never collide on disk; a
+    'version' column is also stamped on every row, so results from both can
+    still be told apart after being concatenated together downstream.
     """
-    replication_out = os.path.join(basedir, evaldir, replicationdir, f'{lang}_eval.csv')
-    norms_out = os.path.join(basedir, evaldir, normsdir, f'{lang}_eval.csv')
-    counts_out = os.path.join(basedir, evaldir, countdir, f'{lang}_eval.csv')
+    subs_key = lang if version == '2018' else f'{lang}-{version}'
+
+    replication_out = os.path.join(basedir, evaldir, replicationdir, f'{subs_key}_eval.csv')
+    norms_out = os.path.join(basedir, evaldir, normsdir, f'{subs_key}_eval.csv')
+    counts_out = os.path.join(basedir, evaldir, countdir, f'{subs_key}_eval.csv')
     outfiles = [replication_out, norms_out, counts_out]
 
     if overwrite:
@@ -453,7 +474,7 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
 
     replication_norms = load_replication_norms(lang)
     extended_norms = load_extended_norms(lang)
-    count_freqs = load_count_freqs(lang)
+    count_freqs = load_count_freqs(lang, subs_key=subs_key)
 
     done_replication = load_done_combos(replication_out) if replication_norms else set()
     done_norms = load_done_combos(norms_out) if extended_norms else set()
@@ -462,7 +483,7 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
     for dim in dimension_list:
         for win in window_list:
             for alg in algo_list:
-                base_file_name = f'{lang}_{dim}_{win}_{alg}'
+                base_file_name = f'{subs_key}_{dim}_{win}_{alg}'
 
                 # Skip loading this model entirely if every combo it would
                 # produce is already recorded in every relevant output file.
@@ -475,7 +496,7 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
                 if not work_remaining:
                     continue
 
-                words, raw_vectors = load_model(lang, dim, win, alg)
+                words, raw_vectors = load_model(subs_key, dim, win, alg)
                 if words is None:
                     continue
                 print(f'Evaluating model {base_file_name}')
@@ -491,6 +512,7 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
+                            scores['version'] = version
                             append_scores(replication_out, scores)
                         done_replication.add(key)
 
@@ -499,6 +521,7 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
+                            scores['version'] = version
                             append_scores(norms_out, scores)
                         done_norms.add(key)
 
@@ -507,5 +530,6 @@ def evaluate_language(lang, alpha=1.0, overwrite=False):
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
+                            scores['version'] = version
                             append_scores(counts_out, scores)
                         done_counts.add(key)
