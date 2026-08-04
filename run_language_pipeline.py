@@ -113,17 +113,20 @@ cp.concatenate_corpus(language, version=version)
 # ## 6. Build frequency counts (this project's own corpus, not an external mirror)
 # in:  preprocessed/wikipedia-{language}-pruned.zip
 #      preprocessed/subtitles-{subs_key}-pruned.zip
-# out: eval_inputs/counts/dedup.{language}wiki-meta.words.unigrams.tsv.zip
-#      eval_inputs/counts/dedup.{subs_key}.words.unigrams.tsv.zip
+# out: eval_inputs/counts/{language}.wiki.2018.tsv.zip
+#      eval_inputs/counts/{language}.subs.{version}.tsv.zip
+# (Zenodo upload for these is separate and not per-language -- see
+# download/zenodo_upload.py's sync_all_counts(), run manually once however
+# many languages you want are ready.)
 
 # %%
 if language == "tw":
     bc.build_tw_wiki_counts()  # derives from zh, same as cell 3
 else:
-    bc.count_unigrams("wikipedia", language)
+    bc.count_unigrams("wikipedia", language, version)
 
 # %%
-bc.count_unigrams("subtitles", subs_key)
+bc.count_unigrams("subtitles", language, version)
 
 # %% [markdown]
 # ## 7. Train models -- 60 configs (dim: 50/100/200/300/500, window: 1-6, algo: cbow/sg)

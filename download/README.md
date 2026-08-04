@@ -82,7 +82,7 @@ If the source table changes (new language, more parts, another wrong DOI discove
 
 ## 3. Frequency count data (`eval_inputs/counts/`)
 
-Word-frequency counts computed from van Paridon & Thompson's (2021) subtitle/Wikipedia corpora — used by `evaluation.py`'s `predict_counts` (Research Question 2, frequency prediction). `eval_inputs/counts/` ships with just the Afrikaans example (`dedup.af.words.unigrams.tsv.zip` and `dedup.afwiki-meta.words.unigrams.tsv.zip`, small enough to keep tracked). Other languages' frequency data lives in the lab's MinIO bucket under `frequency_source/`, zip-compressed; `evaluation.py`'s `load_count_freqs` reads `.tsv.zip` transparently, so there's no need to unzip after downloading:
+Word-frequency counts computed from van Paridon & Thompson's (2021) subtitle/Wikipedia corpora — used by `evaluation.py`'s `predict_counts` (Research Question 2, frequency prediction). `eval_inputs/counts/` ships with just the Afrikaans example (`af.subs.2018.tsv.zip` and `af.wiki.2018.tsv.zip`, small enough to keep tracked). Other languages' frequency data lives in the lab's MinIO bucket under `frequency_source/`, zip-compressed; `evaluation.py`'s `load_count_freqs` reads `.tsv.zip` transparently, so there's no need to unzip after downloading:
 
 ```bash
 set -a; source .env; set +a
@@ -90,9 +90,9 @@ pip install minio
 python download/minio_download.py --prefix frequency_source/dedup.bg --dest eval_inputs/counts/   # both dedup.bg. and dedup.bgwiki-meta. files
 ```
 
-(There's no Zenodo path for this one — the `frequency_source/` data isn't part of the DOI-archived deposits, only the trained models are. The original public source is van Paridon's own [subs2vec](https://github.com/jvparidon/subs2vec) project; the lab's MinIO bucket is a mirror of those counts, kept alongside the trained models for convenience.)
+(This MinIO mirror isn't part of the DOI-archived deposits below — the original public source is van Paridon's own [subs2vec](https://github.com/jvparidon/subs2vec) project; the lab's MinIO bucket is a mirror of those counts, kept alongside the trained models for convenience.)
 
-**Languages subs2vec never covered** (Japanese, Chinese, Thai — none of them use whitespace to separate words, so counting unigrams needs a real segmenter, not just a split) have no `frequency_source/` entry to download at all. For those, [`eval_inputs/build_counts_tokenized.py`](../eval_inputs/build_counts_tokenized.py) builds the same `dedup.{language}.words.unigrams.tsv.zip` / `dedup.{language}wiki-meta.words.unigrams.tsv.zip` pair locally, straight from `preprocessed/{subtitles,wikipedia}-{language}-pruned.zip` (Stage 1's deduplicated output — see [`01_corpus_preprocessing/README.md`](../01_corpus_preprocessing/README.md)):
+**Languages subs2vec never covered** (Japanese, Chinese, Thai — none of them use whitespace to separate words, so counting unigrams needs a real segmenter, not just a split) have no `frequency_source/` entry to download at all. For those, [`eval_inputs/build_counts_tokenized.py`](../eval_inputs/build_counts_tokenized.py) builds the same `{language}.subs.{version}.tsv.zip` / `{language}.wiki.2018.tsv.zip` pair locally, straight from `preprocessed/{subtitles,wikipedia}-{language}-pruned.zip` (Stage 1's deduplicated output — see [`01_corpus_preprocessing/README.md`](../01_corpus_preprocessing/README.md)):
 
 ```python
 import sys
@@ -102,6 +102,20 @@ import build_counts_tokenized as bc
 bc.basedir = '.'
 bc.build_counts('ja')   # requires preprocessed/{subtitles,wikipedia}-ja-pruned.zip to already exist
 ```
+
+`run_language_pipeline.ipynb`'s step 6 calls this same function for *every* language (not just the subs2vec-uncovered ones) — the project builds its own frequency baseline from its own cleaned corpus rather than trusting the external mirror, so `eval_inputs/counts/` accumulates one `{language}.subs.{version}.tsv.zip` + `{language}.wiki.2018.tsv.zip` pair per language processed.
+
+### Publishing this project's own counts to Zenodo
+
+Unlike the trained models (published per-language, immediately after each language finishes step 7 — see §2 above), the frequency counts are **not** published per language. Once you've built counts for however many languages you want (they pile up in `eval_inputs/counts/` as you run the pipeline), archive the whole directory to Zenodo as one bundled dataset — run manually, whenever you want, not from inside `run_language_pipeline.ipynb`:
+
+```bash
+pip install requests
+python download/zenodo_upload.py --sync-counts --counts-dir eval_inputs/counts/ --dry-run   # review the plan first
+python download/zenodo_upload.py --sync-counts --counts-dir eval_inputs/counts/             # actual upload
+```
+
+This publishes every `*.tsv.zip` currently in `eval_inputs/counts/` as one Zenodo record (or a few, if the file count ever exceeds Zenodo's 100-files-per-record limit — see `zenodo_upload.py`'s `sync_all_counts()`), carrying the same creators/ORCID/license/manuscript-link boilerplate as the model records (`REFERENCE_RECORD_ID` in `zenodo_upload.py`). Tracked in `zenodo_counts_dois.csv` (kept separate from `zenodo_dois.csv`, which is model-only) — commit that file afterward the same way `zenodo_dois.csv` gets committed in step 8b. Re-running this later, after more languages have been added, publishes a **new version** of the same record(s) rather than a duplicate — same "correction" semantics as the models' new-version path.
 
 ## 4. Extended norms (`eval_inputs/norms/`)
 

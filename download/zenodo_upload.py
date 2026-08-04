@@ -41,12 +41,20 @@ Usage:
     python zenodo_upload.py --language af --version 2018 --models-dir ../models/
     python zenodo_upload.py --language az --version 2024 --models-dir ../models/
     python zenodo_upload.py --language af --version 2018 --models-dir ../models/ --dry-run
+
+Frequency counts (see eval_inputs/build_counts_tokenized.py) are a separate,
+much smaller dataset -- every language's counts are bundled into one shared
+Zenodo record via sync_all_counts(), run once manually after however many
+languages you want are ready, not per language:
+    python zenodo_upload.py --sync-counts --counts-dir ../eval_inputs/counts/
+    python zenodo_upload.py --sync-counts --counts-dir ../eval_inputs/counts/ --dry-run
 """
 
 import argparse
 import csv
 import hashlib
 import os
+import re
 import sys
 import time
 from collections import namedtuple
@@ -58,6 +66,7 @@ import zenodo_common as zc
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DOIS_CSV = os.path.join(HERE, "zenodo_dois.csv")
+COUNTS_DOIS_CSV = os.path.join(HERE, "zenodo_counts_dois.csv")
 REPO_URL = "https://github.com/SemanticPriming/word2manylanguages"
 
 API = "https://zenodo.org/api"
@@ -317,14 +326,14 @@ def _publish(deposit_id):
     return r.json()
 
 
-def _append_dois_csv(rows):
-    file_exists = os.path.exists(DOIS_CSV)
-    with open(DOIS_CSV, "a", newline="") as f:
+def _append_dois_csv(csv_path, rows):
+    file_exists = os.path.exists(csv_path)
+    with open(csv_path, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["language", "version", "part", "file", "doi", "zenodo_version"])
         if not file_exists:
             writer.writeheader()
         writer.writerows(rows)
-    print(f"Appended {len(rows)} row(s) to {DOIS_CSV}")
+    print(f"Appended {len(rows)} row(s) to {csv_path}")
 
 
 def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata):
@@ -369,29 +378,34 @@ def logical_rows_for_batch(language, version, part, batch, doi, zenodo_version):
     ]
 
 
-def existing_records_for(language, version):
+def _existing_records_for(csv_path, language, version):
     """{part: record_id} for whatever's already published under this
-    language+version, so retraining can target the right existing DOIs."""
+    language+version in csv_path, so retraining/rebuilding can target the
+    right existing DOIs."""
     record_id_by_part = {}
-    if not os.path.exists(DOIS_CSV):
+    if not os.path.exists(csv_path):
         return record_id_by_part
-    with open(DOIS_CSV) as f:
+    with open(csv_path) as f:
         for row in csv.DictReader(f):
             if row["language"] == language and row.get("version", "2018") == version:
                 record_id_by_part[int(row["part"])] = row["doi"].rsplit(".", 1)[-1]
     return record_id_by_part
 
 
-def _next_zenodo_version_for(language, version, part):
-    """How many distinct DOIs a part already has in zenodo_dois.csv, plus
-    one -- 'v1' for a brand-new record, 'v2'+ for each Zenodo new-version
+def existing_records_for(language, version):
+    return _existing_records_for(DOIS_CSV, language, version)
+
+
+def _next_zenodo_version_for(csv_path, language, version, part):
+    """How many distinct DOIs a part already has in csv_path, plus one --
+    'v1' for a brand-new record, 'v2'+ for each Zenodo new-version
     republish, so the CSV makes it obvious why a language can have more
     than one DOI (a correction/retrain) rather than looking like a
     duplicate or a mistake."""
-    if not os.path.exists(DOIS_CSV):
+    if not os.path.exists(csv_path):
         return "v1"
     dois = set()
-    with open(DOIS_CSV) as f:
+    with open(csv_path) as f:
         for row in csv.DictReader(f):
             if row["language"] == language and row.get("version", "2018") == version and int(row["part"]) == part:
                 dois.add(row["doi"])
@@ -440,7 +454,7 @@ def sync_language(language, version, models_dir, dry_run=False):
     new_rows = []
     for i, batch in enumerate(batches, start=1):
         part = i
-        zenodo_version = _next_zenodo_version_for(language, version, part)
+        zenodo_version = _next_zenodo_version_for(DOIS_CSV, language, version, part)
         if part in existing:
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
         else:
@@ -473,21 +487,130 @@ def sync_language(language, version, models_dir, dry_run=False):
             f"note the change in their description."
         )
 
-    _append_dois_csv(new_rows)
+    _append_dois_csv(DOIS_CSV, new_rows)
 
     if chunk_dir.exists():
         chunk_dir.rmdir()  # _upload_spec cleans up each chunk right after its upload; this just removes the now-empty dir
 
 
+# sync_all_counts bundles every language's frequency-count files into one
+# shared Zenodo record (or a few, if MAX_FILES_PER_RECORD is exceeded) --
+# unlike sync_language, there's no single (language, version) to key the
+# "already published?" lookup on, so bookkeeping in COUNTS_DOIS_CSV uses
+# this fixed sentinel instead; each row's own language/version columns
+# still reflect that row's real file, parsed from its filename.
+_COUNTS_BOOKKEEPING_KEY = ("frequency-counts", "all-languages")
+
+_COUNTS_SUBS_RE = re.compile(r"^(?P<lang>[a-z]{2,3})\.subs\.(?P<version>\d{4})\.tsv\.zip$")
+_COUNTS_WIKI_RE = re.compile(r"^(?P<lang>[a-z]{2,3})\.wiki\.2018\.tsv\.zip$")
+
+
+def _parse_counts_filename(name):
+    """(language, version) for a counts filename produced by
+    eval_inputs/build_counts_tokenized.py, e.g. 'af.subs.2018.tsv.zip' ->
+    ('af', '2018'), 'af.wiki.2018.tsv.zip' -> ('af', '2018')."""
+    m = _COUNTS_WIKI_RE.match(name)
+    if m:
+        return m.group("lang"), "2018"
+    m = _COUNTS_SUBS_RE.match(name)
+    if m:
+        return m.group("lang"), m.group("version")
+    raise ValueError(f"unrecognized counts filename (doesn't match {{lang}}.subs.{{version}}.tsv.zip or {{lang}}.wiki.2018.tsv.zip): {name}")
+
+
+def sync_all_counts(counts_dir, dry_run=False):
+    """
+    Uploads every frequency-count file in counts_dir (all languages, both
+    subtitles and wikipedia sides -- see eval_inputs/build_counts_tokenized.py)
+    to Zenodo as one bundled dataset, batched into as many records as
+    MAX_FILES_PER_RECORD/MAX_BYTES_PER_RECORD require (reuses sync_language's
+    chunking infra, though these files are far too small for per-file
+    chunking to ever trigger -- only the file-count cap realistically will,
+    once enough languages are in).
+
+    Meant to be run once, manually, after however many languages you want
+    are done -- not per language. Re-running after more languages are added
+    republishes a new version of the same record(s) (tracked in
+    zenodo_counts_dois.csv), same "correction" semantics as sync_language's
+    new-version path.
+    """
+    counts_dir = Path(counts_dir)
+    paths = sorted(counts_dir.glob("*.tsv.zip"))
+    if not paths:
+        sys.exit(f"No count files found in {counts_dir}")
+    print(f"counts: {len(paths)} file(s) across all languages, {sum(p.stat().st_size for p in paths)/1e6:.1f}MB total")
+
+    specs = plan_chunks(paths)
+    batches = batch_for_records(specs)
+    print(f"  -> {len(batches)} record(s) needed ({sum(len(b) for b in batches)} file(s))")
+
+    if dry_run:
+        for i, batch in enumerate(batches, start=1):
+            total = sum(s.size for s in batch)
+            print(f"  [dry run] part {i}: {len(batch)} files, {total/1e6:.2f}MB")
+        return
+
+    chunk_dir = counts_dir / ".zenodo_upload_chunks_counts"
+    bk_language, bk_version = _COUNTS_BOOKKEEPING_KEY
+    existing = _existing_records_for(COUNTS_DOIS_CSV, bk_language, bk_version)
+
+    needs_new_record = any(i not in existing for i in range(1, len(batches) + 1))
+    reference_metadata = _reference_metadata() if needs_new_record else {}
+
+    new_rows = []
+    for i, batch in enumerate(batches, start=1):
+        part = i
+        zenodo_version = _next_zenodo_version_for(COUNTS_DOIS_CSV, bk_language, bk_version, part)
+        if part in existing:
+            doi = upload_batch_as_new_version(bk_language, bk_version, part, batch, chunk_dir, existing[part])
+        else:
+            title = "word2manylanguages: unigram frequency counts (all languages)"
+            if len(batches) > 1:
+                title += f" Part {part}"
+            metadata = {
+                "upload_type": "dataset",
+                "title": title,
+                "description": (
+                    f"Unigram frequency count files for every language in this project -- the "
+                    f"frequency baseline used to evaluate this project's FastText word embedding "
+                    f"models (see the project's other Zenodo records/DOIs), built from this "
+                    f"project's own cleaned/deduplicated OpenSubtitles + Wikipedia corpus (see "
+                    f"eval_inputs/build_counts_tokenized.py) rather than an external mirror. "
+                    f"See {REPO_URL} for the full pipeline."
+                ),
+                "access_right": "open",
+                **reference_metadata,
+                "keywords": [*reference_metadata.get("keywords", []), "frequency-counts"],
+            }
+            doi = upload_batch_as_new_record(bk_language, bk_version, part, batch, chunk_dir, metadata)
+        for spec in batch:
+            lang, version = _parse_counts_filename(spec.name)
+            new_rows.append({"language": lang, "version": version, "part": part, "file": spec.name, "doi": doi, "zenodo_version": zenodo_version})
+
+    _append_dois_csv(COUNTS_DOIS_CSV, new_rows)
+
+    if chunk_dir.exists():
+        chunk_dir.rmdir()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--language", required=True, help="two-letter language code, e.g. 'af'")
+    parser.add_argument("--language", help="two-letter language code, e.g. 'af' -- required unless --sync-counts")
     parser.add_argument("--version", default="2018", help="corpus vintage: '2018' (default) or '2024'")
-    parser.add_argument("--models-dir", required=True, help="local directory containing {language}_*_wxd.csv.bz2 files")
+    parser.add_argument("--models-dir", help="local directory containing {language}_*_wxd.csv.bz2 files -- required unless --sync-counts")
+    parser.add_argument("--sync-counts", action="store_true", help="upload every language's frequency counts as one bundled record instead of a single language's models -- see sync_all_counts()")
+    parser.add_argument("--counts-dir", help="local directory containing {language}.subs.{version}.tsv.zip / {language}.wiki.2018.tsv.zip files -- required with --sync-counts")
     parser.add_argument("--dry-run", action="store_true", help="only print the chunking/batching plan, no network calls")
     args = parser.parse_args()
 
-    sync_language(args.language, args.version, args.models_dir, dry_run=args.dry_run)
+    if args.sync_counts:
+        if not args.counts_dir:
+            parser.error("--sync-counts requires --counts-dir")
+        sync_all_counts(args.counts_dir, dry_run=args.dry_run)
+    else:
+        if not args.language or not args.models_dir:
+            parser.error("--language and --models-dir are required unless --sync-counts")
+        sync_language(args.language, args.version, args.models_dir, dry_run=args.dry_run)
 
 
 if __name__ == "__main__":

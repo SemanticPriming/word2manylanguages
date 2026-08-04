@@ -14,11 +14,13 @@ separate words at all, so they need a real segmenter -- see TOKENIZE_FUNCS.
 Reads preprocessed/{subtitles,wikipedia}-{language}-pruned.zip -- the same
 deduplicated per-document archives 01_corpus_preprocessing's
 concatenate_corpus() reads, except kept apart by source instead of merged
-into corpora/corpus-{language}.txt, matching how the downloaded counts are
-themselves split into dedup.{language}.words.unigrams.tsv (subtitles) and
-dedup.{language}wiki-meta.words.unigrams.tsv (wikipedia). Output uses the
-same two-column (unigram, unigram_freq) tsv format, zip-compressed the same
-way, so evaluation.py's load_count_freqs reads it with no changes.
+into corpora/corpus-{language}.txt. Output is named
+{language}.subs.{version}.tsv (subtitles) and {language}.wiki.2018.tsv
+(wikipedia -- always tagged 2018 regardless of `version`, since Wikipedia
+has no dated-vintage concept and is shared/reused across corpus versions;
+see corpus_preprocessing.py's version param). Uses a two-column (unigram,
+unigram_freq) tsv format, zip-compressed, so evaluation.py's
+load_count_freqs reads it with no changes.
 
 Requires per-language segmenters:
     pip install fugashi[unidic-lite] jieba pythainlp opencc
@@ -32,8 +34,8 @@ Usage (basedir set the same way as 01_corpus_preprocessing/corpus_preprocessing.
     import build_counts_tokenized as bc
 
     bc.basedir = '.'
-    bc.build_counts('ja')   # -> eval_inputs/counts/dedup.ja.words.unigrams.tsv.zip
-                             #    eval_inputs/counts/dedup.jawiki-meta.words.unigrams.tsv.zip
+    bc.build_counts('ja')   # -> eval_inputs/counts/ja.subs.2018.tsv.zip
+                             #    eval_inputs/counts/ja.wiki.2018.tsv.zip
 """
 import os
 import zipfile
@@ -100,34 +102,41 @@ TOKENIZE_FUNCS = {
 }
 
 
-def count_unigrams(source, language, overwrite=False, read_language=None, convert=None):
+def count_unigrams(source, language, version="2018", overwrite=False, read_language=None, convert=None):
     """
-    Tokenizes preprocessed/{source}-{read_language or language}-pruned.zip
+    Tokenizes preprocessed/{source}-{read_language or subs_key}-pruned.zip
     with the language-appropriate segmenter (or a plain whitespace split for
     languages not in TOKENIZE_FUNCS) and writes unigram counts to
-    eval_inputs/counts/dedup.{language}[wiki-meta].words.unigrams.tsv.zip --
-    built from this project's own cleaned corpus rather than relying on
+    eval_inputs/counts/{language}.subs.{version}.tsv.zip (subtitles) or
+    eval_inputs/counts/{language}.wiki.2018.tsv.zip (wikipedia, always
+    tagged 2018 regardless of `version` -- see module docstring) -- built
+    from this project's own cleaned corpus rather than relying on
     download/README.md's downloaded frequency_source/ mirror, so the
     frequency baseline always matches whatever corpus actually trained the
     embeddings for that language.
 
+    language is always the bare two-letter code (never version-suffixed).
+    version selects which subtitles vintage to read/tag ('2018' or '2024',
+    same convention as corpus_preprocessing.py's subs_key); ignored for the
+    wikipedia side's naming, which is always the shared 2018 dump.
     read_language: read a *different* language's preprocessed archive than
         the one being labeled/output -- used for tw's Wikipedia counts,
         which have no Wikipedia of their own (see build_tw_wiki_counts()).
     convert: optional text -> text transform applied before tokenizing (e.g.
         OpenCC simplified-to-traditional conversion for tw).
     """
-    # strip a possible "-2024"-style version suffix before the tokenizer
-    # lookup (e.g. "ja-2024" should still get fugashi, not fall through to
-    # whitespace splitting just because the exact suffixed string isn't a
-    # literal key in TOKENIZE_FUNCS) -- doesn't affect output naming, which
-    # still uses the full, possibly-suffixed `language` as given
-    base_language = language.split("-")[0]
-    tokenize = TOKENIZE_FUNCS.get(base_language, _tokenize_whitespace)
+    tokenize = TOKENIZE_FUNCS.get(language, _tokenize_whitespace)
 
-    input_path = os.path.join(basedir, processdir, f"{source}-{read_language or language}-pruned.zip")
-    stem = language if source == "subtitles" else f"{language}wiki-meta"
-    tsv_name = f"dedup.{stem}.words.unigrams.tsv"
+    if source == "subtitles":
+        subs_key = language if version == "2018" else f"{language}-{version}"
+        read_key = read_language or subs_key
+        stem = f"{language}.subs.{version}"
+    else:
+        read_key = read_language or language
+        stem = f"{language}.wiki.2018"
+
+    input_path = os.path.join(basedir, processdir, f"{source}-{read_key}-pruned.zip")
+    tsv_name = f"{stem}.tsv"
     output_path = os.path.join(basedir, countdir, tsv_name + ".zip")
 
     if os.path.exists(output_path) and not overwrite:
@@ -217,10 +226,10 @@ def materialize_tw_wikipedia_pruned(overwrite=False):
     print("Wrote preprocessed/wikipedia-tw-pruned.zip")
 
 
-def build_counts(language, overwrite=False):
+def build_counts(language, version="2018", overwrite=False):
     """
     Builds both the subtitle and wikipedia unigram count files for one
     language -- the pair evaluation.py's load_count_freqs expects.
     """
-    count_unigrams("subtitles", language, overwrite=overwrite)
-    count_unigrams("wikipedia", language, overwrite=overwrite)
+    count_unigrams("subtitles", language, version, overwrite=overwrite)
+    count_unigrams("wikipedia", language, version, overwrite=overwrite)

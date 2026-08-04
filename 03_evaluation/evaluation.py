@@ -341,22 +341,20 @@ def load_extended_norms(lang):
             print(f"An exception of type {type(ex).__name__} occurred loading {langfile}. Arguments:\n{ex.args!r}")
     return loaded
 
-def load_count_freqs(lang, subs_key=None):
+def load_count_freqs(lang, version='2018'):
     """
     Loads and cleans both frequency-count datasets for this language once.
     Transparently reads either a plain .tsv or a zip-compressed .tsv.zip (as
     downloaded from storage) without decompressing to disk first.
 
-    `lang` is the bare two-letter code, used for the wikipedia-side file --
-    Wikipedia counts are never version-suffixed, since Wikipedia has no
-    dated-vintage concept (see corpus_preprocessing.py's version param).
-    `subs_key` is the (possibly version-suffixed, e.g. 'en-2024') key used
-    for the subtitles-side file; defaults to `lang` for plain 2018-vintage
-    languages, where the two are the same string.
+    `lang` is the bare two-letter code. `version` ('2018' or '2024') selects
+    the subtitles-side file, e.g. 'en.subs.2024.tsv'; the wikipedia-side
+    file is always tagged 2018 regardless of `version`, since Wikipedia has
+    no dated-vintage concept and is shared/reused across corpus versions
+    (see corpus_preprocessing.py's version param).
     """
-    subs_key = subs_key or lang
     datasetspath = os.path.join(basedir, datasetsdir, countdir)
-    flist = [f'dedup.{subs_key}.words.unigrams.tsv', f'dedup.{lang}wiki-meta.words.unigrams.tsv']
+    flist = [f'{lang}.subs.{version}.tsv', f'{lang}.wiki.2018.tsv']
 
     loaded = []
     for langfile in flist:
@@ -517,7 +515,7 @@ def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
 
     replication_norms = load_replication_norms(lang)
     extended_norms = load_extended_norms(lang)
-    count_freqs = load_count_freqs(lang, subs_key=subs_key)
+    count_freqs = load_count_freqs(lang, version=version)
 
     done_replication = load_done_combos(replication_out) if replication_norms else set()
     done_norms = load_done_combos(norms_out) if extended_norms else set()

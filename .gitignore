@@ -40,10 +40,8 @@ vignettes/*.pdf
 ~$data_cross_comparison.xlsx
 .DS_Store
 /.ipynb_checkpoints
-/01_corpus_preprocessing/__pycache__
-/02_model_training/__pycache__
-/03_evaluation/__pycache__
-/download/__pycache__
+__pycache__/
+*.pyc
 /deal with
 /eval_results/replication/.ipynb_checkpoints
 /eval_inputs/.ipynb_checkpoints
@@ -72,10 +70,10 @@ vignettes/*.pdf
 # the two formats evaluation.py's load_count_freqs reads (plain .tsv or .zip)
 /eval_inputs/counts/*.tsv
 /eval_inputs/counts/*.zip
-!/eval_inputs/counts/dedup.af.words.unigrams.tsv
-!/eval_inputs/counts/dedup.afwiki-meta.words.unigrams.tsv
-!/eval_inputs/counts/dedup.af.words.unigrams.tsv.zip
-!/eval_inputs/counts/dedup.afwiki-meta.words.unigrams.tsv.zip
+!/eval_inputs/counts/af.subs.2018.tsv
+!/eval_inputs/counts/af.wiki.2018.tsv
+!/eval_inputs/counts/af.subs.2018.tsv.zip
+!/eval_inputs/counts/af.wiki.2018.tsv.zip
 
 # psycholinguistic norms datasets are large (250MB+) and sourced from many
 # individual papers, not re-downloadable as a bundle; keep just one real af
@@ -105,4 +103,3 @@ vignettes/*.pdf
 /preprocessed/*.zip
 /corpora/*.txt
 temp.md
-eval_inputs/__pycache__/build_counts_tokenized.cpython-311.pyc
