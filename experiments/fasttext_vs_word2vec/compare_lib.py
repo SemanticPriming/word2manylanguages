@@ -174,7 +174,7 @@ def run_predictive_eval(language, version, tag, dim, win, alg, model_dir):
     return pd.concat(rows, ignore_index=True)
 
 
-def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3), (300, 4), (500, 6)), workers=None, epochs=10):
+def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3), (300, 4), (500, 6)), workers=None, epochs=10, overwrite=False):
     """
     Full pipeline for one language: trains FastText + Word2Vec, cbow + sg,
     at every (dim, window) pair in `configs` (sharing one corpus load and
@@ -182,6 +182,15 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
     model_training.py's real build_models()), times each, exports vectors,
     runs RSA between matched FastText/Word2Vec pairs, and scores every
     model through evaluation.py's real predict pipeline.
+
+    Resumable: if a config's model file already exists in
+    models/{language}/ (e.g. this language's run got interrupted partway
+    through last time), that config is loaded back from disk instead of
+    retrained -- its timing is pulled from this language's own prior
+    _timing.csv if a recorded value is there, else left blank (it was
+    trained in a run whose timing CSV never got written, e.g. the process
+    died before reaching that point). Pass overwrite=True to force
+    retraining everything regardless of what's already on disk.
 
     Requires corpora/corpus-{language}.txt to already exist -- run steps
     1-5 of run_language_pipeline.ipynb for this language first if it
@@ -199,6 +208,15 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
     os.makedirs(model_dir, exist_ok=True)
     os.makedirs(results_dir, exist_ok=True)
 
+    # Real recorded seconds for configs that were actually trained in an
+    # earlier (possibly interrupted) attempt at this exact language --
+    # reused below so resumed configs don't just show up blank in timing.
+    prior_timing_path = os.path.join(results_dir, f"{language}_{version}_timing.csv")
+    prior_timing = {}
+    if os.path.exists(prior_timing_path):
+        for _, row in pd.read_csv(prior_timing_path).iterrows():
+            prior_timing[(row["dim"], row["window"], row["alg"], row["family"])] = row["seconds"]
+
     print(f"Loading {language} corpus + vocab (shared across every config below)...")
     corpus = mt.load_corpus(language) if version == "2018" else mt.load_corpus(f"{language}-{version}")
     word_freq = mt.count_word_freq(corpus)
@@ -214,19 +232,39 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
                 ("fasttext", f"{language}ft", FastText, dict(min_n=3, max_n=6)),
                 ("word2vec", f"{language}wv", Word2Vec, {}),
             ):
-                model, elapsed = train_and_time(
-                    tag, alg, cls, sg, corpus, word_freq, corpus_count, dim, win, extra, workers, epochs,
-                )
-                words = list(model.wv.key_to_index)
-                vectors = model.wv[words]
-                models[(dim, win, alg, family)] = {"words": words, "vectors": vectors, "time": elapsed, "tag": tag}
                 out_path = os.path.join(model_dir, f"{tag}_{dim}_{win}_{alg}_wxd.csv.bz2")
-                pd.DataFrame(vectors, index=words).to_csv(out_path, index_label="word", compression="bz2")
+                if os.path.exists(out_path) and not overwrite:
+                    elapsed = prior_timing.get((dim, win, alg, family), float("nan"))
+                    note = f" (recorded {elapsed:.1f}s)" if elapsed == elapsed else " (no prior timing recorded)"
+                    print(f"  {tag}_{dim}_{win}_{alg}: already exists, skipping training{note}")
+                else:
+                    model, elapsed = train_and_time(
+                        tag, alg, cls, sg, corpus, word_freq, corpus_count, dim, win, extra, workers, epochs,
+                    )
+                    out_words = list(model.wv.key_to_index)
+                    out_vectors = model.wv[out_words]
+                    pd.DataFrame(out_vectors, index=out_words).to_csv(out_path, index_label="word", compression="bz2")
+                    del model  # one language's 4x models per config point can add up in RAM; done with the object itself
+
+                # Always reload from the file just written/found, rather than
+                # keeping a freshly-trained model's in-memory (non-casefolded)
+                # vectors -- ev.load_model() casefolds + dedupes case variants
+                # ("Apple"/"apple"), so a resumed config would otherwise carry
+                # a slightly different vocab than a freshly-trained one in the
+                # same run, silently skewing the RSA comparison between them.
+                prior_modeldir = ev.modeldir
+                ev.modeldir = model_dir
+                try:
+                    words_arr, vectors = ev.load_model(tag, dim, win, alg)
+                finally:
+                    ev.modeldir = prior_modeldir
+                words = list(words_arr)
+
+                models[(dim, win, alg, family)] = {"words": words, "vectors": vectors, "time": elapsed, "tag": tag}
                 timing_rows.append({
                     "language": language, "dim": dim, "window": win, "alg": alg,
                     "family": family, "seconds": elapsed, "n_words": len(words),
                 })
-                del model  # one language's 4x models per config point can add up in RAM; done with the object itself
 
     timing_df = pd.DataFrame(timing_rows)
     timing_df.to_csv(os.path.join(results_dir, f"{language}_{version}_timing.csv"), index=False)
@@ -312,7 +350,7 @@ def ensure_corpus(language, version="2018"):
 def run_comparison_batch(
     languages=None, version="2018",
     configs=((50, 1), (100, 2), (200, 3), (300, 4), (500, 6)),
-    workers=None, epochs=10, build_corpus=True,
+    workers=None, epochs=10, build_corpus=True, overwrite=False,
 ):
     """
     Runs run_comparison() for every language in `languages` (defaults to
@@ -320,6 +358,19 @@ def run_comparison_batch(
     Builds each language's corpus first if it doesn't exist (build_corpus=True,
     the default; set False to fail loudly on a missing corpus instead of
     silently kicking off a download/preprocess run you didn't expect).
+
+    Resumable at two levels, so rerunning after a crash or an interrupted
+    overnight run doesn't redo finished work:
+    - a language already marked "ok" in results/batch_summary.csv from a
+      previous call is skipped entirely (fast -- doesn't even touch its
+      corpus or model files)
+    - a language that's new or previously failed still gets a full
+      run_comparison() call, which itself skips any individual (dim,
+      window, alg, family) config whose model file already exists on disk
+      (see run_comparison()'s docstring) -- so a language that died
+      halfway through last time resumes from where it left off instead of
+      restarting from config 1
+    Pass overwrite=True to ignore all of the above and redo everything.
 
     Each language is wrapped in its own try/except so one language's
     problem (network hiccup, a language-specific preprocessing edge case,
@@ -333,13 +384,26 @@ def run_comparison_batch(
     results_dir = os.path.join(basedir, resultsdir)
     os.makedirs(results_dir, exist_ok=True)
 
+    summary_path = os.path.join(results_dir, "batch_summary.csv")
+    prior_status = {}
+    if os.path.exists(summary_path) and not overwrite:
+        for _, row in pd.read_csv(summary_path).iterrows():
+            prior_status[row["language"]] = row["status"]
+
     summary_rows = []
     for i, language in enumerate(languages, start=1):
+        if not overwrite and prior_status.get(language) == "ok":
+            print(f"\n[{i}/{len(languages)}] {language}: already completed, skipping "
+                  f"(see results/batch_summary.csv; pass overwrite=True to redo).", flush=True)
+            summary_rows.append({"language": language, "status": "ok", "error": "(skipped -- already done)"})
+            pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
+            continue
+
         print(f"\n{'=' * 60}\n[{i}/{len(languages)}] {language}\n{'=' * 60}", flush=True)
         try:
             if build_corpus:
                 ensure_corpus(language, version)
-            run_comparison(language, version=version, configs=configs, workers=workers, epochs=epochs)
+            run_comparison(language, version=version, configs=configs, workers=workers, epochs=epochs, overwrite=overwrite)
             summary_rows.append({"language": language, "status": "ok", "error": ""})
         except Exception as e:
             print(f"  FAILED: {language}: {e}", flush=True)
@@ -348,7 +412,7 @@ def run_comparison_batch(
 
         # write the summary after every language, not just at the end, so a
         # run that gets interrupted overnight still leaves a partial record
-        pd.DataFrame(summary_rows).to_csv(os.path.join(results_dir, "batch_summary.csv"), index=False)
+        pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
 
     summary_df = pd.DataFrame(summary_rows)
     print("\n\nBatch summary:")

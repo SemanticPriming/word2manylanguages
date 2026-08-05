@@ -8,7 +8,7 @@ See `README.md` for methodology and the full coverage plan.
 
 | language | status | error |
 |---|---|---|
-| af | ok |  |
+| af | ok | (skipped -- already done) |
 
 ## Overall: timing
 
