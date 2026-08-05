@@ -243,6 +243,27 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
         write_header = not os.path.exists(path)
         pd.DataFrame([row]).to_csv(path, mode="a", header=write_header, index=False)
 
+    # Which configs will be (re)trained fresh this call -- computed ahead of
+    # the main loop so timing_path can be purged of their stale rows first.
+    # Without this, overwrite=True (or retraining a config whose model file
+    # got deleted) would append a new row on top of the old one instead of
+    # replacing it, since timing_path otherwise accumulates *across* calls
+    # (unlike rsa_path/predictive_path, which are always fully recomputed
+    # and cleared every call -- timing_path deliberately isn't, so a smaller
+    # earlier configs= call's rows survive a later, wider one).
+    fresh_keys = set()
+    for dim, win in configs:
+        for alg in ("cbow", "sg"):
+            for family in ("fasttext", "word2vec"):
+                tag = f"{language}ft" if family == "fasttext" else f"{language}wv"
+                out_path = os.path.join(model_dir, f"{tag}_{dim}_{win}_{alg}_wxd.csv.bz2")
+                if overwrite or not os.path.exists(out_path):
+                    fresh_keys.add((dim, win, alg, family))
+    if fresh_keys and os.path.exists(timing_path):
+        existing = pd.read_csv(timing_path)
+        keep = existing.apply(lambda r: (r["dim"], r["window"], r["alg"], r["family"]) not in fresh_keys, axis=1)
+        existing[keep].to_csv(timing_path, index=False)
+
     models = {}  # (dim, win, alg, family) -> {"words":..., "vectors":..., "time":...}
     timing_rows = []
 
@@ -295,6 +316,22 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
                     _append_row(timing_path, row)  # resumed rows are already on disk from a prior call -- don't duplicate
 
     timing_df = pd.DataFrame(timing_rows)
+    # The incremental appends above are a crash-safety net (whatever
+    # finished before an interruption is already on disk); this final
+    # merge-and-rewrite is the correctness guarantee -- it covers edge
+    # cases the append-only path can't (timing_path missing/incomplete, a
+    # resumed config whose row never actually made it to disk in an earlier
+    # interrupted run) without discarding rows for configs *outside*
+    # this call's `configs` -- e.g. an earlier wider sweep's rows must
+    # survive a later, narrower call, same as a narrower call's rows must
+    # survive a later, wider one.
+    call_keys = {(r["dim"], r["window"], r["alg"], r["family"]) for r in timing_rows}
+    if os.path.exists(timing_path):
+        prior_full = pd.read_csv(timing_path)
+        outside = prior_full[~prior_full.apply(lambda r: (r["dim"], r["window"], r["alg"], r["family"]) in call_keys, axis=1)]
+        pd.concat([outside, timing_df], ignore_index=True).to_csv(timing_path, index=False)
+    else:
+        timing_df.to_csv(timing_path, index=False)
 
     print("\nComputing RSA (FastText vs Word2Vec agreement, per config point + cbow-vs-sg sanity checks)...")
     if os.path.exists(rsa_path):
