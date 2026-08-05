@@ -192,6 +192,13 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
     died before reaching that point). Pass overwrite=True to force
     retraining everything regardless of what's already on disk.
 
+    Every row (one model's timing, one RSA comparison, one model's
+    predictive scores) is appended to its results CSV and printed as soon
+    as it's computed, not batched into memory and written once at the end
+    -- if this crashes partway through a language (most likely during the
+    slow ridge-regression predictive step), whatever finished before the
+    crash is already safely on disk and visible in the notebook, not lost.
+
     Requires corpora/corpus-{language}.txt to already exist -- run steps
     1-5 of run_language_pipeline.ipynb for this language first if it
     doesn't (this module deliberately doesn't redo preprocessing; see
@@ -223,20 +230,37 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
     corpus_count = len(corpus)
     print(f"{corpus_count} sentences, {len(word_freq)} unique tokens, workers={workers}")
 
+    # All three result files below are appended to as each row is computed,
+    # not batched into memory and written once at the end -- a crash or
+    # interruption partway through a language (training, RSA, or the slow
+    # ridge-regression predictive step) still leaves everything computed so
+    # far safely on disk instead of losing the whole language's progress.
+    timing_path = os.path.join(results_dir, f"{language}_{version}_timing.csv")
+    rsa_path = os.path.join(results_dir, f"{language}_{version}_rsa.csv")
+    predictive_path = os.path.join(results_dir, f"{language}_{version}_predictive.csv")
+
+    def _append_row(path, row):
+        write_header = not os.path.exists(path)
+        pd.DataFrame([row]).to_csv(path, mode="a", header=write_header, index=False)
+
     models = {}  # (dim, win, alg, family) -> {"words":..., "vectors":..., "time":...}
     timing_rows = []
 
+    n_configs = len(configs) * 2 * 2
+    i = 0
     for dim, win in configs:
         for alg, sg in (("cbow", 0), ("sg", 1)):
             for family, tag, cls, extra in (
                 ("fasttext", f"{language}ft", FastText, dict(min_n=3, max_n=6)),
                 ("word2vec", f"{language}wv", Word2Vec, {}),
             ):
+                i += 1
                 out_path = os.path.join(model_dir, f"{tag}_{dim}_{win}_{alg}_wxd.csv.bz2")
-                if os.path.exists(out_path) and not overwrite:
+                is_fresh = not (os.path.exists(out_path) and not overwrite)
+                if not is_fresh:
                     elapsed = prior_timing.get((dim, win, alg, family), float("nan"))
                     note = f" (recorded {elapsed:.1f}s)" if elapsed == elapsed else " (no prior timing recorded)"
-                    print(f"  {tag}_{dim}_{win}_{alg}: already exists, skipping training{note}")
+                    print(f"  [{i}/{n_configs}] {tag}_{dim}_{win}_{alg}: already exists, skipping training{note}", flush=True)
                 else:
                     model, elapsed = train_and_time(
                         tag, alg, cls, sg, corpus, word_freq, corpus_count, dim, win, extra, workers, epochs,
@@ -245,6 +269,7 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
                     out_vectors = model.wv[out_words]
                     pd.DataFrame(out_vectors, index=out_words).to_csv(out_path, index_label="word", compression="bz2")
                     del model  # one language's 4x models per config point can add up in RAM; done with the object itself
+                    print(f"  [{i}/{n_configs}] {tag}_{dim}_{win}_{alg}: trained", flush=True)
 
                 # Always reload from the file just written/found, rather than
                 # keeping a freshly-trained model's in-memory (non-casefolded)
@@ -261,56 +286,74 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
                 words = list(words_arr)
 
                 models[(dim, win, alg, family)] = {"words": words, "vectors": vectors, "time": elapsed, "tag": tag}
-                timing_rows.append({
+                row = {
                     "language": language, "dim": dim, "window": win, "alg": alg,
                     "family": family, "seconds": elapsed, "n_words": len(words),
-                })
+                }
+                timing_rows.append(row)
+                if is_fresh:
+                    _append_row(timing_path, row)  # resumed rows are already on disk from a prior call -- don't duplicate
 
     timing_df = pd.DataFrame(timing_rows)
-    timing_df.to_csv(os.path.join(results_dir, f"{language}_{version}_timing.csv"), index=False)
 
     print("\nComputing RSA (FastText vs Word2Vec agreement, per config point + cbow-vs-sg sanity checks)...")
+    if os.path.exists(rsa_path):
+        os.remove(rsa_path)  # RSA is always fully recomputed this call (cheap) -- start clean, then append as we go
     rsa_rows = []
+    n_rsa = len(configs) * 4  # 2 fasttext_vs_word2vec + 2 cbow_vs_sg comparisons per config point
+    j = 0
     for dim, win in configs:
         for alg in ("cbow", "sg"):
+            j += 1
             ft = models[(dim, win, alg, "fasttext")]
             wv = models[(dim, win, alg, "word2vec")]
             pear, spear, n = rsa(ft["words"], ft["vectors"], wv["words"], wv["vectors"], word_freq)
-            rsa_rows.append({
+            row = {
                 "language": language, "dim": dim, "window": win, "alg": alg,
                 "comparison": "fasttext_vs_word2vec", "n_common_words": n,
                 "pearson_r": pear, "spearman_r": spear,
-            })
+            }
+            rsa_rows.append(row)
+            _append_row(rsa_path, row)
+            print(f"  [{j}/{n_rsa}] RSA {dim}_{win}_{alg} fasttext_vs_word2vec: pearson_r={pear:.3f}", flush=True)
         # same-family cbow-vs-sg, as a reference point for how much RSA moves
         # just from the training objective, independent of subwords at all
         for family in ("fasttext", "word2vec"):
+            j += 1
             a = models[(dim, win, "cbow", family)]
             b = models[(dim, win, "sg", family)]
             pear, spear, n = rsa(a["words"], a["vectors"], b["words"], b["vectors"], word_freq)
-            rsa_rows.append({
+            row = {
                 "language": language, "dim": dim, "window": win, "alg": "cbow_vs_sg",
                 "comparison": family, "n_common_words": n,
                 "pearson_r": pear, "spearman_r": spear,
-            })
+            }
+            rsa_rows.append(row)
+            _append_row(rsa_path, row)
+            print(f"  [{j}/{n_rsa}] RSA {dim}_{win}_cbow_vs_sg {family}: pearson_r={pear:.3f}", flush=True)
     rsa_df = pd.DataFrame(rsa_rows)
-    rsa_df.to_csv(os.path.join(results_dir, f"{language}_{version}_rsa.csv"), index=False)
 
-    print("\nScoring every model through evaluation.py's real predictive pipeline...")
+    print("\nScoring every model through evaluation.py's real predictive pipeline (the slow step -- ridge regression per dataset)...")
+    if os.path.exists(predictive_path):
+        os.remove(predictive_path)  # also always fully recomputed this call -- start clean, then append as we go
     pred_rows = []
-    for (dim, win, alg, family), info in models.items():
+    n_models = len(models)
+    for k, ((dim, win, alg, family), info) in enumerate(models.items(), start=1):
         scores = run_predictive_eval(language, version, info["tag"], dim, win, alg, model_dir)
-        if scores is None:
-            continue
-        scores["language"] = language
-        scores["dim"] = dim
-        scores["window"] = win
-        scores["alg"] = alg
-        scores["family"] = family
-        pred_rows.append(scores)
+        if scores is not None:
+            scores["language"] = language
+            scores["dim"] = dim
+            scores["window"] = win
+            scores["alg"] = alg
+            scores["family"] = family
+            pred_rows.append(scores)
+            write_header = not os.path.exists(predictive_path)
+            scores.to_csv(predictive_path, mode="a", header=write_header, index=False)
+        print(f"  [{k}/{n_models}] {info['tag']}_{dim}_{win}_{alg}: predictive eval done "
+              f"({'no local eval data for this language' if scores is None else f'{len(scores)} rows'})", flush=True)
     predictive_df = pd.concat(pred_rows, ignore_index=True) if pred_rows else pd.DataFrame()
-    predictive_df.to_csv(os.path.join(results_dir, f"{language}_{version}_predictive.csv"), index=False)
 
-    print(f"\nDone -- wrote timing/rsa/predictive CSVs to {results_dir}/{language}_{version}_*.csv")
+    print(f"\nDone -- {results_dir}/{language}_{version}_*.csv are all up to date.")
     return {"timing": timing_df, "rsa": rsa_df, "predictive": predictive_df}
 
 
@@ -347,6 +390,37 @@ def ensure_corpus(language, version="2018"):
     return corpus_path
 
 
+def ensure_counts(language, version="2018"):
+    """
+    Builds eval_inputs/counts/{language}.subs.{version}.tsv.zip and
+    {language}.wiki.2018.tsv.zip if they don't exist yet -- the same step 6
+    run_language_pipeline.ipynb performs by hand (see
+    eval_inputs/build_counts_tokenized.py) -- needed for
+    run_predictive_eval()'s "counts" eval_type. Reuses whatever
+    preprocessed/{wikipedia,subtitles}-{language}-pruned.zip ensure_corpus()
+    already left on disk, so this doesn't re-download anything; call
+    ensure_corpus() first if it hasn't run yet for this language.
+
+    Doesn't handle tw's zh-derived wiki-counts special case (see
+    run_language_pipeline.ipynb's build_tw_wiki_counts()) -- build tw's
+    counts by hand first if it's ever added to the coverage set.
+    """
+    sys.path.insert(0, os.path.join(basedir, "eval_inputs"))
+    import build_counts_tokenized as bc
+    bc.basedir = basedir
+
+    counts_dir = os.path.join(basedir, "eval_inputs", "counts")
+    subs_path = os.path.join(counts_dir, f"{language}.subs.{version}.tsv.zip")
+    wiki_path = os.path.join(counts_dir, f"{language}.wiki.2018.tsv.zip")
+
+    if not os.path.exists(subs_path):
+        print(f"  building subtitles frequency counts for {language} ({version})...")
+        bc.count_unigrams("subtitles", language, version)
+    if not os.path.exists(wiki_path):
+        print(f"  building wikipedia frequency counts for {language}...")
+        bc.count_unigrams("wikipedia", language, version)
+
+
 def _all_configs_done(language, configs, model_dir):
     """True only if every (dim, window, alg, family) model file `configs`
     implies already exists in model_dir -- the real source of truth for
@@ -365,14 +439,18 @@ def _all_configs_done(language, configs, model_dir):
 def run_comparison_batch(
     languages=None, version="2018",
     configs=((50, 1), (100, 2), (200, 3), (300, 4), (500, 6)),
-    workers=None, epochs=10, build_corpus=True, overwrite=False,
+    workers=None, epochs=10, build_corpus=True, build_counts=True, overwrite=False,
 ):
     """
     Runs run_comparison() for every language in `languages` (defaults to
     CORE_LANGUAGES), one at a time -- meant for an unattended overnight run.
     Builds each language's corpus first if it doesn't exist (build_corpus=True,
-    the default; set False to fail loudly on a missing corpus instead of
-    silently kicking off a download/preprocess run you didn't expect).
+    the default) and its frequency-count files (build_counts=True, the
+    default -- needed for run_predictive_eval()'s "counts" eval_type, cheap
+    once the corpus step above has already left preprocessed/*-pruned.zip on
+    disk); set either False to fail loudly on missing input instead of
+    silently kicking off a download/preprocess/count-building run you didn't
+    expect.
 
     Resumable at two levels, so rerunning after a crash or an interrupted
     overnight run doesn't redo finished work -- and so that widening
@@ -419,6 +497,8 @@ def run_comparison_batch(
         try:
             if build_corpus:
                 ensure_corpus(language, version)
+            if build_counts:
+                ensure_counts(language, version)
             run_comparison(language, version=version, configs=configs, workers=workers, epochs=epochs, overwrite=overwrite)
             summary_rows.append({"language": language, "status": "ok", "error": ""})
         except Exception as e:
@@ -479,9 +559,19 @@ def generate_report():
 
     def load_all(kind):
         paths = sorted(glob.glob(os.path.join(results_dir, f"*_{kind}.csv")))
-        if not paths:
+        dfs = []
+        for p in paths:
+            try:
+                dfs.append(pd.read_csv(p))
+            except pd.errors.EmptyDataError:
+                # predictive.csv in particular can be genuinely empty for a
+                # language with no local replication/norms/counts data to
+                # score against (see run_predictive_eval()) -- not a bug,
+                # just nothing to report for that language/kind.
+                pass
+        if not dfs:
             return pd.DataFrame()
-        return pd.concat([pd.read_csv(p) for p in paths], ignore_index=True)
+        return pd.concat(dfs, ignore_index=True)
 
     timing = load_all("timing")
     rsa_df = load_all("rsa")
@@ -567,6 +657,15 @@ def generate_report():
             norm_only = lp[lp["normalized"] == True]
             pr = norm_only.groupby(["eval_type", "family"])["r"].mean().round(4).unstack()
             lines.append(_markdown_table(pr))
+            lines.append("")
+        else:
+            lines.append(
+                "**Predictive power:** no local replication norms, extended norms, or frequency "
+                "counts for this language yet -- see `03_evaluation/evaluation.py`'s "
+                "`load_replication_norms`/`load_extended_norms`/`load_count_freqs`. Timing and RSA "
+                "above are still valid; nothing to score predictive power against until that data "
+                "exists (e.g. run `eval_inputs/build_counts_tokenized.py` for frequency counts)."
+            )
             lines.append("")
 
     with open(report_path, "w") as f:
