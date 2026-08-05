@@ -347,6 +347,21 @@ def ensure_corpus(language, version="2018"):
     return corpus_path
 
 
+def _all_configs_done(language, configs, model_dir):
+    """True only if every (dim, window, alg, family) model file `configs`
+    implies already exists in model_dir -- the real source of truth for
+    whether a language needs (re)work, unlike a bare "ok" flag that can't
+    tell a five-config run apart from the one-config run that happened to
+    finish first."""
+    for dim, win in configs:
+        for alg in ("cbow", "sg"):
+            for tag in (f"{language}ft", f"{language}wv"):
+                path = os.path.join(model_dir, f"{tag}_{dim}_{win}_{alg}_wxd.csv.bz2")
+                if not os.path.exists(path):
+                    return False
+    return True
+
+
 def run_comparison_batch(
     languages=None, version="2018",
     configs=((50, 1), (100, 2), (200, 3), (300, 4), (500, 6)),
@@ -360,16 +375,20 @@ def run_comparison_batch(
     silently kicking off a download/preprocess run you didn't expect).
 
     Resumable at two levels, so rerunning after a crash or an interrupted
-    overnight run doesn't redo finished work:
-    - a language already marked "ok" in results/batch_summary.csv from a
-      previous call is skipped entirely (fast -- doesn't even touch its
-      corpus or model files)
-    - a language that's new or previously failed still gets a full
-      run_comparison() call, which itself skips any individual (dim,
-      window, alg, family) config whose model file already exists on disk
-      (see run_comparison()'s docstring) -- so a language that died
-      halfway through last time resumes from where it left off instead of
-      restarting from config 1
+    overnight run doesn't redo finished work -- and so that widening
+    `configs` on a later call (e.g. you first tried one config point, now
+    want the full five-point sweep) correctly trains only what's missing
+    rather than either redoing everything or wrongly skipping the whole
+    language:
+    - a language is skipped entirely (fast -- doesn't even load its corpus)
+      only if *every* model file implied by the current `configs` already
+      exists on disk for it -- not just because it was marked "ok" in an
+      earlier call, which might have used a smaller `configs` and would
+      otherwise cause a silent under-run
+    - anything not fully covered still gets a full run_comparison() call,
+      which itself skips any individual (dim, window, alg, family) config
+      whose model file already exists (see run_comparison()'s docstring),
+      so only the missing configs actually retrain
     Pass overwrite=True to ignore all of the above and redo everything.
 
     Each language is wrapped in its own try/except so one language's
@@ -385,16 +404,13 @@ def run_comparison_batch(
     os.makedirs(results_dir, exist_ok=True)
 
     summary_path = os.path.join(results_dir, "batch_summary.csv")
-    prior_status = {}
-    if os.path.exists(summary_path) and not overwrite:
-        for _, row in pd.read_csv(summary_path).iterrows():
-            prior_status[row["language"]] = row["status"]
 
     summary_rows = []
     for i, language in enumerate(languages, start=1):
-        if not overwrite and prior_status.get(language) == "ok":
-            print(f"\n[{i}/{len(languages)}] {language}: already completed, skipping "
-                  f"(see results/batch_summary.csv; pass overwrite=True to redo).", flush=True)
+        model_dir = os.path.join(basedir, expmodeldir, language)
+        if not overwrite and _all_configs_done(language, configs, model_dir):
+            print(f"\n[{i}/{len(languages)}] {language}: every requested config already on disk, skipping "
+                  f"(pass overwrite=True, or widen configs, to redo/extend).", flush=True)
             summary_rows.append({"language": language, "status": "ok", "error": "(skipped -- already done)"})
             pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
             continue
