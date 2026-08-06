@@ -36,10 +36,83 @@ You can find the word by dimensions embeddings using the following DOIs.
 WE ARE STILL WORKING ON THIS. 
 
 ```{r data-table, results='asis'}
-df <- rio::import("dataset_list.xlsx") %>% 
+df <- rio::import("dataset_list.xlsx") %>%
   dplyr::arrange(Language)
 
-papaja::apa_table(df, 
-          caption = "DOIs for Word Embeddings", 
+papaja::apa_table(df,
+          caption = "DOIs for Word Embeddings",
           col.names = c("Language", "Models", "DOI"))
 ```
+
+# Algorithm Comparison: FastText versus Word2Vec
+
+This appendix documents the project timeline that motivated the FastText-versus-word2vec comparison reported in the Results, the scope and a key limitation of that comparison, the correctness bugs found and fixed in the core corpus-processing/model-training/evaluation pipeline over the course of the project, and how that pipeline differs from the original subs2vec implementation [@vanparidon2021] it was designed to be comparable with.
+
+## Project Timeline
+
+The parameter-sweep models reported in this manuscript were developed in five broad stages:
+
+1. **Initial implementation.** The corpus-processing, model-training, and evaluation pipeline was first built as part of a doctoral dissertation project, following van Paridon and Thompson's [-@vanparidon2021] approach as closely as practical while extending it to a per-language parameter sweep. This produced a first ("v1") set of trained models and the first Zenodo upload -- largely a close replication, but with a handful of correctness bugs typical of a first pass at a pipeline of this scale, detailed below.
+2. **Bug fixing.** These issues were subsequently identified -- primarily via a systematic, test-driven audit of the corpus-processing, model-training, and evaluation code against van Paridon and Thompson's [-@vanparidon2021] described methodology -- and corrected. See "Bugs Found and Fixed in the Core Pipeline" below for the full list.
+3. **Reassessing scope.** Completing every fastText configuration for all remaining languages, at the same per-language cost already observed for the languages trained so far, represented a large amount of additional compute time. This prompted a reassessment of whether that cost was necessary: the project's contribution centers on the *embeddings* themselves and how their optimal parameters vary by language, not on distributing a particular model binary or algorithm family, and most downstream users of these resources consume exported word-by-dimension vectors directly rather than a live trainable model object.
+4. **This comparison.** Because it was not obvious a priori whether fastText's subword mechanism [@bojanowski2016] was earning its slower training time (see below) once only the exported vectors are what matters, we built a dedicated comparison (`experiments/fasttext_vs_word2vec/`) to test timing, representational similarity, and predictive power for fastText against plain word2vec [@mikolov2013] across a targeted, typologically diverse subset of languages before deciding whether to retrain the remaining sweep with word2vec instead.
+5. **Data availability.** The trained models, and the timing/RSA/predictive-power results, from this comparison will be archived on Zenodo (DOI: `XXXXXXXX` -- upload forthcoming).
+
+## Scope of the Comparison: Exported Vectors, Not Live Models
+
+The comparison reported in the Results (and the figure therein) evaluates each algorithm's *exported* word-by-dimension vectors -- a static word-to-vector lookup table written to disk after training, the same format used for every model this project distributes. This is an important limitation to state explicitly: fastText's subword n-gram mechanism [@bojanowski2016] gives it a genuine practical advantage that this comparison does not, and cannot, measure -- the ability to construct a vector for a word that never appeared in the training corpus at all, by composing that unseen word's own character n-grams from the n-grams the model already learned. A live fastText model object retains this capability at inference time; a plain word2vec model has no representation whatsoever for a word outside its trained vocabulary, and neither model has this capability once reduced to a static exported vector table, since looking up a word not present in that table fails identically for both algorithms.
+
+Every evaluation reported here -- timing, RSA, and predictive power alike -- only ever looks up words that are already present in the exported vector table (see `03_evaluation/evaluation.py`'s `load_model()`), so it necessarily cannot exercise this out-of-vocabulary generalization capability for either algorithm. In other words, this comparison speaks only to the quality and cost of *in-vocabulary* embeddings as exported and consumed by this project's own tooling, which is the form in which these resources are actually distributed and used. It does not speak to which algorithm is preferable for applications that query words unseen during training, an application-level use case for which fastText's subword mechanism remains the principled choice regardless of what this comparison shows.
+
+## Bugs Found and Fixed in the Core Pipeline
+
+Between the initial ("v1") implementation and the models reported in this manuscript, we ran a systematic, test-driven audit of the corpus-processing, model-training, and evaluation code against van Paridon and Thompson's [-@vanparidon2021] described methodology and against each library's own documented behavior. Every bug below was found by writing a runnable test against the actual function in question -- none of them raised an error or a warning on their own, which is why they survived the initial implementation undetected. Each was corrected before the models and evaluation results reported in this manuscript were produced.
+
+**Corpus preprocessing (`01_corpus_preprocessing/corpus_preprocessing.py`)**
+
+- **Wikipedia text was never actually lowercased.** `clean_wikipedia()` computed a lowercased copy of each article's text, used that copy only to check redirect/`noinclude`/`noindex` conditions, and then fed the original, mixed-case text to the downstream stripping function. Subtitle text was correctly lowercased. The practical effect: "The" (from Wikipedia) and "the" (from subtitles) were treated as two unrelated vocabulary items during training. Fixed by lowercasing before stripping, matching the subtitle path.
+- **A single stray brace could delete an entire article.** The function that strips nested wikitext templates (`{{...}}`) tracked bracket depth with a running counter that could go negative if an article contained more closing than opening curly braces anywhere -- common in real wikitext (emoticons, math or code snippets, malformed templates) -- at which point the function discarded the *entire article's text*, not just the offending character. Fixed to leave a stray, unmatched brace in place instead (harmless, since it gets filtered out by the normal character-keeping logic downstream) rather than discarding everything collected so far.
+- **Category-link sort keys leaked into the corpus as prose.** Wikitext links of the form `[[Category:People|Smith, John]]` were meant to be stripped entirely, but a more general rule for `[[File:...|caption]]`-style links (intended to keep the caption as prose) matched first and kept the category's sort key text instead. Fixed by adding a dedicated category-link pattern that runs first and always strips the whole link.
+- **The last sentence of every document kept its terminal punctuation glued to the last word.** The sentence-break regular expression's end-of-string alternative (`$`) never re-inserted the word it had captured, so a document's final sentence read "Ok?" instead of "Ok" (with the sentence break inserted) like every other sentence. Fixed by nesting the terminator so the end-of-string case is handled the same way as the whitespace case.
+
+**Model training (`02_model_training/model_training.py`)**
+
+- **Nine out of every ten training epochs silently processed zero data.** The training corpus was passed to gensim as a single-use Python generator. gensim's `train()` calls the corpus's iterator fresh once per epoch, expecting a *repeatedly* iterable object; a single-use generator's first `iter()` call exhausts it, so every epoch after the first simply got the same spent generator and immediately hit `StopIteration`. This was confirmed empirically: gensim's own reported `raw_word_count` matched exactly one epoch's worth of words, not ten, for every model trained this way. Every model produced before this fix was therefore trained on roughly one-tenth of the intended data. Fixed by loading the corpus into an actual list once per language (also incidentally eliminating redundant full-corpus disk reads across configurations for the same language).
+- **The subsampling threshold didn't match the replicated paper.** The frequent-word subsampling parameter was set to `sample=1e-2`, a 100x difference from van Paridon and Thompson's [-@vanparidon2021] reported value of `t=.0001`. Fixed to `sample=0.0001`.
+- **Vocabulary was rebuilt from scratch for every one of up to 60 configurations per language.** Vocabulary construction (which words pass the minimum-count threshold, the downsampling table, and, for fastText, the subword n-gram hash buckets) depends only on the corpus text and the minimum-count threshold, never on the dimension/window/algorithm being trained -- so rescanning the full corpus inside every configuration's training call was up to 60 redundant passes over the same text per language. This was a performance issue rather than a correctness bug (its output was verified bit-identical to the original per-config vocabulary build under a fixed seed), but is included here because it substantially reduced the wall-clock cost of retraining. Fixed by counting word frequencies once per language and seeding every configuration's vocabulary from that shared count table (gensim's `build_vocab_from_freq()`) instead of rescanning the corpus per configuration.
+
+**Evaluation (`03_evaluation/evaluation.py`)**
+
+- **Case-variant words silently multiplied prediction rows.** Because training corpora are not casefolded, a word appearing as both "Apple" and "apple" in the source text produced two separate trained vectors, but the evaluation loader's own vocabulary was casefolded when read back in, collapsing them to one key with duplicate rows still attached. Left uncorrected, this multiplied rows on the join used for prediction. Fixed by averaging each casefolded word's vectors down to one row when loading a model, and (in a later fix) summing rather than averaging the analogous collision in frequency counts, since counts are tallies rather than vector estimates.
+- **Ridge regression crashed outright for very small evaluation sets.** `RepeatedKFold` cross-validation requires at least as many samples as folds (five), but some norm columns have very few non-missing values once joined to a given language's vocabulary. Fixed by skipping (with a printed message) any column with fewer than five usable words instead of letting `cross_val_score` raise.
+- **Extended-norm datasets were silently missed for languages whose name didn't match exactly.** Language names were matched against each dataset's own `language` column by exact string equality, so spelling or naming variants across datasets (e.g. "farsi" vs. "persian," a "galacian"/"galician" typo, "maylay" vs. "malay," and separate simplified/traditional Chinese labels) caused entire languages' worth of extended-norm coverage to be silently dropped rather than matched. Fixed with an explicit alias table so known variant spellings resolve to the same language.
+- **Unicode transliteration was actively destroying matches for non-Latin-script languages.** Frequency-count words were unconditionally Unicode-normalized and transliterated to a romanized form before matching against the model vocabulary, which is never itself transliterated (corpus preprocessing preserves each language's native script). For non-Latin-script languages this romanization made correct, differently-encoded words match, but far more often destroyed matches that would otherwise have succeeded directly. Fixed by matching on the untouched, casefolded word first, trying the transliterated form only as a fallback for words that don't match directly -- and excluding that fallback from ever displacing a word that already matched a *different* word directly, which the initial fallback implementation allowed.
+- **The "adjusted r-squared" penalty was computed once per model instead of once per predicted variable.** This penalty compensates for words present in an evaluation dataset but missing from the model's vocabulary. It was computed once, globally, from the vector-join alone, then applied uniformly to every predicted variable regardless of how many rows that specific variable actually used after its own missing-value handling -- systematically overstating the reliability of sparse variables fit on only a handful of points. Fixed to recompute the penalty separately for each predicted variable.
+- **Replication-norm provenance was silently destroyed.** Each replication-norm row was tagged with which source file it came from, but a later step in the pipeline unconditionally overwrote that tag with the model configuration's name instead, discarding the provenance information (a bug the corresponding norms/counts evaluation paths did not have, since they used a differently named column that survived). Fixed by renaming the replication-file column so it isn't overwritten by the same step.
+- **A missing word column failed silently.** If none of a dataset's candidate word-identifying columns could be resolved for a given language, the loader silently skipped that dataset with no printed trace, unlike every other skip condition in the same function. Fixed by adding a print statement so missing coverage is visible rather than silent.
+
+## Differences From subs2vec's Implementation
+
+Table \@ref(tab:subs2vec-diff) summarizes how this project's corpus-processing, training, and evaluation code (`01_corpus_preprocessing/`, `02_model_training/`, `03_evaluation/`) differs from the corresponding modules in van Paridon and Thompson's [-@vanparidon2021] publicly released subs2vec code (<https://github.com/jvparidon/subs2vec>), which this study's fastText models were built to be comparable with. Ridge-regression regularization strength ($\alpha = 1.0$), the fivefold-repeated-ten-times cross-validation procedure, and the fastText hyperparameters listed in the Technical Implementation section above were matched deliberately; the differences below were not. The phrase-joining row refers to the `word2phrase` tool from the original word2vec toolkit [@mikolov2013].
+
+```{r subs2vec-diff, results='asis'}
+diffs <- tibble::tribble(
+  ~Aspect, ~subs2vec, ~`This study`,
+  "Training implementation", "Native fastText CLI binary (subprocess), skip-gram only", "gensim FastText/Word2Vec (Python), both CBOW and skip-gram",
+  "Vector dimension", "Fixed at 300", "Swept: 50, 100, 200, 300, 500",
+  "Context window", "fastText CLI default (not set explicitly)", "Swept: 1-6",
+  "Phrase joining", "word2phrase, 5 passes, bigrams joined with underscores", "None -- multi-word phrases are not joined",
+  "Corpus casing", "Not lowercased by default", "Lowercased",
+  "Deduplication", "Exact-duplicate line removal (set-based) plus full shuffle", "Document-level near-duplicate removal via simhash (Hamming distance <= 2); exact repeated short phrases (e.g. common interjections) intentionally retained",
+  "Vocabulary used for evaluation", "Top 1,000,000 rows of the exported vector file only", "Full trained vocabulary (minimum count 5)",
+  "Ridge regression aggregation", "Median of 50 cross-validated R-squared scores; r = sqrt(median R-squared)", "Same, with r floored at 0 when median R-squared is negative rather than propagating an undefined value"
+)
+
+papaja::apa_table(diffs,
+          caption = "Implementation differences between subs2vec and this study's pipeline.",
+          note = "Rows describe defaults/behavior as implemented in each project's own code, not hypothetical alternatives either project also supports.")
+```
+
+## Availability
+
+The pretrained vectors and model binaries subs2vec's own code is set up to retrieve (via `download.py`'s lookup against its published `corpus_data.tsv` table) are no longer available for download as of this writing. Models produced by this project remain available: the full parameter-sweep embeddings referenced throughout this manuscript are archived on Zenodo per Table \@ref(tab:data-table) above, and the models and results from the fastText-versus-word2vec comparison described in this appendix will be added there as a dedicated record (see Project Timeline, stage 5, above).

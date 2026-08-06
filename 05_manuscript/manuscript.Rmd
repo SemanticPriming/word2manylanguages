@@ -341,6 +341,76 @@ For each norm prediction task, we selected the simplest model whose $R^2$ value 
 
 # Results
 
+## Algorithm Comparison: FastText versus Word2Vec
+
+```{r ft-w2v-load, include=FALSE}
+ft_w2v_dir <- "../experiments/fasttext_vs_word2vec/results"
+timing_df <- dplyr::bind_rows(lapply(list.files(ft_w2v_dir, pattern = "_timing\\.csv$", full.names = TRUE), import))
+rsa_df <- dplyr::bind_rows(lapply(list.files(ft_w2v_dir, pattern = "_rsa\\.csv$", full.names = TRUE), import))
+pred_df <- dplyr::bind_rows(lapply(list.files(ft_w2v_dir, pattern = "_predictive\\.csv$", full.names = TRUE), import))
+
+lang_names <- expand_lang(unique(timing_df$language)) %>%
+  dplyr::rename(language_name = language, language = code)
+
+timing_summary <- timing_df %>%
+  tidyr::pivot_wider(id_cols = c(language, dim, window, alg), names_from = family, values_from = seconds) %>%
+  dplyr::filter(!is.na(fasttext), !is.na(word2vec)) %>%
+  dplyr::mutate(speedup = fasttext / word2vec) %>%
+  dplyr::left_join(lang_names, by = "language")
+
+rsa_ftvw2v <- rsa_df %>%
+  dplyr::filter(comparison == "fasttext_vs_word2vec") %>%
+  dplyr::left_join(lang_names, by = "language")
+
+pred_counts <- pred_df %>%
+  dplyr::filter(eval_type == "counts", normalized == TRUE) %>%
+  dplyr::group_by(language, family) %>%
+  dplyr::summarise(mean_r = mean(r, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(names_from = family, values_from = mean_r) %>%
+  dplyr::left_join(lang_names, by = "language")
+
+n_ft_w2v_langs <- length(unique(timing_summary$language))
+mean_speedup <- mean(timing_summary$speedup, na.rm = TRUE)
+min_speedup <- min(timing_summary$speedup, na.rm = TRUE)
+max_speedup <- max(timing_summary$speedup, na.rm = TRUE)
+mean_rsa <- mean(rsa_ftvw2v$pearson_r, na.rm = TRUE)
+```
+
+Every model reported below was trained with fastText's subword-informed embeddings [@bojanowski2016], which represent each word as the sum of its constituent character n-gram vectors (minimum length three, maximum length six) rather than fitting a single vector per wordform as in the original word2vec algorithm [@mikolov2013]. This subword mechanism is intended to improve embeddings for morphologically rich languages and out-of-vocabulary words, but it comes at a real computational cost: gensim's fastText implementation must additionally hash and train vectors for every n-gram of every word, not just the wordform itself. Because the full 60-configuration sweep across all remaining languages was not yet complete when this manuscript was prepared, we conducted a smaller, targeted comparison to determine whether that added cost was justified before committing the full parameter sweep to it.
+
+We reran a subset of five (dimension, window) configuration points -- (50, 1), (100, 2), (200, 3), (300, 4), (500, 6), each with both CBOW and skip-gram -- with plain word2vec in place of fastText, for `r n_ft_w2v_langs` languages selected to span the morphological and orthographic diversity of the full language sample: an isolating language with comparatively simple morphology (Afrikaans), agglutinative languages from three unrelated families (Basque, Kazakh, Tamil, Korean), fusional languages from two families (Hindi, Macedonian), and isolating/analytic languages, one of which requires word segmentation rather than whitespace tokenization (Thai, Vietnamese) -- across Latin, Cyrillic, Devanagari, Thai, and Hangul scripts. For every resulting model we recorded (a) training time, (b) representational similarity analysis (RSA) [@kriegeskorte2008] between the fastText and word2vec embedding spaces -- correlating each model's own pairwise cosine-similarity matrix over a shared sample of frequent words, since the two models' raw vector spaces are not otherwise directly comparable -- and (c) predictive power against the same frequency-count evaluation used in Research Question 2.
+
+Figure \@ref(fig:ft-w2v-fig) summarizes all three comparisons. Word2vec trained substantially faster than fastText for every language and configuration tested, averaging a `r round(mean_speedup, 2)`x speedup (range `r round(min_speedup, 2)`--`r round(max_speedup, 2)`x across languages), with the largest gap at the highest dimension/window settings, where fastText's subword overhead compounds most. Despite this speed difference, the two algorithms' embedding spaces were highly correlated (mean Pearson $r$ = `r round(mean_rsa, 2)` across configurations and languages), indicating that fastText's subword mechanism does not fundamentally reorganize which words are considered similar to which, at least for the languages tested here. Predictive power against frequency counts was, if anything, slightly higher for word2vec than fastText in every language tested. Taken together, these preliminary results suggest that fastText's subword mechanism -- and its associated training cost -- may not be necessary for the languages and evaluation tasks considered in this study; we return to this point, and to whether the remaining parameter sweep should therefore be conducted with word2vec instead, in the Discussion.
+
+```{r ft-w2v-fig, fig.height=4, fig.width=10, fig.cap="Comparison of fastText and word2vec for a targeted subset of languages spanning diverse morphology and scripts. (A) Distribution of word2vec speedup (fastText seconds / word2vec seconds) across the five (dimension, window) configurations tested, by language; values above the dashed line at 1 indicate word2vec trained faster. (B) Representational similarity analysis (RSA) Pearson correlation between the fastText and word2vec embedding spaces at each configuration, by language. (C) Mean predictive power (Pearson r) against frequency-count norms for L2-normalized vectors, paired by language and algorithm."}
+fig.timing <-
+  ggplot(timing_summary, aes(x = reorder(language_name, speedup, FUN = mean), y = speedup)) +
+  geom_boxplot(fill = "grey85") +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "grey40") +
+  coord_flip() +
+  labs(x = NULL, y = "word2vec speedup (x)", title = "A. Training time") +
+  theme_minimal(base_size = 11)
+
+fig.rsa <-
+  ggplot(rsa_ftvw2v, aes(x = reorder(language_name, pearson_r, FUN = mean), y = pearson_r)) +
+  geom_boxplot(fill = "grey85") +
+  coord_flip() +
+  labs(x = NULL, y = "Pearson r", title = "B. Embedding agreement (RSA)") +
+  theme_minimal(base_size = 11)
+
+fig.pred <-
+  ggplot(pred_counts, aes(y = reorder(language_name, word2vec))) +
+  geom_segment(aes(x = fasttext, xend = word2vec, yend = language_name), color = "grey60") +
+  geom_point(aes(x = fasttext, color = "fastText"), size = 3) +
+  geom_point(aes(x = word2vec, color = "word2vec"), size = 3) +
+  scale_color_manual(values = c("fastText" = "#440154", "word2vec" = "#21918c"), name = NULL) +
+  labs(x = "Mean r (frequency counts)", y = NULL, title = "C. Predictive power") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "bottom")
+
+fig.timing + fig.rsa + fig.pred
+```
+
 ## Research Question 1
 
 For the first set of evaluations, each language model was tested using the same normed datasets @vanparidon2021 (see Appendix B for the full list). We applied the same analysis approach as the original study which was ridge regression using the model's output vectors to predict norm values for matched tokens, as detailed in the data analysis section. Because all tables are very large, we recommend examining prediction for specific language, algorithm, and dataset combinations on our online resources or shiny application. The heatmaps shown in Figure \@ref(fig:r1-fig) visualize the top three performing models for each algorithm. For CBOW, there is a clear trend favoring simpler models, with the most frequent configuration being 50 dimensions and a window size of 1. In contrast, the Skip-Gram results show a more balanced spread across dimensionalities, though still skewed toward smaller window sizes, most commonly size 3 or smaller. These results indicate that the parameter settings used in the original fastText models (300 dimensions, window size of 5) are unlikely to be optimal across languages. Notably, those original settings do not appear in the top three results for any language or prediction task under Research Question 1.
