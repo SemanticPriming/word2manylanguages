@@ -1,0 +1,4 @@
+language,dim,window,alg,family,seconds,n_words
+he,50,1,cbow,fasttext,1334.5081059932709,658678
+he,50,1,cbow,word2vec,819.1446418762207,658678
+he,50,1,sg,fasttext,1455.2550280094147,658678
