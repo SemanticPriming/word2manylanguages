@@ -1,7 +1,9 @@
 language,status,error
-af,ok,
+af,ok,(skipped -- already done)
 eu,ok,
 kk,ok,
 ta,ok,
 hi,ok,
-mk,ok,
+mk,ok,(skipped -- already done)
+th,ok,
+vi,ok,

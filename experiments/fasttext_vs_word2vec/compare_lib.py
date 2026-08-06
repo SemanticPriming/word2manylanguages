@@ -388,6 +388,13 @@ def run_comparison(language, version="2018", configs=((50, 1), (100, 2), (200, 3
             scores.to_csv(predictive_path, mode="a", header=write_header, index=False)
         print(f"  [{k}/{n_models}] {info['tag']}_{dim}_{win}_{alg}: predictive eval done "
               f"({'no local eval data for this language' if scores is None else f'{len(scores)} rows'})", flush=True)
+    if not os.path.exists(predictive_path):
+        # No model produced any scoreable data (no local replication/norms/counts
+        # for this language) -- touch the file anyway so its mere existence marks
+        # "the predictive step ran to completion", distinguishing this from a
+        # language whose predictive step never ran at all. _results_complete()
+        # below relies on this to tell the two cases apart.
+        open(predictive_path, "a").close()
     predictive_df = pd.concat(pred_rows, ignore_index=True) if pred_rows else pd.DataFrame()
 
     print(f"\nDone -- {results_dir}/{language}_{version}_*.csv are all up to date.")
@@ -458,18 +465,47 @@ def ensure_counts(language, version="2018"):
         bc.count_unigrams("wikipedia", language, version)
 
 
-def _all_configs_done(language, configs, model_dir):
+def _results_complete(language, version, configs, model_dir, results_dir):
     """True only if every (dim, window, alg, family) model file `configs`
-    implies already exists in model_dir -- the real source of truth for
-    whether a language needs (re)work, unlike a bare "ok" flag that can't
-    tell a five-config run apart from the one-config run that happened to
-    finish first."""
+    implies already exists in model_dir *and* this language's rsa/predictive
+    result files actually contain the corresponding data -- the real source
+    of truth for whether a language needs (re)work, rather than a bare "ok"
+    flag (can't tell a five-config run apart from a one-config run that
+    happened to finish first) or model-files-alone (misses a language whose
+    training finished but got interrupted during RSA/predictive scoring, or
+    whose result CSVs were separately restored/deleted -- see af's timing.csv
+    being restored from git history without touching its models/)."""
     for dim, win in configs:
         for alg in ("cbow", "sg"):
             for tag in (f"{language}ft", f"{language}wv"):
                 path = os.path.join(model_dir, f"{tag}_{dim}_{win}_{alg}_wxd.csv.bz2")
                 if not os.path.exists(path):
                     return False
+
+    rsa_path = os.path.join(results_dir, f"{language}_{version}_rsa.csv")
+    predictive_path = os.path.join(results_dir, f"{language}_{version}_predictive.csv")
+
+    # predictive_path's mere existence (even 0 rows) means the predictive
+    # step ran to completion last time -- see run_comparison()'s trailing
+    # open(...).close() for the "no local eval data" case. Its absence means
+    # that step either never ran or was interrupted before finishing.
+    if not os.path.exists(predictive_path):
+        return False
+
+    # rsa.csv is written one comparison at a time as it's computed (see
+    # run_comparison()) -- a run interrupted mid-RSA leaves fewer rows than
+    # len(configs) * 4 (2 fasttext_vs_word2vec + 2 cbow_vs_sg per config
+    # point), which is exactly the signal that this language needs a rerun.
+    expected_rsa_rows = len(configs) * 4
+    if not os.path.exists(rsa_path):
+        return False
+    try:
+        actual_rsa_rows = sum(1 for _ in open(rsa_path)) - 1  # minus header
+    except OSError:
+        return False
+    if actual_rsa_rows < expected_rsa_rows:
+        return False
+
     return True
 
 
@@ -497,13 +533,16 @@ def run_comparison_batch(
     language:
     - a language is skipped entirely (fast -- doesn't even load its corpus)
       only if *every* model file implied by the current `configs` already
-      exists on disk for it -- not just because it was marked "ok" in an
-      earlier call, which might have used a smaller `configs` and would
-      otherwise cause a silent under-run
+      exists on disk for it *and* its rsa.csv/predictive.csv actually
+      contain complete results for those configs (see _results_complete())
+      -- not just because it was marked "ok" in an earlier call, and not
+      just because the model files exist while the RSA/predictive step
+      never finished or its result files were separately deleted/restored
     - anything not fully covered still gets a full run_comparison() call,
       which itself skips any individual (dim, window, alg, family) config
-      whose model file already exists (see run_comparison()'s docstring),
-      so only the missing configs actually retrain
+      whose model file already exists (see run_comparison()'s docstring) --
+      so a language missing only its RSA/predictive data retrains no models
+      at all, it just recomputes those two cheap-relative-to-training steps
     Pass overwrite=True to ignore all of the above and redo everything.
 
     Each language is wrapped in its own try/except so one language's
@@ -523,9 +562,9 @@ def run_comparison_batch(
     summary_rows = []
     for i, language in enumerate(languages, start=1):
         model_dir = os.path.join(basedir, expmodeldir, language)
-        if not overwrite and _all_configs_done(language, configs, model_dir):
-            print(f"\n[{i}/{len(languages)}] {language}: every requested config already on disk, skipping "
-                  f"(pass overwrite=True, or widen configs, to redo/extend).", flush=True)
+        if not overwrite and _results_complete(language, version, configs, model_dir, results_dir):
+            print(f"\n[{i}/{len(languages)}] {language}: models trained and rsa/predictive results complete, "
+                  f"skipping (pass overwrite=True, or widen configs, to redo/extend).", flush=True)
             summary_rows.append({"language": language, "status": "ok", "error": "(skipped -- already done)"})
             pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
             continue
