@@ -42,6 +42,8 @@ vignettes/*.pdf
 /.ipynb_checkpoints
 __pycache__/
 *.pyc
+*.log
+.venv/
 /deal with
 /eval_results/replication/.ipynb_checkpoints
 /eval_inputs/.ipynb_checkpoints

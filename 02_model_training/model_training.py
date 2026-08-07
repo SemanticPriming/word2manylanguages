@@ -8,13 +8,24 @@ from gensim.models import FastText
 corpusdir = "corpora"
 modeldir = 'models'
 
+# Languages whose script doesn't separate words with whitespace at all, so
+# a plain split(' ') collapses each line to ~1 token (confirmed empirically:
+# corpus-zh.txt is 76% single-token lines) instead of real words -- same
+# languages eval_inputs/build_counts_tokenized.py already segments with a
+# real tokenizer for frequency counts (TOKENIZE_FUNCS), just applied here
+# too so the corpus that trains the embeddings uses the same word
+# boundaries as the corpus the eval side counts frequencies from.
+_JIEBA_LANGS = {"zh", "tw"}
+
 # Read the concatenated corpus for gensim
 def load_corpus(language):
     """
     Reads corpora/corpus-{language}.txt into memory once, pre-tokenized the
     same way the old streaming `sentences` generator did (rstrip + split on
     ' ', dropping empty tokens; blank lines still yield an empty list, same
-    as before, so corpus_count/training behavior is unchanged).
+    as before, so corpus_count/training behavior is unchanged) -- except for
+    _JIEBA_LANGS, which get real word segmentation instead (see
+    _load_corpus_jieba).
 
     build_models() calls this exactly once per language and reuses the
     result across all up-to-60 (dim, window, algo) configs. The old
@@ -27,7 +38,28 @@ def load_corpus(language):
     in-memory list to gensim every time instead.
     """
     path_name = os.path.join(basedir, corpusdir, f'corpus-{language}.txt')
+    if language.split('-')[0] in _JIEBA_LANGS:
+        return _load_corpus_jieba(language, path_name)
     with open(path_name, 'r') as f:
+        return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
+
+def _load_corpus_jieba(language, path_name):
+    """
+    Segments corpus-{language}.txt with jieba (real Chinese word boundaries)
+    instead of whitespace, writing the segmented text to a sibling
+    corpus-{language}-jieba.txt cache the first time so repeat calls (e.g.
+    re-running this notebook/experiment) pay the segmentation cost once, not
+    on every load_corpus() call -- jieba on a multi-GB corpus is slow enough
+    to matter, unlike the cheap split(' ') path above.
+    """
+    import jieba
+    cache_path = os.path.join(basedir, corpusdir, f'corpus-{language}-jieba.txt')
+    if not os.path.exists(cache_path):
+        with open(path_name, 'r') as fin, open(cache_path, 'w') as fout:
+            for line in fin:
+                tokens = [w for w in jieba.cut(line.rstrip()) if w.strip()]
+                fout.write(' '.join(tokens) + '\n')
+    with open(cache_path, 'r') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
 # Number of gensim training threads. Default leaves one core free for the OS/
