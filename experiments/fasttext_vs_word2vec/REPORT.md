@@ -17,6 +17,7 @@ See `README.md` for methodology and the full coverage plan.
 | th | ok |  |
 | vi | ok |  |
 | ko | ok |  |
+| he | ok |  |
 
 ## Overall: timing
 
@@ -26,7 +27,7 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 |---|---|
 | af | 2.260 |
 | eu | 2.440 |
-| he | 1.630 |
+| he | 1.890 |
 | hi | 2.180 |
 | kk | 2.520 |
 | ko | 1.610 |
@@ -35,7 +36,7 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 | th | 1.710 |
 | vi | 1.720 |
 
-**Overall mean speedup across all languages run so far: 2.10x**
+**Overall mean speedup across all languages run so far: 2.12x**
 
 ## Overall: vector geometry (RSA)
 
@@ -45,6 +46,7 @@ Pearson r between FastText's and Word2Vec's word-similarity structure, vs. each 
 |---|---|---|---|
 | af | 0.638 | 0.784 | 0.807 |
 | eu | 0.694 | 0.786 | 0.787 |
+| he | 0.568 | 0.814 | 0.626 |
 | hi | 0.669 | 0.856 | 0.814 |
 | kk | 0.627 | 0.735 | 0.733 |
 | ko | 0.744 | 0.900 | 0.779 |
@@ -62,6 +64,8 @@ Mean r on normalized vectors, by language x eval_type x family:
 | af | counts | 0.156 | 0.164 |
 | af | norms | 0.346 | 0.294 |
 | eu | counts | 0.092 | 0.107 |
+| he | counts | 0.077 | 0.077 |
+| he | norms | 0.000 | 0.000 |
 | hi | counts | 0.148 | 0.182 |
 | kk | counts | 0.177 | 0.202 |
 | ko | counts | 0.109 | 0.127 |
@@ -167,8 +171,42 @@ Mean r on normalized vectors, by language x eval_type x family:
 | dim | window | alg | fasttext | word2vec |
 |---|---|---|---|---|
 | 50 | 1 | cbow | 1334.500 | 819.100 |
+| 50 | 1 | sg | 1455.300 | 960.000 |
+| 100 | 2 | cbow | 1665.100 | 924.800 |
+| 100 | 2 | sg | 1954.700 | 1627.600 |
+| 200 | 3 | cbow | 2511.500 | 1191.600 |
+| 200 | 3 | sg | 4026.600 | 2186.700 |
+| 300 | 4 | cbow | 2769.900 | 1280.400 |
+| 300 | 4 | sg | 5232.000 | 3217.600 |
+| 500 | 6 | cbow | 4715.800 | 1370.500 |
+| 500 | 6 | sg | 9029.000 | 5621.600 |
 
-**Predictive power:** no local replication norms, extended norms, or frequency counts for this language yet -- see `03_evaluation/evaluation.py`'s `load_replication_norms`/`load_extended_norms`/`load_count_freqs`. Timing and RSA above are still valid; nothing to score predictive power against until that data exists (e.g. run `eval_inputs/build_counts_tokenized.py` for frequency counts).
+**RSA (Pearson r):**
+
+| dim | window | alg | fasttext | fasttext_vs_word2vec | word2vec |
+|---|---|---|---|---|---|
+| 50 | 1 | cbow |  | 0.831 |  |
+| 50 | 1 | cbow_vs_sg | 0.591 |  | 0.767 |
+| 50 | 1 | sg |  | 0.839 |  |
+| 100 | 2 | cbow |  | 0.862 |  |
+| 100 | 2 | cbow_vs_sg | 0.569 |  | 0.677 |
+| 100 | 2 | sg |  | 0.821 |  |
+| 200 | 3 | cbow |  | 0.846 |  |
+| 200 | 3 | cbow_vs_sg | 0.567 |  | 0.635 |
+| 200 | 3 | sg |  | 0.823 |  |
+| 300 | 4 | cbow |  | 0.827 |  |
+| 300 | 4 | cbow_vs_sg | 0.564 |  | 0.605 |
+| 300 | 4 | sg |  | 0.827 |  |
+| 500 | 6 | cbow |  | 0.632 |  |
+| 500 | 6 | cbow_vs_sg | 0.548 |  | 0.445 |
+| 500 | 6 | sg |  | 0.830 |  |
+
+**Predictive power (normalized vectors, mean r by eval_type x family):**
+
+| eval_type | fasttext | word2vec |
+|---|---|---|
+| counts | 0.077 | 0.077 |
+| norms | 0.000 | 0.000 |
 
 ### `hi`
 
