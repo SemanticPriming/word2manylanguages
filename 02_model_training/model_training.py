@@ -10,12 +10,49 @@ modeldir = 'models'
 
 # Languages whose script doesn't separate words with whitespace at all, so
 # a plain split(' ') collapses each line to ~1 token (confirmed empirically:
-# corpus-zh.txt is 76% single-token lines) instead of real words -- same
-# languages eval_inputs/build_counts_tokenized.py already segments with a
-# real tokenizer for frequency counts (TOKENIZE_FUNCS), just applied here
-# too so the corpus that trains the embeddings uses the same word
-# boundaries as the corpus the eval side counts frequencies from.
-_JIEBA_LANGS = {"zh", "tw"}
+# corpus-zh.txt is 76% single-token lines, corpus-th.txt is 60%) instead of
+# real words -- same languages eval_inputs/build_counts_tokenized.py already
+# segments with a real tokenizer for frequency counts (TOKENIZE_FUNCS), just
+# applied here too so the corpus that trains the embeddings uses the same
+# word boundaries as the corpus the eval side counts frequencies from.
+def _segment_zh(text):
+    import jieba
+    return jieba.cut(text)
+
+def _segment_th(text):
+    from pythainlp.tokenize import word_tokenize
+    return word_tokenize(text)
+
+# MeCab's C++ parser segfaults on a single parse call above ~193,357
+# characters (see eval_inputs/build_counts_tokenized.py's _tokenize_ja,
+# which hit the same limit building frequency counts) -- corpus lines are
+# one sentence each so this should never bite here, but chunk defensively
+# anyway rather than depend on that always being true.
+_JA_MAX_CHARS = 100_000
+_ja_tagger = None
+
+def _segment_ja(text):
+    import fugashi
+    global _ja_tagger
+    if _ja_tagger is None:
+        _ja_tagger = fugashi.Tagger()
+    for start in range(0, max(len(text), 1), _JA_MAX_CHARS):
+        chunk = text[start:start + _JA_MAX_CHARS]
+        for word in _ja_tagger(chunk):
+            yield word.surface
+
+_SEGMENTERS = {
+    "zh": _segment_zh,
+    "tw": _segment_zh,  # Traditional Chinese -- same jieba tokenizer as zh
+    "th": _segment_th,
+    "ja": _segment_ja,
+}
+
+# Cache filename suffix per language -- zh/tw keep the original "-jieba"
+# name (not a generic "-segmented") so an in-progress zh run started before
+# this th support was added still finds/produces the same cache file
+# instead of redoing its (multi-hour, 34M-line) segmentation from scratch.
+_CACHE_SUFFIX = {"zh": "jieba", "tw": "jieba", "th": "pythainlp", "ja": "fugashi"}
 
 # Read the concatenated corpus for gensim
 def load_corpus(language):
@@ -24,8 +61,8 @@ def load_corpus(language):
     same way the old streaming `sentences` generator did (rstrip + split on
     ' ', dropping empty tokens; blank lines still yield an empty list, same
     as before, so corpus_count/training behavior is unchanged) -- except for
-    _JIEBA_LANGS, which get real word segmentation instead (see
-    _load_corpus_jieba).
+    languages in _SEGMENTERS, which get real word segmentation instead (see
+    _load_corpus_segmented).
 
     build_models() calls this exactly once per language and reuses the
     result across all up-to-60 (dim, window, algo) configs. The old
@@ -38,27 +75,36 @@ def load_corpus(language):
     in-memory list to gensim every time instead.
     """
     path_name = os.path.join(basedir, corpusdir, f'corpus-{language}.txt')
-    if language.split('-')[0] in _JIEBA_LANGS:
-        return _load_corpus_jieba(language, path_name)
+    base_lang = language.split('-')[0]
+    if base_lang in _SEGMENTERS:
+        return _load_corpus_segmented(language, base_lang, path_name)
     with open(path_name, 'r') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
-def _load_corpus_jieba(language, path_name):
+def _load_corpus_segmented(language, base_lang, path_name):
     """
-    Segments corpus-{language}.txt with jieba (real Chinese word boundaries)
-    instead of whitespace, writing the segmented text to a sibling
-    corpus-{language}-jieba.txt cache the first time so repeat calls (e.g.
-    re-running this notebook/experiment) pay the segmentation cost once, not
-    on every load_corpus() call -- jieba on a multi-GB corpus is slow enough
-    to matter, unlike the cheap split(' ') path above.
+    Segments corpus-{language}.txt with the real tokenizer for its script
+    (see _SEGMENTERS) instead of whitespace, writing the segmented text to a
+    sibling corpus-{language}-{suffix}.txt cache (see _CACHE_SUFFIX) the
+    first time so repeat calls (e.g. re-running this notebook/experiment)
+    pay the segmentation cost once, not on every load_corpus() call -- a
+    real tokenizer over a multi-GB corpus is slow enough to matter, unlike
+    the cheap split(' ') path above.
     """
-    import jieba
-    cache_path = os.path.join(basedir, corpusdir, f'corpus-{language}-jieba.txt')
+    segment = _SEGMENTERS[base_lang]
+    cache_path = os.path.join(basedir, corpusdir, f'corpus-{language}-{_CACHE_SUFFIX[base_lang]}.txt')
     if not os.path.exists(cache_path):
-        with open(path_name, 'r') as fin, open(cache_path, 'w') as fout:
-            for line in fin:
-                tokens = [w for w in jieba.cut(line.rstrip()) if w.strip()]
-                fout.write(' '.join(tokens) + '\n')
+        # Write to a .tmp path and os.replace() into place only once fully
+        # written, so a killed/interrupted run leaves no half-written file
+        # at cache_path for a later call to mistake for a finished cache
+        # (os.path.exists() above can't tell "done" from "partial").
+        tmp_path = cache_path + '.tmp'
+        with open(tmp_path, 'w') as fout:
+            with open(path_name, 'r') as fin:
+                for line in fin:
+                    tokens = [w for w in segment(line.rstrip()) if w.strip()]
+                    fout.write(' '.join(tokens) + '\n')
+        os.replace(tmp_path, cache_path)
     with open(cache_path, 'r') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
