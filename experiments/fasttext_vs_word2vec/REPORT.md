@@ -8,16 +8,8 @@ See `README.md` for methodology and the full coverage plan.
 
 | language | status | error |
 |---|---|---|
-| af | ok | (skipped -- already done) |
-| eu | ok |  |
-| kk | ok |  |
-| ta | ok |  |
-| hi | ok |  |
-| mk | ok | (skipped -- already done) |
+| zh | ok |  |
 | th | ok |  |
-| vi | ok |  |
-| ko | ok |  |
-| he | ok |  |
 
 ## Overall: timing
 
@@ -26,7 +18,7 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 | language | word2vec_speedup |
 |---|---|
 | af | 2.260 |
-| ar | 1.390 |
+| ar | 1.580 |
 | eu | 2.440 |
 | he | 1.890 |
 | hi | 2.180 |
@@ -34,11 +26,11 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 | ko | 1.610 |
 | mk | 2.230 |
 | ta | 2.660 |
-| th | 1.710 |
+| th | 2.040 |
 | vi | 1.720 |
-| zh | 1.330 |
+| zh | 1.360 |
 
-**Overall mean speedup across all languages run so far: 1.99x**
+**Overall mean speedup across all languages run so far: 2.04x**
 
 ## Overall: vector geometry (RSA)
 
@@ -54,8 +46,9 @@ Pearson r between FastText's and Word2Vec's word-similarity structure, vs. each 
 | ko | 0.744 | 0.900 | 0.779 |
 | mk | 0.598 | 0.777 | 0.750 |
 | ta | 0.708 | 0.660 | 0.757 |
-| th | 0.694 | 0.749 | 0.777 |
+| th | 0.475 | 0.847 | 0.719 |
 | vi | 0.693 | 0.828 | 0.777 |
+| zh | 0.776 | 0.959 | 0.800 |
 
 ## Overall: predictive power
 
@@ -73,11 +66,11 @@ Mean r on normalized vectors, by language x eval_type x family:
 | ko | counts | 0.109 | 0.127 |
 | mk | counts | 0.073 | 0.094 |
 | ta | counts | 0.126 | 0.174 |
-| th | counts | 0.141 | 0.161 |
-| th | norms | 0.604 | 0.591 |
+| th | counts | 0.175 | 0.186 |
+| th | norms | 0.731 | 0.716 |
 | vi | counts | 0.209 | 0.223 |
-| zh | counts | 0.071 | 0.081 |
-| zh | norms | 0.217 | 0.219 |
+| zh | counts | 0.051 | 0.057 |
+| zh | norms | 0.547 | 0.546 |
 
 ## Per-language detail
 
@@ -136,6 +129,10 @@ Mean r on normalized vectors, by language x eval_type x family:
 | 100 | 2 | cbow | 4801.900 | 3852.800 |
 | 100 | 2 | sg | 5818.500 | 4031.100 |
 | 200 | 3 | cbow | 5463.400 | 3173.700 |
+| 200 | 3 | sg | 10075.000 | 6127.000 |
+| 300 | 4 | cbow | 8874.600 | 3515.000 |
+| 300 | 4 | sg | 14999.500 | 9646.500 |
+| 500 | 6 | cbow | 14151.000 |  |
 
 **Predictive power:** no local replication norms, extended norms, or frequency counts for this language yet -- see `03_evaluation/evaluation.py`'s `load_replication_norms`/`load_extended_norms`/`load_count_freqs`. Timing and RSA above are still valid; nothing to score predictive power against until that data exists (e.g. run `eval_inputs/build_counts_tokenized.py` for frequency counts).
 
@@ -447,43 +444,43 @@ Mean r on normalized vectors, by language x eval_type x family:
 
 | dim | window | alg | fasttext | word2vec |
 |---|---|---|---|---|
-| 50 | 1 | cbow | 94.000 | 59.600 |
-| 50 | 1 | sg | 93.300 | 58.000 |
-| 100 | 2 | cbow | 103.100 | 64.900 |
-| 100 | 2 | sg | 105.000 | 66.500 |
-| 200 | 3 | cbow | 113.900 | 69.000 |
-| 200 | 3 | sg | 124.300 | 76.100 |
-| 300 | 4 | cbow | 132.900 | 73.000 |
-| 300 | 4 | sg | 154.700 | 91.200 |
-| 500 | 6 | cbow | 180.400 | 82.400 |
-| 500 | 6 | sg | 230.100 | 131.000 |
+| 50 | 1 | cbow | 161.600 | 106.400 |
+| 50 | 1 | sg | 190.500 | 131.400 |
+| 100 | 2 | cbow | 264.600 | 148.700 |
+| 100 | 2 | sg | 345.700 | 234.000 |
+| 200 | 3 | cbow | 366.700 | 167.500 |
+| 200 | 3 | sg | 580.000 | 322.700 |
+| 300 | 4 | cbow | 543.700 | 195.700 |
+| 300 | 4 | sg | 902.400 | 524.100 |
+| 500 | 6 | cbow | 954.400 | 245.400 |
+| 500 | 6 | sg | 1699.300 | 948.500 |
 
 **RSA (Pearson r):**
 
 | dim | window | alg | fasttext | fasttext_vs_word2vec | word2vec |
 |---|---|---|---|---|---|
-| 50 | 1 | cbow |  | 0.704 |  |
-| 50 | 1 | cbow_vs_sg | 0.747 |  | 0.812 |
-| 50 | 1 | sg |  | 0.738 |  |
-| 100 | 2 | cbow |  | 0.723 |  |
-| 100 | 2 | cbow_vs_sg | 0.708 |  | 0.793 |
-| 100 | 2 | sg |  | 0.767 |  |
-| 200 | 3 | cbow |  | 0.730 |  |
-| 200 | 3 | cbow_vs_sg | 0.682 |  | 0.768 |
-| 200 | 3 | sg |  | 0.784 |  |
-| 300 | 4 | cbow |  | 0.726 |  |
-| 300 | 4 | cbow_vs_sg | 0.672 |  | 0.758 |
-| 300 | 4 | sg |  | 0.796 |  |
-| 500 | 6 | cbow |  | 0.717 |  |
-| 500 | 6 | cbow_vs_sg | 0.661 |  | 0.754 |
-| 500 | 6 | sg |  | 0.807 |  |
+| 50 | 1 | cbow |  | 0.869 |  |
+| 50 | 1 | cbow_vs_sg | 0.616 |  | 0.784 |
+| 50 | 1 | sg |  | 0.872 |  |
+| 100 | 2 | cbow |  | 0.843 |  |
+| 100 | 2 | cbow_vs_sg | 0.468 |  | 0.732 |
+| 100 | 2 | sg |  | 0.856 |  |
+| 200 | 3 | cbow |  | 0.835 |  |
+| 200 | 3 | cbow_vs_sg | 0.437 |  | 0.712 |
+| 200 | 3 | sg |  | 0.848 |  |
+| 300 | 4 | cbow |  | 0.826 |  |
+| 300 | 4 | cbow_vs_sg | 0.431 |  | 0.701 |
+| 300 | 4 | sg |  | 0.848 |  |
+| 500 | 6 | cbow |  | 0.814 |  |
+| 500 | 6 | cbow_vs_sg | 0.425 |  | 0.667 |
+| 500 | 6 | sg |  | 0.855 |  |
 
 **Predictive power (normalized vectors, mean r by eval_type x family):**
 
 | eval_type | fasttext | word2vec |
 |---|---|---|
-| counts | 0.141 | 0.161 |
-| norms | 0.604 | 0.591 |
+| counts | 0.175 | 0.186 |
+| norms | 0.731 | 0.716 |
 
 ### `vi`
 
@@ -537,10 +534,37 @@ Mean r on normalized vectors, by language x eval_type x family:
 | 50 | 1 | cbow | 2050.300 | 1449.600 |
 | 50 | 1 | sg | 2203.900 | 1768.000 |
 | 100 | 2 | cbow | 2236.600 | 1675.300 |
+| 100 | 2 | sg | 1960.200 | 1594.700 |
+| 200 | 3 | cbow | 1515.100 | 1041.800 |
+| 200 | 3 | sg | 3179.200 | 2456.100 |
+| 300 | 4 | cbow | 1875.400 | 1255.800 |
+| 300 | 4 | sg | 4911.700 | 3868.500 |
+| 500 | 6 | cbow | 2717.900 | 1630.100 |
+| 500 | 6 | sg | 8803.700 | 7280.100 |
+
+**RSA (Pearson r):**
+
+| dim | window | alg | fasttext | fasttext_vs_word2vec | word2vec |
+|---|---|---|---|---|---|
+| 50 | 1 | cbow |  | 0.911 |  |
+| 50 | 1 | cbow_vs_sg | 0.803 |  | 0.864 |
+| 50 | 1 | sg |  | 0.963 |  |
+| 100 | 2 | cbow |  | 0.945 |  |
+| 100 | 2 | cbow_vs_sg | 0.776 |  | 0.805 |
+| 100 | 2 | sg |  | 0.968 |  |
+| 200 | 3 | cbow |  | 0.958 |  |
+| 200 | 3 | cbow_vs_sg | 0.768 |  | 0.782 |
+| 200 | 3 | sg |  | 0.971 |  |
+| 300 | 4 | cbow |  | 0.961 |  |
+| 300 | 4 | cbow_vs_sg | 0.767 |  | 0.776 |
+| 300 | 4 | sg |  | 0.974 |  |
+| 500 | 6 | cbow |  | 0.961 |  |
+| 500 | 6 | cbow_vs_sg | 0.764 |  | 0.771 |
+| 500 | 6 | sg |  | 0.979 |  |
 
 **Predictive power (normalized vectors, mean r by eval_type x family):**
 
 | eval_type | fasttext | word2vec |
 |---|---|---|
-| counts | 0.071 | 0.081 |
-| norms | 0.217 | 0.219 |
+| counts | 0.051 | 0.057 |
+| norms | 0.547 | 0.546 |
