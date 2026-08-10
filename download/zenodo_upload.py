@@ -458,14 +458,14 @@ def sync_language(language, version, models_dir, dry_run=False):
         if part in existing:
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
         else:
-            title = f"word2manylanguages: {language} FastText embeddings ({version} corpus)"
+            title = f"word2manylanguages: {language} Word2Vec embeddings ({version} corpus)"
             if len(batches) > 1:
                 title += f" Part {part}"
             metadata = {
                 "upload_type": "dataset",
                 "title": title,
                 "description": (
-                    f"FastText word embeddings for '{language}', trained on the {version} "
+                    f"Word2Vec word embeddings for '{language}', trained on the {version} "
                     f"OpenSubtitles + Wikipedia corpus. See {REPO_URL} for the full pipeline."
                 ),
                 "access_right": "open",
@@ -572,7 +572,7 @@ def sync_all_counts(counts_dir, dry_run=False):
                 "title": title,
                 "description": (
                     f"Unigram frequency count files for every language in this project -- the "
-                    f"frequency baseline used to evaluate this project's FastText word embedding "
+                    f"frequency baseline used to evaluate this project's Word2Vec word embedding "
                     f"models (see the project's other Zenodo records/DOIs), built from this "
                     f"project's own cleaned/deduplicated OpenSubtitles + Wikipedia corpus (see "
                     f"eval_inputs/build_counts_tokenized.py) rather than an external mirror. "

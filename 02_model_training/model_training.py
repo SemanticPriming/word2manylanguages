@@ -2,7 +2,7 @@
 import os
 from collections import Counter
 import pandas as pd
-from gensim.models import FastText
+from gensim.models import FastText, Word2Vec
 
 # Define locations
 corpusdir = "corpora"
@@ -132,19 +132,31 @@ def count_word_freq(corpus):
     return dict(word_freq)
 
 # Build gensim models
-def vectorize_stream(corpus, word_freq, corpus_count, min_freq=5, dim=50, win=3, alg=0):
+def vectorize_stream(corpus, word_freq, corpus_count, min_freq=5, dim=50, win=3, alg=0, family="word2vec"):
     """
-    Creates the word2vec model using gensim.
+    Creates the word2vec or fasttext model using gensim (see `family`).
     `corpus` is a pre-tokenized list of token lists, as returned by
     load_corpus(); `word_freq`/`corpus_count` are count_word_freq()'s and
     len(corpus)'s one-time results, passed in so every config seeds its
     vocabulary from the precomputed table (build_vocab_from_freq) instead of
     re-scanning the corpus itself (build_vocab) -- see count_word_freq()'s
     docstring.
+
+    `family` is "word2vec" (default, faster to train with equal-or-better
+    predictive power -- see experiments/fasttext_vs_word2vec/REPORT.md) or
+    "fasttext" (subword n-grams, min_n=3/max_n=6, matched to subs2vec's
+    Table 1 -- see 05_manuscript/manuscript.Rmd:314). FastText's only real
+    edge, generalizing to out-of-vocabulary words via subwords, isn't used
+    downstream since only the plain word vectors are kept, not the trained
+    model itself.
     """
     algo = 1 if alg == "sg" else 0
-    print(f"Training model {dim} {win} {alg}")
-    model = FastText(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=0.0001, negative=10, alpha=0.05, min_n=3, max_n=6, workers=workers)
+    print(f"Training {family} model {dim} {win} {alg}")
+    common_kwargs = dict(vector_size=dim, window=win, min_count=min_freq, sg=algo, sample=0.0001, negative=10, alpha=0.05, workers=workers)
+    if family == "fasttext":
+        model = FastText(min_n=3, max_n=6, **common_kwargs)
+    else:
+        model = Word2Vec(**common_kwargs)
     model.build_vocab_from_freq(word_freq, corpus_count=corpus_count)
     model.train(corpus_iterable=corpus, total_examples=corpus_count, epochs=10)
 
@@ -154,9 +166,14 @@ dimension_list = [50,100,200,300,500]
 window_list = [1,2,3,4,5,6]
 algo_list = ['cbow','sg']
 
-def build_models(language,overwrite=False):
+def build_models(language, overwrite=False, family="word2vec"):
     """
-    Loops over model requirements and uses vectorize stream to create gensim models.
+    Loops over model requirements and uses vectorize stream to create gensim
+    models. `family` is "word2vec" (default) or "fasttext" -- see
+    vectorize_stream()'s docstring. Output filenames don't encode family
+    (only one family's data is meant to exist per language at a time); pass
+    overwrite=True to replace an existing language's files with a run under
+    a different family.
     """
     configs = [
         (dim, win, alg)
@@ -188,7 +205,7 @@ def build_models(language,overwrite=False):
             print(f'File {base_file_name}_wxd.csv.bz2 exists, and overwrite not specified. Skipping.');
         else:
             print("Building model " + base_file_name)
-            model = vectorize_stream(corpus, word_freq, corpus_count, 5, dim, win, alg)
+            model = vectorize_stream(corpus, word_freq, corpus_count, 5, dim, win, alg, family)
             #Write down the model?
             words=list(model.wv.key_to_index)
             wordsxdims = pd.DataFrame(model.wv[words],words)

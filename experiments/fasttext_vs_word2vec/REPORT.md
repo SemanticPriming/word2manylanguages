@@ -8,8 +8,7 @@ See `README.md` for methodology and the full coverage plan.
 
 | language | status | error |
 |---|---|---|
-| zh | ok |  |
-| th | ok |  |
+| ar | ok |  |
 
 ## Overall: timing
 
@@ -18,7 +17,7 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 | language | word2vec_speedup |
 |---|---|
 | af | 2.260 |
-| ar | 1.580 |
+| ar | 1.720 |
 | eu | 2.440 |
 | he | 1.890 |
 | hi | 2.180 |
@@ -30,7 +29,7 @@ Mean Word2Vec speedup over FastText, by language (>1 = word2vec faster):
 | vi | 1.720 |
 | zh | 1.360 |
 
-**Overall mean speedup across all languages run so far: 2.04x**
+**Overall mean speedup across all languages run so far: 2.05x**
 
 ## Overall: vector geometry (RSA)
 
@@ -39,6 +38,7 @@ Pearson r between FastText's and Word2Vec's word-similarity structure, vs. each 
 | language | fasttext | fasttext_vs_word2vec | word2vec |
 |---|---|---|---|
 | af | 0.638 | 0.784 | 0.807 |
+| ar | 0.541 | 0.729 | 0.681 |
 | eu | 0.694 | 0.786 | 0.787 |
 | he | 0.568 | 0.814 | 0.626 |
 | hi | 0.669 | 0.856 | 0.814 |
@@ -58,6 +58,7 @@ Mean r on normalized vectors, by language x eval_type x family:
 |---|---|---|---|
 | af | counts | 0.156 | 0.164 |
 | af | norms | 0.346 | 0.294 |
+| ar | counts | 0.053 | 0.070 |
 | eu | counts | 0.092 | 0.107 |
 | he | counts | 0.077 | 0.077 |
 | he | norms | 0.000 | 0.000 |
@@ -132,9 +133,34 @@ Mean r on normalized vectors, by language x eval_type x family:
 | 200 | 3 | sg | 10075.000 | 6127.000 |
 | 300 | 4 | cbow | 8874.600 | 3515.000 |
 | 300 | 4 | sg | 14999.500 | 9646.500 |
-| 500 | 6 | cbow | 14151.000 |  |
+| 500 | 6 | cbow | 14151.000 | 5362.900 |
+| 500 | 6 | sg | 27063.400 | 13973.300 |
 
-**Predictive power:** no local replication norms, extended norms, or frequency counts for this language yet -- see `03_evaluation/evaluation.py`'s `load_replication_norms`/`load_extended_norms`/`load_count_freqs`. Timing and RSA above are still valid; nothing to score predictive power against until that data exists (e.g. run `eval_inputs/build_counts_tokenized.py` for frequency counts).
+**RSA (Pearson r):**
+
+| dim | window | alg | fasttext | fasttext_vs_word2vec | word2vec |
+|---|---|---|---|---|---|
+| 50 | 1 | cbow |  | 0.786 |  |
+| 50 | 1 | cbow_vs_sg | 0.626 |  | 0.785 |
+| 50 | 1 | sg |  | 0.827 |  |
+| 100 | 2 | cbow |  | 0.671 |  |
+| 100 | 2 | cbow_vs_sg | 0.537 |  | 0.715 |
+| 100 | 2 | sg |  | 0.814 |  |
+| 200 | 3 | cbow |  | 0.601 |  |
+| 200 | 3 | cbow_vs_sg | 0.511 |  | 0.665 |
+| 200 | 3 | sg |  | 0.825 |  |
+| 300 | 4 | cbow |  | 0.565 |  |
+| 300 | 4 | cbow_vs_sg | 0.512 |  | 0.635 |
+| 300 | 4 | sg |  | 0.829 |  |
+| 500 | 6 | cbow |  | 0.534 |  |
+| 500 | 6 | cbow_vs_sg | 0.519 |  | 0.606 |
+| 500 | 6 | sg |  | 0.838 |  |
+
+**Predictive power (normalized vectors, mean r by eval_type x family):**
+
+| eval_type | fasttext | word2vec |
+|---|---|---|
+| counts | 0.053 | 0.070 |
 
 ### `eu`
 
