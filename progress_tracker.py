@@ -1,0 +1,224 @@
+"""
+Progress tracker for the 59-language word2manylanguages pipeline.
+
+For each language, checks:
+  - models/          : how many of the 60 trained model files exist
+                        (5 dims x 6 windows x 2 algos)
+  - eval_results/counts     : whether the frequency-counts eval file exists,
+                        and how many of the present models it has scored
+  - eval_results/norms      : same, but only for languages that actually
+                        appear in eval_inputs/datasets_norms.csv
+  - eval_results/replication: same, but only for languages that have a
+                        replication-norms file in eval_inputs/replication
+
+Re-run any time to refresh: `python progress_tracker.py`
+Writes progress_tracker.md next to this script.
+"""
+import os
+import pandas as pd
+
+basedir = os.path.dirname(os.path.abspath(__file__))
+modeldir = os.path.join(basedir, 'models')
+evaldir = os.path.join(basedir, 'eval_results')
+datasetsdir = os.path.join(basedir, 'eval_inputs')
+
+dimension_list = [50, 100, 200, 300, 500]
+window_list = [1, 2, 3, 4, 5, 6]
+algo_list = ['cbow', 'sg']
+
+# code -> language name, matches 03_evaluation/evaluation.py's code2lang
+code2lang = {
+    'af': 'afrikaans', 'ar': 'arabic', 'bg': 'bulgarian', 'bn': 'bengali',
+    'br': 'breton', 'bs': 'bosnian', 'ca': 'catalan', 'cs': 'czech',
+    'da': 'danish', 'de': 'german', 'el': 'greek', 'en': 'english',
+    'eo': 'esperanto', 'es': 'spanish', 'et': 'estonian', 'eu': 'basque',
+    'fa': 'farsi', 'fi': 'finnish', 'fr': 'french', 'gl': 'galacian',
+    'he': 'hebrew', 'hi': 'hindi', 'hr': 'croatian', 'hu': 'hungarian',
+    'hy': 'armenian', 'id': 'indonesian', 'is': 'icelandic', 'it': 'italian',
+    'ja': 'japanese', 'ka': 'georgian', 'kk': 'kazakh', 'ko': 'korean',
+    'lt': 'lithuanian', 'lv': 'latvian', 'mk': 'macedonian',
+    'ml': 'malayalam', 'ms': 'maylay', 'nl': 'dutch', 'no': 'norwegian',
+    'pl': 'polish', 'pt': 'portuguese', 'ro': 'romanian', 'ru': 'russian',
+    'si': 'sinhalese', 'sk': 'slovak', 'sl': 'slovenian', 'sq': 'albanian',
+    'sr': 'serbian', 'sv': 'swedish', 'ta': 'tamil', 'te': 'telugu',
+    'th': 'thai', 'tl': 'tagalog', 'tr': 'turkish', 'tw': 'taiwanese',
+    'uk': 'ukrainian', 'ur': 'urdu', 'vi': 'vietnamese', 'zh': 'chinese',
+}
+
+lang_aliases = {
+    'farsi': {'farsi', 'persian'},
+    'galacian': {'galacian', 'galician'},
+    'maylay': {'maylay', 'malay'},
+    'chinese': {'chinese', 'chinese_simplified', 'chinese_traditional'},
+}
+
+display_names = {
+    'af': 'Afrikaans', 'ar': 'Arabic', 'bg': 'Bulgarian', 'bn': 'Bengali',
+    'br': 'Breton', 'bs': 'Bosnian', 'ca': 'Catalan', 'cs': 'Czech',
+    'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English',
+    'eo': 'Esperanto', 'es': 'Spanish', 'et': 'Estonian', 'eu': 'Basque',
+    'fa': 'Farsi', 'fi': 'Finnish', 'fr': 'French', 'gl': 'Galician',
+    'he': 'Hebrew', 'hi': 'Hindi', 'hr': 'Croatian', 'hu': 'Hungarian',
+    'hy': 'Armenian', 'id': 'Indonesian', 'is': 'Icelandic', 'it': 'Italian',
+    'ja': 'Japanese', 'ka': 'Georgian', 'kk': 'Kazakh', 'ko': 'Korean',
+    'lt': 'Lithuanian', 'lv': 'Latvian', 'mk': 'Macedonian',
+    'ml': 'Malayalam', 'ms': 'Malay', 'nl': 'Dutch', 'no': 'Norwegian',
+    'pl': 'Polish', 'pt': 'Portuguese', 'ro': 'Romanian', 'ru': 'Russian',
+    'si': 'Sinhalese', 'sk': 'Slovak', 'sl': 'Slovenian', 'sq': 'Albanian',
+    'sr': 'Serbian', 'sv': 'Swedish', 'ta': 'Tamil', 'te': 'Telugu',
+    'th': 'Thai', 'tl': 'Tagalog', 'tr': 'Turkish',
+    'tw': 'Taiwanese / Traditional Chinese', 'uk': 'Ukrainian', 'ur': 'Urdu',
+    'vi': 'Vietnamese', 'zh': 'Chinese / Mandarin',
+}
+
+languages = sorted(code2lang.keys())
+assert len(languages) == 59, f'expected 59 languages, got {len(languages)}'
+
+
+def model_combos():
+    return [(dim, win, alg)
+            for dim in dimension_list
+            for win in window_list
+            for alg in algo_list]
+
+
+def existing_models(lang):
+    found = []
+    for dim, win, alg in model_combos():
+        base = f'{lang}_{dim}_{win}_{alg}_wxd.csv'
+        if os.path.exists(os.path.join(modeldir, base)) or \
+           os.path.exists(os.path.join(modeldir, base + '.bz2')):
+            found.append(base)
+    return found
+
+
+def needs_norms(lang):
+    catalogpath = os.path.join(datasetsdir, 'datasets_norms.csv')
+    catalog = pd.read_csv(catalogpath)
+    langname = code2lang[lang]
+    accepted = lang_aliases.get(langname, {langname})
+    match = catalog[catalog['language'].fillna('').apply(
+        lambda cell: bool(accepted & set(cell.split('|'))))]
+    return len(match) > 0
+
+
+def needs_replication(lang):
+    repdir = os.path.join(datasetsdir, 'replication')
+    return any(fname.startswith(lang + '-')
+               for fname in os.listdir(repdir))
+
+
+def eval_sources(eval_csv):
+    """Distinct model 'source' values already scored in an eval_results file."""
+    if not os.path.exists(eval_csv) or os.path.getsize(eval_csv) == 0:
+        return set()
+    try:
+        df = pd.read_csv(eval_csv, usecols=['source'])
+    except (ValueError, pd.errors.EmptyDataError):
+        return set()
+    return set(df['source'].unique())
+
+
+def check(mark):
+    return 'x' if mark else ' '
+
+
+def build_row(lang):
+    models = existing_models(lang)
+    n_models = len(models)
+    model_names = {m[:-len('_wxd.csv')] for m in models}
+
+    counts_csv = os.path.join(evaldir, 'counts', f'{lang}_eval.csv')
+    counts_done = eval_sources(counts_csv)
+    counts_ok = n_models > 0 and model_names <= counts_done
+
+    norms_needed = needs_norms(lang)
+    norms_csv = os.path.join(evaldir, 'norms', f'{lang}_eval.csv')
+    norms_done = eval_sources(norms_csv) if norms_needed else set()
+    norms_ok = (not norms_needed) or (n_models > 0 and model_names <= norms_done)
+
+    rep_needed = needs_replication(lang)
+    rep_csv = os.path.join(evaldir, 'replication', f'{lang}_eval.csv')
+    rep_done = eval_sources(rep_csv) if rep_needed else set()
+    rep_ok = (not rep_needed) or (n_models > 0 and model_names <= rep_done)
+
+    return {
+        'code': lang,
+        'name': display_names[lang],
+        'n_models': n_models,
+        'models_ok': n_models == 60,
+        'counts_done': len(counts_done),
+        'counts_ok': counts_ok,
+        'norms_needed': norms_needed,
+        'norms_done': len(norms_done),
+        'norms_ok': norms_ok,
+        'rep_needed': rep_needed,
+        'rep_done': len(rep_done),
+        'rep_ok': rep_ok,
+    }
+
+
+def counts_cell(row):
+    # every language eventually needs a counts eval, regardless of whether
+    # its models have been trained yet
+    return f"[{check(row['counts_ok'])}] {int(row['counts_ok'])}/1"
+
+
+def norms_cell(row):
+    if not row['norms_needed']:
+        return 'n/a'
+    return f"[{check(row['norms_ok'])}] {int(row['norms_ok'])}/1"
+
+
+def rep_cell(row):
+    if not row['rep_needed']:
+        return 'n/a'
+    return f"[{check(row['rep_ok'])}] {int(row['rep_ok'])}/1"
+
+
+def build_markdown(rows):
+    total = len(rows)
+    models_done = sum(r['models_ok'] for r in rows)
+    counts_done = sum(r['counts_ok'] for r in rows)
+    norms_needed = sum(r['norms_needed'] for r in rows)
+    norms_done = sum(r['norms_ok'] for r in rows if r['norms_needed'])
+    rep_needed = sum(r['rep_needed'] for r in rows)
+    rep_done = sum(r['rep_ok'] for r in rows if r['rep_needed'])
+
+    total_items = total + total + norms_needed + rep_needed
+    done_items = models_done + counts_done + norms_done + rep_done
+    overall_pct = 100 * done_items / total_items
+
+    lines = []
+    lines.append('# word2manylanguages progress tracker')
+    lines.append('')
+    lines.append('Re-run `python progress_tracker.py` any time to refresh this file.')
+    lines.append('')
+    lines.append(f'**Overall: {overall_pct:.1f}% ({done_items}/{total_items} items complete)**')
+    lines.append('')
+    lines.append(f'- Models complete (60/60): {models_done}/{total}')
+    lines.append(f'- Counts eval complete: {counts_done}/{total}')
+    lines.append(f'- Norms eval complete: {norms_done}/{norms_needed}')
+    lines.append(f'- Replication eval complete: {rep_done}/{rep_needed}')
+    lines.append('')
+    lines.append('| | Code | Language | Models | Counts | Norms | Replication |')
+    lines.append('|---|---|---|---|---|---|---|')
+    for r in rows:
+        row_mark = 'x' if (r['models_ok'] and r['counts_ok'] and r['norms_ok'] and r['rep_ok']) else ' '
+        lines.append(
+            f"| [{row_mark}] | {r['code']} | {r['name']} | "
+            f"[{check(r['models_ok'])}] {r['n_models']}/60 | "
+            f"{counts_cell(r)} | "
+            f"{norms_cell(r)} | {rep_cell(r)} |"
+        )
+    lines.append('')
+    return '\n'.join(lines)
+
+
+if __name__ == '__main__':
+    rows = [build_row(lang) for lang in languages]
+    md = build_markdown(rows)
+    outpath = os.path.join(basedir, 'progress_tracker.md')
+    with open(outpath, 'w') as f:
+        f.write(md)
+    print(f'Wrote {outpath}')
