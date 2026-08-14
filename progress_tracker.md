@@ -2,9 +2,9 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 4.2% (7/166 items complete)**
+**Overall: 4.8% (8/166 items complete)**
 
-- Models complete (60/60): 7/59
+- Models complete (60/60): 8/59
 - Counts eval complete: 0/59
 - Norms eval complete: 0/35
 - Replication eval complete: 0/13
@@ -26,19 +26,19 @@ Re-run `python progress_tracker.py` any time to refresh this file.
 | [ ] | eo | Esperanto | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | es | Spanish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | et | Estonian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | eu | Basque | [ ] 37/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | eu | Basque | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | fa | Farsi | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fi | Finnish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fr | French | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | gl | Galician | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | he | Hebrew | [ ] 10/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | he | Hebrew | [ ] 19/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hi | Hindi | [ ] 10/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | hr | Croatian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hu | Hungarian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hy | Armenian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | id | Indonesian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | is | Icelandic | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | it | Italian | [ ] 35/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | it | Italian | [ ] 36/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ja | Japanese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | ka | Georgian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | kk | Kazakh | [ ] 10/60 | [ ] 0/1 | n/a | n/a |
