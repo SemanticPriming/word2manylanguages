@@ -189,6 +189,18 @@ def build_markdown(rows):
     done_items = models_done + counts_done + norms_done + rep_done
     overall_pct = 100 * done_items / total_items
 
+    # Raw object counts -- actual files/rows produced, not just "language
+    # fully done or not". Sums (n_models) instead of language-level flags,
+    # so partial progress within a language shows up too.
+    model_files = sum(r['n_models'] for r in rows)
+    model_files_possible = total * 60
+    counts_rows = sum(r['counts_done'] for r in rows)
+    counts_rows_possible = model_files
+    norms_rows = sum(r['norms_done'] for r in rows if r['norms_needed'])
+    norms_rows_possible = sum(r['n_models'] for r in rows if r['norms_needed'])
+    rep_rows = sum(r['rep_done'] for r in rows if r['rep_needed'])
+    rep_rows_possible = sum(r['n_models'] for r in rows if r['rep_needed'])
+
     lines = []
     lines.append('# word2manylanguages progress tracker')
     lines.append('')
@@ -196,6 +208,13 @@ def build_markdown(rows):
     lines.append('')
     lines.append(f'**Overall: {overall_pct:.1f}% ({done_items}/{total_items} items complete)**')
     lines.append('')
+    lines.append('Raw object counts (actual files/model-results produced, not just "language fully done"):')
+    lines.append(f'- Model files trained: {model_files}/{model_files_possible}')
+    lines.append(f'- Counts eval model-results written: {counts_rows}/{counts_rows_possible}')
+    lines.append(f'- Norms eval model-results written: {norms_rows}/{norms_rows_possible}')
+    lines.append(f'- Replication eval model-results written: {rep_rows}/{rep_rows_possible}')
+    lines.append('')
+    lines.append('Language-level completion (all applicable model-results present for that language):')
     lines.append(f'- Models complete (60/60): {models_done}/{total}')
     lines.append(f'- Counts eval complete: {counts_done}/{total}')
     lines.append(f'- Norms eval complete: {norms_done}/{norms_needed}')

@@ -2,9 +2,16 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 4.8% (8/166 items complete)**
+**Overall: 5.4% (9/166 items complete)**
 
-- Models complete (60/60): 8/59
+Raw object counts (actual files/model-results produced, not just "language fully done"):
+- Model files trained: 729/3540
+- Counts eval model-results written: 0/729
+- Norms eval model-results written: 0/429
+- Replication eval model-results written: 0/57
+
+Language-level completion (all applicable model-results present for that language):
+- Models complete (60/60): 9/59
 - Counts eval complete: 0/59
 - Norms eval complete: 0/35
 - Replication eval complete: 0/13
@@ -19,7 +26,7 @@ Re-run `python progress_tracker.py` any time to refresh this file.
 | [ ] | bs | Bosnian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ca | Catalan | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | cs | Czech | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | da | Danish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | da | Danish | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | de | German | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | el | Greek | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | en | English | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
@@ -31,14 +38,14 @@ Re-run `python progress_tracker.py` any time to refresh this file.
 | [ ] | fi | Finnish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fr | French | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | gl | Galician | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | he | Hebrew | [ ] 19/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | he | Hebrew | [ ] 52/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hi | Hindi | [ ] 10/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | hr | Croatian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hu | Hungarian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hy | Armenian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | id | Indonesian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | is | Icelandic | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | it | Italian | [ ] 36/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | it | Italian | [ ] 57/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ja | Japanese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | ka | Georgian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | kk | Kazakh | [ ] 10/60 | [ ] 0/1 | n/a | n/a |
