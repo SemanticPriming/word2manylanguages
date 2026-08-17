@@ -78,7 +78,7 @@ def load_corpus(language):
     base_lang = language.split('-')[0]
     if base_lang in _SEGMENTERS:
         return _load_corpus_segmented(language, base_lang, path_name)
-    with open(path_name, 'r') as f:
+    with open(path_name, 'r', encoding='utf-8') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
 def _load_corpus_segmented(language, base_lang, path_name):
@@ -99,13 +99,13 @@ def _load_corpus_segmented(language, base_lang, path_name):
         # at cache_path for a later call to mistake for a finished cache
         # (os.path.exists() above can't tell "done" from "partial").
         tmp_path = cache_path + '.tmp'
-        with open(tmp_path, 'w') as fout:
-            with open(path_name, 'r') as fin:
+        with open(tmp_path, 'w', encoding='utf-8') as fout:
+            with open(path_name, 'r', encoding='utf-8') as fin:
                 for line in fin:
                     tokens = [w for w in segment(line.rstrip()) if w.strip()]
                     fout.write(' '.join(tokens) + '\n')
         os.replace(tmp_path, cache_path)
-    with open(cache_path, 'r') as f:
+    with open(cache_path, 'r', encoding='utf-8') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
 # Number of gensim training threads. Default leaves one core free for the OS/

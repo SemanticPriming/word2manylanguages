@@ -464,7 +464,7 @@ def append_scores(outfile, scores):
     """Appends a scores dataframe to a per-language eval file, writing the header only once."""
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
     write_header = not os.path.exists(outfile)
-    with open(outfile, 'a') as f:
+    with open(outfile, 'a', encoding='utf-8') as f:
         scores.to_csv(f, mode='a', header=write_header, index=False)
 
 def load_done_combos(outfile):
