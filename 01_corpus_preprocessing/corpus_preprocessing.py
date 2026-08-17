@@ -437,7 +437,14 @@ def concatenate_corpus(language,version='2018',overwrite=False):
         print(f'File corpus-{corpus_key}.txt exists, and overwrite not specified. Skipping.');
     else:
         print(f"Concatenating {corpus_key} corpus.")
-        with open(corpus_output_path, mode="w") as out:
+        # encoding='utf-8' is required, not just conventional: without it,
+        # Python falls back to the platform's default text encoding on
+        # write, which is UTF-8-compatible on Mac/Linux but is the system
+        # ANSI codepage on Windows (e.g. cp1252) -- that can't represent
+        # non-Latin scripts (Armenian, Arabic, Thai, ...) at all, so writing
+        # a decoded line raises UnicodeEncodeError, caught by the bare
+        # except below, and prints the line instead of saving it.
+        with open(corpus_output_path, mode="w", encoding="utf-8") as out:
             subs_input_file = zipfile.ZipFile(subs_input_path, 'r')
             for f in subs_input_file.namelist():
                 inf = subs_input_file.open(f)
