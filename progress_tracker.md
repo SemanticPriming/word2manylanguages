@@ -2,16 +2,16 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 12.7% (21/166 items complete)**
+**Overall: 14.5% (24/166 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 1324/3540
-- Counts eval model-results written: 0/1324
-- Norms eval model-results written: 0/582
-- Replication eval model-results written: 0/74
+- Model files trained: 1520/3540
+- Counts eval model-results written: 0/1520
+- Norms eval model-results written: 0/680
+- Replication eval model-results written: 0/97
 
 Language-level completion (all applicable model-results present for that language):
-- Models complete (60/60): 21/59
+- Models complete (60/60): 24/59
 - Counts eval complete: 0/59
 - Norms eval complete: 0/35
 - Replication eval complete: 0/13
@@ -30,9 +30,9 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | de | German | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | el | Greek | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | en | English | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
-| [ ] | eo | Esperanto | [ ] 22/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | eo | Esperanto | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | es | Spanish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
-| [ ] | et | Estonian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | et | Estonian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | eu | Basque | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | fa | Farsi | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fi | Finnish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
@@ -42,8 +42,8 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | hi | Hindi | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | hr | Croatian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hu | Hungarian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | hy | Armenian | [ ] 17/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | id | Indonesian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | hy | Armenian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | id | Indonesian | [ ] 11/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | is | Icelandic | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | it | Italian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ja | Japanese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
@@ -57,7 +57,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | ms | Malay | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | nl | Dutch | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | no | Norwegian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | pl | Polish | [ ] 14/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | pl | Polish | [ ] 26/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | pt | Portuguese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ro | Romanian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ru | Russian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
@@ -76,4 +76,4 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | uk | Ukrainian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ur | Urdu | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | vi | Vietnamese | [x] 60/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | zh | Chinese / Mandarin | [ ] 11/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | zh | Chinese / Mandarin | [ ] 43/60 | [ ] 0/1 | [ ] 0/1 | n/a |
