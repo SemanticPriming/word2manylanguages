@@ -38,8 +38,7 @@ cp.basedir = mt.basedir = bc.basedir = HERE
 
 # Override mt.workers here for a bigger server, e.g.: mt.workers = 32
 
-languages = ["af", "ar", "br", "bn", "bs", "ca", "cs",
-             "eu", "he", "hi", "kk", "ko", "mk", "si", "ta", "th", "tl", "vi", "zh"]   # two-letter codes -- everything with both wikipedia-*.bz2 and subtitles-*.zip already in raw/
+languages = ["ka", "lt", "lv", "bg"]   # two-letter codes -- everything with both wikipedia-*.bz2 and subtitles-*.zip already in raw/
 version = "2018"      # '2018' or '2024' -- see run_language_pipeline.py's module docstring
 overwrite = False      # pass True to replace existing (e.g. FastText) model files
 
