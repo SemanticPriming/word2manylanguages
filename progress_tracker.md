@@ -2,16 +2,16 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 14.5% (24/166 items complete)**
+**Overall: 19.3% (32/166 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 1602/3540
-- Counts eval model-results written: 0/1602
-- Norms eval model-results written: 0/762
-- Replication eval model-results written: 0/173
+- Model files trained: 1982/3540
+- Counts eval model-results written: 0/1982
+- Norms eval model-results written: 0/1022
+- Replication eval model-results written: 0/229
 
 Language-level completion (all applicable model-results present for that language):
-- Models complete (60/60): 24/59
+- Models complete (60/60): 32/59
 - Counts eval complete: 0/59
 - Norms eval complete: 0/35
 - Replication eval complete: 0/13
@@ -20,7 +20,7 @@ Language-level completion (all applicable model-results present for that languag
 |---|---|---|---|---|---|---|
 | [ ] | af | Afrikaans | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | ar | Arabic | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | bg | Bulgarian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | bg | Bulgarian | [ ] 7/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | bn | Bengali | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | br | Breton | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | bs | Bosnian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
@@ -35,29 +35,29 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | et | Estonian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | eu | Basque | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | fa | Farsi | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
-| [ ] | fi | Finnish | [ ] 44/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | fi | Finnish | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fr | French | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
-| [ ] | gl | Galician | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | gl | Galician | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | he | Hebrew | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hi | Hindi | [x] 60/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | hr | Croatian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | hr | Croatian | [ ] 6/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hu | Hungarian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | hy | Armenian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | id | Indonesian | [ ] 36/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
-| [ ] | is | Icelandic | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | id | Indonesian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | is | Icelandic | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
 | [ ] | it | Italian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ja | Japanese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | ka | Georgian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | ka | Georgian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | kk | Kazakh | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ko | Korean | [x] 60/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | lt | Lithuanian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | lv | Latvian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | lt | Lithuanian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | lv | Latvian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | mk | Macedonian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ml | Malayalam | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ms | Malay | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | nl | Dutch | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | no | Norwegian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
-| [ ] | pl | Polish | [ ] 33/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | pl | Polish | [ ] 49/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | pt | Portuguese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | ro | Romanian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ru | Russian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a |
@@ -76,4 +76,4 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | uk | Ukrainian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | ur | Urdu | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | vi | Vietnamese | [x] 60/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | zh | Chinese / Mandarin | [ ] 49/60 | [ ] 0/1 | [ ] 0/1 | n/a |
+| [ ] | zh | Chinese / Mandarin | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
