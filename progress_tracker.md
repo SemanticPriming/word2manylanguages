@@ -5,10 +5,10 @@ Re-run `python progress_tracker.py` any time to refresh this file.
 **Overall: 21.1% (35/166 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 2155/3540
-- Counts eval model-results written: 0/2155
-- Norms eval model-results written: 0/1195
-- Replication eval model-results written: 0/295
+- Model files trained: 2161/3540
+- Counts eval model-results written: 46/2161
+- Norms eval model-results written: 46/1197
+- Replication eval model-results written: 0/297
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 35/59
@@ -34,7 +34,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | es | Spanish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | et | Estonian | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | eu | Basque | [x] 60/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | fa | Farsi | [ ] 53/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
+| [ ] | fa | Farsi | [ ] 55/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fi | Finnish | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | fr | French | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | gl | Galician | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
@@ -74,6 +74,6 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | tr | Turkish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 |
 | [ ] | tw | Taiwanese / Traditional Chinese | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | uk | Ukrainian | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
-| [ ] | ur | Urdu | [ ] 0/60 | [ ] 0/1 | n/a | n/a |
+| [ ] | ur | Urdu | [ ] 4/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | vi | Vietnamese | [x] 60/60 | [ ] 0/1 | n/a | n/a |
 | [ ] | zh | Chinese / Mandarin | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a |
