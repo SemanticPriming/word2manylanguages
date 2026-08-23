@@ -267,6 +267,23 @@ norms_encoding_overrides = {
     'Kremer2011_de.csv': 'latin-1',
 }
 
+# A few (lang, dataset) pairs have word column(s) that don't match any of
+# load_extended_norms()'s generic 'word'/'word_{language}'[_simple/_uk]
+# guesses -- these two Arabic norms files use dialect/variant-specific
+# names instead (confirmed by inspecting their headers directly). Boukadi2016
+# has two independent Arabic word-form columns (the word as originally
+# intended vs. the modal/most-common response given for it) -- both are
+# real, distinct word lists worth evaluating separately rather than
+# picking just one, so each gets its own entry (see load_extended_norms's
+# per-candidate loop) with a suffixed label so results stay distinguishable.
+word_column_overrides = {
+    ('ar', 'Rami2022.csv'): [('word_arabic_moroccan', None)],
+    ('ar', 'Boukadi2016.csv'): [
+        ('word_arabic_intended', 'intended'),
+        ('word_arabic_modal', 'modal'),
+    ],
+}
+
 def load_extended_norms(lang):
     """
     Loads and resolves the word column for every extended norms file that
@@ -295,47 +312,55 @@ def load_extended_norms(lang):
             norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'],
                                  encoding=encoding)
 
-            # Get the column that has the words in it.  It might just be word, or
-            # it might be word_{language_name}
-            if 'word' in norms.columns:
-                wordcol = 'word'
+            check = norms.columns
+
+            # Get the column(s) that have the words in them. Usually just
+            # one candidate: 'word', or 'word_{language_name}' (with a few
+            # generic suffix/lang-specific fallbacks); word_column_overrides
+            # covers the handful of files that need something else entirely.
+            if (lang, langfile) in word_column_overrides:
+                candidates = word_column_overrides[(lang, langfile)]
+            elif 'word' in check:
+                candidates = [('word', None)]
             else:
                 wordcol = 'word_' + langname
-
-            check = norms.columns
-            if wordcol not in check:
-                # There are some other special cases
-                if wordcol + '_simple' in check:
-                    wordcol = wordcol + '_simple'
-                elif wordcol + '_uk' in check:
-                    wordcol = wordcol + '_uk'
-                elif lang == 'fa' and 'word_persian' in check:
-                    wordcol = 'word_persian'
-                elif lang == 'zh':
-                    for candidate in ('word_chinese_simplified', 'word_chinese_traditional'):
-                        if candidate in check:
-                            wordcol = candidate
-                            break
+                if wordcol not in check:
+                    if wordcol + '_simple' in check:
+                        wordcol = wordcol + '_simple'
+                    elif wordcol + '_uk' in check:
+                        wordcol = wordcol + '_uk'
+                    elif lang == 'fa' and 'word_persian' in check:
+                        wordcol = 'word_persian'
+                    elif lang == 'zh':
+                        for candidate in ('word_chinese_simplified', 'word_chinese_traditional'):
+                            if candidate in check:
+                                wordcol = candidate
+                                break
+                candidates = [(wordcol, None)]
 
             # Catalog already tells us exactly which mean columns this
             # dataset/language pair has -- just select them.
             cols = [c for c in dict.fromkeys(group['variable_original']) if c in check]
-            if wordcol not in check or not cols:
-                # Unlike every other skip path in this file (load_model,
-                # load_count_freqs), this used to continue with no printed
-                # trace at all -- a catalog-matched language/file pair could
-                # silently vanish from evaluation entirely, with nothing in
-                # the output to show it was ever expected to contribute.
-                reason = f"no usable word column (tried '{wordcol}')" if wordcol not in check else "no matching value columns"
-                print(f'Skipping {langfile} for {lang}: {reason}.')
-                continue
 
-            norms = norms[[wordcol] + cols]
-            norms.set_index(wordcol, inplace=True)
-            # lowercase to match load_model's casefolded vector words, so the
-            # join in predict() doesn't silently drop case-mismatched rows
-            norms.index = norms.index.str.casefold()
-            loaded.append((langfile, norms))
+            for wordcol, label in candidates:
+                if wordcol not in check or not cols:
+                    # Unlike every other skip path in this file (load_model,
+                    # load_count_freqs), this used to continue with no printed
+                    # trace at all -- a catalog-matched language/file pair could
+                    # silently vanish from evaluation entirely, with nothing in
+                    # the output to show it was ever expected to contribute.
+                    reason = f"no usable word column (tried '{wordcol}')" if wordcol not in check else "no matching value columns"
+                    print(f'Skipping {langfile} for {lang}: {reason}.')
+                    continue
+
+                variant = norms[[wordcol] + cols].copy()
+                variant.set_index(wordcol, inplace=True)
+                # lowercase to match load_model's casefolded vector words, so the
+                # join in predict() doesn't silently drop case-mismatched rows
+                variant.index = variant.index.str.casefold()
+                variant_name = f'{langfile}:{label}' if label else langfile
+                loaded.append((variant_name, variant))
+
         except Exception as ex:
             print("Error loading " + langfile)
             print(f"An exception of type {type(ex).__name__} occurred loading {langfile}. Arguments:\n{ex.args!r}")

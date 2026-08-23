@@ -21,6 +21,7 @@ basedir = os.path.dirname(os.path.abspath(__file__))
 modeldir = os.path.join(basedir, 'models')
 evaldir = os.path.join(basedir, 'eval_results')
 datasetsdir = os.path.join(basedir, 'eval_inputs')
+zenodo_dois_csv = os.path.join(basedir, 'download', 'zenodo_dois.csv')
 
 dimension_list = [50, 100, 200, 300, 500]
 window_list = [1, 2, 3, 4, 5, 6]
@@ -44,6 +45,12 @@ code2lang = {
     'th': 'thai', 'tl': 'tagalog', 'tr': 'turkish', 'tw': 'taiwanese',
     'uk': 'ukrainian', 'ur': 'urdu', 'vi': 'vietnamese', 'zh': 'chinese',
 }
+
+# Target Zenodo version for the current upload round -- every language
+# needs v2 except af, which already reached v2 previously and now needs
+# v3. Update this by hand at the start of the next round (once every
+# language below is checked off, i.e. already at its target version).
+zenodo_target_version = {'_default': 2, 'af': 3}
 
 lang_aliases = {
     'farsi': {'farsi', 'persian'},
@@ -102,6 +109,23 @@ def needs_norms(lang):
     return len(match) > 0
 
 
+def load_zenodo_versions():
+    """
+    Maps each language to the highest Zenodo version it's already been
+    uploaded as (parsed from the 'vN' strings in download/zenodo_dois.csv),
+    so the tracker can show what the *next* upload would be (current max +
+    1) without hand-maintaining that number as uploads happen.
+    """
+    versions = {}
+    if not os.path.exists(zenodo_dois_csv):
+        return versions
+    df = pd.read_csv(zenodo_dois_csv, usecols=['language', 'zenodo_version'])
+    for lang, group in df.groupby('language')['zenodo_version']:
+        nums = [int(v.lstrip('v')) for v in group.unique()]
+        versions[lang] = max(nums)
+    return versions
+
+
 def needs_replication(lang):
     repdir = os.path.join(datasetsdir, 'replication')
     return any(fname.startswith(lang + '-')
@@ -123,7 +147,7 @@ def check(mark):
     return 'x' if mark else ' '
 
 
-def build_row(lang):
+def build_row(lang, zenodo_versions):
     models = existing_models(lang)
     n_models = len(models)
     model_names = {m[:-len('_wxd.csv')] for m in models}
@@ -142,6 +166,9 @@ def build_row(lang):
     rep_done = eval_sources(rep_csv) if rep_needed else set()
     rep_ok = (not rep_needed) or (n_models > 0 and model_names <= rep_done)
 
+    target = zenodo_target_version.get(lang, zenodo_target_version['_default'])
+    zenodo_ok = zenodo_versions.get(lang, 0) >= target
+
     return {
         'code': lang,
         'name': display_names[lang],
@@ -155,6 +182,8 @@ def build_row(lang):
         'rep_needed': rep_needed,
         'rep_done': len(rep_done),
         'rep_ok': rep_ok,
+        'zenodo_ok': zenodo_ok,
+        'zenodo_target': target,
     }
 
 
@@ -168,6 +197,10 @@ def norms_cell(row):
     if not row['norms_needed']:
         return 'n/a'
     return f"[{check(row['norms_ok'])}] {int(row['norms_ok'])}/1"
+
+
+def zenodo_cell(row):
+    return f"[{check(row['zenodo_ok'])}] v{row['zenodo_target']}"
 
 
 def rep_cell(row):
@@ -184,9 +217,10 @@ def build_markdown(rows):
     norms_done = sum(r['norms_ok'] for r in rows if r['norms_needed'])
     rep_needed = sum(r['rep_needed'] for r in rows)
     rep_done = sum(r['rep_ok'] for r in rows if r['rep_needed'])
+    zenodo_done = sum(r['zenodo_ok'] for r in rows)
 
-    total_items = total + total + norms_needed + rep_needed
-    done_items = models_done + counts_done + norms_done + rep_done
+    total_items = total + total + norms_needed + rep_needed + total
+    done_items = models_done + counts_done + norms_done + rep_done + zenodo_done
     overall_pct = 100 * done_items / total_items
 
     # Raw object counts -- actual files/rows produced, not just "language
@@ -219,23 +253,25 @@ def build_markdown(rows):
     lines.append(f'- Counts eval complete: {counts_done}/{total}')
     lines.append(f'- Norms eval complete: {norms_done}/{norms_needed}')
     lines.append(f'- Replication eval complete: {rep_done}/{rep_needed}')
+    lines.append(f'- Zenodo upload at target version: {zenodo_done}/{total}')
     lines.append('')
-    lines.append('| | Code | Language | Models | Counts | Norms | Replication |')
-    lines.append('|---|---|---|---|---|---|---|')
+    lines.append('| | Code | Language | Models | Counts | Norms | Replication | Zenodo |')
+    lines.append('|---|---|---|---|---|---|---|---|')
     for r in rows:
-        row_mark = 'x' if (r['models_ok'] and r['counts_ok'] and r['norms_ok'] and r['rep_ok']) else ' '
+        row_mark = 'x' if (r['models_ok'] and r['counts_ok'] and r['norms_ok'] and r['rep_ok'] and r['zenodo_ok']) else ' '
         lines.append(
             f"| [{row_mark}] | {r['code']} | {r['name']} | "
             f"[{check(r['models_ok'])}] {r['n_models']}/60 | "
             f"{counts_cell(r)} | "
-            f"{norms_cell(r)} | {rep_cell(r)} |"
+            f"{norms_cell(r)} | {rep_cell(r)} | {zenodo_cell(r)} |"
         )
     lines.append('')
     return '\n'.join(lines)
 
 
 if __name__ == '__main__':
-    rows = [build_row(lang) for lang in languages]
+    zenodo_versions = load_zenodo_versions()
+    rows = [build_row(lang, zenodo_versions) for lang in languages]
     md = build_markdown(rows)
     outpath = os.path.join(basedir, 'progress_tracker.md')
     with open(outpath, 'w') as f:

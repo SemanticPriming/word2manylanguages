@@ -69,6 +69,14 @@ DOIS_CSV = os.path.join(HERE, "zenodo_dois.csv")
 COUNTS_DOIS_CSV = os.path.join(HERE, "zenodo_counts_dois.csv")
 REPO_URL = "https://github.com/SemanticPriming/word2manylanguages"
 
+
+def _log(msg):
+    """Timestamped, always-flushed progress print -- large model files can
+    take minutes per upload, so every progress line is stamped with a
+    wall-clock time (not just relative order) to make it obvious whether
+    the process is still moving or has stalled."""
+    print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
 API = "https://zenodo.org/api"
 
 # Stay well under Zenodo's documented limits (100 files/record, 50GB/record)
@@ -162,7 +170,7 @@ def _retry(fn, description):
         except Exception as e:
             if attempt == MAX_RETRIES:
                 raise
-            print(f"  {description} failed (attempt {attempt}/{MAX_RETRIES}): {e} -- retrying in {delay}s")
+            _log(f"  {description} failed (attempt {attempt}/{MAX_RETRIES}): {e} -- retrying in {delay}s")
             time.sleep(delay)
             delay *= 2
 
@@ -279,18 +287,21 @@ def _discard_draft(deposit_id):
     try:
         requests.delete(f"{API}/deposit/depositions/{deposit_id}", headers=_headers())
     except Exception as e:
-        print(f"  warning: failed to discard draft {deposit_id} after error -- clean it up manually: {e}")
+        _log(f"  warning: failed to discard draft {deposit_id} after error -- clean it up manually: {e}")
 
 
 def _clear_files(deposit):
     """New-version drafts inherit the old published files by default (Zenodo's
     own documented behavior) -- must delete before uploading replacements."""
     r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit['id']}/files", headers=_headers()), "list draft files")
-    for f in r.json():
+    files = r.json()
+    _log(f"  clearing {len(files)} inherited file(s) from draft...")
+    for f in files:
         _retry(
             lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers()),
             f"delete old file {f['filename']}",
         )
+        _log(f"  deleted old file {f['filename']}")
 
 
 def _upload_spec(bucket_url, spec, chunk_dir):
@@ -303,6 +314,7 @@ def _upload_spec(bucket_url, spec, chunk_dir):
     """
     path = materialize_chunk(spec, chunk_dir)
     local_md5 = _md5(path)
+    _log(f"  uploading {spec.name} ({spec.size/1e6:.0f}MB)...")
 
     def do_put():
         with open(path, "rb") as fp:
@@ -315,7 +327,7 @@ def _upload_spec(bucket_url, spec, chunk_dir):
             remote_md5 = remote_md5[len("md5:"):]
         if remote_md5 != local_md5:
             raise RuntimeError(f"checksum mismatch for {spec.name}: local={local_md5} remote={remote_md5} -- upload landed corrupted")
-        print(f"  uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB)")
+        _log(f"  uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB)")
     finally:
         if spec.offset is not None:  # only clean up materialized chunks, never the original source file
             path.unlink(missing_ok=True)
@@ -333,7 +345,7 @@ def _append_dois_csv(csv_path, rows):
         if not file_exists:
             writer.writeheader()
         writer.writerows(rows)
-    print(f"Appended {len(rows)} row(s) to {csv_path}")
+    _log(f"Appended {len(rows)} row(s) to {csv_path}")
 
 
 def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata):
@@ -343,7 +355,7 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
         _upload_spec(bucket_url, spec, chunk_dir)
     published = _publish(deposit["id"])
     doi = published["doi"]
-    print(f"Published {language} {version} part {part}: {doi}")
+    _log(f"Published {language} {version} part {part}: {doi}")
     return doi
 
 
@@ -359,7 +371,7 @@ def upload_batch_as_new_version(language, version, part, batch, chunk_dir, exist
         _discard_draft(deposit["id"])
         raise
     doi = published["doi"]
-    print(f"Published new version of {language} {version} part {part}: {doi}")
+    _log(f"Published new version of {language} {version} part {part}: {doi}")
     return doi
 
 
@@ -451,9 +463,11 @@ def sync_language(language, version, models_dir, dry_run=False):
     needs_new_record = any(i not in existing for i in range(1, len(batches) + 1))
     reference_metadata = _reference_metadata() if needs_new_record else {}
 
-    new_rows = []
     for i, batch in enumerate(batches, start=1):
         part = i
+        if len(batches) > 1:
+            total_bytes = sum(s.size for s in batch)
+            _log(f"--- Part {part}/{len(batches)}: {len(batch)} file(s), {total_bytes/1e9:.2f}GB ---")
         zenodo_version = _next_zenodo_version_for(DOIS_CSV, language, version, part)
         if part in existing:
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
@@ -476,7 +490,14 @@ def sync_language(language, version, models_dir, dry_run=False):
                 "keywords": [*reference_metadata.get("keywords", []), f"opensubtitles-{version}"],
             }
             doi = upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata)
-        new_rows.extend(logical_rows_for_batch(language, version, part, batch, doi, zenodo_version))
+        # Written immediately, part-by-part, rather than accumulated and
+        # appended once at the end -- so if a later part fails (network
+        # error, crash, Zenodo 500...), this part's row is already on disk.
+        # A rerun's existing_records_for() then correctly sees this part as
+        # already published instead of re-creating a duplicate record for
+        # it (see sync_language's docstring / this module's docstring on
+        # the "publish a correction" resume flow).
+        _append_dois_csv(DOIS_CSV, logical_rows_for_batch(language, version, part, batch, doi, zenodo_version))
 
     extra_old_parts = set(existing) - set(range(1, len(batches) + 1))
     if extra_old_parts:
@@ -486,8 +507,6 @@ def sync_language(language, version, models_dir, dry_run=False):
             f"doesn't support deleting published records). Decide by hand whether to leave them or "
             f"note the change in their description."
         )
-
-    _append_dois_csv(DOIS_CSV, new_rows)
 
     if chunk_dir.exists():
         chunk_dir.rmdir()  # _upload_spec cleans up each chunk right after its upload; this just removes the now-empty dir
@@ -557,9 +576,11 @@ def sync_all_counts(counts_dir, dry_run=False):
     needs_new_record = any(i not in existing for i in range(1, len(batches) + 1))
     reference_metadata = _reference_metadata() if needs_new_record else {}
 
-    new_rows = []
     for i, batch in enumerate(batches, start=1):
         part = i
+        if len(batches) > 1:
+            total_bytes = sum(s.size for s in batch)
+            _log(f"--- Part {part}/{len(batches)}: {len(batch)} file(s), {total_bytes/1e6:.2f}MB ---")
         zenodo_version = _next_zenodo_version_for(COUNTS_DOIS_CSV, bk_language, bk_version, part)
         if part in existing:
             doi = upload_batch_as_new_version(bk_language, bk_version, part, batch, chunk_dir, existing[part])
@@ -583,11 +604,13 @@ def sync_all_counts(counts_dir, dry_run=False):
                 "keywords": [*reference_metadata.get("keywords", []), "frequency-counts"],
             }
             doi = upload_batch_as_new_record(bk_language, bk_version, part, batch, chunk_dir, metadata)
+        # Written immediately, part-by-part -- see the matching comment in
+        # sync_language for why (resume correctness after a mid-run failure).
+        part_rows = []
         for spec in batch:
             lang, version = _parse_counts_filename(spec.name)
-            new_rows.append({"language": lang, "version": version, "part": part, "file": spec.name, "doi": doi, "zenodo_version": zenodo_version})
-
-    _append_dois_csv(COUNTS_DOIS_CSV, new_rows)
+            part_rows.append({"language": lang, "version": version, "part": part, "file": spec.name, "doi": doi, "zenodo_version": zenodo_version})
+        _append_dois_csv(COUNTS_DOIS_CSV, part_rows)
 
     if chunk_dir.exists():
         chunk_dir.rmdir()
