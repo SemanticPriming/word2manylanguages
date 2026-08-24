@@ -269,18 +269,39 @@ norms_encoding_overrides = {
 
 # A few (lang, dataset) pairs have word column(s) that don't match any of
 # load_extended_norms()'s generic 'word'/'word_{language}'[_simple/_uk]
-# guesses -- these two Arabic norms files use dialect/variant-specific
-# names instead (confirmed by inspecting their headers directly). Boukadi2016
-# has two independent Arabic word-form columns (the word as originally
-# intended vs. the modal/most-common response given for it) -- both are
-# real, distinct word lists worth evaluating separately rather than
-# picking just one, so each gets its own entry (see load_extended_norms's
-# per-candidate loop) with a suffixed label so results stay distinguishable.
+# guesses -- confirmed by inspecting each file's header directly. Each
+# candidate is (wordcol, label, col_suffix):
+#   - label: None for a file with only one usable word column (used as-is);
+#     a short string when a file has multiple independent word lists worth
+#     evaluating separately (appended to the dataset name so results stay
+#     distinguishable, e.g. Boukadi2016.csv:intended vs. :modal).
+#   - col_suffix: None to use every catalog-selected column for this file
+#     (the normal case: one word list, several measures over the same
+#     words); a suffix string when a file's independent word lists each
+#     pair with their own disjoint measure columns (Smolka2018's prime/
+#     target word lists have separate aoa_mean_prime/aoa_mean_target
+#     columns -- pairing the prime word list with target-suffixed columns,
+#     or vice versa, would silently join the wrong words to the wrong
+#     values) -- only columns ending in this suffix are kept for that
+#     candidate.
 word_column_overrides = {
-    ('ar', 'Rami2022.csv'): [('word_arabic_moroccan', None)],
+    ('ar', 'Rami2022.csv'): [('word_arabic_moroccan', None, None)],
     ('ar', 'Boukadi2016.csv'): [
-        ('word_arabic_intended', 'intended'),
-        ('word_arabic_modal', 'modal'),
+        ('word_arabic_intended', 'intended', None),
+        ('word_arabic_modal', 'modal', None),
+    ],
+    # Citron2016.csv's only word column is word_idiom_german -- deliberately
+    # left unmapped (not skipped by mistake): these are multi-word idioms,
+    # not single words, so they don't belong in this single-word embedding
+    # evaluation regardless of column-name resolution.
+    #
+    # Primarily French/Polish stimulus sets; only their German-translation
+    # column is usable for lang='de'.
+    ('de', 'Quadflieg2014.csv'): [('translate_word_german', None, None)],
+    ('de', 'Riegel2015.csv'): [('translate_word_german', None, None)],
+    ('de', 'Smolka2018.csv'): [
+        ('word_german_prime', 'prime', '_prime'),
+        ('word_german_target', 'target', '_target'),
     ],
 }
 
@@ -321,7 +342,7 @@ def load_extended_norms(lang):
             if (lang, langfile) in word_column_overrides:
                 candidates = word_column_overrides[(lang, langfile)]
             elif 'word' in check:
-                candidates = [('word', None)]
+                candidates = [('word', None, None)]
             else:
                 wordcol = 'word_' + langname
                 if wordcol not in check:
@@ -336,13 +357,14 @@ def load_extended_norms(lang):
                             if candidate in check:
                                 wordcol = candidate
                                 break
-                candidates = [(wordcol, None)]
+                candidates = [(wordcol, None, None)]
 
             # Catalog already tells us exactly which mean columns this
             # dataset/language pair has -- just select them.
-            cols = [c for c in dict.fromkeys(group['variable_original']) if c in check]
+            all_cols = [c for c in dict.fromkeys(group['variable_original']) if c in check]
 
-            for wordcol, label in candidates:
+            for wordcol, label, col_suffix in candidates:
+                cols = [c for c in all_cols if c.endswith(col_suffix)] if col_suffix else all_cols
                 if wordcol not in check or not cols:
                     # Unlike every other skip path in this file (load_model,
                     # load_count_freqs), this used to continue with no printed

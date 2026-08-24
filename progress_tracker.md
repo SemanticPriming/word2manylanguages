@@ -2,25 +2,25 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 23.6% (53/225 items complete)**
+**Overall: 24.0% (54/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 2335/3540
-- Counts eval model-results written: 544/2335
-- Norms eval model-results written: 361/1255
-- Replication eval model-results written: 4/326
+- Model files trained: 2337/3540
+- Counts eval model-results written: 551/2337
+- Norms eval model-results written: 371/1257
+- Replication eval model-results written: 11/326
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 38/59
 - Counts eval complete: 9/59
-- Norms eval complete: 5/35
+- Norms eval complete: 6/35
 - Replication eval complete: 0/13
 - Zenodo upload at target version: 1/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
 |---|---|---|---|---|---|---|---|
 | [x] | af | Afrikaans | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v3 |
-| [ ] | ar | Arabic | [x] 60/60 | [x] 1/1 | [ ] 0/1 | n/a | [ ] v2 |
+| [ ] | ar | Arabic | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | bg | Bulgarian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | bn | Bengali | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | br | Breton | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
@@ -67,7 +67,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | sl | Slovenian | [ ] 0/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | sq | Albanian | [ ] 0/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | sr | Serbian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
-| [ ] | sv | Swedish | [ ] 29/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
+| [ ] | sv | Swedish | [ ] 31/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | ta | Tamil | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | te | Telugu | [ ] 0/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | th | Thai | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |

@@ -32,7 +32,7 @@ LANGUAGE_SEQUENCES = [
 LANGUAGE_SEQUENCES.sort(key=lambda t: -len(t))
 
 WORD_PREFIXES = [
-    'translate_word_', 'translation_word_', 'translated_word_',
+    'translate_word_', 'translated_word_',
     'paired_word_', 'word_',
 ]
 
@@ -242,12 +242,12 @@ for fname in files:
     for col in measurement_cols:
         low = col.lower()
         tokens = low.split('_')
-        # "word_aoa_mean" / "translation_concrete_mean" (Prior2007 pairs-style
-        # files): word_/translation_ here is a qualifier (primary item vs.
+        # "word_aoa_mean" / "translate_concrete_mean" (Prior2007 pairs-style
+        # files): word_/translate_ here is a qualifier (primary item vs.
         # its translation), not a language tag or part of the concept name.
         # Strip it if the remainder parses to a real mean-suffixed concept.
         qualifier = None
-        if len(tokens) > 2 and tokens[0] in ('word', 'translation'):
+        if len(tokens) > 2 and tokens[0] in ('word', 'translate'):
             cand_concept, cand_stat, _ = split_stat(tokens[1:])
             if cand_stat and normalize_concept(cand_concept, cand_stat) is not None:
                 qualifier = tokens[0]

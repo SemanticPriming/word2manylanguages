@@ -151,20 +151,25 @@ def build_row(lang, zenodo_versions):
     models = existing_models(lang)
     n_models = len(models)
     model_names = {m[:-len('_wxd.csv')] for m in models}
+    # Eval coverage can only be "complete" once all 60 target models exist --
+    # otherwise evaluating just the handful trained so far (e.g. 11/60) would
+    # trivially satisfy "every existing model is scored" and misleadingly
+    # show as done while 49 models haven't even been trained yet.
+    models_ok = n_models == 60
 
     counts_csv = os.path.join(evaldir, 'counts', f'{lang}_eval.csv')
     counts_done = eval_sources(counts_csv)
-    counts_ok = n_models > 0 and model_names <= counts_done
+    counts_ok = models_ok and n_models > 0 and model_names <= counts_done
 
     norms_needed = needs_norms(lang)
     norms_csv = os.path.join(evaldir, 'norms', f'{lang}_eval.csv')
     norms_done = eval_sources(norms_csv) if norms_needed else set()
-    norms_ok = (not norms_needed) or (n_models > 0 and model_names <= norms_done)
+    norms_ok = (not norms_needed) or (models_ok and n_models > 0 and model_names <= norms_done)
 
     rep_needed = needs_replication(lang)
     rep_csv = os.path.join(evaldir, 'replication', f'{lang}_eval.csv')
     rep_done = eval_sources(rep_csv) if rep_needed else set()
-    rep_ok = (not rep_needed) or (n_models > 0 and model_names <= rep_done)
+    rep_ok = (not rep_needed) or (models_ok and n_models > 0 and model_names <= rep_done)
 
     target = zenodo_target_version.get(lang, zenodo_target_version['_default'])
     zenodo_ok = zenodo_versions.get(lang, 0) >= target
@@ -173,7 +178,7 @@ def build_row(lang, zenodo_versions):
         'code': lang,
         'name': display_names[lang],
         'n_models': n_models,
-        'models_ok': n_models == 60,
+        'models_ok': models_ok,
         'counts_done': len(counts_done),
         'counts_ok': counts_ok,
         'norms_needed': norms_needed,
