@@ -279,48 +279,102 @@ def _new_version(existing_record_id):
     return r2.json()
 
 
-def _discard_draft(deposit_id):
-    """Best-effort delete of an unpublished version draft -- called when a
-    later step in upload_batch_as_new_version fails, so a crash doesn't
-    leave an orphaned draft blocking the next newversion call (see
-    zenodo_dois.csv / DOI-history note above; this bit us once already)."""
-    try:
-        requests.delete(f"{API}/deposit/depositions/{deposit_id}", headers=_headers())
-    except Exception as e:
-        _log(f"  warning: failed to discard draft {deposit_id} after error -- clean it up manually: {e}")
+def _list_draft_depositions():
+    r = _retry(
+        lambda: requests.get(f"{API}/deposit/depositions", headers=_headers(), params={"size": 100, "status": "draft"}),
+        "list draft depositions",
+    )
+    return r.json()
 
 
-def _clear_files(deposit):
-    """New-version drafts inherit the old published files by default (Zenodo's
-    own documented behavior) -- must delete before uploading replacements."""
+def _fetch_deposit(deposit_id):
+    """The list endpoint (_list_draft_depositions) returns abbreviated
+    records missing several fields the rest of this module relies on --
+    notably links.bucket -- present only when fetching a single deposit by
+    id. Always re-fetch a match from the list before using it as a
+    deposit."""
+    r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit_id}", headers=_headers()), "fetch deposit")
+    return r.json()
+
+
+def _find_pending_version_draft(conceptrecid):
+    """
+    An unpublished newversion draft that already exists for this concept --
+    from a prior attempt that got interrupted (timeout, Ctrl+C, crash)
+    before publishing. Large files fail partway through often enough that
+    just discarding and starting over every time wastes real upload time
+    (tens of GB re-sent for nothing); finding this lets the caller resume
+    into the same draft and skip whatever already landed instead.
+    """
+    for d in _list_draft_depositions():
+        if d.get("conceptrecid") == conceptrecid:
+            return _fetch_deposit(d["id"])
+    return None
+
+
+def _find_pending_new_record_draft(title):
+    """Same idea as _find_pending_version_draft, but for a brand-new record
+    that has no prior published version (and so no conceptrecid) to key on
+    yet -- title is the only stable anchor available before the first
+    publish. conceptdoi only appears once a concept has been published at
+    least once, so its absence confirms this is a first-version draft."""
+    for d in _list_draft_depositions():
+        if not d.get("conceptdoi") and d["metadata"].get("title") == title:
+            return d
+    return None
+
+
+def _remove_stale_draft_files(deposit, keep_names):
+    """
+    Deletes any file currently in the draft whose name isn't part of the
+    batch being uploaded -- covers both a new-version draft's inherited old
+    published files (Zenodo copies these into every fresh draft) and any
+    leftover chunk from a previous attempt that used different chunk
+    boundaries. Returns {filename: md5} for everything that's left (i.e.
+    already legitimately present), so the caller can skip re-uploading
+    whatever already matches.
+    """
     r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit['id']}/files", headers=_headers()), "list draft files")
     files = r.json()
-    _log(f"  clearing {len(files)} inherited file(s) from draft...")
+    kept = {}
     for f in files:
-        _retry(
-            lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers()),
-            f"delete old file {f['filename']}",
-        )
-        _log(f"  deleted old file {f['filename']}")
+        if f["filename"] in keep_names:
+            checksum = f.get("checksum", "")
+            kept[f["filename"]] = checksum[len("md5:"):] if checksum.startswith("md5:") else checksum
+        else:
+            _retry(
+                lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers()),
+                f"delete stale file {f['filename']}",
+            )
+            _log(f"  deleted stale file {f['filename']}")
+    return kept
 
 
-def _upload_spec(bucket_url, spec, chunk_dir):
+def _upload_spec(bucket_url, spec, chunk_dir, already_uploaded=None):
     """
     Materializes a ChunkSpec to disk only if needed (a whole file needs no
     copy), uploads it, verifies its checksum, then immediately deletes the
     materialized chunk (not the original source file) -- so at most one
     chunk's worth of temp data exists on disk at a time, regardless of how
     large the language's full model set is.
+
+    `already_uploaded` ({filename: md5}, from _remove_stale_draft_files) is
+    checked before uploading -- if this exact file already landed correctly
+    in a prior attempt at this same draft, skip re-sending it entirely.
     """
     path = materialize_chunk(spec, chunk_dir)
-    local_md5 = _md5(path)
-    _log(f"  uploading {spec.name} ({spec.size/1e6:.0f}MB)...")
-
-    def do_put():
-        with open(path, "rb") as fp:
-            return requests.put(f"{bucket_url}/{spec.name}", data=fp, headers=_headers())
-
     try:
+        local_md5 = _md5(path)
+        if (already_uploaded or {}).get(spec.name) == local_md5:
+            _log(f"  already uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB) -- skipping")
+            return
+
+        _log(f"  uploading {spec.name} ({spec.size/1e6:.0f}MB)...")
+
+        def do_put():
+            with open(path, "rb") as fp:
+                return requests.put(f"{bucket_url}/{spec.name}", data=fp, headers=_headers())
+
         r = _retry(do_put, f"upload {spec.name}")
         remote_md5 = r.json().get("checksum", "")
         if remote_md5.startswith("md5:"):
@@ -349,10 +403,19 @@ def _append_dois_csv(csv_path, rows):
 
 
 def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata):
-    deposit = _create_record(metadata)
+    target_names = {s.name for s in batch}
+    pending = _find_pending_new_record_draft(metadata["title"])
+    if pending:
+        _log(f"  found pending draft {pending['id']} for {language} part {part} -- resuming it (large uploads can time out partway through)")
+        deposit = pending
+        already_uploaded = _remove_stale_draft_files(deposit, target_names)
+    else:
+        deposit = _fetch_deposit(_create_record(metadata)["id"])
+        already_uploaded = {}
+
     bucket_url = deposit["links"]["bucket"]
     for spec in batch:
-        _upload_spec(bucket_url, spec, chunk_dir)
+        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
     published = _publish(deposit["id"])
     doi = published["doi"]
     _log(f"Published {language} {version} part {part}: {doi}")
@@ -360,16 +423,24 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
 
 
 def upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing_record_id):
-    deposit = _new_version(existing_record_id)
-    try:
-        _clear_files(deposit)
-        bucket_url = deposit["links"]["bucket"]
-        for spec in batch:
-            _upload_spec(bucket_url, spec, chunk_dir)
-        published = _publish(deposit["id"])
-    except Exception:
-        _discard_draft(deposit["id"])
-        raise
+    target_names = {s.name for s in batch}
+    conceptrecid = _retry(
+        lambda: requests.get(f"{API}/deposit/depositions/{existing_record_id}", headers=_headers()),
+        "fetch record for conceptrecid",
+    ).json()["conceptrecid"]
+    pending = _find_pending_version_draft(conceptrecid)
+    if pending:
+        _log(f"  found pending draft {pending['id']} for {language} part {part} -- resuming it (large uploads can time out partway through)")
+        deposit = pending
+        already_uploaded = _remove_stale_draft_files(deposit, target_names)
+    else:
+        deposit = _fetch_deposit(_new_version(existing_record_id)["id"])
+        already_uploaded = _remove_stale_draft_files(deposit, target_names)  # clears Zenodo's inherited-old-files copy
+
+    bucket_url = deposit["links"]["bucket"]
+    for spec in batch:
+        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
+    published = _publish(deposit["id"])
     doi = published["doi"]
     _log(f"Published new version of {language} {version} part {part}: {doi}")
     return doi
