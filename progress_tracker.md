@@ -2,19 +2,19 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 24.9% (56/225 items complete)**
+**Overall: 28.9% (65/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 2366/3540
-- Counts eval model-results written: 640/2366
-- Norms eval model-results written: 431/1286
-- Replication eval model-results written: 11/350
+- Model files trained: 2378/3540
+- Counts eval model-results written: 965/2378
+- Norms eval model-results written: 553/1298
+- Replication eval model-results written: 133/362
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 38/59
-- Counts eval complete: 10/59
-- Norms eval complete: 7/35
-- Replication eval complete: 0/13
+- Counts eval complete: 15/59
+- Norms eval complete: 9/35
+- Replication eval complete: 2/13
 - Zenodo upload at target version: 1/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
@@ -31,12 +31,12 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | de | German | [ ] 13/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | el | Greek | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | en | English | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
-| [ ] | eo | Esperanto | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
+| [ ] | eo | Esperanto | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | es | Spanish | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
-| [ ] | et | Estonian | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
-| [ ] | eu | Basque | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
-| [ ] | fa | Farsi | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
-| [ ] | fi | Finnish | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | et | Estonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
+| [ ] | eu | Basque | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
+| [ ] | fa | Farsi | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
+| [ ] | fi | Finnish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [ ] | fr | French | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | gl | Galician | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | he | Hebrew | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
@@ -55,7 +55,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | lv | Latvian | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | mk | Macedonian | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
 | [ ] | ml | Malayalam | [x] 60/60 | [ ] 0/1 | n/a | n/a | [ ] v2 |
-| [ ] | ms | Malay | [ ] 37/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | ms | Malay | [ ] 49/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | nl | Dutch | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | no | Norwegian | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | pl | Polish | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |

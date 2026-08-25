@@ -307,7 +307,13 @@ def _find_pending_version_draft(conceptrecid):
     into the same draft and skip whatever already landed instead.
     """
     for d in _list_draft_depositions():
-        if d.get("conceptrecid") == conceptrecid:
+        # Zenodo's status=draft filter on the list endpoint isn't reliable --
+        # it can include a concept's already-published record (state='done',
+        # submitted=True) alongside genuine unpublished drafts. A published
+        # record's bucket is read-only, so treating it as resumable causes a
+        # 403 on every upload into it -- state must be checked explicitly
+        # rather than trusting the query param alone.
+        if d.get("conceptrecid") == conceptrecid and d.get("state") == "unsubmitted":
             return _fetch_deposit(d["id"])
     return None
 
@@ -319,8 +325,10 @@ def _find_pending_new_record_draft(title):
     publish. conceptdoi only appears once a concept has been published at
     least once, so its absence confirms this is a first-version draft."""
     for d in _list_draft_depositions():
-        if not d.get("conceptdoi") and d["metadata"].get("title") == title:
-            return d
+        # Same defensive state check as _find_pending_version_draft -- see
+        # its comment.
+        if d.get("state") == "unsubmitted" and not d.get("conceptdoi") and d["metadata"].get("title") == title:
+            return _fetch_deposit(d["id"])
     return None
 
 
