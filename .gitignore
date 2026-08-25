@@ -60,6 +60,17 @@ __pycache__/
 # "{filename}.{etag}.part.minio" while downloading, then renames on completion
 *.part.minio
 
+# in-progress rsync transfers: rsync -P writes to a hidden ".<filename>.<random>"
+# temp file in the destination dir, then renames on completion. These have
+# leaked into git before (e.g. a 147MB partial model file), so ignore them
+# in the rsync-synced download dirs, keeping only .gitkeep tracked.
+/models/.*
+!/models/.gitkeep
+/raw/.*
+!/raw/.gitkeep
+/preprocessed/.*
+/corpora/.*
+
 # downloaded/trained models are large and re-downloadable (see download/README.md);
 # keep just one small one tracked as a worked example, matching raw/'s pattern.
 # build_models() writes .csv.bz2 directly; .csv is ignored too as a safety net
