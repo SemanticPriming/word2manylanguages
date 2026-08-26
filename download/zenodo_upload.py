@@ -247,15 +247,28 @@ def batch_for_records(specs):
     Groups ChunkSpecs into batches that each fit under MAX_FILES_PER_RECORD
     and MAX_BYTES_PER_RECORD -- one batch per Zenodo record needed. Pure,
     no I/O.
+
+    An oversized source file's chunks (consecutive specs sharing the same
+    source_path, from plan_chunks) are kept together in one batch rather
+    than allowed to fall across a batch boundary -- a model file shouldn't
+    end up split across two different Zenodo records.
     """
+    groups = []
+    for spec in specs:
+        if groups and groups[-1][0].source_path == spec.source_path:
+            groups[-1].append(spec)
+        else:
+            groups.append([spec])
+
     batches = []
     current, current_bytes = [], 0
-    for spec in specs:
-        if current and (len(current) >= MAX_FILES_PER_RECORD or current_bytes + spec.size > MAX_BYTES_PER_RECORD):
+    for group in groups:
+        group_bytes = sum(s.size for s in group)
+        if current and (len(current) + len(group) > MAX_FILES_PER_RECORD or current_bytes + group_bytes > MAX_BYTES_PER_RECORD):
             batches.append(current)
             current, current_bytes = [], 0
-        current.append(spec)
-        current_bytes += spec.size
+        current.extend(group)
+        current_bytes += group_bytes
     if current:
         batches.append(current)
     return batches
