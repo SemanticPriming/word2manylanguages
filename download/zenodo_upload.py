@@ -69,6 +69,13 @@ DOIS_CSV = os.path.join(HERE, "zenodo_dois.csv")
 COUNTS_DOIS_CSV = os.path.join(HERE, "zenodo_counts_dois.csv")
 REPO_URL = "https://github.com/SemanticPriming/word2manylanguages"
 
+# Uploaded alongside any record that ends up containing split "_part_aa"/...
+# chunks, so downloaders who grab the record straight from Zenodo's web UI
+# (not via zenodo_download.py, which reassembles chunks itself) still have
+# instructions + a tool to recombine them.
+CHUNKER_ASSETS_DIR = Path(HERE) / "zenodo"
+CHUNKER_ASSET_NAMES = ("README.md", "FileChunker.ps1")
+
 
 def _log(msg):
     """Timestamped, always-flushed progress print -- large model files can
@@ -274,6 +281,20 @@ def batch_for_records(specs):
     return batches
 
 
+def _batch_has_chunks(batch):
+    return any(spec.offset is not None for spec in batch)
+
+
+def _chunker_asset_specs():
+    """Whole-file ChunkSpecs for the recombine README + FileChunker.ps1 --
+    same shape as a plan_chunks() output so they can go through
+    _upload_spec unchanged."""
+    return [
+        ChunkSpec(name, (CHUNKER_ASSETS_DIR / name).stat().st_size, CHUNKER_ASSETS_DIR / name, None)
+        for name in CHUNKER_ASSET_NAMES
+    ]
+
+
 def _create_record(metadata):
     r = _retry(
         lambda: requests.post(f"{API}/deposit/depositions", json={"metadata": metadata}, headers=_headers(json=True)),
@@ -424,7 +445,8 @@ def _append_dois_csv(csv_path, rows):
 
 
 def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata):
-    target_names = {s.name for s in batch}
+    chunker_specs = _chunker_asset_specs() if _batch_has_chunks(batch) else []
+    target_names = {s.name for s in batch} | {s.name for s in chunker_specs}
     pending = _find_pending_new_record_draft(metadata["title"])
     if pending:
         _log(f"  found pending draft {pending['id']} for {language} part {part} -- resuming it (large uploads can time out partway through)")
@@ -437,6 +459,8 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
     bucket_url = deposit["links"]["bucket"]
     for spec in batch:
         _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
+    for spec in chunker_specs:
+        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
     published = _publish(deposit["id"])
     doi = published["doi"]
     _log(f"Published {language} {version} part {part}: {doi}")
@@ -444,7 +468,8 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
 
 
 def upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing_record_id):
-    target_names = {s.name for s in batch}
+    chunker_specs = _chunker_asset_specs() if _batch_has_chunks(batch) else []
+    target_names = {s.name for s in batch} | {s.name for s in chunker_specs}
     conceptrecid = _retry(
         lambda: requests.get(f"{API}/deposit/depositions/{existing_record_id}", headers=_headers()),
         "fetch record for conceptrecid",
@@ -460,6 +485,8 @@ def upload_batch_as_new_version(language, version, part, batch, chunk_dir, exist
 
     bucket_url = deposit["links"]["bucket"]
     for spec in batch:
+        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
+    for spec in chunker_specs:
         _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
     published = _publish(deposit["id"])
     doi = published["doi"]
@@ -567,13 +594,21 @@ def sync_language(language, version, models_dir, dry_run=False):
             title = f"word2manylanguages: {language} Word2Vec embeddings ({version} corpus)"
             if len(batches) > 1:
                 title += f" Part {part}"
+            description = (
+                f"Word2Vec word embeddings for '{language}', trained on the {version} "
+                f"OpenSubtitles + Wikipedia corpus. See {REPO_URL} for the full pipeline."
+            )
+            if _batch_has_chunks(batch):
+                description += (
+                    " Some files here exceeded Zenodo's reliable single-upload size and were "
+                    "split into '<file>_part_aa', '_part_ab', ... pieces -- see the included "
+                    "README.md for how to recombine them (macOS/Linux: `cat <file>_part_* > "
+                    "<file>`; Windows: the included FileChunker.ps1)."
+                )
             metadata = {
                 "upload_type": "dataset",
                 "title": title,
-                "description": (
-                    f"Word2Vec word embeddings for '{language}', trained on the {version} "
-                    f"OpenSubtitles + Wikipedia corpus. See {REPO_URL} for the full pipeline."
-                ),
+                "description": description,
                 "access_right": "open",
                 **reference_metadata,
                 # Marks corpus vintage as a queryable field, not just prose in the
