@@ -77,24 +77,52 @@ CHUNKER_ASSETS_DIR = Path(HERE) / "zenodo"
 CHUNKER_ASSET_NAMES = ("README.md", "FileChunker.ps1")
 
 
+LOG_PATH = os.path.join(HERE, "zenodo_upload.log")
+
+
 def _log(msg):
     """Timestamped, always-flushed progress print -- large model files can
     take minutes per upload, so every progress line is stamped with a
     wall-clock time (not just relative order) to make it obvious whether
-    the process is still moving or has stalled."""
-    print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+    the process is still moving or has stalled. Also appended to LOG_PATH
+    (opened fresh each call, not held open) so a notebook kernel reset or
+    crash doesn't lose the run's history -- needed to diagnose recurring
+    502s/stalls across multiple resumed attempts, not just the current
+    notebook output."""
+    line = f"[{time.strftime('%H:%M:%S')}] {msg}"
+    print(line, flush=True)
+    with open(LOG_PATH, "a") as f:
+        f.write(line + "\n")
 
 API = "https://zenodo.org/api"
 
 # Stay well under Zenodo's documented limits (100 files/record, 50GB/record)
 # -- and well under the rough few-GB-per-request point where uploads have
 # been unreliable in practice, not a precisely diagnosed threshold.
-CHUNK_BYTES = int(1.5 * 1000**3)          # 1.5GB (decimal) max per uploaded file/chunk
-MAX_FILES_PER_RECORD = 90                 # Zenodo caps at 100; leave headroom
+CHUNK_BYTES = int(0.5 * 1000**3)          # 500MB (decimal) max per uploaded file/chunk -- lowered from
+                                           # 1.5GB after observing 502s/stalls around the ~1GB mark on a
+                                           # slow/unstable uplink (~20Mbps, high latency under sustained load)
+MAX_FILES_PER_RECORD = 100                # Zenodo's hard cap; no headroom left
 MAX_BYTES_PER_RECORD = int(45 * 1000**3)  # Zenodo caps at 50GB (decimal); leave headroom
 
 MAX_RETRIES = 5
 RETRY_BACKOFF_SECONDS = 5  # doubles each retry: 5, 10, 20, 40, 80s
+
+# (connect timeout, read timeout) applied to every request. Without this,
+# requests has NO default timeout -- a stalled connection (server or
+# network just stops responding mid-transfer, sends no more bytes either
+# way) hangs indefinitely instead of raising, which is why a single upload
+# attempt was observed sitting silent for 48 minutes before finally
+# surfacing as a 502. 120s read timeout means a genuine stall gets caught
+# and retried within ~2 minutes instead of the better part of an hour;
+# it's a per-socket-read/write timeout, not a cap on total upload
+# duration, so a slow-but-still-moving transfer isn't affected by it.
+REQUEST_TIMEOUT = (15, 120)
+
+# How often (seconds) an in-progress upload logs bytes-sent-so-far -- lets
+# a running upload's progress be read off stdout/LOG_PATH instead of just
+# seeing "uploading..." and then silence until it finishes or fails.
+UPLOAD_PROGRESS_INTERVAL_SECONDS = 20
 
 # A known-good already-published record (af, 2018, part 1) whose boilerplate
 # metadata -- creators, license, communities, related_identifiers, version
@@ -139,7 +167,7 @@ def _reference_metadata():
         return _reference_metadata_cache
 
     record_id = os.environ.get("ZENODO_REFERENCE_RECORD", REFERENCE_RECORD_ID)
-    r = _retry(lambda: requests.get(f"{API}/records/{record_id}"), "fetch reference record metadata")
+    r = _retry(lambda: requests.get(f"{API}/records/{record_id}", timeout=REQUEST_TIMEOUT), "fetch reference record metadata")
     m = r.json()["metadata"]
 
     boilerplate = {}
@@ -161,12 +189,32 @@ def _reference_metadata():
     return boilerplate
 
 
+def _describe_error(e):
+    """Appends the HTTP response body (truncated) to an exception's message
+    when available -- requests' default str(e) for an HTTPError gives only
+    the status line (e.g. "502 Server Error: Bad Gateway"), which isn't
+    enough to tell a real Zenodo-side 502 apart from, say, a proxy/CDN
+    timeout page or a connection reset -- useful when diagnosing a pattern
+    of failures after the fact from LOG_PATH."""
+    resp = getattr(e, "response", None)
+    if resp is None:
+        return str(e)
+    try:
+        body = resp.text[:300]
+    except Exception:
+        body = "<unreadable body>"
+    return f"{e} | body: {body!r}"
+
+
 def _retry(fn, description):
     """
     Calls fn() (a zero-arg callable making one HTTP request), retrying on
     any exception or non-2xx response with exponential backoff. Re-raises
     the last error if every attempt fails -- callers should treat that as
-    "did not land," never silently swallow it.
+    "did not land," never silently swallow it. Every attempt, including the
+    final failure, is logged (via _log, so it's in LOG_PATH too) -- so a
+    run that dies can still be diagnosed afterward instead of just showing
+    a bare traceback in the notebook.
     """
     delay = RETRY_BACKOFF_SECONDS
     for attempt in range(1, MAX_RETRIES + 1):
@@ -176,8 +224,9 @@ def _retry(fn, description):
             return r
         except Exception as e:
             if attempt == MAX_RETRIES:
+                _log(f"  {description} failed (attempt {attempt}/{MAX_RETRIES}): {_describe_error(e)} -- giving up")
                 raise
-            _log(f"  {description} failed (attempt {attempt}/{MAX_RETRIES}): {e} -- retrying in {delay}s")
+            _log(f"  {description} failed (attempt {attempt}/{MAX_RETRIES}): {_describe_error(e)} -- retrying in {delay}s")
             time.sleep(delay)
             delay *= 2
 
@@ -297,7 +346,7 @@ def _chunker_asset_specs():
 
 def _create_record(metadata):
     r = _retry(
-        lambda: requests.post(f"{API}/deposit/depositions", json={"metadata": metadata}, headers=_headers(json=True)),
+        lambda: requests.post(f"{API}/deposit/depositions", json={"metadata": metadata}, headers=_headers(json=True), timeout=REQUEST_TIMEOUT),
         "create deposit",
     )
     return r.json()
@@ -305,17 +354,17 @@ def _create_record(metadata):
 
 def _new_version(existing_record_id):
     r = _retry(
-        lambda: requests.post(f"{API}/deposit/depositions/{existing_record_id}/actions/newversion", headers=_headers()),
+        lambda: requests.post(f"{API}/deposit/depositions/{existing_record_id}/actions/newversion", headers=_headers(), timeout=REQUEST_TIMEOUT),
         "create new version",
     )
     latest_draft_url = r.json()["links"]["latest_draft"]
-    r2 = _retry(lambda: requests.get(latest_draft_url, headers=_headers()), "fetch new draft")
+    r2 = _retry(lambda: requests.get(latest_draft_url, headers=_headers(), timeout=REQUEST_TIMEOUT), "fetch new draft")
     return r2.json()
 
 
 def _list_draft_depositions():
     r = _retry(
-        lambda: requests.get(f"{API}/deposit/depositions", headers=_headers(), params={"size": 100, "status": "draft"}),
+        lambda: requests.get(f"{API}/deposit/depositions", headers=_headers(), params={"size": 100, "status": "draft"}, timeout=REQUEST_TIMEOUT),
         "list draft depositions",
     )
     return r.json()
@@ -327,7 +376,7 @@ def _fetch_deposit(deposit_id):
     notably links.bucket -- present only when fetching a single deposit by
     id. Always re-fetch a match from the list before using it as a
     deposit."""
-    r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit_id}", headers=_headers()), "fetch deposit")
+    r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit_id}", headers=_headers(), timeout=REQUEST_TIMEOUT), "fetch deposit")
     return r.json()
 
 
@@ -376,7 +425,7 @@ def _remove_stale_draft_files(deposit, keep_names):
     already legitimately present), so the caller can skip re-uploading
     whatever already matches.
     """
-    r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit['id']}/files", headers=_headers()), "list draft files")
+    r = _retry(lambda: requests.get(f"{API}/deposit/depositions/{deposit['id']}/files", headers=_headers(), timeout=REQUEST_TIMEOUT), "list draft files")
     files = r.json()
     kept = {}
     for f in files:
@@ -385,14 +434,60 @@ def _remove_stale_draft_files(deposit, keep_names):
             kept[f["filename"]] = checksum[len("md5:"):] if checksum.startswith("md5:") else checksum
         else:
             _retry(
-                lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers()),
+                lambda f=f: requests.delete(f"{API}/deposit/depositions/{deposit['id']}/files/{f['id']}", headers=_headers(), timeout=REQUEST_TIMEOUT),
                 f"delete stale file {f['filename']}",
             )
             _log(f"  deleted stale file {f['filename']}")
     return kept
 
 
-def _upload_spec(bucket_url, spec, chunk_dir, already_uploaded=None):
+class _ProgressReader:
+    """
+    Wraps an open file object so requests streams it through .read() as
+    usual, but every call to read() also checks whether
+    UPLOAD_PROGRESS_INTERVAL_SECONDS has elapsed since the last progress
+    log and, if so, logs bytes-sent-so-far and current speed. This is the
+    only way to see movement *during* a single PUT -- previously a chunk
+    logged once before uploading and once after, so a stalled request
+    (observed once hanging 48 minutes before finally 502ing) produced no
+    output at all in between, making it impossible to tell whether it was
+    still moving or already dead. Retried automatically on failure (a new
+    _ProgressReader/file handle is created per attempt by the caller), so
+    this only ever reports one attempt's progress, not a cumulative total
+    across retries.
+    """
+
+    def __init__(self, fp, name, total_size):
+        self.fp = fp
+        self.name = name
+        self.total_size = total_size
+        self.bytes_read = 0
+        self.start = time.monotonic()
+        self.last_log = self.start
+
+    def read(self, size=-1):
+        chunk = self.fp.read(size)
+        self.bytes_read += len(chunk)
+        now = time.monotonic()
+        if now - self.last_log >= UPLOAD_PROGRESS_INTERVAL_SECONDS and self.bytes_read < self.total_size:
+            elapsed = now - self.start
+            speed = (self.bytes_read / 1e6) / elapsed if elapsed > 0 else 0
+            pct = 100 * self.bytes_read / self.total_size if self.total_size else 100
+            _log(f"    ...{self.name}: {self.bytes_read/1e6:.0f}/{self.total_size/1e6:.0f}MB ({pct:.0f}%) at {speed:.1f}MB/s")
+            self.last_log = now
+        return chunk
+
+    def __len__(self):
+        # Read once by requests' super_len() before any reads happen, to
+        # set the Content-Length header -- must be the file's full size,
+        # not remaining bytes.
+        return self.total_size
+
+    def __getattr__(self, attr):
+        return getattr(self.fp, attr)
+
+
+def _upload_spec(bucket_url, spec, chunk_dir, already_uploaded=None, progress=None):
     """
     Materializes a ChunkSpec to disk only if needed (a whole file needs no
     copy), uploads it, verifies its checksum, then immediately deletes the
@@ -403,34 +498,45 @@ def _upload_spec(bucket_url, spec, chunk_dir, already_uploaded=None):
     `already_uploaded` ({filename: md5}, from _remove_stale_draft_files) is
     checked before uploading -- if this exact file already landed correctly
     in a prior attempt at this same draft, skip re-sending it entirely.
+
+    `progress`, if given, is a (index, total, bytes_done, bytes_total)
+    tuple -- purely for the log lines below (how far into the current
+    record's batch this chunk is, by count and by bytes), so a run's speed
+    and remaining work can be read off LOG_PATH/stdout without guessing
+    from file names alone.
     """
+    tag = f" [{progress[0]}/{progress[1]}, {progress[2]/1e9:.2f}/{progress[3]/1e9:.2f}GB]" if progress else ""
     path = materialize_chunk(spec, chunk_dir)
     try:
         local_md5 = _md5(path)
         if (already_uploaded or {}).get(spec.name) == local_md5:
-            _log(f"  already uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB) -- skipping")
+            _log(f"  already uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB){tag} -- skipping")
             return
 
-        _log(f"  uploading {spec.name} ({spec.size/1e6:.0f}MB)...")
+        _log(f"  uploading {spec.name} ({spec.size/1e6:.0f}MB){tag}...")
 
         def do_put():
             with open(path, "rb") as fp:
-                return requests.put(f"{bucket_url}/{spec.name}", data=fp, headers=_headers())
+                reader = _ProgressReader(fp, spec.name, spec.size)
+                return requests.put(f"{bucket_url}/{spec.name}", data=reader, headers=_headers(), timeout=REQUEST_TIMEOUT)
 
+        start = time.monotonic()
         r = _retry(do_put, f"upload {spec.name}")
+        elapsed = max(time.monotonic() - start, 1e-9)
+        speed_mbps = (spec.size / 1e6) / elapsed
         remote_md5 = r.json().get("checksum", "")
         if remote_md5.startswith("md5:"):
             remote_md5 = remote_md5[len("md5:"):]
         if remote_md5 != local_md5:
             raise RuntimeError(f"checksum mismatch for {spec.name}: local={local_md5} remote={remote_md5} -- upload landed corrupted")
-        _log(f"  uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB)")
+        _log(f"  uploaded + verified {spec.name} ({spec.size/1e6:.0f}MB){tag} in {elapsed:.0f}s ({speed_mbps:.1f}MB/s)")
     finally:
         if spec.offset is not None:  # only clean up materialized chunks, never the original source file
             path.unlink(missing_ok=True)
 
 
 def _publish(deposit_id):
-    r = _retry(lambda: requests.post(f"{API}/deposit/depositions/{deposit_id}/actions/publish", headers=_headers()), "publish")
+    r = _retry(lambda: requests.post(f"{API}/deposit/depositions/{deposit_id}/actions/publish", headers=_headers(), timeout=REQUEST_TIMEOUT), "publish")
     return r.json()
 
 
@@ -442,6 +548,25 @@ def _append_dois_csv(csv_path, rows):
             writer.writeheader()
         writer.writerows(rows)
     _log(f"Appended {len(rows)} row(s) to {csv_path}")
+
+
+def _deposit_html_link(deposit):
+    """The draft's editable-in-browser URL, so a long-running upload's
+    progress can be checked/watched on Zenodo's site while it's still going."""
+    return deposit["links"].get("html", f"{API}/deposit/{deposit['id']}")
+
+
+def _upload_all(bucket_url, specs, chunk_dir, already_uploaded):
+    """Uploads every spec in order, passing each one its (index, total,
+    bytes_done, bytes_total) position within this full list (batch +
+    chunker assets combined) so _upload_spec's log lines show overall
+    progress through the current record, not just a per-file status."""
+    total = len(specs)
+    total_bytes = sum(s.size for s in specs)
+    bytes_done = 0
+    for i, spec in enumerate(specs, start=1):
+        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded, progress=(i, total, bytes_done, total_bytes))
+        bytes_done += spec.size
 
 
 def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metadata):
@@ -456,11 +581,9 @@ def upload_batch_as_new_record(language, version, part, batch, chunk_dir, metada
         deposit = _fetch_deposit(_create_record(metadata)["id"])
         already_uploaded = {}
 
+    _log(f"  draft: {_deposit_html_link(deposit)}")
     bucket_url = deposit["links"]["bucket"]
-    for spec in batch:
-        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
-    for spec in chunker_specs:
-        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
+    _upload_all(bucket_url, batch + chunker_specs, chunk_dir, already_uploaded)
     published = _publish(deposit["id"])
     doi = published["doi"]
     _log(f"Published {language} {version} part {part}: {doi}")
@@ -471,7 +594,7 @@ def upload_batch_as_new_version(language, version, part, batch, chunk_dir, exist
     chunker_specs = _chunker_asset_specs() if _batch_has_chunks(batch) else []
     target_names = {s.name for s in batch} | {s.name for s in chunker_specs}
     conceptrecid = _retry(
-        lambda: requests.get(f"{API}/deposit/depositions/{existing_record_id}", headers=_headers()),
+        lambda: requests.get(f"{API}/deposit/depositions/{existing_record_id}", headers=_headers(), timeout=REQUEST_TIMEOUT),
         "fetch record for conceptrecid",
     ).json()["conceptrecid"]
     pending = _find_pending_version_draft(conceptrecid)
@@ -483,11 +606,9 @@ def upload_batch_as_new_version(language, version, part, batch, chunk_dir, exist
         deposit = _fetch_deposit(_new_version(existing_record_id)["id"])
         already_uploaded = _remove_stale_draft_files(deposit, target_names)  # clears Zenodo's inherited-old-files copy
 
+    _log(f"  draft: {_deposit_html_link(deposit)}")
     bucket_url = deposit["links"]["bucket"]
-    for spec in batch:
-        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
-    for spec in chunker_specs:
-        _upload_spec(bucket_url, spec, chunk_dir, already_uploaded)
+    _upload_all(bucket_url, batch + chunker_specs, chunk_dir, already_uploaded)
     published = _publish(deposit["id"])
     doi = published["doi"]
     _log(f"Published new version of {language} {version} part {part}: {doi}")
