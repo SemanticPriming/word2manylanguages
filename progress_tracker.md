@@ -2,27 +2,27 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 54.2% (122/225 items complete)**
+**Overall: 55.1% (124/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 3076/3540
-- Counts eval model-results written: 2786/3076
-- Norms eval model-results written: 1284/1636
-- Replication eval model-results written: 383/490
+- Model files trained: 3078/3540
+- Counts eval model-results written: 2786/3078
+- Norms eval model-results written: 1284/1638
+- Replication eval model-results written: 383/494
 
 Language-level completion (all applicable model-results present for that language):
-- Models complete (60/60): 49/59
+- Models complete (60/60): 50/59
 - Counts eval complete: 43/59
 - Norms eval complete: 19/35
 - Replication eval complete: 5/13
-- Zenodo upload at target version: 6/59
+- Zenodo upload at target version: 7/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
 |---|---|---|---|---|---|---|---|
 | [x] | af | Afrikaans | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v3 |
 | [x] | ar | Arabic | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | bg | Bulgarian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
-| [ ] | bn | Bengali | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
+| [x] | bn | Bengali | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | br | Breton | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [ ] | bs | Bosnian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | ca | Catalan | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
@@ -37,17 +37,17 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | eu | Basque | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | fa | Farsi | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [ ] | fi | Finnish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
-| [ ] | fr | French | [ ] 12/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | fr | French | [ ] 14/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | gl | Galician | [x] 60/60 | [x] 1/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | he | Hebrew | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | hi | Hindi | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | hr | Croatian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
-| [ ] | hu | Hungarian | [ ] 21/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
+| [ ] | hu | Hungarian | [ ] 17/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | hy | Armenian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | id | Indonesian | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [ ] | is | Icelandic | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | it | Italian | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
-| [ ] | ja | Japanese | [ ] 45/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
+| [ ] | ja | Japanese | [ ] 47/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | ka | Georgian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | kk | Kazakh | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | ko | Korean | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
@@ -56,7 +56,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | mk | Macedonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | ml | Malayalam | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | ms | Malay | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
-| [ ] | nl | Dutch | [ ] 58/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | nl | Dutch | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [ ] | no | Norwegian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
 | [ ] | pl | Polish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [ ] | pt | Portuguese | [ ] 0/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
