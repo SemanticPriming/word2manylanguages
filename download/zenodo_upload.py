@@ -308,6 +308,13 @@ def batch_for_records(specs):
     source_path, from plan_chunks) are kept together in one batch rather
     than allowed to fall across a batch boundary -- a model file shouldn't
     end up split across two different Zenodo records.
+
+    Any batch containing a chunked file also gets 2 more files appended
+    later (the README.md/FileChunker.ps1 recombine assets -- see
+    _batch_has_chunks/_chunker_asset_specs), so such a batch's file count is
+    capped at MAX_FILES_PER_RECORD - 2, not MAX_FILES_PER_RECORD, or that
+    later append can push a batch that filled to exactly the cap over
+    Zenodo's hard per-record file limit.
     """
     groups = []
     for spec in specs:
@@ -316,15 +323,20 @@ def batch_for_records(specs):
         else:
             groups.append([spec])
 
+    chunker_asset_count = len(CHUNKER_ASSET_NAMES)
+
     batches = []
-    current, current_bytes = [], 0
+    current, current_bytes, current_has_chunks = [], 0, False
     for group in groups:
         group_bytes = sum(s.size for s in group)
-        if current and (len(current) + len(group) > MAX_FILES_PER_RECORD or current_bytes + group_bytes > MAX_BYTES_PER_RECORD):
+        group_has_chunks = any(s.offset is not None for s in group)
+        effective_max_files = MAX_FILES_PER_RECORD - chunker_asset_count if (current_has_chunks or group_has_chunks) else MAX_FILES_PER_RECORD
+        if current and (len(current) + len(group) > effective_max_files or current_bytes + group_bytes > MAX_BYTES_PER_RECORD):
             batches.append(current)
-            current, current_bytes = [], 0
+            current, current_bytes, current_has_chunks = [], 0, False
         current.extend(group)
         current_bytes += group_bytes
+        current_has_chunks = current_has_chunks or group_has_chunks
     if current:
         batches.append(current)
     return batches
