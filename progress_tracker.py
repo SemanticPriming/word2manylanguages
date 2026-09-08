@@ -38,7 +38,7 @@ code2lang = {
     'hy': 'armenian', 'id': 'indonesian', 'is': 'icelandic', 'it': 'italian',
     'ja': 'japanese', 'ka': 'georgian', 'kk': 'kazakh', 'ko': 'korean',
     'lt': 'lithuanian', 'lv': 'latvian', 'mk': 'macedonian',
-    'ml': 'malayalam', 'ms': 'maylay', 'nl': 'dutch', 'no': 'norwegian',
+    'ml': 'malayalam', 'ms': 'malay', 'nl': 'dutch', 'no': 'norwegian',
     'pl': 'polish', 'pt': 'portuguese', 'ro': 'romanian', 'ru': 'russian',
     'si': 'sinhalese', 'sk': 'slovak', 'sl': 'slovenian', 'sq': 'albanian',
     'sr': 'serbian', 'sv': 'swedish', 'ta': 'tamil', 'te': 'telugu',
@@ -54,7 +54,6 @@ zenodo_target_version = {'_default': 2, 'af': 3}
 
 lang_aliases = {
     'farsi': {'farsi', 'persian'},
-    'maylay': {'maylay', 'malay'},
     'chinese': {'chinese', 'chinese_simplified', 'chinese_traditional'},
 }
 
