@@ -31,9 +31,23 @@ LANGUAGE_SEQUENCES = [
 ]
 LANGUAGE_SEQUENCES.sort(key=lambda t: -len(t))
 
+# Prefixes that mark a column as actually holding words that were RATED in
+# that language. 'paired_word_' is a second item list with its own
+# language-suffixed rating columns (e.g. DeLima2021's paired_word_swahili
+# alongside familiar_mean_portuguese); 'word_' is the primary list.
 WORD_PREFIXES = [
-    'translate_word_', 'translated_word_',
     'paired_word_', 'word_',
+]
+
+# 'translate_word_'/'translated_word_' columns are a gloss for the primary
+# word only (a human-readable translation for reference) -- the ratings in
+# these files were never collected on the gloss-language word itself, so a
+# dataset like AlvarezMosquera2026 (word_galician + translate_word_english)
+# has NO English ratings despite the English gloss column. These must not
+# be folded into `language` the way WORD_PREFIXES languages are; tracked
+# separately as `translation_language` instead. See conversation history.
+GLOSS_PREFIXES = [
+    'translate_word_', 'translated_word_',
 ]
 
 STAT_WORDS = {
@@ -171,8 +185,8 @@ def match_language(tokens, start):
     return None, None
 
 
-def find_word_column(col_lower):
-    for prefix in WORD_PREFIXES:
+def _find_prefixed_language(col_lower, prefixes):
+    for prefix in prefixes:
         if col_lower.startswith(prefix):
             rest = col_lower[len(prefix):]
             tokens = rest.split('_') if rest else []
@@ -182,8 +196,16 @@ def find_word_column(col_lower):
                 lang, _ = match_language(tokens, i)
                 if lang:
                     return lang
-            return None  # word_-prefixed but not a recognized language (e.g. word_class)
+            return None  # prefixed but not a recognized language (e.g. word_class)
     return None
+
+
+def find_word_column(col_lower):
+    return _find_prefixed_language(col_lower, WORD_PREFIXES)
+
+
+def find_gloss_column(col_lower):
+    return _find_prefixed_language(col_lower, GLOSS_PREFIXES)
 
 
 def find_language_in_tokens(tokens):
@@ -222,6 +244,7 @@ for fname in files:
     cols = [c.strip().strip('"') for c in header.split(',') if c.strip()]
 
     file_languages = []
+    gloss_languages = []
     measurement_cols = []
     for col in cols:
         low = col.lower()
@@ -229,7 +252,19 @@ for fname in files:
         if lang:
             if lang not in file_languages:
                 file_languages.append(lang)
-        elif any(low.startswith(p) for p in WORD_PREFIXES):
+            continue
+        gloss_lang = find_gloss_column(low)
+        if gloss_lang:
+            # A translate_word_/translated_word_ column is a human-readable
+            # gloss of the primary word, not a second set of rated items --
+            # ratings in this file were never collected on this language's
+            # word, so it must not be folded into `language` (see
+            # AlvarezMosquera2026: word_galician + translate_word_english
+            # has ONLY Galician ratings despite the English gloss column).
+            if gloss_lang not in gloss_languages:
+                gloss_languages.append(gloss_lang)
+            continue
+        if any(low.startswith(p) for p in WORD_PREFIXES + GLOSS_PREFIXES):
             # word_-prefixed but not a language (e.g. word_class, word_aoa_mean)
             measurement_cols.append(col)
         else:
@@ -238,6 +273,7 @@ for fname in files:
     default_lang = file_languages[0] if len(file_languages) == 1 else (
         '|'.join(file_languages) if file_languages else ''
     )
+    translation_language = '|'.join(gloss_languages)
 
     for col in measurement_cols:
         low = col.lower()
@@ -281,6 +317,7 @@ for fname in files:
         rows.append({
             'dataset': fname,
             'language': row_lang,
+            'translation_language': translation_language,
             'variable_normed': variable_normed,
             'variable_stat': variable_stat,
             'variable_stat_group': variable_stat_group,
@@ -289,8 +326,8 @@ for fname in files:
 
 with open(OUT, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=[
-        'dataset', 'language', 'variable_normed', 'variable_stat',
-        'variable_stat_group', 'variable_original'
+        'dataset', 'language', 'translation_language', 'variable_normed',
+        'variable_stat', 'variable_stat_group', 'variable_original'
     ])
     writer.writeheader()
     writer.writerows(rows)

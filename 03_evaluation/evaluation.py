@@ -514,14 +514,21 @@ def append_scores(outfile, scores):
 
 def load_done_combos(outfile):
     """
-    Returns the set of (source, normalized) model/normalization combos already
-    written to outfile, so a run that quit partway through can pick back up
-    instead of redoing (or skipping) an entire language.
+    Returns the set of (source, normalized, dataset) combos already written
+    to outfile, so a run that quit partway through -- or a catalog that
+    gained a new dataset file after this language was already evaluated --
+    can pick back up instead of redoing finished work or, worse, silently
+    never backfilling the new dataset into model configs that were already
+    marked complete before it existed. Tracking 'dataset' alongside
+    'source'/'normalized' (not just the model/normalization pair) is what
+    makes that backfill possible: see conversation history for the bug this
+    fixed (SelviBalo2020 landing in only 1 of 60 tr_eval.csv configs after
+    being added to the norms catalog post-hoc).
     """
     if not os.path.exists(outfile):
         return set()
-    existing = pd.read_csv(outfile, usecols=['source', 'normalized'])
-    return set(zip(existing['source'], existing['normalized']))
+    existing = pd.read_csv(outfile, usecols=['source', 'normalized', 'dataset'])
+    return set(zip(existing['source'], existing['normalized'], existing['dataset']))
 
 # Main driver: one pass per language, one model load per configuration
 def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
@@ -531,9 +538,11 @@ def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
     both the raw vectors and L2-normalized vectors, to compare the two --
     writing results to one output file per evaluation type as each model
     finishes, before moving on to the next model. Already-completed
-    model/normalization combos (per output file) are skipped, so a run that
-    got interrupted partway through a language resumes where it left off
-    instead of redoing finished work or being skipped entirely.
+    model/normalization/dataset combos (per output file) are skipped, so a
+    run that got interrupted partway through a language resumes where it
+    left off, and a dataset added to the catalog after a model config was
+    already fully evaluated gets backfilled into that config instead of
+    being silently skipped forever (see load_done_combos()).
 
     `lang` is always the bare two-letter code (norms/replication ground
     truth has no corpus-vintage concept, and code2lang only has bare-code
@@ -562,21 +571,35 @@ def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
     extended_norms = load_extended_norms(lang)
     count_freqs = load_count_freqs(lang, version=version)
 
+    # Names of every dataset file currently expected for this language/type
+    # -- used to detect "this model config is on record, but a dataset that
+    # exists NOW wasn't there when it ran" (a new file added to the catalog
+    # since), not just "this config was never run at all".
+    replication_names = {name for name, _ in replication_norms}
+    norms_names = {name for name, _ in extended_norms}
+    counts_names = {name for name, _ in count_freqs}
+
     done_replication = load_done_combos(replication_out) if replication_norms else set()
     done_norms = load_done_combos(norms_out) if extended_norms else set()
     done_counts = load_done_combos(counts_out) if count_freqs else set()
+
+    def missing_datasets(done, names, base_file_name, normalized):
+        return [n for n in names if (base_file_name, normalized, n) not in done]
 
     for dim in dimension_list:
         for win in window_list:
             for alg in algo_list:
                 base_file_name = f'{subs_key}_{dim}_{win}_{alg}'
 
-                # Skip loading this model entirely if every combo it would
-                # produce is already recorded in every relevant output file.
+                # Skip loading this model entirely only if every dataset
+                # currently in the catalog already has a recorded row for
+                # every relevant output file -- so a dataset added to the
+                # catalog after this config was last evaluated still gets
+                # backfilled instead of the whole config being skipped.
                 work_remaining = any(
-                    (replication_norms and (base_file_name, normalized) not in done_replication) or
-                    (extended_norms and (base_file_name, normalized) not in done_norms) or
-                    (count_freqs and (base_file_name, normalized) not in done_counts)
+                    missing_datasets(done_replication, replication_names, base_file_name, normalized) or
+                    missing_datasets(done_norms, norms_names, base_file_name, normalized) or
+                    missing_datasets(done_counts, counts_names, base_file_name, normalized)
                     for normalized in (False, True)
                 )
                 if not work_remaining:
@@ -588,34 +611,39 @@ def evaluate_language(lang, version='2018', alpha=1.0, overwrite=False):
                 print(f'Evaluating model {base_file_name}')
 
                 for normalized in (False, True):
-                    key = (base_file_name, normalized)
                     vectors = normalize_vectors(raw_vectors) if normalized else raw_vectors
                     wordsXdims = pd.DataFrame(vectors)
                     wordsXdims.set_index(words, inplace=True)
 
-                    if replication_norms and key not in done_replication:
-                        scores = evaluate_replication(wordsXdims, replication_norms, alpha)
+                    todo_replication = missing_datasets(done_replication, replication_names, base_file_name, normalized)
+                    if todo_replication:
+                        subset = [(n, df) for n, df in replication_norms if n in todo_replication]
+                        scores = evaluate_replication(wordsXdims, subset, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             scores['version'] = version
                             append_scores(replication_out, scores)
-                        done_replication.add(key)
+                        done_replication.update((base_file_name, normalized, n) for n in todo_replication)
 
-                    if extended_norms and key not in done_norms:
-                        scores = evaluate_norms(wordsXdims, extended_norms, alpha)
+                    todo_norms = missing_datasets(done_norms, norms_names, base_file_name, normalized)
+                    if todo_norms:
+                        subset = [(n, df) for n, df in extended_norms if n in todo_norms]
+                        scores = evaluate_norms(wordsXdims, subset, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             scores['version'] = version
                             append_scores(norms_out, scores)
-                        done_norms.add(key)
+                        done_norms.update((base_file_name, normalized, n) for n in todo_norms)
 
-                    if count_freqs and key not in done_counts:
-                        scores = evaluate_counts(wordsXdims, count_freqs, alpha)
+                    todo_counts = missing_datasets(done_counts, counts_names, base_file_name, normalized)
+                    if todo_counts:
+                        subset = [(n, df) for n, df in count_freqs if n in todo_counts]
+                        scores = evaluate_counts(wordsXdims, subset, alpha)
                         if scores is not None:
                             scores['source'] = base_file_name
                             scores['normalized'] = normalized
                             scores['version'] = version
                             append_scores(counts_out, scores)
-                        done_counts.add(key)
+                        done_counts.update((base_file_name, normalized, n) for n in todo_counts)
