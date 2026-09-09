@@ -124,3 +124,4 @@ temp.md
 # timing/rsa/predictive CSVs and the generated report are the actual
 # evidence this experiment exists to produce; keep those tracked.
 /experiments/fasttext_vs_word2vec/models/
+corpora/corpus-en.txt.zst
