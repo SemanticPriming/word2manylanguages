@@ -12,8 +12,8 @@ language = "en"   # subs_key -- 'en' for 2018 vintage
 
 # shrink to just the configs you need (comment out / edit as needed)
 mt.dimension_list = [50]        # subset of 50/100/200/300/500
-mt.window_list = [1]            # subset of 1-6
-mt.algo_list = ['cbow']         # subset of cbow/sg
+mt.window_list = [3]            # subset of 1-6
+mt.algo_list = ['cbow', 'sg']   # subset of cbow/sg
 
 # mt.workers = os.cpu_count() - 1  # default; override if you want to cap it
 

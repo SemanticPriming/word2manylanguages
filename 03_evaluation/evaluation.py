@@ -283,6 +283,13 @@ norms_encoding_overrides = {
 #     values) -- only columns ending in this suffix are kept for that
 #     candidate.
 word_column_overrides = {
+    # word_arabic_moroccan is encoded with Arabic Presentation Forms-B
+    # codepoints (U+FB50-FEFF isolated/contextual glyph shapes -- likely
+    # from a PDF/font copy-paste) instead of the standard Arabic block
+    # (U+0600-06FF) that embedding vocabularies use. These render
+    # identically but are different codepoints, so this used to produce
+    # zero overlap; load_extended_norms's NFKC normalization now converts
+    # them back to standard-form Arabic before matching.
     ('ar', 'Rami2022.csv'): [('word_arabic_moroccan', None, None)],
     ('ar', 'Boukadi2016.csv'): [
         ('word_arabic_intended', 'intended', None),
@@ -375,9 +382,17 @@ def load_extended_norms(lang):
 
                 variant = norms[[wordcol] + cols].copy()
                 variant.set_index(wordcol, inplace=True)
-                # lowercase to match load_model's casefolded vector words, so the
-                # join in predict() doesn't silently drop case-mismatched rows
-                variant.index = variant.index.str.casefold()
+                # NFKC-normalize before casefolding: some source files (e.g.
+                # Rami2022.csv's Arabic) encode words with compatibility
+                # codepoints -- Presentation Forms glyph variants that render
+                # identically to standard letters but are distinct
+                # codepoints -- which would otherwise never match the model
+                # vocabulary's standard-form words. NFKC is a no-op for
+                # already-standard text, so this doesn't affect other files.
+                # Then lowercase to match load_model's casefolded vector
+                # words, so the join in predict() doesn't silently drop
+                # case-mismatched rows.
+                variant.index = variant.index.str.normalize('NFKC').str.casefold()
                 variant_name = f'{langfile}:{label}' if label else langfile
                 loaded.append((variant_name, variant))
 
