@@ -300,6 +300,14 @@ word_column_overrides = {
     # not single words, so they don't belong in this single-word embedding
     # evaluation regardless of column-name resolution.
     #
+    # Bonin2021.csv's word_french column is entirely compound nouns/idioms
+    # (e.g. 'abaisse-langue', 'arc-en-ciel', 'accusé de réception') --
+    # deliberately left unmapped for the same reason as Citron2016 above.
+    # Corpus tokenization splits on both hyphens and spaces, so the model
+    # vocabulary never contains these as single tokens ('abaisse-langue'
+    # only ever appears as separate 'abaisse'/'langue' entries) -- 0/506
+    # words would match regardless of language or column-name resolution.
+    #
     # Primarily French/Polish stimulus sets; only their German-translation
     # column is usable for lang='de'.
     ('de', 'Quadflieg2014.csv'): [('translate_word_german', None, None)],
