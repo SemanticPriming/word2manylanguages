@@ -308,6 +308,17 @@ word_column_overrides = {
     # only ever appears as separate 'abaisse'/'langue' entries) -- 0/506
     # words would match regardless of language or column-name resolution.
     #
+    # Tabossi2011.csv's only word column is word_italian_idiom -- deliberately
+    # left unmapped for the same reason as Citron2016 above: multi-word
+    # idioms, not single words.
+    #
+    # DellAcqua2000_2.csv's only word column is word_italian -- the catalog
+    # also registers this file under language='french' (familiar_mean_french/
+    # aoa_mean_french), but those columns are French RATERS' judgments of the
+    # same Italian words, not ratings of French words -- there is no
+    # word_french column, so 'fr' can never be mapped here regardless of
+    # column-name resolution. Left unmapped deliberately.
+    #
     # Primarily French/Polish stimulus sets; only their German-translation
     # column is usable for lang='de'.
     ('de', 'Quadflieg2014.csv'): [('translate_word_german', None, None)],
@@ -316,6 +327,67 @@ word_column_overrides = {
         ('word_german_prime', 'prime', '_prime'),
         ('word_german_target', 'target', '_target'),
     ],
+    # word_english_loanword holds actual English words borrowed into
+    # Croatian; word_croatian_* are their three Croatian-side variants
+    # (rated in/out of context, and as an adapted spelling) -- each catalog
+    # value column is already suffixed to match exactly one of these, same
+    # pattern as Boukadi2016 above.
+    ('en', 'Bogunovic2024.csv'): [('word_english_loanword', None, None)],
+    ('hr', 'Bogunovic2024.csv'): [
+        ('word_croatian_incontext', 'incontext', '_croatian_incontext'),
+        ('word_croatian_outcontext', 'outcontext', '_croatian_outcontext'),
+        ('word_croatian_adaptedform', 'adaptedform', '_croatian_adaptedform'),
+    ],
+    # word_english_acronym holds single-token acronyms (e.g. 'nato', 'radar');
+    # Izura2012's word_english_phrase is each acronym's multi-word expansion
+    # (a gloss, not a rated word) -- excluded for the same reason as
+    # translate_word_* columns.
+    ('en', 'Bonin2015.csv'): [('word_english_acronym', None, None)],
+    ('en', 'Izura2012.csv'): [('word_english_acronym', None, None)],
+    # word_hebrew_modal_l1 / word_english_modal_l2 are disjoint word lists
+    # (L1 Hebrew naming responses vs. L2 English naming responses) whose
+    # catalog columns are already suffixed to match exactly one each, so no
+    # col_suffix filtering is needed.
+    ('he', 'Hirosh2025.csv'): [('word_hebrew_modal_l1', None, None)],
+    ('en', 'Hirosh2025.csv'): [('word_english_modal_l2', None, None)],
+    # word_english_us / word_english_gb are two spellings of the same
+    # picture-naming items (e.g. 'airplane'/'aeroplane') sharing one
+    # unsuffixed set of measure columns -- same shared-columns pattern as
+    # Boukadi2016's intended/modal split above.
+    ('en', 'Johnston2010.csv'): [
+        ('word_english_us', 'us', None),
+        ('word_english_gb', 'gb', None),
+    ],
+    # word_english_concept is the picture-naming target (single word);
+    # word_english_feature is a generated feature description (frequently
+    # multi-word, e.g. 'is_used_for_flying') with many rows per concept --
+    # not a word list at all, so left unmapped.
+    ('en', 'McRae2005.csv'): [('word_english_concept', None, None)],
+    ('en', 'Siew2025.csv'): [('word_english_singapore', None, None)],
+    # Header has a stray leading space on every column name
+    # (', word_english_name, count, ...'); skipinitialspace=True above
+    # strips it, but the resolved name still needs the '_name' suffix
+    # spelled out explicitly.
+    ('en', 'Zechmeister1975.csv'): [('word_english_name', None, None)],
+    # filename_english is an image filename, not a word; the real word list
+    # is word_french_modal_name (naming-task responses -- occasionally a
+    # multi-word phrase like 'billet de 50$', which simply won't match the
+    # single-token model vocabulary, same as any other unmatched word).
+    ('fr', 'Brodeur2012.csv'): [('word_french_modal_name', None, None)],
+    # word_japanese_katana is the native-script naming response (matches the
+    # corpus vocabulary's script); word_japanese_romanized is a romanized
+    # transliteration of the same word, not a separate word list.
+    ('ja', 'Nishimoto2012.csv'): [('word_japanese_katana', None, None)],
+    # word_thai_intended / word_thai_modal is the same intended/modal-
+    # response split as Boukadi2016's Arabic columns above.
+    ('th', 'Clarke2018.csv'): [
+        ('word_thai_intended', 'intended', None),
+        ('word_thai_modal', 'modal', None),
+    ],
+    # word_polish_cue is the picture/task prompt; the measures (aoa_mean
+    # etc.) vary across a cue's multiple word_polish_response rows, so
+    # they're rated on the response actually produced, not the cue.
+    ('pl', 'Wolna2023.csv'): [('word_polish_response', None, None)],
 }
 
 def load_extended_norms(lang):
@@ -344,7 +416,7 @@ def load_extended_norms(lang):
         try:
             encoding = norms_encoding_overrides.get(langfile, 'utf-8-sig')
             norms = pd.read_csv(datapath, sep=',', comment='#', na_values=['-', '–'],
-                                 encoding=encoding)
+                                 encoding=encoding, skipinitialspace=True)
 
             check = norms.columns
 
@@ -389,6 +461,14 @@ def load_extended_norms(lang):
                     continue
 
                 variant = norms[[wordcol] + cols].copy()
+                # Some files (e.g. McRae2005's concept/feature norms) repeat
+                # the same word across many rows with an identical value on
+                # this column (one row per elicited feature, not per word) --
+                # joining on that index as-is would attach the same vector to
+                # every repeat, giving that one word many times the weight of
+                # a single-occurrence word in cross-validation. Keep only the
+                # first occurrence per word.
+                variant.drop_duplicates(subset=[wordcol], inplace=True)
                 variant.set_index(wordcol, inplace=True)
                 # NFKC-normalize before casefolding: some source files (e.g.
                 # Rami2022.csv's Arabic) encode words with compatibility
