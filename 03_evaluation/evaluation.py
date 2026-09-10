@@ -529,9 +529,23 @@ def evaluate_counts(wordsXdims, count_freqs, alpha=1.0):
 
 # Write output incrementally, one file per language per evaluation type
 def append_scores(outfile, scores):
-    """Appends a scores dataframe to a per-language eval file, writing the header only once."""
+    """
+    Appends a scores dataframe to a per-language eval file, writing the
+    header only once. Reindexes to the file's existing on-disk column order
+    first (rather than trusting `scores`'s own column order) -- append with
+    header=False writes positionally, so if a future code change ever
+    reorders the columns a DataFrame is built with, appending it as-is would
+    silently write values under the wrong header names for every row after
+    that point, corrupting 'dataset' (and everything else) for
+    load_done_combos() without any error. See conversation history: this is
+    exactly what happened to el_eval.csv's Dimitripoulou2009.csv rows.
+    """
     os.makedirs(os.path.dirname(outfile), exist_ok=True)
     write_header = not os.path.exists(outfile)
+    if not write_header:
+        with open(outfile, 'r', encoding='utf-8') as f:
+            existing_header = f.readline().rstrip('\n').split(',')
+        scores = scores[existing_header]
     with open(outfile, 'a', encoding='utf-8') as f:
         scores.to_csv(f, mode='a', header=write_header, index=False)
 
