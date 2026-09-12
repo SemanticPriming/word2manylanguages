@@ -44,8 +44,7 @@ if os.path.exists(env_path):
 # per progress_tracker.md) but isn't yet at its target Zenodo version.
 # Edit freely: drop languages you don't want tonight, or add more once
 # their models finish.
-languages = [
-    "fr", "hu", "hy", "id", "is", "it", "ja", "ka", "kk", "ko", "lt", "lv",
+languages = ["it", "ja", "ka", "kk", "ko", "lt", "lv",
     "mk", "ml", "ms", "nl", "no", "pl", "pt", "ro", "ru", "si", "sk", "sl",
     "sq", "sv", "ta", "te", "th", "tr", "ur", "vi", "zh",
 ]
