@@ -64,15 +64,13 @@ def load_corpus(language):
     languages in _SEGMENTERS, which get real word segmentation instead (see
     _load_corpus_segmented).
 
-    build_models() calls this exactly once per language and reuses the
-    result across all up-to-60 (dim, window, algo) configs. The old
-    `sentences(language)` generator reopened and re-read the corpus file
-    from scratch for *every* build_vocab() and every train() call -- two
-    full-file passes per config, 120 total for a full sweep -- through a
-    slow per-line Python readline()/split() loop. A language's corpus is
-    small enough to hold in memory (a list of token lists) relative to the
-    300GB+ RAM this pipeline runs on, so read it once and hand the same
-    in-memory list to gensim every time instead.
+    Kept for the experiments/ comparison scripts (compare_lib.py) that still
+    want the full in-memory token lists for their own analysis. build_models()
+    itself no longer calls this -- it uses resolve_corpus_path() +
+    count_word_freq_from_path() + corpus_file training instead, since holding
+    a large language's whole corpus as a Python list-of-lists (English:
+    276M lines) can exceed available RAM on smaller boxes; see
+    resolve_corpus_path()'s docstring.
     """
     path_name = os.path.join(basedir, corpusdir, f'corpus-{language}.txt')
     base_lang = language.split('-')[0]
@@ -81,15 +79,15 @@ def load_corpus(language):
     with open(path_name, 'r', encoding='utf-8') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
 
-def _load_corpus_segmented(language, base_lang, path_name):
+def _ensure_segmented_cache(language, base_lang, path_name):
     """
     Segments corpus-{language}.txt with the real tokenizer for its script
     (see _SEGMENTERS) instead of whitespace, writing the segmented text to a
     sibling corpus-{language}-{suffix}.txt cache (see _CACHE_SUFFIX) the
     first time so repeat calls (e.g. re-running this notebook/experiment)
-    pay the segmentation cost once, not on every load_corpus() call -- a
-    real tokenizer over a multi-GB corpus is slow enough to matter, unlike
-    the cheap split(' ') path above.
+    pay the segmentation cost once, not on every load -- a real tokenizer
+    over a multi-GB corpus is slow enough to matter, unlike the cheap
+    split(' ') path above. Returns the cache path.
     """
     segment = _SEGMENTERS[base_lang]
     cache_path = os.path.join(basedir, corpusdir, f'corpus-{language}-{_CACHE_SUFFIX[base_lang]}.txt')
@@ -105,8 +103,29 @@ def _load_corpus_segmented(language, base_lang, path_name):
                     tokens = [w for w in segment(line.rstrip()) if w.strip()]
                     fout.write(' '.join(tokens) + '\n')
         os.replace(tmp_path, cache_path)
+    return cache_path
+
+def _load_corpus_segmented(language, base_lang, path_name):
+    cache_path = _ensure_segmented_cache(language, base_lang, path_name)
     with open(cache_path, 'r', encoding='utf-8') as f:
         return [[w for w in line.rstrip().split(' ') if len(w) > 0] for line in f]
+
+def resolve_corpus_path(language):
+    """
+    Returns the on-disk, whitespace-tokenized (LineSentence-format) path for
+    `language` -- the raw corpus-{language}.txt for languages that already
+    split on whitespace, or the segmented cache file (built if missing) for
+    languages in _SEGMENTERS. Used by build_models()/count_word_freq_from_path()
+    to train/count straight from disk via gensim's corpus_file interface
+    instead of materializing the whole corpus as a Python list-of-lists (see
+    build_models()'s docstring for why -- English alone is 15.8GB/276M lines
+    on disk, which as Python objects exceeds even a 125GB box).
+    """
+    path_name = os.path.join(basedir, corpusdir, f'corpus-{language}.txt')
+    base_lang = language.split('-')[0]
+    if base_lang in _SEGMENTERS:
+        return _ensure_segmented_cache(language, base_lang, path_name)
+    return path_name
 
 # Number of gensim training threads. Default leaves one core free for the OS/
 # Jupyter kernel itself; gensim's own default (3) badly underuses a large
@@ -131,16 +150,41 @@ def count_word_freq(corpus):
         word_freq.update(sentence)
     return dict(word_freq)
 
+def count_word_freq_from_path(path):
+    """
+    Same accounting as count_word_freq(), but streams `path` line-by-line
+    instead of requiring the whole corpus already materialized as a Python
+    list-of-lists -- used by build_models() so large corpora (English: 15.8GB
+    / 276M lines) never need to fit in RAM as Python objects, only as a
+    Counter over unique tokens. Returns (word_freq dict, corpus_count).
+    """
+    word_freq = Counter()
+    corpus_count = 0
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            tokens = [w for w in line.rstrip().split(' ') if len(w) > 0]
+            word_freq.update(tokens)
+            corpus_count += 1
+    return dict(word_freq), corpus_count
+
 # Build gensim models
-def vectorize_stream(corpus, word_freq, corpus_count, min_freq=5, dim=50, win=3, alg=0, family="word2vec"):
+def vectorize_stream(corpus_path, word_freq, corpus_count, min_freq=5, dim=50, win=3, alg=0, family="word2vec"):
     """
     Creates the word2vec or fasttext model using gensim (see `family`).
-    `corpus` is a pre-tokenized list of token lists, as returned by
-    load_corpus(); `word_freq`/`corpus_count` are count_word_freq()'s and
-    len(corpus)'s one-time results, passed in so every config seeds its
-    vocabulary from the precomputed table (build_vocab_from_freq) instead of
-    re-scanning the corpus itself (build_vocab) -- see count_word_freq()'s
+    `corpus_path` is a path to a whitespace-tokenized, one-sentence-per-line
+    file (gensim's LineSentence format), as returned by resolve_corpus_path();
+    `word_freq`/`corpus_count` are count_word_freq_from_path()'s one-time
+    results, passed in so every config seeds its vocabulary from the
+    precomputed table (build_vocab_from_freq) instead of re-scanning the
+    corpus itself (build_vocab) -- see count_word_freq_from_path()'s
     docstring.
+
+    Training reads directly from `corpus_path` via gensim's `corpus_file`
+    interface (memory-mapped and parallelized in C) rather than an in-memory
+    Python list -- for a corpus the size of English (276M lines), the
+    Python-object list previously used here regularly exceeded 125GB RSS and
+    got OOM-killed; corpus_file training uses a small, size-independent
+    footprint instead.
 
     `family` is "word2vec" (default, faster to train with equal-or-better
     predictive power -- see experiments/fasttext_vs_word2vec/REPORT.md) or
@@ -158,7 +202,11 @@ def vectorize_stream(corpus, word_freq, corpus_count, min_freq=5, dim=50, win=3,
     else:
         model = Word2Vec(**common_kwargs)
     model.build_vocab_from_freq(word_freq, corpus_count=corpus_count)
-    model.train(corpus_iterable=corpus, total_examples=corpus_count, epochs=10)
+    # gensim's corpus_file path requires total_words (raw token count), not
+    # total_examples (sentence count) -- sum of word_freq's per-word counts
+    # gives the same raw total that a full corpus scan would.
+    total_words = sum(word_freq.values())
+    model.train(corpus_file=corpus_path, total_examples=corpus_count, total_words=total_words, epochs=10)
 
     return model
 
@@ -192,11 +240,9 @@ def build_models(language, overwrite=False, family="word2vec"):
         print(f'All {len(configs)} configs for {language} already exist, and overwrite not specified. Skipping.')
         return
 
-    print(f"Loading {language} corpus.")
-    corpus = load_corpus(language)
-    print(f"Counting {language} vocabulary (once, reused across all configs).")
-    word_freq = count_word_freq(corpus)
-    corpus_count = len(corpus)
+    corpus_path = resolve_corpus_path(language)
+    print(f"Counting {language} vocabulary (once, reused across all configs, streamed from disk).")
+    word_freq, corpus_count = count_word_freq_from_path(corpus_path)
 
     for dim, win, alg in configs:
         base_file_name = f'{language}_{str(dim)}_{str(win)}_{alg}'
@@ -205,7 +251,7 @@ def build_models(language, overwrite=False, family="word2vec"):
             print(f'File {base_file_name}_wxd.csv.bz2 exists, and overwrite not specified. Skipping.');
         else:
             print("Building model " + base_file_name)
-            model = vectorize_stream(corpus, word_freq, corpus_count, 5, dim, win, alg, family)
+            model = vectorize_stream(corpus_path, word_freq, corpus_count, 5, dim, win, alg, family)
             #Write down the model?
             words=list(model.wv.key_to_index)
             wordsxdims = pd.DataFrame(model.wv[words],words)
