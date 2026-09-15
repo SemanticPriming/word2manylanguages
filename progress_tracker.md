@@ -6,9 +6,9 @@ Re-run `python progress_tracker.py` any time to refresh this file.
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
 - Model files trained: 3506/3540
-- Counts eval model-results written: 3503/3506
-- Norms eval model-results written: 2063/2066
-- Replication eval model-results written: 743/746
+- Counts eval model-results written: 3506/3506
+- Norms eval model-results written: 2066/2066
+- Replication eval model-results written: 746/746
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 57/59
