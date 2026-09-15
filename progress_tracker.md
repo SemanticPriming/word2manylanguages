@@ -2,20 +2,20 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 81.8% (184/225 items complete)**
+**Overall: 87.6% (197/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 3474/3540
-- Counts eval model-results written: 3430/3474
-- Norms eval model-results written: 1990/2034
-- Replication eval model-results written: 690/714
+- Model files trained: 3506/3540
+- Counts eval model-results written: 3503/3506
+- Norms eval model-results written: 2063/2066
+- Replication eval model-results written: 743/746
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 57/59
-- Counts eval complete: 56/59
-- Norms eval complete: 32/35
+- Counts eval complete: 57/59
+- Norms eval complete: 33/35
 - Replication eval complete: 11/13
-- Zenodo upload at target version: 28/59
+- Zenodo upload at target version: 39/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
 |---|---|---|---|---|---|---|---|
@@ -30,9 +30,9 @@ Language-level completion (all applicable model-results present for that languag
 | [x] | da | Danish | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | de | German | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | el | Greek | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
-| [ ] | en | English | [ ] 18/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | en | English | [ ] 32/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [x] | eo | Esperanto | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
-| [ ] | es | Spanish | [ ] 36/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | es | Spanish | [ ] 54/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [x] | et | Estonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | eu | Basque | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | fa | Farsi | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
@@ -46,17 +46,17 @@ Language-level completion (all applicable model-results present for that languag
 | [x] | hy | Armenian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | id | Indonesian | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | is | Icelandic | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
-| [ ] | it | Italian | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
-| [ ] | ja | Japanese | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
-| [ ] | ka | Georgian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | kk | Kazakh | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | ko | Korean | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | lt | Lithuanian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
-| [ ] | lv | Latvian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | mk | Macedonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | ml | Malayalam | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | ms | Malay | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
-| [ ] | nl | Dutch | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
+| [x] | it | Italian | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
+| [x] | ja | Japanese | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
+| [x] | ka | Georgian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | kk | Kazakh | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | ko | Korean | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | lt | Lithuanian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
+| [x] | lv | Latvian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | mk | Macedonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | ml | Malayalam | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
+| [x] | ms | Malay | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
+| [x] | nl | Dutch | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [ ] | no | Norwegian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | pl | Polish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [ ] | pt | Portuguese | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
@@ -66,7 +66,7 @@ Language-level completion (all applicable model-results present for that languag
 | [ ] | sk | Slovak | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | sl | Slovenian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | sq | Albanian | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
-| [ ] | sr | Serbian | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | n/a | [ ] v2 |
+| [ ] | sr | Serbian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | sv | Swedish | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
 | [ ] | ta | Tamil | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | te | Telugu | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
