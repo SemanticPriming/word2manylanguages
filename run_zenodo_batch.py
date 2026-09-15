@@ -44,7 +44,7 @@ if os.path.exists(env_path):
 # per progress_tracker.md) but isn't yet at its target Zenodo version.
 # Edit freely: drop languages you don't want tonight, or add more once
 # their models finish.
-languages = [ "no", "pl", "pt", "ro", "ru", "si", "sk", "sl",
+languages = [ "pl", "pt", "ro", "ru", "si", "sk", "sl",
     "sq", "sv", "ta", "te", "th", "tr", "ur", "vi", "zh",
 ]
 version = "2018"       # '2018' or '2024' -- see run_language_pipeline.py's module docstring
