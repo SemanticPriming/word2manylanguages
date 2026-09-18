@@ -1,0 +1,73 @@
+bibtex: Sarli2022
+parent_bibtex: ~
+citation:
+  author: Leticia Sarli, Nadia Justel
+  year: 2021
+  title: 'Emotional words in Spanish: Adaptation and cross-cultural differences for
+    the affective norms for English words (ANEW) on a sample of Argentinian adults'
+  journal: Behavior Research Methods
+  volume: '54'
+  pages: 1595-1610
+  doi: 10.3758/s13428-021-01682-7
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 1034
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - translate_word_english
+  - word_spanish
+  - pos
+  - valence_mean_all
+  - valence_sd_all
+  - valence_pct_answered_all
+  - valence_n_all
+  - arousal_mean_all
+  - arousal_sd_all
+  - arousal_pct_answered_all
+  - arousal_n_all
+  - dominance_mean_all
+  - dominance_sd_all
+  - dominance_pct_answered_all
+  - dominance_n_all
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - familiar_mean_all
+  - familiar_sd_all
+  - familiar_pct_answered_all
+  - familiar_n_all
+  - imagine_mean_all
+  - imagine_sd_all
+  - imagine_pct_answered_all
+  - imagine_n_all
+  - concrete_mean_all
+  - concrete_sd_all
+  - concrete_pct_answered_all
+  - concrete_n_all
+  - letters
+  - syllables
+  - frequency_corpes_reg
+  - frequency_corpes_general
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    pos: yes
+    syllables: yes
+    valence: yes

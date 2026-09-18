@@ -1,0 +1,34 @@
+bibtex: Nemati2026
+parent_bibtex: ~
+citation:
+  author: Fatemeh Nemati, Chris Westbury, Habib Rostami, Fatemeh Alavi
+  year: 2026
+  title: Extrapolated Persian Lexical Affect Norms (E-PLAN) from best–worst judgments
+    of valence, arousal, dominance, and concreteness
+  journal: Behavior Research Methods
+  volume: '58'
+  pages: []
+  doi: 10.3758/s13428-026-02963-9
+  source: crossref
+dataset:
+  language_from_columns: persian
+  n_rows_csv: 85716
+variables:
+  word_columns:
+  - word_persian
+  raw_columns:
+  - word_persian
+  - bw_sample_group
+  - valence_mean_bw
+  - arousal_mean_bw
+  - dominance_mean_bw
+  - concrete_mean_bw
+  - valence_mean_extrapolated
+  - arousal_mean_extrapolated
+  - dominance_mean_extrapolated
+  - concrete_mean_extrapolated
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    valence: yes

@@ -1,0 +1,43 @@
+bibtex: Song2021
+parent_bibtex: ~
+citation:
+  author: Dangui Song, Degao Li
+  year: 2021
+  title: Psycholinguistic Norms for 3,783 Two-Character Words in Simplified Chinese
+  journal: Sage Open
+  volume: '11'
+  pages: []
+  doi: 10.1177/21582440211054495
+  source: crossref
+dataset:
+  language_from_columns: chinese
+  n_rows_csv: 3783
+variables:
+  word_columns:
+  - word_chinese
+  raw_columns:
+  - word_chinese
+  - meanings_n
+  - frequency_subtitle
+  - strokes_n
+  - aoa_mean
+  - compositionality_mean
+  - concrete_mean
+  - emotional_experience_mean
+  - familiar_mean
+  - imagine_mean
+  - sensory_experience_mean
+  - frequency_subjective_mean
+  - meanings_subjective_mean
+  - transparency_mean
+  - rt_mean
+  flags:
+    aoa: yes
+    concrete: yes
+    emotion: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    meaning: yes
+    rt: yes
+    sensory: yes

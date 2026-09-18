@@ -1,0 +1,77 @@
+bibtex: Wang2020_en
+parent_bibtex: Wang2020
+citation:
+  author: Jue Wang, Baoguo Chen
+  year: 2020
+  title: 'A Database of Chinese-English Bilingual Speakers: Ratings of the Age of
+    Acquisition and Familiarity'
+  journal: Frontiers in Psychology
+  volume: '11'
+  pages: []
+  doi: 10.3389/fpsyg.2020.554785
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1916
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean_english_l2
+  - aoa_recognition_percent_english_l2
+  - aoa_recognition_n_english_l2
+  - aol_english_l2
+  - familiar_mean_english_l2
+  - familiar_percent_english_l2
+  - familiar_n_english_l2
+  - concrete_english_l2
+  - frequency_english_l2
+  - letters_english_l2
+  - translate_word_chinese
+  - translate_n_dominant_chinese
+  - translate_n_all_chinese
+  - translate_percent_dominant_chinese
+  - translate_other_chinese
+  - translate_chinese_2
+  - translate_n_chinese_2
+  - translate_chinese_3
+  - translate_n_chinese_3
+  - translate_chinese_4
+  - translate_n_chinese_4
+  - translate_chinese_5
+  - translate_n_chinese_5
+  - translate_chinese_6
+  - translate_n_chinese_6
+  - translate_chinese_7
+  - translate_n_chinese_7
+  - translate_chinese_8
+  - translate_n_chinese_8
+  - translate_chinese_9
+  - translate_n_chinese_9
+  - translate_chinese_10
+  - translate_n_chinese_10
+  - translate_chinese_11
+  - translate_n_chinese_11
+  - translate_chinese_12
+  - translate_n_chinese_12
+  - translate_chinese_13
+  - translate_n_chinese_13
+  - translate_chinese_14
+  - translate_n_chinese_14
+  - translate_chinese_15
+  - translate_n_chinese_15
+  - translate_chinese_16
+  - translate_n_chinese_16
+  - translate_chinese_17
+  - translate_n_chinese_17
+  - translate_chinese_18
+  - translate_n_chinese_18
+  - translate_chinese_19
+  - translate_n_chinese_19
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    letters: yes

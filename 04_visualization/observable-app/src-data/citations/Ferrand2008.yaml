@@ -1,0 +1,28 @@
+bibtex: Ferrand2008
+parent_bibtex: ~
+citation:
+  author: Ludovic Ferrand, Patrick Bonin, Alain Méot, Maria Augustinova, Boris New,
+    Christophe Pallier, et al.
+  year: 2008
+  title: Age-of-acquisition and subjective frequency estimates for all generally known
+    monosyllabic French words and their relation with other psycholinguistic variables
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 1049-1054
+  doi: 10.3758/brm.40.4.1049
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1493
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - aoa_mean
+  - aoa_sd
+  - frequency_mean
+  - frequency_sd
+  flags:
+    aoa: yes
+    freq: yes

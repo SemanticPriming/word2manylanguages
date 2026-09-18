@@ -1,0 +1,48 @@
+bibtex: Moreno-Martinez2014
+parent_bibtex: ~
+citation:
+  author: F. Javier Moreno-Martínez, Pedro R. Montoro, Inmaculada C. Rodríguez-Rojo
+  year: 2014
+  title: Spanish norms for age of acquisition, concept familiarity, lexical frequency,
+    manipulability, typicality, and other variables for 820 words from 14 living/nonliving
+    concepts
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 1088-1097
+  doi: 10.3758/s13428-013-0435-x
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 820
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - semantic_category
+  - domain
+  - aoa_subjective_mean
+  - aoa_subjective_sd
+  - familiar_mean
+  - familiar_sd
+  - manip_mean
+  - manip_sd
+  - typicality_mean
+  - typicality_sd
+  - percent_total_36
+  - frequency_log
+  - frequency_espal
+  - frequency_crea
+  - frequency_cuetosetal_2012
+  - length
+  - syllables
+  - subjects
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    semantic: yes
+    syllables: yes
+    typical: yes

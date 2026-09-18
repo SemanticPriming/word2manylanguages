@@ -1,0 +1,45 @@
+bibtex: Raman2014
+parent_bibtex: ~
+citation:
+  author: Ilhan Raman, Evren Raman, Biran Mertan
+  year: 2014
+  title: 'A standardized set of 260 pictures for Turkish: Norms of name and image
+    agreement, age of acquisition, visual complexity, and conceptual familiarity'
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 588-595
+  doi: 10.3758/s13428-013-0376-4
+  source: crossref
+dataset:
+  language_from_columns: turkish
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_turkish
+  - word_turkish_modal
+  raw_columns:
+  - word_turkish
+  - translate_word_english
+  - word_turkish_modal
+  - name_agreement_proportion
+  - image_agreement_mean
+  - image_agreement_sd
+  - familiar_mean_conceptual
+  - familiar_sd_conceptual
+  - aoa_mean
+  - aoa_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - syllables
+  - length
+  - frequency
+  - frequency_1
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    letters: yes
+    nameagree: yes
+    syllables: yes
+    visualcomp: yes

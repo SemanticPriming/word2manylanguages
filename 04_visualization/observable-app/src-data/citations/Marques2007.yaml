@@ -1,0 +1,38 @@
+bibtex: Marques2007
+parent_bibtex: ~
+citation:
+  author: J. Frederico Marques, Francisca L. Fonseca, Sofia Morais, Inês A. Pinto
+  year: 2007
+  title: Estimated age of acquisition norms for 834 Portuguese nouns and their relation
+    with other psycholinguistic variables
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 439-444
+  doi: 10.3758/bf03193013
+  source: crossref
+dataset:
+  language_from_columns: portuguese
+  n_rows_csv: 834
+variables:
+  word_columns:
+  - word_portuguese
+  raw_columns:
+  - word_portuguese
+  - translate_word_english
+  - aoa_mean
+  - aoa_sd
+  - syllables
+  - length
+  - familiar_mean
+  - frequency
+  - frequency_log
+  - concrete_mean
+  - imagine_mean
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    syllables: yes

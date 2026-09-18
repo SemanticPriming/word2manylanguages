@@ -1,0 +1,30 @@
+bibtex: Hao2008_infant
+parent_bibtex: Hao2008
+citation:
+  author: Meiling Hao, Hua Shu, Ailing Xing, Ping Li
+  year: 2008
+  title: Early vocabulary inventory for Mandarin Chinese
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 728-733
+  doi: 10.3758/brm.40.3.728
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 464
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - comprehension_production
+  - type
+  - word_chinese_simplified
+  - translate_word_pinyin
+  - translate_word_english
+  - aoa_percent_12m
+  - aoa_percent_13m
+  - aoa_percent_14m
+  - aoa_percent_15m
+  - aoa_percent_16m
+  flags:
+    aoa: yes

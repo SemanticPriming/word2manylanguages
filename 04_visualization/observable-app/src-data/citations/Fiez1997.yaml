@@ -1,0 +1,34 @@
+bibtex: Fiez1997
+parent_bibtex: ~
+citation:
+  author: J. A. Fiez, D. Tranel
+  year: 1997
+  title: Standardized stimuli and procedures for investigating the retrieval of lexical
+    and conceptual knowledge for actions
+  journal: Memory & Cognition
+  volume: '25'
+  pages: 543-569
+  doi: 10.3758/bf03201129
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 275
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - h
+  - percent_response
+  - familiar_mean
+  - familiar_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - image_agreement_mean
+  - image_agreement_sd
+  - frequency
+  flags:
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    visualcomp: yes

@@ -1,0 +1,47 @@
+bibtex: Diez-Alamo2018a
+parent_bibtex: ~
+citation:
+  author: Antonio M. Díez-Álamo, Emiliano Díez, María Ángeles Alonso, C. Alejandra
+    Vargas, Angel Fernandez
+  year: 2018
+  title: Normative ratings for perceptual and motor attributes of 750 object concepts
+    in Spanish
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 1632-1644
+  doi: 10.3758/s13428-017-0970-y
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 750
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - color_mean
+  - color_sd
+  - motion_mean
+  - motion_sd
+  - grasp_mean
+  - grasp_sd
+  - pain_mean
+  - pain_sd
+  - sound_mean
+  - sound_sd
+  - taste_mean
+  - taste_sd
+  - smell_mean
+  - smell_sd
+  - boi_mean
+  - concrete_mean
+  - imagine_mean
+  - category
+  - pc1_scores
+  - pc2_scores
+  flags:
+    category: yes
+    concrete: yes
+    imagine: yes
+    sensory: yes

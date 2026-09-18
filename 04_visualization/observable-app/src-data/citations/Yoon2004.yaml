@@ -1,0 +1,36 @@
+bibtex: Yoon2004
+parent_bibtex: ~
+citation:
+  author: Carolyn Yoon, Fred Feinberg, Ting Luo, Trey Hedden, Angela Hall Gutchess,
+    Hiu-Ying Mary Chen, et al.
+  year: 2004
+  title: 'A cross-culturally standardized set of pictures for younger and older adults:
+    American and Chinese norms for name agreement, concept agreement, and familiarity'
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 639-649
+  doi: 10.3758/bf03206545
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 344
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - picture_number
+  - equivalence
+  - word_english
+  - culture
+  - age_group
+  - 'n'
+  - familiar_mean
+  - familiar_sd
+  - name_agreement_h
+  - name_agreement_proportion
+  - concept_agreement_percent
+  - name_responses_and_raw_frequency_counts
+  flags:
+    familiar: yes
+    nameagree: yes
+    picture: yes

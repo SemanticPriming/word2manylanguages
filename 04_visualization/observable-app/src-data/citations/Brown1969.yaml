@@ -1,0 +1,28 @@
+bibtex: Brown1969
+parent_bibtex: ~
+citation:
+  author: W. P. BROWN, DOROTHY M. J. URE
+  year: 1969
+  title: FIVE RATED CHARACTERISTICS OF 650 WORD ASSOCIATION STIMULI
+  journal: British Journal of Psychology
+  volume: '60'
+  pages: 233-249
+  doi: 10.1111/j.2044-8295.1969.tb01196.x
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 636
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - goodness_mean
+  - pleasant_mean
+  - emotionality_mean
+  - concrete_mean
+  - associative_difficulty_mean
+  flags:
+    assoc: yes
+    concrete: yes
+    emotion: yes

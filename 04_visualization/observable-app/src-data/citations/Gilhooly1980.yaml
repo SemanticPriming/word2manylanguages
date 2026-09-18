@@ -1,0 +1,36 @@
+bibtex: Gilhooly1980
+parent_bibtex: ~
+citation:
+  author: K. J. Gilhooly, R. H. Logie
+  year: 1980
+  title: Meaning-dependent ratings of imagery, age of acquisition, familiarity, and
+    concreteness for 387 ambiguous words
+  journal: Behavior Research Methods & Instrumentation
+  volume: '12'
+  pages: 428-450
+  doi: 10.3758/bf03201694
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 902
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - number_responses
+  - meaning
+  - imagine_mean
+  - imagine_sd
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - concrete_mean
+  - concrete_sd
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    meaning: yes

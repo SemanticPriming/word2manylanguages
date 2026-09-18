@@ -1,0 +1,25 @@
+bibtex: Kremer2011_it
+parent_bibtex: Kremer2011
+citation:
+  author: Gerhard Kremer, Marco Baroni
+  year: 2011
+  title: A set of semantic norms for German and Italian
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 97-109
+  doi: 10.3758/s13428-010-0028-x
+  source: crossref
+dataset:
+  language_from_columns: italian_1, italian_2
+  n_rows_csv: 2500
+variables:
+  word_columns:
+  - word_italian_1
+  - word_italian_2
+  raw_columns:
+  - translate_word_english_1
+  - translate_word_english_2
+  - cosine
+  - word_italian_1
+  - word_italian_2
+  flags: {}

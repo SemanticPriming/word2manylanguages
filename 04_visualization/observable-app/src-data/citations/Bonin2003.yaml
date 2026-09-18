@@ -1,0 +1,56 @@
+bibtex: Bonin2003
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Ronald Peereman, Nathalie Malardier, Alain Méot, Marylène
+    Chalard
+  year: 2003
+  title: 'A new set of 299 pictures for psycholinguistic studies: French norms for
+    name agreement, image agreement, conceptual familiarity, visual complexity, image
+    variability, age of acquisition, and naming latencies'
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '35'
+  pages: 158-167
+  doi: 10.3758/bf03195507
+  source: crossref
+dataset:
+  language_from_columns: french, french_disambiguate
+  n_rows_csv: 299
+variables:
+  word_columns:
+  - word_french
+  - word_french_disambiguate
+  raw_columns:
+  - word_french
+  - word_french_disambiguate
+  - translate_word_english
+  - semantic_category
+  - rt_mean_naming
+  - name_agreement_h
+  - name_agreement_p
+  - image_agreement_mean
+  - image_agreement_sd
+  - familiar_mean
+  - familiar_sd
+  - visualcomplexity_mean
+  - visual_complexity_sd
+  - image_variability_mean
+  - image_variability_sd
+  - aoa_mean
+  - aoa_sd
+  - frequency_brulex
+  - frequency_frontex
+  - number_of_modal_names
+  - dont_know
+  - dko
+  - total
+  - nondominance_names
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagevar: yes
+    nameagree: yes
+    rt: yes
+    semantic: yes
+    visualcomp: yes

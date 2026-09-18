@@ -1,0 +1,43 @@
+bibtex: Su2023
+parent_bibtex: ~
+citation:
+  author: I-Fan Su, Yen Na Yum, Dustin Kai-Yan Lau
+  year: 2022
+  title: 'Hong Kong Chinese character psycholinguistic norms: ratings of 4376 single
+    Chinese characters on semantic radical transparency, age-of-acquisition, familiarity,
+    imageability, and concreteness'
+  journal: Behavior Research Methods
+  volume: '55'
+  pages: 2989-3008
+  doi: 10.3758/s13428-022-01928-y
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional
+  n_rows_csv: 4376
+variables:
+  word_columns:
+  - word_chinese_traditional
+  raw_columns:
+  - word_chinese_traditional
+  - aoa_mean
+  - familiar_mean
+  - imagine_mean
+  - concrete_mean
+  - semantic_radical_trans_mean
+  - frequency_log
+  - number_stroke
+  - number_word_forms
+  - number_homophones
+  - number_meanings
+  - aoa_raw
+  - familiar_raw
+  - imagine_raw
+  - concrete_raw
+  - semantic_radical_trans_raw
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    semantic: yes

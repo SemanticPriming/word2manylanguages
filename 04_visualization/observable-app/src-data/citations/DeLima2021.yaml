@@ -1,0 +1,54 @@
+bibtex: DeLima2021
+parent_bibtex: ~
+citation:
+  author: Marcos Felipe Rodrigues de Lima, Luciano Grüdtner Buratto
+  year: 2021
+  title: Norms for Familiarity, Concreteness, Valence, Arousal, Wordlikeness, and
+    Recall Accuracy for Swahili–Portuguese Word Pairs
+  journal: Sage Open
+  volume: '11'
+  pages: []
+  doi: 10.1177/2158244020988524
+  source: crossref
+dataset:
+  language_from_columns: portuguese, likeness_mean, likeness_sd, likeness_median
+  n_rows_csv: 80
+variables:
+  word_columns:
+  - word_portuguese
+  - word_likeness_mean
+  - word_likeness_sd
+  - word_likeness_median
+  raw_columns:
+  - paired_word_swahili
+  - word_portuguese
+  - translate_word_english
+  - familiar_mean_portuguese
+  - familiar_sd_portuguese
+  - concrete_mean_portuguese
+  - concrete_sd_portuguese
+  - valence_mean_portuguese
+  - valence_sd_portuguese
+  - arousal_mean_portuguese
+  - arousal_sd_portuguese
+  - word_likeness_mean
+  - word_likeness_sd
+  - word_likeness_median
+  - recall_trial1
+  - recall_trial2
+  - recall_trial3
+  - recall_mean
+  - frequency_log
+  - length_swahili
+  - length_portuguese
+  - lage_2019
+  - lima_2020_exp1
+  - lima_2020_exp2
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    recall: yes
+    valence: yes

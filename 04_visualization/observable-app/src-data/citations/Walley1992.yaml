@@ -1,0 +1,36 @@
+bibtex: Walley1992
+parent_bibtex: ~
+citation:
+  author: Amanda C. Walley, Jamie L. Metsala
+  year: 1992
+  title: Young children’s age-of-acquisition estimates for spoken words
+  journal: Memory & Cognition
+  volume: '20'
+  pages: 171-182
+  doi: 10.3758/bf03197166
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 87
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - os_mp
+  - category
+  - aoa_adult_mean
+  - aoa_adult_sd
+  - aoa_mean_older
+  - aoa_sd_older
+  - aoa_mean_young
+  - aoa_sd_young
+  - imagine_mean
+  - imagine_sd
+  - frequency_kol
+  - frequency_kf
+  flags:
+    aoa: yes
+    category: yes
+    freq: yes
+    imagine: yes

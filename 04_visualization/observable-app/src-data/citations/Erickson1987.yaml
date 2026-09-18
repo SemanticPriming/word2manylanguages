@@ -1,0 +1,26 @@
+bibtex: Erickson1987
+parent_bibtex: ~
+citation:
+  author: James R. Erickson, Carol Renaud Gaffney, Wendy P. Heath
+  year: 1987
+  title: Difficulty and familiarity norms for 192 single-solution word fragments
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '19'
+  pages: 370-376
+  doi: 10.3758/bf03202580
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 166
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - fragment
+  - word_english
+  - familiar_mean
+  - frequency
+  - probability_completion
+  flags:
+    familiar: yes
+    freq: yes

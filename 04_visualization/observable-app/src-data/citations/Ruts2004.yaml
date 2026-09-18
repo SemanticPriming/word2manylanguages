@@ -1,0 +1,32 @@
+bibtex: Ruts2004
+parent_bibtex: ~
+citation:
+  author: Wim Ruts, Simon De Deyne, Eef Ameel, Wolf Vanpaemel, Timothy Verbeemen,
+    Gert Storms
+  year: 2004
+  title: Dutch norm data for 13 semantic categories and 338 exemplars
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 506-515
+  doi: 10.3758/bf03195597
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 338
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - category
+  - translate_word_english
+  - aoa_n
+  - aoa_mean
+  - aoa_sd
+  - percent_known
+  - source
+  - frequency_logcelex
+  flags:
+    aoa: yes
+    category: yes
+    freq: yes

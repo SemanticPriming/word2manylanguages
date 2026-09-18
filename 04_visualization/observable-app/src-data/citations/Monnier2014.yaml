@@ -1,0 +1,56 @@
+bibtex: Monnier2014
+parent_bibtex: ~
+citation:
+  author: Catherine Monnier, Arielle Syssau
+  year: 2014
+  title: Affective norms for french words (FAN)
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 1128-1137
+  doi: 10.3758/s13428-013-0431-1
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1031
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - picture_source
+  - picture_number
+  - valence_mean_all
+  - valence_sd_all
+  - arousal_mean_all
+  - arousal_sd_all
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - length
+  - phonemes
+  - syllables
+  - pos
+  - frequency_films
+  - frequency_books
+  - imagine_mean
+  - bonin2003
+  - gilet2012
+  - niedenthal_et_al_2004
+  - ric_et_al_2013
+  - syssau_font_2005
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    picture: yes
+    pos: yes
+    syllables: yes
+    valence: yes

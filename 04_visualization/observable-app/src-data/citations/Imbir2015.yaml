@@ -1,0 +1,124 @@
+bibtex: Imbir2015
+parent_bibtex: ~
+citation:
+  author: Kamil K. Imbir
+  year: 2015
+  title: 'Affective norms for 1,586 polish words (ANPW): Duality-of-mind approach'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 860-870
+  doi: 10.3758/s13428-014-0509-4
+  source: crossref
+dataset:
+  language_from_columns: polish
+  n_rows_csv: 1586
+variables:
+  word_columns:
+  - word_polish
+  raw_columns:
+  - word_polish
+  - translate_word_english
+  - pos
+  - length
+  - frequency
+  - valence_n
+  - valence_minimum
+  - valence_maximum
+  - valence_mean
+  - valence_sd
+  - valence_n_female
+  - valence_minimum_female
+  - valence_maximum_female
+  - valence_mean_female
+  - valence_sd_female
+  - valence_n_male
+  - valence_minimum_male
+  - valence_maximum_male
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_n
+  - arousal_minimum
+  - arousal_maximum
+  - arousal_mean
+  - arousal_sd
+  - arousal_n_female
+  - arousal_minimum_female
+  - arousal_maximum_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - arousal_n_male
+  - arousal_minimum_male
+  - arousal_maximum_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_n
+  - dominance_minimum
+  - dominance_maximum
+  - dominance_mean
+  - dominance_sd
+  - dominance_n_female
+  - dominance_minimum_female
+  - dominance_maximum_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - dominance_n_male
+  - dominance_minimum_male
+  - dominance_maximum_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - origin_n
+  - origin_minimum
+  - origin_maximum
+  - origin_mean
+  - origin_sd
+  - origin_n_female
+  - origin_minimum_female
+  - origin_maximum_female
+  - origin_mean_female
+  - origin_sd_female
+  - origin_n_male
+  - origin_minimum_male
+  - origin_maximum_male
+  - origin_mean_male
+  - origin_sd_male
+  - significance_n
+  - significance_minimum
+  - significance_maximum
+  - significance_mean
+  - significance_sd
+  - significance_n_female
+  - significance_minimum_female
+  - significance_maximum_female
+  - significance_mean_female
+  - significance_sd_female
+  - significance_n_male
+  - significance_minimum_male
+  - significance_maximum_male
+  - significance_mean_male
+  - significance_sd_male
+  - source_n
+  - source_minimum
+  - source_maximum
+  - source_mean
+  - source_sd
+  - source_n_female
+  - source_minimum_female
+  - source_maximum_female
+  - source_mean_female
+  - source_sd_female
+  - source_n_male
+  - source_minimum_male
+  - source_maximum_male
+  - source_mean_male
+  - source_sd_male
+  - english_meanings_n
+  - anew_number
+  - anew_second_meaning_number
+  - anew_third_meaning_number
+  flags:
+    arousal: yes
+    dominate: yes
+    freq: yes
+    letters: yes
+    pos: yes
+    valence: yes

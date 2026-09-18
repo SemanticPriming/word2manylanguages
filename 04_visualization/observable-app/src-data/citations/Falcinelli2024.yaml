@@ -1,0 +1,126 @@
+bibtex: Falcinelli2024
+parent_bibtex: ~
+citation:
+  author: Ilenia Falcinelli, Chiara Fini, Claudia Mazzuca, Anna M. Borghi
+  year: 2024
+  title: 'The TECo Database: Ecological and Technological Concepts at the Interface
+    Between Abstractness and Concreteness'
+  journal: 'Collabra: Psychology'
+  volume: '10'
+  pages: []
+  doi: 10.1525/collabra.120327
+  source: crossref
+dataset:
+  language_from_columns: italian, confidence_mean, confidence_sd
+  n_rows_csv: 200
+variables:
+  word_columns:
+  - word_italian
+  - word_confidence_mean
+  - word_confidence_sd
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - category
+  - concrete_mean
+  - concrete_sd
+  - action_effector_mean
+  - action_effector_sd
+  - action_effector_feet_mean
+  - action_effector_feet_sd
+  - action_effector_hands_mean
+  - action_effector_hands_sd
+  - action_effector_mouth_mean
+  - action_effector_mouth_sd
+  - action_effector_torso_mean
+  - action_effector_torso_sd
+  - arousal_mean
+  - arousal_sd
+  - aoa_mean
+  - aoa_sd
+  - body_object_interact_mean
+  - body_object_interact_sd
+  - context_avail_mean
+  - context_avail_sd
+  - expert_confidence_mean
+  - expert_confidence_sd
+  - dominance_mean
+  - dominance_sd
+  - emotional_mean
+  - emotional_sd
+  - convo_ease_mean
+  - convo_ease_sd
+  - expert_social_meta_mean
+  - expert_social_meta_sd
+  - define_ease_mean
+  - define_ease_sd
+  - familiar_mean
+  - familiar_sd
+  - frequency_subjective_mean
+  - frequency_subjective_sd
+  - frequency_objective
+  - imagine_mean
+  - imagine_sd
+  - interoception_mean
+  - interoception_sd
+  - metacognition_mean
+  - metacognition_sd
+  - modality_acquis_mean
+  - modality_acquis_sd
+  - natural_artific_mean
+  - natural_artific_sd
+  - open_negotiation_mean
+  - open_negotiation_sd
+  - perceived_distance_mean
+  - perceived_distance_sd
+  - personal_experience_mean
+  - personal_experience_sd
+  - perceived_impact_mean
+  - perceived_impact_sd
+  - perceived_impact_future_mean
+  - perceived_impact_future_sd
+  - perceived_impact_past_mean
+  - perceived_impact_past_sd
+  - perceived_impact_present_mean
+  - perceived_impact_present_sd
+  - political_relev_mean
+  - political_relev_sd
+  - percept_strength_mean
+  - percept_strength_sd
+  - percept_strength_hearing_mean
+  - percept_strength_hearing_sd
+  - percept_strength_smell_mean
+  - percept_strength_smell_sd
+  - percept_strength_taste_mean
+  - percept_strength_taste_sd
+  - percept_strength_touch_mean
+  - percept_strength_touch_sd
+  - percept_strength_vision_mean
+  - percept_strength_vision_sd
+  - scientificity_mean
+  - scientificity_sd
+  - social_meta_mean
+  - social_meta_sd
+  - social_valence_mean
+  - social_valence_sd
+  - valence_mean
+  - valence_sd
+  - word_confidence_mean
+  - word_confidence_sd
+  - letters
+  - syllables
+  flags:
+    aoa: yes
+    arousal: yes
+    category: yes
+    concrete: yes
+    context: yes
+    dominate: yes
+    emotion: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    modality: yes
+    syllables: yes
+    valence: yes

@@ -1,0 +1,33 @@
+bibtex: Bonin2013
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Diana Guillemard-Tsaparina, Alain Méot
+  year: 2013
+  title: Determinants of naming latencies, object comprehension times, and new norms
+    for the Russian standardized set of the colorized version of the Snodgrass and
+    Vanderwart pictures
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 731-745
+  doi: 10.3758/s13428-012-0279-9
+  source: crossref
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - translate_word_english
+  - word_russian
+  - frequency_subjective
+  - image_variability_mean
+  - boi_mean
+  - naming_rt
+  - recognition_rt
+  flags:
+    freq: yes
+    imagevar: yes
+    picture: yes
+    recognition: yes
+    sensory: yes

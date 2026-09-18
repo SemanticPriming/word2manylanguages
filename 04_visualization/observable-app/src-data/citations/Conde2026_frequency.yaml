@@ -1,0 +1,32 @@
+bibtex: Conde2026_frequency
+parent_bibtex: Conde2026
+citation:
+  author: Javier Conde, Gonzalo Martínez, María Grandury, Carlos Arriaga, Juan Haro,
+    Sascha Schroeder, et al.
+  year: 2026
+  title: Updating the German Psycholinguistic Word Toolbox with AI-Generated Estimates
+    of Concreteness, Valence, Arousal, Age of Acquisition, and Familiarity
+  journal: Journal of Cognition
+  volume: '9'
+  pages: []
+  doi: 10.5334/joc.482
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 190500
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - frequency_wffreqcount
+  - spell_check
+  - frequency_cumfreqcount
+  - frequency_subtlex
+  - frequency_google00
+  - frequency_google00cum
+  - frequency_google00pm
+  - frequency_zipfsubtlex
+  - frequency_zipfgoogle
+  flags:
+    freq: yes

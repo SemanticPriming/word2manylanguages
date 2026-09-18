@@ -1,0 +1,31 @@
+bibtex: Liu2007
+parent_bibtex: ~
+citation:
+  author: Youyi Liu, Hua Shu, Ping Li
+  year: 2007
+  title: 'Word naming and psycholinguistic norms: Chinese'
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 192-198
+  doi: 10.3758/bf03193147
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified, pinyin
+  n_rows_csv: 2356
+variables:
+  word_columns:
+  - word_chinese_simplified
+  - word_pinyin
+  raw_columns:
+  - word_chinese_simplified
+  - word_pinyin
+  - age_of_learning
+  - aoa_mean
+  - concrete_mean
+  - familiar_mean
+  - imagine_mean
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes

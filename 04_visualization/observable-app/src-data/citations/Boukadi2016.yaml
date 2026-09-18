@@ -1,0 +1,41 @@
+bibtex: Boukadi2016
+parent_bibtex: ~
+citation:
+  author: Mariem Boukadi, Cirine Zouaidi, Maximiliano A. Wilson
+  year: 2016
+  title: Norms for name agreement, familiarity, subjective frequency, and imageability
+    for 348 object names in Tunisian Arabic
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 585-599
+  doi: 10.3758/s13428-015-0602-3
+  source: crossref
+dataset:
+  language_from_columns: arabic_intended, arabic
+  n_rows_csv: 400
+variables:
+  word_columns:
+  - word_arabic_intended
+  - word_arabic_modal
+  raw_columns:
+  - translate_word_english
+  - word_arabic_intended
+  - word_arabic_modal
+  - translate_english_modal
+  - name_agreement_mean
+  - name_agreement_proportion
+  - familiar_mean
+  - familiar_sd
+  - frequency_mean
+  - frequency_sd
+  - imagine_mean
+  - imagine_sd
+  - phonemes
+  - syllables
+  flags:
+    familiar: yes
+    freq: yes
+    imagine: yes
+    nameagree: yes
+    phonemes: yes
+    syllables: yes

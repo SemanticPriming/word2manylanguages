@@ -1,0 +1,89 @@
+bibtex: Roest2017
+parent_bibtex: ~
+citation:
+  author: Sander A. Roest, Tessa A. Visser, René Zeelenberg
+  year: 2018
+  title: Dutch taboo norms
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 630-641
+  doi: 10.3758/s13428-017-0890-x
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 716
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - arousal_mean
+  - arousal_sd
+  - valence_mean
+  - valence_sd
+  - taboo_mean
+  - taboo_sd
+  - taboo_personal_mean
+  - taboo_personal_sd
+  - insulting_mean
+  - insulting_sd
+  - length
+  - syllables
+  - frequency_pm
+  - frequency_log10pm
+  - zipf
+  - pos
+  - category
+  - type
+  - valence_mean_moors
+  - arousal_mean_moors
+  - arousal_mean_women
+  - arousal_sd_women
+  - valence_mean_women
+  - valence_sd_women
+  - taboo_mean_women
+  - taboo_sd_women
+  - taboo_personal_mean_women
+  - taboo_personal_sd_women
+  - insulting_mean_women
+  - insulting_sd_women
+  - arousal_mean_men
+  - arousal_sd_men
+  - valence_mean_men
+  - valence_sd_men
+  - taboo_mean_men
+  - taboo_sd_men
+  - taboo_personal_mean_men
+  - taboo_personal_sd_men
+  - insulting_mean_men
+  - insulting_sd_men
+  - arousal_mean_religious
+  - arousal_sd_religious
+  - valence_mean_religious
+  - valence_sd_religious
+  - taboo_mean_religious
+  - taboo_sd_religious
+  - taboo_personal_mean_religious
+  - taboo_personal_sd_religious
+  - insulting_mean_religious
+  - insulting_sd_religious
+  - arousal_mean_nonreligious
+  - arousal_sd_nonreligious
+  - valence_mean_nonreligious
+  - valence_sd_nonreligious
+  - taboo_mean_nonreligious
+  - taboo_sd_nonreligious
+  - taboo_personal_mean_nonreligious
+  - taboo_personal_sd_nonreligious
+  - insulting_mean_nonreligious
+  - insulting_sd_nonreligious
+  flags:
+    arousal: yes
+    category: yes
+    freq: yes
+    letters: yes
+    pos: yes
+    syllables: yes
+    taboo: yes
+    valence: yes

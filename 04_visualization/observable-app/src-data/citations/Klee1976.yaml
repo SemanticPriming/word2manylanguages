@@ -1,0 +1,28 @@
+bibtex: Klee1976
+parent_bibtex: ~
+citation:
+  author: Hilary Klee, David Legge
+  year: 1976
+  title: Estimates of concreteness and other indices for 200 transitive verbs.
+  journal: 'Journal of Experimental Psychology: Human Learning and Memory'
+  volume: '2'
+  pages: 497-507
+  doi: 10.1037/0278-7393.2.4.497
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 200
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - concrete_mean
+  - concrete_sd
+  - ease_define_mean
+  - ease_define_sd
+  - observability_mean
+  - subject_acceptable
+  - objects_acceptable
+  flags:
+    concrete: yes

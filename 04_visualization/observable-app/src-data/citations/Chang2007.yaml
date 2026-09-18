@@ -1,0 +1,27 @@
+bibtex: Chang2007
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+  data_url: https://www.researchgate.net/publication/325465986_Familiarity_and_age_of_acquisition_ratings_for_English_words_by_Taiwanese_college_students
+dataset:
+  language_from_columns: english, type
+  n_rows_csv: 3076
+variables:
+  word_columns:
+  - word_english
+  - word_type
+  raw_columns:
+  - item_number
+  - word_english
+  - type
+  - word_type
+  - familiar_mean
+  - aoa_mean
+  - frequency_log_hal
+  - orthographic_neighbors
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    orthon: yes

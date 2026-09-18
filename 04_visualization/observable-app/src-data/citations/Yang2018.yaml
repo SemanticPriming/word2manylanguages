@@ -1,0 +1,43 @@
+bibtex: Yang2018
+parent_bibtex: ~
+citation:
+  author: Wanlu Yang, Kai Makita, Takashi Nakao, Noriaki Kanayama, Maro G. Machizawa,
+    Takafumi Sasaoka, et al.
+  year: 2018
+  title: 'Affective auditory stimulus database: An expanded version of the International
+    Affective Digitized Sounds (IADS-E)'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 1415-1429
+  doi: 10.3758/s13428-018-1027-6
+  source: crossref
+dataset:
+  language_from_columns: ''
+  n_rows_csv: 935
+variables:
+  word_columns: []
+  raw_columns:
+  - source
+  - description
+  - category
+  - sound_id
+  - be_classification
+  - arousal_mean
+  - arousal_sd
+  - valence_mean
+  - valence_sd
+  - dominance_mean
+  - dominance_sd
+  - fear_mean
+  - fear_sd
+  - happiness_mean
+  - happiness_sd
+  - sad_mean
+  - sad_sd
+  flags:
+    arousal: yes
+    category: yes
+    dominate: yes
+    emotion: yes
+    sensory: yes
+    valence: yes

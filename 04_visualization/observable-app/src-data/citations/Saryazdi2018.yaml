@@ -1,0 +1,50 @@
+bibtex: Saryazdi2018
+parent_bibtex: ~
+citation:
+  author: Raheleh Saryazdi, Julie Bannon, Agatha Rodrigues, Chris Klammer, Craig G.
+    Chambers
+  year: 2018
+  title: 'Picture perfect: A stimulus set of 225 pairs of matched clipart and photographic
+    images normed by Mechanical Turk and laboratory participants'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 2498-2510
+  doi: 10.3758/s13428-018-1028-5
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 225
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - category
+  - modal_verb
+  - name_agreement_photo
+  - name_agreement_clipart
+  - naming_h_photo
+  - naming_h_clipart
+  - verb_agreement_photo
+  - verb_agreement_clipart
+  - verb_h_photo
+  - verb_h_clipart
+  - picture_name_agreement_photo
+  - picture_name_agreement_clipart
+  - familiar_photo
+  - familiar_clipart
+  - visual_complexity_photo
+  - visual_complexity_clipart
+  - image_agreement_photo
+  - image_agreement_clipart
+  - subtlex_freq
+  - wordnet_senses
+  - aoa_mean
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    imageagree: yes
+    nameagree: yes
+    picture: yes
+    visualcomp: yes

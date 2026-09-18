@@ -1,0 +1,25 @@
+bibtex: Hermans1994
+parent_bibtex: ~
+citation:
+  author: Dirk Hermans, Jan De Houwer
+  year: 1994
+  title: Affective and Subjective Familiarity Ratings of 740 Dutch Words
+  journal: Psychologica Belgica
+  volume: '34'
+  pages: '115'
+  doi: 10.5334/pb.864
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 740
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - affective_mean
+  - affective_sd
+  - familiar_mean
+  - familiar_sd
+  flags:
+    familiar: yes

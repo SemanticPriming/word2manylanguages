@@ -1,0 +1,28 @@
+bibtex: Desrochers2010
+parent_bibtex: ~
+citation:
+  author: Alain Desrochers, Juana M. Liceras, Raquel Fernández-Fuertes, Glenn L. Thompson
+  year: 2010
+  title: Subjective frequency norms for 330 Spanish simple and compound words
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 109-117
+  doi: 10.3758/brm.42.1.109
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 3600
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - frequency_mean
+  - frequency_sd
+  - frequency_stresiduals
+  - imagine_mean
+  - imagine_sd
+  - imagine_stresiduals
+  flags:
+    freq: yes
+    imagine: yes

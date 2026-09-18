@@ -1,0 +1,45 @@
+bibtex: Juhasz2015
+parent_bibtex: ~
+citation:
+  author: Barbara J. Juhasz, Yun-Hsuan Lai, Michelle L. Woodcock
+  year: 2015
+  title: 'A database of 629 English compound words: ratings of familiarity, lexeme
+    meaning dominance, semantic transparency, age of acquisition, imageability, and
+    sensory experience'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 1004-1019
+  doi: 10.3758/s13428-014-0523-6
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 631
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - length
+  - familiar_mean
+  - familiar_n
+  - aoa_subjective_mean
+  - aoa_subjective_n
+  - transparency_mean
+  - transparency_n
+  - lmd_mean
+  - lmd_n
+  - imagine_mean
+  - imagine_n
+  - ser_mean
+  - ser_n
+  - familiar_zscore
+  - aoa_zscore
+  - transparency_zscore
+  - lmd_zscore
+  - imagine_zscore
+  - ser_zscore
+  flags:
+    aoa: yes
+    familiar: yes
+    imagine: yes
+    letters: yes

@@ -1,0 +1,51 @@
+bibtex: Hinojosa2016b
+parent_bibtex: ~
+citation:
+  author: José A. Hinojosa, Irene Rincón-Pérez, Mª Verónica Romero-Ferreiro, Natalia
+    Martínez-García, Cristina Villalba-García, Pedro R. Montoro, et al.
+  year: 2016
+  title: 'The Madrid Affective Database for Spanish (MADS): Ratings of Dominance,
+    Familiarity, Subjective Age of Acquisition and Sensory Experience'
+  journal: PLOS ONE
+  volume: '11'
+  pages: e0155866
+  doi: 10.1371/journal.pone.0155866
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 875
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - dominance_mean
+  - dominance_sd
+  - dominance_mean_female
+  - dominance_sd_female
+  - dominance_mean_male
+  - dominance_sd_male
+  - familiar_mean
+  - familiar_sd
+  - familiar_mean_female
+  - familiar_sd_female
+  - familiar_mean_male
+  - familiar_sd_male
+  - aoa_subjective_mean
+  - aoa_subjective_sd
+  - aoa_subjective_mean_female
+  - aoa_subjective_sd_female
+  - aoa_subjective_mean_male
+  - aoa_subjective_sd_male
+  - sensory_experience_mean
+  - sensory_experience_sd
+  - sensory_experience_mean_female
+  - sensory_experience_sd_female
+  - sensory_experience_mean_male
+  - sensory_experience_sd_male
+  flags:
+    aoa: yes
+    dominate: yes
+    familiar: yes
+    sensory: yes

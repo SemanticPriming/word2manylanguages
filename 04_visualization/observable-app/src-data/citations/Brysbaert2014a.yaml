@@ -1,0 +1,34 @@
+bibtex: Brysbaert2014a
+parent_bibtex: ~
+citation:
+  author: Marc Brysbaert, Michaël Stevens, Simon De Deyne, Wouter Voorspoels, Gert
+    Storms
+  year: 2014
+  title: Norms of age of acquisition and concreteness for 30,000 Dutch words
+  journal: Acta Psychologica
+  volume: '150'
+  pages: 80-84
+  doi: 10.1016/j.actpsy.2014.04.010
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 30070
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - concrete_list
+  - concrete_mean
+  - concrete_sd
+  - concrete_ratings_n
+  - concrete_unknown_response_n
+  - concrete_sample_n
+  - aoa_list
+  - aoa_sample_n
+  - aoa_known_probability
+  - aoa_mean
+  - aoa_sd
+  flags:
+    aoa: yes
+    concrete: yes

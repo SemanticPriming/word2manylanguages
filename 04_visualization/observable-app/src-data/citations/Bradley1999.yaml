@@ -1,0 +1,38 @@
+bibtex: Bradley1999
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+  data_url: https://www.semanticscholar.org/paper/Affective-Norms-for-English-Words-(ANEW)%3A-Manual-Bradley-Lang/c765eb0a31849361d829b24e173a37bab0919892
+dataset:
+  language_from_columns: english
+  n_rows_csv: 976
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - dominance_mean
+  - dominance_sd
+  - frequency
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_mean_female
+  - dominance_sd_female
+  flags:
+    arousal: yes
+    dominate: yes
+    freq: yes
+    valence: yes

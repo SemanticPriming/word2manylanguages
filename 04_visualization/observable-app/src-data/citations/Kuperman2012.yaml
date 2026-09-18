@@ -1,0 +1,28 @@
+bibtex: Kuperman2012
+parent_bibtex: ~
+citation:
+  author: Victor Kuperman, Hans Stadthagen-Gonzalez, Marc Brysbaert
+  year: 2012
+  title: Age-of-acquisition ratings for 30,000 English words
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 978-990
+  doi: 10.3758/s13428-012-0210-4
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 31318
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - occurrence_total
+  - occurrence_number
+  - frequency_pm
+  - aoa_mean
+  - aoa_sd
+  - known_percent
+  flags:
+    aoa: yes
+    freq: yes

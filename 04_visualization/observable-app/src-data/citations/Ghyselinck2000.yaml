@@ -1,0 +1,25 @@
+bibtex: Ghyselinck2000
+parent_bibtex: ~
+citation:
+  author: Mandy Ghyselinck, Wendy De Moor, Marc Brysbaert
+  year: 2000
+  title: |-
+    Age-of-Acquisition Ratings for 2816 Dutch Four- and Five-Letter
+                            Nouns
+  journal: Psychologica Belgica
+  volume: '40'
+  pages: '77'
+  doi: 10.5334/pb.958
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 2816
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - aoa_mean
+  - known_proportion
+  flags:
+    aoa: yes

@@ -1,0 +1,58 @@
+bibtex: Redondo2007
+parent_bibtex: ~
+citation:
+  author: Jaime Redondo, Isabel Fraga, Isabel Padrón, Montserrat Comesaña
+  year: 2007
+  title: The Spanish adaptation of ANEW (Affective Norms for English Words)
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 600-605
+  doi: 10.3758/bf03193031
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 1034
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - number
+  - translate_word_english
+  - word_spanish
+  - valence_mean_all
+  - valence_sd_all
+  - arousal_mean_all
+  - arousal_sd_all
+  - dominance_mean_all
+  - dominance_sd_all
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - letters
+  - syllables
+  - g_class
+  - frequency
+  - orthographic_neighbors
+  - familiar_mean
+  - concrete_mean
+  - imagine_mean
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    orthon: yes
+    syllables: yes
+    valence: yes

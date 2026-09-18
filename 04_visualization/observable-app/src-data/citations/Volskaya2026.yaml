@@ -1,0 +1,30 @@
+bibtex: Volskaya2026
+parent_bibtex: ~
+citation:
+  author: Yuliya A. Volskaya, Alena A. Toksubaeva, Valery D. Solovyev
+  year: 2026
+  title: 'Affective VAD Norms for Russian: Correlation with Abstractness/Concreteness
+    Ratings'
+  journal: RUDN Journal of Language Studies, Semiotics and Semantics
+  volume: '16'
+  pages: 1225-1241
+  doi: 10.22363/2313-2299-2025-16-4-1225-1241
+  source: crossref
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 1023
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - word_russian
+  - pos
+  - arousal_mean
+  - dominance_mean
+  - valence_mean
+  - abstract_mean
+  flags:
+    arousal: yes
+    dominate: yes
+    pos: yes
+    valence: yes

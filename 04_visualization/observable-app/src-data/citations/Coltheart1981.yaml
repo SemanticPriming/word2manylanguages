@@ -1,0 +1,59 @@
+bibtex: Coltheart1981
+parent_bibtex: ~
+citation:
+  author: Max Coltheart
+  year: 1981
+  title: The MRC Psycholinguistic Database
+  journal: The Quarterly Journal of Experimental Psychology Section A
+  volume: '33'
+  pages: 497-505
+  doi: 10.1080/14640748108400805
+  source: crossref
+dataset:
+  language_from_columns: english, type
+  n_rows_csv: 150000
+variables:
+  word_columns:
+  - word_english
+  - word_type
+  raw_columns:
+  - word_english
+  - letters
+  - phonemes
+  - syllables
+  - frequency_kf_written
+  - kf_number_of_categories
+  - kf_number_of_samples
+  - frequency_thorndike_lorge
+  - frequency_brown_verbal
+  - familiar_mean
+  - concrete_mean
+  - imagine_mean
+  - meaningfulness_coloradao_norms
+  - meaningfulness_pavio_norms
+  - aoa_mean
+  - word_type
+  - comprehensive_syntactic_category
+  - pos
+  - morphemic_status
+  - contextual_status
+  - pronunciation_variability
+  - capitalization
+  - irregular_plural
+  - stress_marked_phonetic_transcription
+  - syllabified_phonetic_transcription
+  - stress_pattern
+  flags:
+    aoa: yes
+    concrete: yes
+    context: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    meaning: yes
+    morph: yes
+    phonemes: yes
+    pos: yes
+    pronounce: yes
+    syllables: yes

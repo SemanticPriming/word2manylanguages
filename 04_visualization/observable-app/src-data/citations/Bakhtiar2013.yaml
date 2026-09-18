@@ -1,0 +1,44 @@
+bibtex: Bakhtiar2013
+parent_bibtex: ~
+citation:
+  author: Mehdi Bakhtiar, Reza Nilipour, Brendan S. Weekes
+  year: 2013
+  title: Predictors of timed picture naming in Persian
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 834-841
+  doi: 10.3758/s13428-012-0298-6
+  source: crossref
+dataset:
+  language_from_columns: persian_phonetic, persian
+  n_rows_csv: 200
+variables:
+  word_columns:
+  - word_persian_phonetic
+  - word_persian
+  raw_columns:
+  - word_persian_phonetic
+  - translate_word_english
+  - naming_rt
+  - h_statistic
+  - name_agreement_proportion
+  - image_agreement_mean
+  - familiar_mean
+  - visualcomplexity_mean
+  - aoa_mean
+  - frequency
+  - imagine_mean
+  - syllables
+  - phonemes
+  - word_persian
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    nameagree: yes
+    phonemes: yes
+    picture: yes
+    syllables: yes
+    visualcomp: yes

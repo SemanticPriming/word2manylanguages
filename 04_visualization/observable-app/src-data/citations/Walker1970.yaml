@@ -1,0 +1,24 @@
+bibtex: Walker1970
+parent_bibtex: ~
+citation:
+  author: Howard J. Walker
+  year: 1970
+  title: Imagery ratings for 338 nouns
+  journal: Behavior Research Methods & Instrumentation
+  volume: '2'
+  pages: 165-167
+  doi: 10.3758/bf03209293
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 334
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - source
+  flags:
+    imagine: yes

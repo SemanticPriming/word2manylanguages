@@ -1,0 +1,41 @@
+bibtex: Jenkins1958
+parent_bibtex: ~
+citation:
+  author: James J. Jenkins, Wallace A. Russell, George J. Suci
+  year: 1958
+  title: An Atlas of Semantic Profiles for 360 Words
+  journal: The American Journal of Psychology
+  volume: '71'
+  pages: '688'
+  doi: 10.2307/1420326
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 360
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - cruel_kind_mean
+  - curved_straight_mean
+  - masculine_feminine_mean
+  - untimely_timely_mean
+  - active_passive_mean
+  - savory_tasteless_mean
+  - unsuccessful_successful_mean
+  - hard_soft_mean
+  - wise_foolish_mean
+  - new_old_mean
+  - good_bad_mean
+  - weak_strong_mean
+  - important_unimportant_mean
+  - angular_rounded_mean
+  - calm_excitable_mean
+  - false_true_mean
+  - colorless_colorful_mean
+  - usual_unusual_mean
+  - beautiful_ugly_mean
+  - slow_fast_mean
+  flags:
+    sensory: yes

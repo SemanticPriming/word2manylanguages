@@ -1,0 +1,27 @@
+bibtex: Stadthagen-Gonzalez2006
+parent_bibtex: ~
+citation:
+  author: Hans Stadthagen-Gonzalez, Colin J. Davis
+  year: 2006
+  title: The Bristol norms for age of acquisition, imageability, and familiarity
+  journal: Behavior Research Methods
+  volume: '38'
+  pages: 598-605
+  doi: 10.3758/bf03193891
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1526
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean_years
+  - aoa_mean_100_700
+  - imagine_mean
+  - familiar_mean
+  flags:
+    aoa: yes
+    familiar: yes
+    imagine: yes

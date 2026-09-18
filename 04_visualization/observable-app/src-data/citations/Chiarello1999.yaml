@@ -1,0 +1,37 @@
+bibtex: Chiarello1999
+parent_bibtex: ~
+citation:
+  author: Christine Chiarello, Connie Shears, Kevin Lund
+  year: 1999
+  title: Imageability and distributional typicality measures of nouns and verbs in
+    contemporary English
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '31'
+  pages: 603-637
+  doi: 10.3758/bf03200739
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1196
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - fk_code
+  - imagine_mean
+  - imagine_sd
+  - imagine_mean_rt
+  - imagine_sd_rt
+  - ndist_hal_uninflected
+  - vdist_hal_uninflected
+  - nvdd_hal_uninflected
+  - ndist_hal_inflected
+  - vdist_hal_inflected
+  - nvdd_hal_inflected
+  - frequency_usenet_log
+  - familiar_mean
+  flags:
+    familiar: yes
+    freq: yes
+    imagine: yes

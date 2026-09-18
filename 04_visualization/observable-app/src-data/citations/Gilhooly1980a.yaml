@@ -1,0 +1,36 @@
+bibtex: Gilhooly1980a
+parent_bibtex: ~
+citation:
+  author: K. J. Gilhooly, R. H. Logie
+  year: 1980
+  title: Age-of-acquisition, imagery, concreteness, familiarity, and ambiguity measures
+    for 1,944 words
+  journal: Behavior Research Methods & Instrumentation
+  volume: '12'
+  pages: 395-427
+  doi: 10.3758/bf03201693
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1920
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - concrete_mean
+  - concrete_sd
+  - uncertainty
+  - frequency_tl
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes

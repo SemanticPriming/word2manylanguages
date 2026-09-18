@@ -1,0 +1,34 @@
+bibtex: Alonso2015
+parent_bibtex: ~
+citation:
+  author: María Angeles Alonso, Angel Fernandez, Emiliano Díez
+  year: 2015
+  title: Subjective age-of-acquisition norms for 7,039 Spanish words
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 268-274
+  doi: 10.3758/s13428-014-0454-2
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 7039
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - aoa_mean
+  - aoa_sd
+  - aoa_minimum
+  - aoa_maximum
+  - aoa_zscore
+  - oral_freq_log_mean
+  - written_freq_log_subtlexesp_mean
+  - written_freq_log_lexesp_mean
+  - written_freq_log_espal_mean
+  - lem_cat_espl_maximum
+  - lem_maximum_code
+  - syllables
+  flags:
+    aoa: yes
+    syllables: yes

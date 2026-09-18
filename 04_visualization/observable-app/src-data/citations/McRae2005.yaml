@@ -1,0 +1,75 @@
+bibtex: McRae2005
+parent_bibtex: ~
+citation:
+  author: Ken McRae, George S. Cree, Mark S. Seidenberg, Chris Mcnorgan
+  year: 2005
+  title: Semantic feature production norms for a large set of living and nonliving
+    things
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 547-559
+  doi: 10.3758/bf03192726
+  source: crossref
+dataset:
+  language_from_columns: english_concept, english_feature
+  n_rows_csv: 7259
+variables:
+  word_columns:
+  - word_english_concept
+  - word_english_feature
+  raw_columns:
+  - word_english_concept
+  - word_english_feature
+  - wb_label
+  - wb_maj
+  - wb_min
+  - br_label
+  - prod_freq
+  - rank_pf
+  - sum_pf_no_tax
+  - cpf
+  - disting
+  - distinct
+  - cv_no_tax
+  - intercorr_str_tax
+  - intercorr_str_no_tax
+  - feat_length_including_spaces
+  - pronunciation
+  - frequency_kf
+  - frequency_kf_ln
+  - frequency_bnc
+  - frequency_ln_bnc
+  - familiar_mean
+  - letters
+  - phonemes
+  - syllables
+  - bigram
+  - trigram
+  - coltheart_n
+  - n_feats_tax
+  - n_feats_no_tax
+  - n_disting_feats_no_tax
+  - disting_feats_percent_no_tax
+  - mean_distinct_no_tax
+  - mean_cv_no_tax
+  - density_no_tax
+  - n_corred_pairs_no_tax
+  - percent_corred_pairs_no_tax
+  - n_func
+  - n_vis_mot
+  - n_vis_f_and_s
+  - n_vis_col
+  - n_sound
+  - n_taste
+  - n_smell
+  - n_tact
+  - n_ency
+  - n_tax
+  flags:
+    dist: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    phonemes: yes
+    pronounce: yes
+    syllables: yes

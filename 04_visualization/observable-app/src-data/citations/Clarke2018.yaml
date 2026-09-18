@@ -1,0 +1,54 @@
+bibtex: Clarke2018
+parent_bibtex: ~
+citation:
+  author: A. J. Benjamin Clarke, Jason D. Ludington
+  year: 2018
+  title: Thai Norms for Name, Image, and Category Agreement, Object Familiarity, Visual
+    Complexity, Manipulability, and Age of Acquisition for 480 Color Photographic
+    Objects
+  journal: Journal of Psycholinguistic Research
+  volume: '47'
+  pages: 607-626
+  doi: 10.1007/s10936-017-9544-5
+  source: crossref
+dataset:
+  language_from_columns: thai_intended, thai
+  n_rows_csv: 480
+variables:
+  word_columns:
+  - word_thai_intended
+  - word_thai_modal
+  raw_columns:
+  - translate_word_english
+  - word_thai_intended
+  - word_thai_modal
+  - translate_word_thai_romanized
+  - name_agreement_percent
+  - name_agreement_h
+  - name_agreement_k
+  - dko
+  - dkn
+  - total
+  - modal_category
+  - category_agreement_percent
+  - category_agreement_h
+  - familiar_mean
+  - familiar_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - grasp_mean
+  - grasp_sd
+  - mime_mean
+  - mime_sd
+  - image_agreement_mean
+  - image_agreement_sd
+  - aoa_mean
+  - aoa_sd
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    imageagree: yes
+    nameagree: yes
+    sensory: yes
+    visualcomp: yes

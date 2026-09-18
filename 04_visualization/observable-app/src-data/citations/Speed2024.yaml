@@ -1,0 +1,68 @@
+bibtex: Speed2024
+parent_bibtex: ~
+citation:
+  author: Laura J. Speed, Marc Brysbaert
+  year: 2023
+  title: Ratings of valence, arousal, happiness, anger, fear, sadness, disgust, and
+    surprise for 24,000 Dutch words
+  journal: Behavior Research Methods
+  volume: '56'
+  pages: 5023-5039
+  doi: 10.3758/s13428-023-02239-6
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 23986
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - arousal_mean
+  - valence_mean
+  - valence_category
+  - valence_vs_neutral
+  - happiness_mean
+  - anger_mean
+  - fear_mean
+  - sadness_mean
+  - disgust_mean
+  - surprise_mean
+  - dominant_emotion
+  - n_arousal
+  - n_valence
+  - n_primary_emotion
+  - n_unknown_arousal
+  - n_unknown_valence
+  - n_unknown_primary_emotion
+  - concrete_mean
+  - concrete_category
+  - imagine_mean
+  - imagine_category
+  - source_imageability
+  - frequency_zipf
+  - prevalence
+  - length
+  - syllables
+  - phonemes
+  - pos
+  - old20
+  - aoa_mean
+  - rt_mean_dlp
+  - accuracy_dlp
+  - rt_mean_dcp
+  - accuracy_dcp
+  flags:
+    accuracy: yes
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    emotion: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    pos: yes
+    rt: yes
+    syllables: yes
+    valence: yes

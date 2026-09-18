@@ -1,0 +1,97 @@
+bibtex: Bogunovic2024
+parent_bibtex: ~
+citation:
+  author: Irena Bogunović, Bojana Ćoso, Marc Guasch, Eva Pavlinušić Vilus, Pilar Ferré,
+    José Antonio Hinojosa
+  year: 2025
+  title: How do we feel about borrowed words? Affective and lexico-semantic norms
+    for most frequent unadapted English loanwords in Croatian (ENGRI CROWD)
+  journal: International Journal of Bilingualism
+  volume: '29'
+  pages: 1309-1334
+  doi: 10.1177/13670069241280355
+  source: crossref
+dataset:
+  language_from_columns: english_loanword, croatian_incontext, croatian_outcontext,
+    croatian_adaptedform
+  n_rows_csv: 391
+variables:
+  word_columns:
+  - word_english_loanword
+  - word_croatian_incontext
+  - word_croatian_outcontext
+  - word_croatian_adaptedform
+  raw_columns:
+  - word_english_loanword
+  - word_croatian_incontext
+  - word_croatian_outcontext
+  - word_croatian_adaptedform
+  - valence_mean_english_loanword
+  - valence_sd_english_loanword
+  - valence_unknown_english_loanword
+  - valence_n_english_loanword
+  - valence_mean_croatian_incontext
+  - valence_sd_croatian_incontext
+  - valence_unknown_croatian_incontext
+  - valence_n_croatian_incontext
+  - valence_mean_croatian_outcontext
+  - valence_sd_croatian_outcontext
+  - valence_unknown_croatian_outcontext
+  - valence_n_croatian_outcontext
+  - valence_mean_croatian_adaptedform
+  - valence_sd_croatian_adaptedform
+  - valence_unknown_croatian_adaptedform
+  - valence_n_croatian_adaptedform
+  - arousal_mean_english_loanword
+  - arousal_sd_english_loanword
+  - arousal_unknown_english_loanword
+  - arousal_n_english_loanword
+  - arousal_mean_croatian_incontext
+  - arousal_sd_croatian_incontext
+  - arousal_unknown_croatian_incontext
+  - arousal_n_croatian_incontext
+  - arousal_mean_croatian_outcontext
+  - arousal_sd_croatian_outcontext
+  - arousal_unknown_croatian_outcontext
+  - arousal_n_croatian_outcontext
+  - arousal_mean_croatian_adaptedform
+  - arousal_sd_croatian_adaptedform
+  - arousal_unknown_croatian_adaptedform
+  - arousal_n_croatian_adaptedform
+  - familiar_mean_english_loanword
+  - familiar_sd_english_loanword
+  - familiar_unknown_english_loanword
+  - familiar_n_english_loanword
+  - familiar_mean_croatian_incontext
+  - familiar_sd_croatian_incontext
+  - familiar_unknown_croatian_incontext
+  - familiar_n_croatian_incontext
+  - familiar_mean_croatian_outcontext
+  - familiar_sd_croatian_outcontext
+  - familiar_unknown_croatian_outcontext
+  - familiar_n_croatian_outcontext
+  - familiar_mean_croatian_adaptedform
+  - familiar_sd_croatian_adaptedform
+  - familiar_unknown_croatian_adaptedform
+  - familiar_n_croatian_adaptedform
+  - concrete_mean_english_loanword
+  - concrete_sd_english_loanword
+  - concrete_unknown_english_loanword
+  - concrete_n_english_loanword
+  - concrete_mean_croatian_incontext
+  - concrete_sd_croatian_incontext
+  - concrete_unknown_croatian_incontext
+  - concrete_n_croatian_incontext
+  - concrete_mean_croatian_outcontext
+  - concrete_sd_croatian_outcontext
+  - concrete_unknown_croatian_outcontext
+  - concrete_n_croatian_outcontext
+  - concrete_mean_croatian_adaptedform
+  - concrete_sd_croatian_adaptedform
+  - concrete_unknown_croatian_adaptedform
+  - concrete_n_croatian_adaptedform
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    valence: yes

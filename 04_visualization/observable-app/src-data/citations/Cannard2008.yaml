@@ -1,0 +1,31 @@
+bibtex: Cannard2008
+parent_bibtex: ~
+citation:
+  author: Christine Cannard, Sonia Kandel
+  year: 2008
+  title: 'Impact of semantic or phonemic cues in picture-naming tasks on the calculation
+    of the objective age-of-acquisition norms: A cross-linguistic study'
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 1055-1064
+  doi: 10.3758/brm.40.4.1055
+  source: crossref
+dataset:
+  language_from_columns: french, english
+  n_rows_csv: 145
+variables:
+  word_columns:
+  - word_french
+  - word_english
+  raw_columns:
+  - word_french
+  - word_english
+  - aoa_mean
+  - aoa_mean_chalard2003
+  - aoa_mean_pind2000
+  - aoa_mean_morrison1997
+  - aoa_mean_barbarotto2005
+  - aoa_mean_perez2005
+  - aoa_mean_alvarez2007
+  flags:
+    aoa: yes

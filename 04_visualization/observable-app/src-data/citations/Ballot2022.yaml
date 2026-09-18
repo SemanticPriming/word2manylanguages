@@ -1,0 +1,77 @@
+bibtex: Ballot2022
+parent_bibtex: ~
+citation:
+  author: Claire Ballot, Stéphanie Mathey, Christelle Robert
+  year: 2022
+  title: 'Age-related evaluations of imageability and subjective frequency for 1286
+    neutral and emotional French words: ratings by young, middle-aged, and older adults'
+  journal: Behavior Research Methods
+  volume: '54'
+  pages: 196-215
+  doi: 10.3758/s13428-021-01621-6
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1286
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - frequency_subjective_mean_all
+  - frequency_subjective_sd_all
+  - frequency_subjective_mean_25
+  - frequency_subjective_sd_25
+  - frequency_subjective_mean_39
+  - frequency_subjective_sd_39
+  - frequency_subjective_mean_59
+  - frequency_subjective_sd_59
+  - frequency_subjective_mean_60plus
+  - frequency_subjective_sd_60plus
+  - frequency_subjective_pval_25v39
+  - frequency_subjective_pval_25v59
+  - frequency_subjective_pval_25v60plus
+  - frequency_subjective_pval_39v59
+  - frequency_subjective_pval_39v60plus
+  - frequency_subjective_pval_59v60plus
+  - imagine_mean_all
+  - imagine_sd_all
+  - imagine_mean_25
+  - imagine_sd_25
+  - imagine_mean_39
+  - imagine_sd_39
+  - imagine_mean_59
+  - imagine_sd_59
+  - imagine_mean_60plus
+  - imagine_sd_60plus
+  - imagine_pval_25v39
+  - imagine_pval_25v59
+  - imagine_pval_25v60plus
+  - imagine_pval_39v59
+  - imagine_pval_39v60plus
+  - imagine_pval_59v60plus
+  - valence_mean_all
+  - valence_sd_all
+  - valence_mean_25
+  - valence_sd_25
+  - valence_mean_39
+  - valence_sd_39
+  - valence_mean_59
+  - valence_sd_59
+  - valence_mean_60plus
+  - valence_sd_60plus
+  - arousal_mean_all
+  - arousal_sd_all
+  - arousal_mean_25
+  - arousal_sd_25
+  - arousal_mean_39
+  - arousal_sd_39
+  - arousal_mean_59
+  - arousal_sd_59
+  - arousal_mean_60plus
+  - arousal_sd_60plus
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    valence: yes

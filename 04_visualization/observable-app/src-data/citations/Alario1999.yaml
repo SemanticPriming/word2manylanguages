@@ -1,0 +1,46 @@
+bibtex: Alario1999
+parent_bibtex: ~
+citation:
+  author: F.-Xavier Alario, Ludovic Ferrand
+  year: 1999
+  title: 'A set of 400 pictures standardized for French: Norms for name agreement,
+    image agreement, familiarity, visual complexity, image variability, and age of
+    acquisition'
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '31'
+  pages: 531-552
+  doi: 10.3758/bf03200732
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 400
+variables:
+  word_columns:
+  - word_spanish
+  - word_spanish_modal
+  raw_columns:
+  - word_spanish
+  - word_spanish_modal
+  - translate_word_english
+  - name_agreement_h
+  - name_agreement_p
+  - image_agreement_mean
+  - image_agreement_sd
+  - familiar_mean
+  - familiar_sd
+  - complexity_mean
+  - complexity_sd
+  - variability_mean
+  - variability_sd
+  - aoa_mean
+  - aoa_sd
+  - f
+  - verbal_association
+  - p
+  flags:
+    aoa: yes
+    assoc: yes
+    complex: yes
+    familiar: yes
+    imageagree: yes
+    nameagree: yes

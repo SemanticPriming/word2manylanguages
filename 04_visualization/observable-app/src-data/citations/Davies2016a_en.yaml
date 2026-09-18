@@ -1,0 +1,41 @@
+bibtex: Davies2016a_en
+parent_bibtex: Davies2016a
+citation:
+  author: Shakiela K. Davies, Cristina Izura, Rosy Socas, Alberto Dominguez
+  year: 2016
+  title: Age of acquisition and imageability norms for base and morphologically complex
+    words in English and in Spanish
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 349-365
+  doi: 10.3758/s13428-015-0579-y
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 2186
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - base_word
+  - word_english
+  - aoa_mean
+  - imagine_mean
+  - frequency
+  - length
+  - phonemes
+  - syllables
+  - orthographic_neighborhood
+  - morphological_family_size_total
+  - morphological_family_size_semantic_related
+  - semantic_distance
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    morph: yes
+    orthon: yes
+    phonemes: yes
+    semantic: yes
+    syllables: yes

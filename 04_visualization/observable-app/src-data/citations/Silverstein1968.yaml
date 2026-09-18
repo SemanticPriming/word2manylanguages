@@ -1,0 +1,28 @@
+bibtex: Silverstein1968
+parent_bibtex: ~
+citation:
+  author: Albert Silverstein, Richard A. Dienstbier
+  year: 1968
+  title: Rated pleasantness and association value of 101 English nouns
+  journal: Journal of Verbal Learning and Verbal Behavior
+  volume: '7'
+  pages: 81-86
+  doi: 10.1016/s0022-5371(68)80168-9
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 101
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - frequency_lorge
+  - association_women_mean
+  - association_men_mean
+  - pleasant_women_mean
+  - pleasant_men_mean
+  flags:
+    assoc: yes
+    emotion: yes
+    freq: yes

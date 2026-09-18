@@ -1,0 +1,29 @@
+bibtex: Brysbaert2014
+parent_bibtex: ~
+citation:
+  author: Marc Brysbaert, Amy Beth Warriner, Victor Kuperman
+  year: 2014
+  title: Concreteness ratings for 40 thousand generally known English word lemmas
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 904-911
+  doi: 10.3758/s13428-013-0403-5
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 39954
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - bigram
+  - concrete_mean
+  - concrete_sd
+  - unknown_n
+  - total_n
+  - known_proportion
+  - frequency_subtlex
+  flags:
+    concrete: yes
+    freq: yes

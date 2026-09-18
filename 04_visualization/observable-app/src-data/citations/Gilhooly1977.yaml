@@ -1,0 +1,36 @@
+bibtex: Gilhooly1977
+parent_bibtex: ~
+citation:
+  author: K. J. Gilhooly, D. Hay
+  year: 1977
+  title: Imagery, concreteness, age-of-acquisition, familiarity, and meaningfulness
+    values for 205 five-letter words having single-solution anagrams
+  journal: Behavior Research Methods & Instrumentation
+  volume: '9'
+  pages: 12-17
+  doi: 10.3758/bf03202210
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 205
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - meaningfulness_mean
+  - meaningfulness_sd
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    meaning: yes

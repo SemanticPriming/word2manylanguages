@@ -1,0 +1,90 @@
+bibtex: PetiStantic2021
+parent_bibtex: ~
+citation:
+  author: Anita Peti-Stantić, Maja Anđel, Vedrana Gnjidić, Gordana Keresteš, Nikola
+    Ljubešić, Irina Masnikosa, et al.
+  year: 2021
+  title: 'The Croatian psycholinguistic database: Estimates for 6000 nouns, verbs,
+    adjectives and adverbs'
+  journal: Behavior Research Methods
+  volume: '53'
+  pages: 1799-1816
+  doi: 10.3758/s13428-020-01533-x
+  source: crossref
+dataset:
+  language_from_columns: croatian, class
+  n_rows_csv: 6000
+variables:
+  word_columns:
+  - word_croatian
+  - word_class
+  raw_columns:
+  - word_croatian
+  - data_round
+  - word_class
+  - gender
+  - animacy
+  - length
+  - frequency_raw_hrwac
+  - concrete_n
+  - concrete_mean
+  - concrete_median
+  - concrete_sd
+  - concrete_min
+  - concrete_max
+  - concrete_n_male
+  - concrete_mean_male
+  - concrete_median_male
+  - concrete_sd_male
+  - concrete_n_female
+  - concrete_mean_female
+  - concrete_median_female
+  - concrete_sd_female
+  - frequency_subjective_n
+  - frequency_subjective_mean
+  - frequency_subjective_median
+  - frequency_subjective_sd
+  - frequency_subjective_min
+  - frequency_subjective_max
+  - frequency_subjective_n_male
+  - frequency_subjective_mean_male
+  - frequency_subjective_median_male
+  - frequency_subjective_sd_male
+  - frequency_subjective_n_female
+  - frequency_subjective_mean_female
+  - frequency_subjective_median_female
+  - frequency_subjective_sd_female
+  - imagine_n
+  - imagine_mean
+  - imagine_median
+  - imagine_sd
+  - imagine_min
+  - imagine_max
+  - imagine_n_male
+  - imagine_mean_male
+  - imagine_median_male
+  - imagine_sd_male
+  - imagine_n_female
+  - imagine_mean_female
+  - imagine_median_female
+  - imagine_sd_female
+  - aoa_n
+  - aoa_mean
+  - aoa_median
+  - aoa_sd
+  - aoa_min
+  - aoa_max
+  - aoa_n_male
+  - aoa_mean_male
+  - aoa_median_male
+  - aoa_sd_male
+  - aoa_n_female
+  - aoa_mean_female
+  - aoa_median_female
+  - aoa_sd_female
+  flags:
+    aoa: yes
+    concrete: yes
+    freq: yes
+    imagine: yes
+    letters: yes

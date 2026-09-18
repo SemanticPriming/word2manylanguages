@@ -1,0 +1,46 @@
+bibtex: Vo2009
+parent_bibtex: ~
+citation:
+  author: Melissa L. H. Võ, Markus Conrad, Lars Kuchinke, Karolina Urton, Markus J.
+    Hofmann, Arthur M. Jacobs
+  year: 2009
+  title: The Berlin Affective Word List Reloaded (BAWL-R)
+  journal: Behavior Research Methods
+  volume: '41'
+  pages: 534-538
+  doi: 10.3758/brm.41.2.534
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 2902
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - pos
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - imagine_mean
+  - imagine_sd
+  - length
+  - phonemes
+  - syllables
+  - frequency_1mil
+  - 'n'
+  - fn
+  - hfn
+  - fhfn
+  - bigmean_token
+  - account
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    pos: yes
+    syllables: yes
+    valence: yes

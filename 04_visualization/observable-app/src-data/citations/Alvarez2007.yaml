@@ -1,0 +1,23 @@
+bibtex: Alvarez2007
+parent_bibtex: ~
+citation:
+  author: Bernardo Álvarez, Fernando Cuetos
+  year: 2007
+  title: Objective age of acquisition norms for a set of 328 words in Spanish
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 377-383
+  doi: 10.3758/bf03193006
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 328
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - aoa_mean
+  flags:
+    aoa: yes

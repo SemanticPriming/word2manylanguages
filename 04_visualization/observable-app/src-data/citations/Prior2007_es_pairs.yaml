@@ -1,0 +1,48 @@
+bibtex: Prior2007_es_pairs
+parent_bibtex: Prior2007_es
+citation:
+  author: Anat Prior, Brian MacWhinney, Judith F. Kroll
+  year: 2007
+  title: 'Translation norms for English and Spanish: The role of lexical variables,
+    word class, and L2 proficiency in negotiating translation ambiguity'
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 1029-1038
+  doi: 10.3758/bf03193001
+  source: crossref
+dataset:
+  language_from_columns: spanish, frequency_per_million, length, class, aoa_mean,
+    familiar_mean, imagine_mean, concrete_mean, translations_n
+  n_rows_csv: 1394
+variables:
+  word_columns:
+  - word_spanish
+  - word_frequency_per_million
+  - word_length
+  - word_class
+  - word_aoa_mean
+  - word_familiar_mean
+  - word_imagine_mean
+  - word_concrete_mean
+  - word_translations_n
+  raw_columns:
+  - word_spanish
+  - translate_english
+  - word_frequency_per_million
+  - word_length
+  - word_class
+  - word_aoa_mean
+  - word_familiar_mean
+  - word_imagine_mean
+  - word_concrete_mean
+  - word_translations_n
+  - translate_frequency_per_million
+  - translate_length
+  - translate_class
+  - translate_aoa_mean
+  - translate_concrete_mean
+  - translate_familiar_mean
+  - translate_imagine_mean
+  - translate_probability
+  - cognate_rating
+  flags: {}

@@ -1,0 +1,86 @@
+bibtex: Warriner2013
+parent_bibtex: ~
+citation:
+  author: Amy Beth Warriner, Victor Kuperman, Marc Brysbaert
+  year: 2013
+  title: Norms of valence, arousal, and dominance for 13,915 English lemmas
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 1191-1207
+  doi: 10.3758/s13428-012-0314-x
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 13915
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - dominance_mean
+  - dominance_sd
+  - dominance_n
+  - valence_mean_male
+  - valence_sd_male
+  - valence_n_male
+  - valence_mean_female
+  - valence_sd_female
+  - valence_n_female
+  - arousal_mean_male
+  - arousal_sd_male
+  - arousal_n_male
+  - arousal_mean_female
+  - arousal_sd_female
+  - arousal_n_female
+  - dominance_mean_male
+  - dominance_sd_male
+  - dominance_n_male
+  - dominance_mean_female
+  - dominance_sd_female
+  - dominance_n_female
+  - valence_mean_young
+  - valence_sd_young
+  - valence_n_young
+  - valence_mean_old
+  - valence_sd_old
+  - valence_n_old
+  - arousal_mean_young
+  - arousal_sd_young
+  - arousal_n_young
+  - arousal_mean_old
+  - arousal_sd_old
+  - arousal_n_old
+  - dominance_mean_young
+  - dominance_sd_young
+  - dominance_n_young
+  - dominance_mean_old
+  - dominance_sd_old
+  - dominance_n_old
+  - valence_mean_low_education
+  - valence_sd_low_education
+  - valence_n_low_education
+  - valence_mean_high_education
+  - valence_sd_high_education
+  - valence_n_high_education
+  - arousal_mean_low_education
+  - arousal_sd_low_education
+  - arousal_n_low_education
+  - arousal_mean_high_education
+  - arousal_sd_high_education
+  - arousal_n_high_education
+  - dominance_mean_low_education
+  - dominance_sd_low_education
+  - dominance_n_low_education
+  - dominance_mean_high_education
+  - dominance_sd_high_education
+  - dominance_n_high_education
+  flags:
+    arousal: yes
+    dominate: yes
+    valence: yes

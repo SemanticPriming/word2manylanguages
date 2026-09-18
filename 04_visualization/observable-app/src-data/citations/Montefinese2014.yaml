@@ -1,0 +1,76 @@
+bibtex: Montefinese2014
+parent_bibtex: ~
+citation:
+  author: Maria Montefinese, Ettore Ambrosini, Beth Fairfield, Nicola Mammarella
+  year: 2014
+  title: The adaptation of the Affective Norms for English Words (ANEW) for Italian
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 887-903
+  doi: 10.3758/s13428-013-0405-3
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 1127
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - anew_number
+  - anew_yesno
+  - translate_word_english
+  - word_italian
+  - pos
+  - length
+  - frequency_colfis
+  - frequency_log_colfis
+  - frequecy_repub
+  - log_frequency_repub
+  - orthographic_neighbors
+  - frequency_mean_orthographic_neighbors
+  - n_familiar_imagine_concrete
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - n_valence_arousal_dominance
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - dominance_mean
+  - dominance_sd
+  - n_valence_arousal_dominance_female
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - n_valence_arousal_dominance_male
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - df_compare_gender
+  - t_valence
+  - p_valence
+  - t_arousal
+  - p_arousal
+  - t_dominance
+  - p_dominance
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    orthon: yes
+    pos: yes
+    valence: yes

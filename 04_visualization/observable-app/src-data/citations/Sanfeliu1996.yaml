@@ -1,0 +1,58 @@
+bibtex: Sanfeliu1996
+parent_bibtex: ~
+citation:
+  author: M. Carmen Sanfeliu, Angel Fernandez
+  year: 1996
+  title: 'A set of 254 Snodgrass-Vanderwart pictures standardized for Spanish: Norms
+    for name agreement, image agreement, familiarity, and visual complexity'
+  journal: Behavior Research Methods, Instruments & Computers
+  volume: '28'
+  pages: 537-555
+  doi: 10.3758/bf03200541
+  source: crossref
+dataset:
+  language_from_columns: spanish, english
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_spanish
+  - word_english
+  raw_columns:
+  - picture_id
+  - word_spanish
+  - word_english
+  - name_agreement_h_spanish
+  - name_agreement_percent_spanish
+  - name_agreement_h_english
+  - name_agreement_percent_english
+  - image_agreement_mean_spanish
+  - image_agreement_sd_spanish
+  - image_agreement_mean_english
+  - image_agreement_sd_english
+  - familiar_mean_spanish
+  - familiar_sd_spanish
+  - familiar_mean_english
+  - familiar_sd_english
+  - visual_complexity_mean_spanish
+  - visual_complexity_sd_spanish
+  - visual_complexity_mean_english
+  - visual_complexity_sd_english
+  - picture_name_agreement_mean_spanish
+  - picture_name_agreement_sd_spanish
+  - image_variability_mean_spanish
+  - image_variability_sd_spanish
+  - dont_know_name_n
+  - dont_know_object_n
+  - tip_of_tongue_n
+  - dont_know_object_familiarity_n
+  - no_image_n
+  - different_object_imaged_n
+  - nondominant_names
+  - availability_note
+  flags:
+    familiar: yes
+    imageagree: yes
+    imagevar: yes
+    nameagree: yes
+    picture: yes
+    visualcomp: yes

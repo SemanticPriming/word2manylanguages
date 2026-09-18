@@ -1,0 +1,31 @@
+bibtex: Li2021
+parent_bibtex: ~
+citation:
+  author: Bing Li, Qiduo Lin, Hoi Yan Mak, Ovid J. L. Tzeng, Chih-Mao Huang, Hsu-Wen
+    Huang
+  year: 2021
+  title: 'Category Exemplar Production Norms for Hong Kong Cantonese: Instance Probabilities
+    and Word Familiarity'
+  journal: Frontiers in Psychology
+  volume: '12'
+  pages: []
+  doi: 10.3389/fpsyg.2021.657706
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional
+  n_rows_csv: 72
+variables:
+  word_columns:
+  - word_chinese_traditional
+  raw_columns:
+  - word_chinese_traditional
+  - translate_word_english
+  - number_exemplars
+  - number_exemplars_90_coverage
+  - coverage_90_percent
+  - invalid_exemplars_percent
+  - first_examplar_percent
+  - familiar_mean
+  - familiar_sd
+  flags:
+    familiar: yes

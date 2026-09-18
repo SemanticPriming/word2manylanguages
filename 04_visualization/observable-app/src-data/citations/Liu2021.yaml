@@ -1,0 +1,71 @@
+bibtex: Liu2021
+parent_bibtex: ~
+citation:
+  author: Pingping Liu, Qin Lu, Zhen Zhang, Jie Tang, Buxin Han
+  year: 2021
+  title: Age-Related Differences in Affective Norms for Chinese Words (AANC)
+  journal: Frontiers in Psychology
+  volume: '12'
+  pages: []
+  doi: 10.3389/fpsyg.2021.585666
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 2062
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - translate_word_english
+  - valence_mean_all
+  - valence_sd_all
+  - arousal_mean_all
+  - arousal_sd_all
+  - dominance_mean_all
+  - dominance_sd_all
+  - familiar_mean_all
+  - familiar_sd_all
+  - valence_mean_old
+  - valence_sd_old
+  - arousal_mean_old
+  - arousal_sd_old
+  - dominance_mean_old
+  - dominance_sd_old
+  - familiar_mean_old
+  - familiar_sd_old
+  - valence_mean_young
+  - valence_sd_young
+  - arousal_mean_young
+  - arousal_sd_young
+  - dominance_mean_young
+  - dominance_sd_young
+  - familiar_mean_young
+  - familiar_sd_young
+  - valence_n_all
+  - valence_n_old
+  - valance_n_young
+  - df_n_all
+  - df_n_old
+  - df_n_young
+  - frequency
+  - complexity
+  - char_1
+  - char_1_frequency
+  - char_1_stroke
+  - char_2
+  - char_2_frequency
+  - char_2_stroke
+  - char_3
+  - char_3_frequency
+  - char_3_stroke
+  - char_4
+  - char_4_frequency
+  - char_4_stroke
+  flags:
+    arousal: yes
+    complex: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    valence: yes

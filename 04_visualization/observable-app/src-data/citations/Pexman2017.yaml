@@ -1,0 +1,37 @@
+bibtex: Pexman2017
+parent_bibtex: ~
+citation:
+  author: Penny M. Pexman, Alison Heard, Ellen Lloyd, Melvin J. Yap
+  year: 2017
+  title: 'The Calgary semantic decision project: concrete/abstract decision data for
+    10,000 English words'
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 407-417
+  doi: 10.3758/s13428-016-0720-6
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 10049
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - version_num
+  - type
+  - block
+  - id_number
+  - rt_clean_mean
+  - rt_clean_sd
+  - rt_clean_n
+  - rt_clean_mean_zscore
+  - rt_clean_sd_zscore
+  - rt_clean_n_zscore
+  - acc_prop
+  - accuracy_n
+  - concrete_mean
+  flags:
+    accuracy: yes
+    concrete: yes
+    rt: yes

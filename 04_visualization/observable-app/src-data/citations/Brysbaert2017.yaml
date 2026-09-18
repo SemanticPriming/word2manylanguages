@@ -1,0 +1,29 @@
+bibtex: Brysbaert2017
+parent_bibtex: ~
+citation:
+  author: Marc Brysbaert, Andrew Biemiller
+  year: 2017
+  title: Test-based age-of-acquisition norms for 44 thousand English word meanings
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1520-1523
+  doi: 10.3758/s13428-016-0811-4
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 43998
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - meaning
+  - aoa_mean_testbased
+  - aoa_mean_rating
+  - lwv
+  - cdi
+  - morr
+  - floc
+  flags:
+    aoa: yes
+    meaning: yes

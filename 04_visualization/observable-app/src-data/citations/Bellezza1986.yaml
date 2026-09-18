@@ -1,0 +1,32 @@
+bibtex: Bellezza1986
+parent_bibtex: ~
+citation:
+  author: Francis S. Bellezza, Anthony G. Greenwald, Mahzarin R. Banaji
+  year: 1986
+  title: Words high and low in pleasantness as rated by male and female college students
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '18'
+  pages: 299-303
+  doi: 10.3758/bf03204403
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 36
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - pleasant_mean_male
+  - pleasant_mean_female
+  - pleasant_mean
+  - imagine_mean_male
+  - imagine_mean_female
+  - imagine_mean
+  - frequency_mean_male
+  - frequency_mean_female
+  - frequency_mean
+  flags:
+    emotion: yes
+    freq: yes
+    imagine: yes

@@ -1,0 +1,48 @@
+bibtex: Navarrete2019
+parent_bibtex: ~
+citation:
+  author: Eduardo Navarrete, Giorgio Arcara, Sara Mondini, Barbara Penolazzi
+  year: 2019
+  title: Italian norms and naming latencies for 357 high quality color images
+  journal: PLOS ONE
+  volume: '14'
+  pages: e0209524
+  doi: 10.1371/journal.pone.0209524
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 357
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - figure_name
+  - translate_word_english
+  - word_italian
+  - category_english
+  - category_italian
+  - image_agreement_proportion
+  - h
+  - frequency
+  - aoa_mean
+  - aoa_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - familiar_mean
+  - familiar_sd
+  - manipulability_mean
+  - manipulability_sd
+  - typicality_mean
+  - typicality_sd
+  - rt
+  - rt_sd
+  - rt_expected_names
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    rt: yes
+    typical: yes
+    visualcomp: yes

@@ -1,0 +1,43 @@
+bibtex: Weekes2007
+parent_bibtex: ~
+citation:
+  author: Brendan Stuart Weekes, Hua Shu, Meiling Hao, Youyi Liu, Li Hai Tan
+  year: 2007
+  title: Predictors of timed picture naming in Chinese
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 335-342
+  doi: 10.3758/bf03193165
+  source: crossref
+dataset:
+  language_from_columns: chinese_pinyin, chinese_simplified
+  n_rows_csv: 232
+variables:
+  word_columns:
+  - word_chinese_pinyin
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_pinyin
+  - syllables
+  - name_agreement_h_mean
+  - name_agreement_proportion
+  - concept_agreement_percent
+  - familiar_mean
+  - imagine_mean
+  - visual_complexity_mean
+  - aoa_mean_subjective
+  - frequency
+  - translate_word_english
+  - rt_mean_exp1
+  - rt_mean_exp2
+  - alt
+  - word_chinese_simplified
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    nameagree: yes
+    rt: yes
+    syllables: yes
+    visualcomp: yes

@@ -1,0 +1,42 @@
+bibtex: Bogunovic2023
+parent_bibtex: ~
+citation:
+  author: Irena Bogunović
+  year: 2023
+  title: A corpus-based approach to English loanwords,Korpusni pristup engleskim posuđenicama
+  journal: Fluminensia
+  volume: '35'
+  pages: 437-460
+  doi: 10.31820/f.35.2.1
+  source: crossref
+dataset:
+  language_from_columns: croatian_equivalent, croatian
+  n_rows_csv: 1307
+variables:
+  word_columns:
+  - word_croatian_equivalent
+  - word_croatian
+  raw_columns:
+  - word_croatian_equivalent
+  - word_croatian
+  - valence_mean
+  - valence_sd
+  - valence_unknown
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_unknown
+  - arousal_n
+  - familiar_mean
+  - familiar_sd
+  - familiar_unknown
+  - familiar_n
+  - concrete_mean
+  - concrete_sd
+  - concrete_unknown
+  - concrete_n
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    valence: yes

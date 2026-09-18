@@ -1,0 +1,23 @@
+bibtex: Koper2016
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+  data_url: https://aclanthology.org/L16-1413/
+dataset:
+  language_from_columns: german
+  n_rows_csv: 351617
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - concrete_mean
+  - arousal_mean
+  - imagine_mean
+  - valence_mean
+  flags:
+    arousal: yes
+    concrete: yes
+    imagine: yes
+    valence: yes

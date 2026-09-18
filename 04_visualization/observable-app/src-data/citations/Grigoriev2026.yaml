@@ -1,0 +1,59 @@
+bibtex: Grigoriev2026
+parent_bibtex: ~
+citation:
+  author: Andrei A. Grigoriev, Konstantin V. Sugonyaev, Svetlana A. Pashneva, Ekaterina
+    A. Valueva, Nikolai A. Grigorev
+  year: 2026
+  title: Subjective age of acquisition norms for 30,849 Russian words
+  journal: Behavior Research Methods
+  volume: '58'
+  issue: '10'
+  pages: '281'
+  doi: 10.3758/s13428-026-03138-2
+  source: crossref
+  data_url: https://osf.io/56da9/
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 30849
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - word_russian
+  - pos
+  - translate_word_english
+  - 'n'
+  - valid_n
+  - percent_known
+  - aoa_mean
+  - aoa_sd
+  - frequency
+  - frequency_zipf
+  - concrete_mean_grigoriev2022
+  - concrete_soloviev2022_1000
+  - concrete_mean_soloviev2022_500
+  - imagine_mean_grigoriev2009
+  - imagine_mean_tsaparina2011
+  - imagine_mean_pashneva2014
+  - imagine_mean_akinina2014
+  - familiar_mean_tsaparina2011
+  - familiar_mean_grigoriev2010
+  - familiar_mean_pashneva2014
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    pos: yes
+notes: >
+  Originally added to this collection under bibtex "Valueva2025" (from the
+  OSF preprint release, citation unresolved at the time - Valueva is a
+  co-author/the OSF depositor). Now formally published with Grigoriev as
+  first author; renamed to Grigoriev2026 to match this collection's
+  first-author-year convention, with the CSV filename and this model card
+  updated to match. No data changed. The concrete_mean_grigoriev2022,
+  concrete_soloviev2022_*, imagine_mean_*, and familiar_mean_* columns
+  refer to separate prior comparison studies cited within this paper for
+  cross-validation (not this paper's own authors' prior work under the
+  same name coincidentally) - left as originally named.

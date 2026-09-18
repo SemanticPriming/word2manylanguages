@@ -1,0 +1,45 @@
+bibtex: Garnham2020
+parent_bibtex: ~
+citation:
+  author: Alan Garnham, Svenja Vorthmann, Karolina Kaplanova
+  year: 2021
+  title: 'Implicit consequentiality bias in English: A corpus of 300+ verbs'
+  journal: Behavior Research Methods
+  volume: '53'
+  pages: 1530-1550
+  doi: 10.3758/s13428-020-01507-z
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 305
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - semantic_category
+  - letters
+  - frequency_subtlex
+  - frequency_subtlex_zipf
+  - valence_mean_subtlex
+  - cont_total_np1_responses
+  - cont_total_np2_responses
+  - cont_other_responses
+  - bias_conseq_bias_score
+  - bias_causal_bias_score
+  - cont_female
+  - cont_male
+  - bias_gender_fem_p_ps_np1_fem
+  - bias_gender_fem_p_ps_np1_masc
+  - bias_gender_male_p_ps_np1_fem
+  - bias_gender_male_p_ps_np1_masc
+  - bias_gender_fem_p_ps_overall
+  - bias_gender_male_p_ps_overall
+  - bias_gender_np1_fem_overall
+  - bias_gender_np1_masc_overall
+  - u_t_gender_effect
+  flags:
+    freq: yes
+    letters: yes
+    semantic: yes
+    valence: yes

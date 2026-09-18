@@ -1,0 +1,29 @@
+bibtex: Stadthagen-Gonzalez2017
+parent_bibtex: ~
+citation:
+  author: Hans Stadthagen-Gonzalez, Constance Imbault, Miguel A. Pérez Sánchez, Marc
+    Brysbaert
+  year: 2017
+  title: Norms of valence and arousal for 14,031 Spanish words
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 111-123
+  doi: 10.3758/s13428-015-0700-2
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 14031
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - valence_mean
+  - valence_sd
+  - valence_percent_raters
+  - arousal_mean
+  - arousal_sd
+  - arousal_percent_raters
+  flags:
+    arousal: yes
+    valence: yes

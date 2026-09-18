@@ -1,0 +1,24 @@
+bibtex: Hunt1978
+parent_bibtex: ~
+citation:
+  author: Karl Hunt
+  year: 1978
+  title: Imagery values for taxonomic-category names
+  journal: Behavior Research Methods & Instrumentation
+  volume: '10'
+  pages: 750-752
+  doi: 10.3758/bf03205394
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 90
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean_female
+  - imagine_mean_male
+  - imagine_mean
+  flags:
+    imagine: yes

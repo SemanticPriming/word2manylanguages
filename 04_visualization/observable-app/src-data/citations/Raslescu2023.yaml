@@ -1,0 +1,59 @@
+bibtex: Raslescu2023
+parent_bibtex: ~
+citation:
+  author: Andreea Raslescu, Sophie Kreicker, Amy L Gillespie, William Berners-Lee,
+    Susannah E Murphy, Catherine J Harmer
+  year: 2023
+  title: 'Positive and negative personality descriptors: UK dataset of self-referential
+    valence, imageability and subjective frequency ratings of 300 adjectives for use
+    in cognitive-emotional tasks'
+  journal: Data in Brief
+  volume: '46'
+  pages: '108831'
+  doi: 10.1016/j.dib.2022.108831
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 300
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - length
+  - valence_category
+  - valence_n
+  - valence_mean
+  - valence_sd
+  - valence_median
+  - valence_min
+  - valence_max
+  - valence_range
+  - valence_skew
+  - valence_kurtosis
+  - valence_se
+  - imagine_n
+  - imagine_mean
+  - imagine_sd
+  - imagine_median
+  - imagine_min
+  - imagine_max
+  - imagine_range
+  - imagine_skew
+  - imagine_kurtosis
+  - imagine_se
+  - frequency_n
+  - frequency_mean
+  - frequency_sd
+  - frequency_median
+  - frequency_min
+  - frequency_max
+  - frequency_range
+  - frequency_skew
+  - frequency_kurtosis
+  - frequency_se
+  flags:
+    freq: yes
+    imagine: yes
+    letters: yes
+    valence: yes

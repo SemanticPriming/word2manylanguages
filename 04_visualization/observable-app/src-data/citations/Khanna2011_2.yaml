@@ -1,0 +1,31 @@
+bibtex: Khanna2011_2
+parent_bibtex: Khanna2011
+citation:
+  author: Maya M. Khanna, Michael J. Cortese
+  year: 2011
+  title: Age of acquisition estimates for 1,208 ambiguous and polysemous words
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 89-96
+  doi: 10.3758/s13428-010-0027-y
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 314
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - item_number
+  - set_number
+  - word_english
+  - dominance_definition
+  - aoa_mean_dominance
+  - subordinate_definition
+  - aoa_mean_subordinate
+  - rt_mean_ldt
+  - rt_mean_naming
+  flags:
+    aoa: yes
+    dominate: yes
+    rt: yes

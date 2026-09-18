@@ -1,0 +1,38 @@
+bibtex: Wang2020_zh
+parent_bibtex: Wang2020
+citation:
+  author: Jue Wang, Baoguo Chen
+  year: 2020
+  title: 'A Database of Chinese-English Bilingual Speakers: Ratings of the Age of
+    Acquisition and Familiarity'
+  journal: Frontiers in Psychology
+  volume: '11'
+  pages: []
+  doi: 10.3389/fpsyg.2020.554785
+  source: crossref
+dataset:
+  language_from_columns: chinese
+  n_rows_csv: 1053
+variables:
+  word_columns:
+  - word_chinese
+  raw_columns:
+  - word_chinese
+  - aoa_mean_chinese_l1
+  - aoa_recognition_percent_chinese_l1
+  - aoa_recognition_n_chinese_l1
+  - aoa_source_chinese_l1
+  - familiar_mean_chinese_l1
+  - familiar_percent_chinese_l1
+  - familiar_n_chinese_l1
+  - familiar_source_chinese_l1
+  - concrete_mean_chinese_l1
+  - concrete_percent_chinese_l1
+  - concrete_n_chinese_l1
+  - strokes_chinese_l1
+  - frequency_chinese_l1
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes

@@ -1,0 +1,39 @@
+bibtex: Dimitripoulou2009
+parent_bibtex: ~
+citation:
+  author: María Dimitropoulou, Jon Andoni Duñabeitia, Panagiotis Blitsas, Manuel Carreiras
+  year: 2009
+  title: 'A standardized set of 260 pictures for Modern Greek: Norms for name agreement,
+    age of acquisition, and visual complexity'
+  journal: Behavior Research Methods
+  volume: '41'
+  pages: 584-589
+  doi: 10.3758/brm.41.2.584
+  source: crossref
+dataset:
+  language_from_columns: greek
+  n_rows_csv: 268
+variables:
+  word_columns:
+  - word_greek
+  raw_columns:
+  - word_greek
+  - translate_word_english
+  - category_rossion_2004
+  - category_snodgrass_1980
+  - length
+  - frequency
+  - observation_n
+  - name_agreement_proportion
+  - name_agreement_h
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - aoa_subjective_mean
+  - aoa_subjective_sd
+  flags:
+    aoa: yes
+    category: yes
+    freq: yes
+    letters: yes
+    nameagree: yes
+    visualcomp: yes

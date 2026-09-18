@@ -1,0 +1,41 @@
+bibtex: Schroder2012
+parent_bibtex: ~
+citation:
+  author: Astrid Schröder, Teresa Gemballa, Steffie Ruppin, Isabell Wartenburger
+  year: 2012
+  title: German norms for semantic typicality, age of acquisition, and concept familiarity
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 380-394
+  doi: 10.3758/s13428-011-0164-y
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 824
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - translate_word_english
+  - semantic_category
+  - exemplar_n_total
+  - exemplar_pct_total
+  - typicality_mean
+  - typicality_sd
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - frequency_per_million
+  - frequency_log10
+  - phonemes
+  - syllables
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    phonemes: yes
+    semantic: yes
+    syllables: yes
+    typical: yes

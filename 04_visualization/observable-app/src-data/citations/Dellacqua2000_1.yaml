@@ -1,0 +1,46 @@
+bibtex: Dellacqua2000_1
+parent_bibtex: Dellacqua2000
+citation:
+  author: Roberto Dell’acqua, Lorella Lotto, Remo Job
+  year: 2000
+  title: 'Naming times and standardized norms for the italian PD/DPSS set of 266 pictures:
+    Direct comparisons with American, English, French, and Spanish published databases'
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '32'
+  pages: 588-615
+  doi: 10.3758/bf03200832
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 264
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - category
+  - length
+  - syllables
+  - frequency
+  - session
+  - familiar_mean
+  - familiar_sd
+  - typicality_mean
+  - typicality_sd
+  - aoa_mean
+  - aoa_sd
+  - rt_mean
+  - name_agreement
+  - concept_agreement
+  - h
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    nameagree: yes
+    rt: yes
+    syllables: yes
+    typical: yes

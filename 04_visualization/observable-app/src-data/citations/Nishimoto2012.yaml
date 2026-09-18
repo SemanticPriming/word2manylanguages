@@ -1,0 +1,96 @@
+bibtex: Nishimoto2012
+parent_bibtex: ~
+citation:
+  author: Takehiko Nishimoto, Takashi Ueda, Kaori Miyawaki, Yuko Une, Masaru Takahashi
+  year: 2012
+  title: 'The role of imagery-related properties in picture naming: A newly standardized
+    set of 360 pictures for Japanese'
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 934-945
+  doi: 10.3758/s13428-011-0176-7
+  source: crossref
+dataset:
+  language_from_columns: japanese_katana, japanese_romanized, japanese_katana_untimed,
+    japanese_romanized_untimed
+  n_rows_csv: 360
+variables:
+  word_columns:
+  - word_japanese_katana
+  - word_japanese_romanized
+  - word_japanese_katana_untimed
+  - word_japanese_romanized_untimed
+  raw_columns:
+  - translate_word_english
+  - word_japanese_katana
+  - word_japanese_romanized
+  - snodgrass_concept
+  - snodgrass_id
+  - picture_type
+  - rt_mean_strict
+  - rt_mean_liberal
+  - name_agreement_percent_strict
+  - name_agreement_percent_liberal
+  - h
+  - name_agreement_percent_strict_untimed
+  - name_agreement_percent_liberal_untimed
+  - untimed_h
+  - imagine_mean
+  - vivid_mean
+  - image_agreement_mean
+  - image_variability_mean
+  - familiar_mean
+  - aoa_mean
+  - complexity_percent
+  - mora
+  - word_japanese_katana_untimed
+  - word_japanese_romanized_untimed
+  - translate_word_english_untimed
+  - rt_sd_strict
+  - rt_skew_strict
+  - rt_kurtosis_strict
+  - rt_se_strict
+  - rt_min_strict
+  - rt_percentile_5_strict
+  - rt_percentile_10_strict
+  - rt_percentile_20_strict
+  - rt_percentile_25_strict
+  - rt_percentile_30_strict
+  - rt_percentile_40_strict
+  - rt_percentile_50_strict
+  - rt_percentile_60_strict
+  - rt_percentile_70_strict
+  - rt_percentile_75_strict
+  - rt_percentile_80_strict
+  - rt_percentile_90_strict
+  - rt_percentile_95_strict
+  - rt_max_strict
+  - rt_sd_liberal
+  - rt_skew_liberal
+  - rt_kurtosis_liberal
+  - rt_se_liberal
+  - rt_min_liberal
+  - rt_percentile_5_liberal
+  - rt_percentile_10_liberal
+  - rt_percentile_20_liberal
+  - rt_percentile_25_liberal
+  - rt_percentile_30_liberal
+  - rt_percentile_40_liberal
+  - rt_percentile_50_liberal
+  - rt_percentile_60_liberal
+  - rt_percentile_70_liberal
+  - rt_percentile_75_liberal
+  - rt_percentile_80_liberal
+  - rt_percentile_90_liberal
+  - rt_percentile_95_liberal
+  - rt_max_liberal
+  flags:
+    aoa: yes
+    complex: yes
+    familiar: yes
+    imageagree: yes
+    imagevar: yes
+    imagine: yes
+    nameagree: yes
+    picture: yes
+    rt: yes

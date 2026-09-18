@@ -1,0 +1,80 @@
+bibtex: Preininger2025
+parent_bibtex: ~
+citation:
+  author: Marián Preininger, Jason Brand, Adam Kříž, Michaela Ceháková
+  year: 2025
+  title: 'SocioLex-CZ: Normative estimates for socio-semantic dimensions of meaning
+    for 2,999 words and 1,000 images'
+  journal: Behavior Research Methods
+  volume: '58'
+  pages: '18'
+  doi: 10.3758/s13428-025-02907-9
+  source: crossref
+dataset:
+  language_from_columns: czech
+  n_rows_csv: 2999
+variables:
+  word_columns:
+  - word_czech
+  raw_columns:
+  - word_czech
+  - translate_word_english
+  - pos
+  - grammatical_gender_czech
+  - animacy
+  - item_id
+  - gender_mean
+  - gender_sd
+  - gender_n
+  - gender_latent_mean
+  - gender_entropy
+  - location_mean
+  - location_sd
+  - location_n
+  - location_latent_mean
+  - location_entropy
+  - political_mean
+  - political_sd
+  - political_n
+  - political_latent_mean
+  - political_entropy
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - valence_latent_mean
+  - valence_entropy
+  - age_pc1
+  - age_pc2
+  - age_pc3
+  - n_known_age
+  - age_mode
+  - prop_mode
+  - age_prop_0_6
+  - age_prop_7_17
+  - age_prop_18_30
+  - age_prop_31_50
+  - age_prop_51_65
+  - age_prop_66_80
+  - age_prop_81plus
+  flags:
+    valence: yes
+    pos: yes
+notes: >
+  Only the word-norming subset (Experiment 1, "Words" version) of the
+  dataset is included here - the paper also norms 1,000 images (500 unique
+  images in color/grayscale from the Multilingual Picture Database), which
+  are not word-level data and were not converted. Five socio-semantic
+  dimensions were rated on 7-point scales: gender (masculine-feminine),
+  location (rural-urban), political alignment (liberal-conservative),
+  valence (negative-positive), plus age association (categorical checkbox
+  across 7 age bands, summarized here as 3 PCA components, the modal age
+  band, and per-band endorsement proportions). "_latent_mean" and
+  "_entropy" columns are IRT-adjusted means and response-diversity measures
+  from the paper's own processing pipeline, not raw sample means, kept
+  alongside the raw mean/sd/n for each dimension. grammatical_gender_czech
+  is the word's linguistic gender (m/f/n), NOT the socio-semantic gender
+  rating - kept distinct to avoid confusion with gender_mean. No
+  concreteness measure is included in this dataset. Checked against
+  existing Czech entries in this collection (Luniewska2019_cs, an
+  unrelated 299-word age-of-acquisition norm set) - no overlap in words,
+  measures, or source.

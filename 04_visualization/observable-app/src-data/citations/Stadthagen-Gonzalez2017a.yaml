@@ -1,0 +1,50 @@
+bibtex: Stadthagen-Gonzalez2017a
+parent_bibtex: ~
+citation:
+  author: Hans Stadthagen-González, Pilar Ferré, Miguel A. Pérez-Sánchez, Constance
+    Imbault, José Antonio Hinojosa
+  year: 2018
+  title: 'Norms for 10,491 Spanish words for five discrete emotions: Happiness, disgust,
+    anger, fear, and sadness'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 1943-1952
+  doi: 10.3758/s13428-017-0962-y
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 10491
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - few_raters
+  - happiness_mean
+  - happiness_sd
+  - happiness_percent_raters
+  - disgust_mean
+  - disgust_sd
+  - disgust_percent_raters
+  - anger_mean
+  - anger_sd
+  - anger_percent_raters
+  - fear_mean
+  - fear_sd
+  - fear_percent_raters
+  - sad_mean
+  - sad_sd
+  - sad_percent_raters
+  - valence_mean
+  - valence_sd
+  - valence_percent_raters
+  - arousal_mean
+  - arousal_sd
+  - arousal_percent_raters
+  - pos_dominance
+  - pos_dominance_prop
+  flags:
+    arousal: yes
+    emotion: yes
+    pos: yes
+    valence: yes

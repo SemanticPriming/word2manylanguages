@@ -1,0 +1,49 @@
+bibtex: Asahara2019
+parent_bibtex: ~
+citation:
+  author: Masayuki Asahara
+  year: 2019
+  title: Word Familiarity Rate Estimation Using a Bayesian Linear Mixed Model
+  journal: Proceedings of the First Workshop on Aggregating and Analysing Crowdsourced
+    Annotations for NLP
+  volume: []
+  pages: 6-14
+  doi: 10.18653/v1/d19-5902
+  source: crossref
+dataset:
+  language_from_columns: japanese_headword, japanese
+  n_rows_csv: 101067
+variables:
+  word_columns:
+  - word_japanese_headword
+  - word_japanese
+  raw_columns:
+  - record_id
+  - entry_id
+  - record_type
+  - semantic_top_id
+  - semantic_mid_id
+  - semantic_fine_id
+  - semantic_label_full
+  - wlsp_id
+  - paragraph_id
+  - subparagraph_id
+  - index_number
+  - word_japanese_headword
+  - word_japanese
+  - reading_kana
+  - reading_reverse
+  - familiar_mean_know
+  - familiar_mean_writing
+  - familiar_mean_read
+  - familiar_mean_speak
+  - familiar_mean_listen
+  - familiar_mean_production
+  - familiar_mean_reception
+  - familiar_mean_written
+  - familiar_mean_spoken
+  - bias_production_vs_reception
+  - bias_written_vs_spoken
+  flags:
+    familiar: yes
+    semantic: yes

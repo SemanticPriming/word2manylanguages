@@ -1,0 +1,59 @@
+bibtex: Borsa2025
+parent_bibtex: ~
+citation:
+  author: Virginia Maria Borsa, Maria Arioli, Riccardo Verni, Nicola Canessa, Stefano
+    F. Cappa, Eleonora Catricalà
+  year: 2025
+  title: 'Quantifying the Multidimensionality of Abstract Concepts: An Italian Database'
+  journal: Brain Sciences
+  volume: '15'
+  pages: '222'
+  doi: 10.3390/brainsci15030222
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 964
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - italian_code
+  - concrete_mean
+  - concrete_sd
+  - imagine_mean
+  - imagine_sd
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - semantic_diversity_mean
+  - semantic_diversity_sd
+  - introspection_mean
+  - introspection_sd
+  - mental_state_mean
+  - mental_state_sd
+  - social_mean
+  - social_sd
+  - moral_mean
+  - moral_sd
+  - economic_mean
+  - economic_sd
+  - theoretic_mean
+  - theoretic_sd
+  - space_mean
+  - space_sd
+  - quantity_mean
+  - quantity_sd
+  flags:
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    semantic: yes
+    valence: yes

@@ -1,0 +1,44 @@
+bibtex: Yee2017
+parent_bibtex: ~
+citation:
+  author: Lydia T. S. Yee
+  year: 2017
+  title: Valence, arousal, familiarity, concreteness, and imageability ratings for
+    292 two-character Chinese nouns in Cantonese speakers in Hong Kong
+  journal: PLOS ONE
+  volume: '12'
+  pages: e0174569
+  doi: 10.1371/journal.pone.0174569
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 292
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - translate_word_english
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - familiar_mean
+  - familiar_sd
+  - concrete_mean
+  - concrete_sd
+  - imagine_mean
+  - imagine_sd
+  - frequency_words_per_million
+  - frequency_log
+  - frequency_zipf
+  - strokes_1st_character_n
+  - strokes_2nd_character_n
+  - strokes_total_n
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    valence: yes

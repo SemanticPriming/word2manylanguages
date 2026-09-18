@@ -1,0 +1,66 @@
+bibtex: Yi2025
+parent_bibtex: ~
+citation:
+  author: Wei Yi, Haitao Xu, Kaiwen Man
+  year: 2025
+  title: 'Perception of emotion across cultures: Norms of valence, arousal, and sensory
+    experience for 4923 Chinese words translated from English in Warriner et al. (2013)'
+  journal: Behavior Research Methods
+  volume: '57'
+  pages: []
+  doi: 10.3758/s13428-024-02580-4
+  source: crossref
+dataset:
+  language_from_columns: english, chinese_simplified
+  n_rows_csv: 4923
+variables:
+  word_columns:
+  - word_english
+  - word_chinese_simplified
+  raw_columns:
+  - word_english
+  - word_chinese_simplified
+  - pos
+  - syllables
+  - strokes
+  - hsk
+  - valence_mean_chinese
+  - valence_sd_ch
+  - valence_n_chinese
+  - arousal_mean_chinese
+  - arousal_sd_chinese
+  - arousal_n_chinese
+  - valence_mean_english
+  - valence_sd_english
+  - valence_n_english
+  - arousal_mean_english
+  - arousal_sd_english
+  - arousal_n_english
+  - sensory_mean_chinese
+  - sensory_sd_chinese
+  - sensory_n_chinese
+  - valence_xu
+  - arousal_xu
+  - valence_yao
+  - arousal_yao
+  - imagine_su
+  - familiar_su
+  - concrete_xu
+  - frequency_m_tsang
+  - frequency_cncorpus
+  - ao_a_xu
+  - rt_tsang
+  - z_rt_tsang
+  - category
+  flags:
+    arousal: yes
+    category: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    pos: yes
+    rt: yes
+    sensory: yes
+    syllables: yes
+    valence: yes

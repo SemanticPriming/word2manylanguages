@@ -1,0 +1,56 @@
+bibtex: Riegel2015
+parent_bibtex: ~
+citation:
+  author: Monika Riegel, Małgorzata Wierzba, Marek Wypych, Łukasz Żurawski, Katarzyna
+    Jednoróg, Anna Grabowska, et al.
+  year: 2015
+  title: 'Nencki Affective Word List (NAWL): the cultural adaptation of the Berlin
+    Affective Word List–Reloaded (BAWL-R) for Polish'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 1222-1236
+  doi: 10.3758/s13428-014-0552-1
+  source: crossref
+dataset:
+  language_from_columns: polish
+  n_rows_csv: 2902
+variables:
+  word_columns:
+  - word_polish
+  raw_columns:
+  - translate_word_german
+  - word_polish
+  - n_men
+  - n_women
+  - n_all
+  - valence_mean_men
+  - valence_mean_women
+  - valence_mean_all
+  - valence_sd_men
+  - valence_sd_women
+  - valence_sd_all
+  - arousal_mean_men
+  - arousal_mean_women
+  - arousal_mean_all
+  - arousal_sd_men
+  - arousal_sd_women
+  - arousal_sd_all
+  - imagine_mean_men
+  - imagine_mean_women
+  - imagine_mean_all
+  - imagine_sd_men
+  - imagine_sd_women
+  - imagine_sd_all
+  - frequency
+  - length
+  - gram
+  - frequency_subtlex_pl
+  - frequency_subtlex_pl_cd
+  - frequency_subtlex_pl_zipf
+  - frequency_subtlex_pl_avg_zipf_frequency_sn
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    valence: yes

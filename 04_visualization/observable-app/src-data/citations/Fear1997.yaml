@@ -1,0 +1,42 @@
+bibtex: Fear1997
+parent_bibtex: ~
+citation:
+  author: William J. Fear
+  year: 1997
+  title: Ratings for Welsh words and their English equivalents
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '29'
+  pages: 425-445
+  doi: 10.3758/bf03200595
+  source: crossref
+dataset:
+  language_from_columns: english, welsh
+  n_rows_csv: 642
+variables:
+  word_columns:
+  - word_english
+  - word_welsh
+  raw_columns:
+  - word_english
+  - familiar_mean_english
+  - familiar_sd_english
+  - aoa_mean_english
+  - aoa_sd_english
+  - concrete_mean_english
+  - concrete_sd_english
+  - imagine_mean_english
+  - imagine_sd_english
+  - word_welsh
+  - familiar_mean_welsh
+  - familiar_sd_welsh
+  - aoa_mean_welsh
+  - aoa_sd_welsh
+  - concrete_mean_welsh
+  - concrete_sd_welsh
+  - imagine_mean_welsh
+  - imagine_sd_welsh
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes

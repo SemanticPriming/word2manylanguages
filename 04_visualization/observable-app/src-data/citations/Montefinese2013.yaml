@@ -1,0 +1,23 @@
+bibtex: Montefinese2013
+parent_bibtex: ~
+citation:
+  author: Maria Montefinese, Ettore Ambrosini, Beth Fairfield, Nicola Mammarella
+  year: 2013
+  title: 'Semantic memory: A feature-based analysis and new norms for Italian'
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 440-461
+  doi: 10.3758/s13428-012-0263-4
+  source: crossref
+dataset:
+  language_from_columns: italian_1, italian_2
+  n_rows_csv: 14400
+variables:
+  word_columns:
+  - word_italian_1
+  - word_italian_2
+  raw_columns:
+  - word_italian_1
+  - word_italian_2
+  - cosine
+  flags: {}

@@ -1,0 +1,29 @@
+bibtex: Nishimoto2005
+parent_bibtex: ~
+citation:
+  author: Takehiko Nishimoto, Kaori Miyawaki, Takashi Ueda, Yuko Une, Masaru Takahashi
+  year: 2005
+  title: Japanese normative set of 359 pictures
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 398-416
+  doi: 10.3758/bf03192709
+  source: crossref
+dataset:
+  language_from_columns: japanese, japanese_latin
+  n_rows_csv: 360
+variables:
+  word_columns:
+  - word_japanese
+  - word_japanese_latin
+  raw_columns:
+  - word_japanese
+  - word_japanese_latin
+  - translate_word_english
+  - imagine_mean
+  - familiar_mean
+  - aoa_mean
+  flags:
+    aoa: yes
+    familiar: yes
+    imagine: yes

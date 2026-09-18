@@ -1,0 +1,54 @@
+bibtex: Muraki2025
+parent_bibtex: ~
+citation:
+  author: Emiko J. Muraki, Penny M. Pexman
+  year: 2025
+  title: 'English verbs semantic norms database: Concreteness, embodiment, imageability,
+    valence and arousal ratings for 3,500 verbs'
+  journal: Behavior Research Methods
+  volume: '57'
+  pages: []
+  doi: 10.3758/s13428-025-02675-6
+  source: crossref
+dataset:
+  language_from_columns: ''
+  n_rows_csv: 2938
+variables:
+  word_columns: []
+  raw_columns:
+  - item
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - arousal_min
+  - arousal_max
+  - arousal_unknown
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  - concrete_min
+  - concrete_max
+  - concrete_unknown
+  - embodiment_mean
+  - embodiment_sd
+  - embodiment_n
+  - embodiment_min
+  - embodiment_max
+  - embodiment_unknown
+  - imagine_mean
+  - imagine_sd
+  - imagine_n
+  - imagine_min
+  - imagine_max
+  - imagine_unknown
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - valence_min
+  - valence_max
+  - valence_unknown
+  flags:
+    arousal: yes
+    concrete: yes
+    imagine: yes
+    valence: yes

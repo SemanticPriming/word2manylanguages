@@ -1,0 +1,43 @@
+bibtex: Chan2024
+parent_bibtex: ~
+citation:
+  author: Yuen-Lai Chan, Chi-Shing Tse
+  year: 2024
+  title: 'Decoding the essence of two-character Chinese words: Unveiling valence,
+    arousal, concreteness, familiarity, and imageability through word norming'
+  journal: Behavior Research Methods
+  volume: '56'
+  pages: 7574-7601
+  doi: 10.3758/s13428-024-02437-w
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional, chinese_simplified
+  n_rows_csv: 25281
+variables:
+  word_columns:
+  - word_chinese_traditional
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_traditional
+  - word_chinese_simplified
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - concrete_mean
+  - concrete_sd
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - frequency_log_c1
+  - frequency_log_c2
+  - frequency_log_word
+  - included_regression
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    valence: yes

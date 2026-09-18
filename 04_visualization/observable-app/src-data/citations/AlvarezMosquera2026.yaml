@@ -1,0 +1,52 @@
+bibtex: AlvarezMosquera2026
+parent_bibtex: ~
+citation:
+  author: Pedro Álvarez-Mosquera, Alba Marín-Gutiérrez, Miguel Cuevas-Alonso, Alberto
+    Iglesias Álvarez
+  year: 2026
+  title: 'Psycholinguistic Norming of Galician Words (NORGAL)'
+  journal: Zenodo (dataset)
+  volume: ~
+  pages: ~
+  doi: 10.5281/zenodo.21224229
+  source: zenodo
+dataset:
+  language_from_columns: galician
+  n_rows_csv: 1585
+variables:
+  word_columns:
+  - word_galician
+  raw_columns:
+  - word_galician
+  - translate_word_english
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  - imagine_mean
+  - imagine_sd
+  - imagine_n
+  - aoa_mean
+  - aoa_sd
+  - aoa_n
+  flags:
+    arousal: yes
+    concrete: yes
+    imagine: yes
+    aoa: yes
+    valence: yes
+notes: >
+  Words extracted from the Reference Corpus of Current Galician (CORGA),
+  focusing on frequent nouns and adjectives. Ratings from bilingual
+  Galician-Spanish university students (Universidad de Vigo) on 9-point
+  Likert scales (AoA on a different scale). No prior Galician dataset in
+  this collection overlaps with NORGAL's measures - the only other
+  Galician-language entry is Granja2025 (the Galician MultiPic picture
+  dataset: name agreement/familiarity from picture naming, no
+  concreteness/valence/arousal/imageability/AoA ratings), so this is a
+  genuinely new addition rather than a duplicate.

@@ -1,0 +1,53 @@
+bibtex: Schmidtke2014
+parent_bibtex: ~
+citation:
+  author: David S. Schmidtke, Tobias Schröder, Arthur M. Jacobs, Markus Conrad
+  year: 2014
+  title: 'ANGST: Affective norms for German sentiment terms, derived from the affective
+    norms for English words'
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 1108-1118
+  doi: 10.3758/s13428-013-0426-y
+  source: crossref
+dataset:
+  language_from_columns: german, english
+  n_rows_csv: 1034
+variables:
+  word_columns:
+  - word_german
+  - word_english
+  raw_columns:
+  - word_german
+  - word_english
+  - id_number
+  - valence_mean
+  - valence_sd
+  - arousal_mean_anew
+  - arousal_sd_anew
+  - arousal_mean_bawl
+  - arousal_sd_bawl
+  - dominance_mean
+  - dominance_sd
+  - pot_mean
+  - pot_sd
+  - imagine_mean
+  - imagine_sd
+  - frequency_leipzig
+  - frequency_subtlex
+  - length
+  - syllables
+  - pos
+  - n_orth
+  - hfn
+  - nf_maximum
+  - f_sum
+  flags:
+    arousal: yes
+    dominate: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    pos: yes
+    syllables: yes
+    valence: yes

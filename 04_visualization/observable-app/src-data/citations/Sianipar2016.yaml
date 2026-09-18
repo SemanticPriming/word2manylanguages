@@ -1,0 +1,81 @@
+bibtex: Sianipar2016
+parent_bibtex: ~
+citation:
+  author: Agnes Sianipar, Pieter van Groenestijn, Ton Dijkstra
+  year: 2016
+  title: Affective Meaning, Concreteness, and Subjective Frequency Norms for Indonesian
+    Words
+  journal: Frontiers in Psychology
+  volume: '7'
+  pages: []
+  doi: 10.3389/fpsyg.2016.01907
+  source: crossref
+dataset:
+  language_from_columns: indonesian
+  n_rows_csv: 1490
+variables:
+  word_columns:
+  - word_indonesian
+  raw_columns:
+  - word_indonesian
+  - translate_word_english
+  - valence_n_male
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_n_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_n_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - predictability_n_male
+  - predictability_mean_male
+  - predictability_sd_male
+  - concrete_n_male
+  - concrete_mean_male
+  - concrete_sd_male
+  - frequency_n_male
+  - frequency_mean_male
+  - frequency_sd_male
+  - valence_n_female
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_n_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_n_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - predictability_n_female
+  - predictability_mean_female
+  - predictability_sd_female
+  - concrete_n_female
+  - concrete_mean_female
+  - concrete_sd_female
+  - frequency_n_female
+  - frequency_mean_female
+  - frequency_sd_female
+  - valence_n_all
+  - valence_mean_all
+  - valence_sd_all
+  - arousal_n_all
+  - arousal_mean_all
+  - arousal_sd_all
+  - dominance_n_all
+  - dominance_mean_all
+  - dominance_sd_all
+  - predictability_n_all
+  - predictability_mean_all
+  - predictability_sd_all
+  - concrete_n_all
+  - concrete_mean_all
+  - concrete_sd_all
+  - frequency_n_all
+  - frequency_mean_all
+  - frequency_sd_all
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    freq: yes
+    valence: yes

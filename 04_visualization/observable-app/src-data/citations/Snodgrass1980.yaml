@@ -1,0 +1,37 @@
+bibtex: Snodgrass1980
+parent_bibtex: ~
+citation:
+  author: Joan G. Snodgrass, Mary Vanderwart
+  year: 1980
+  title: 'A standardized set of 260 pictures: Norms for name agreement, image agreement,
+    familiarity, and visual complexity.'
+  journal: 'Journal of Experimental Psychology: Human Learning and Memory'
+  volume: '6'
+  pages: 174-215
+  doi: 10.1037/0278-7393.6.2.174
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - name_agreement_h
+  - name_agreement_percent
+  - image_agreement_h
+  - image_agreement_percent
+  - familiar_mean
+  - familiar_sd
+  - complexity_mean
+  - complexity_sd
+  - frequency_kf
+  - aoa_mean
+  flags:
+    aoa: yes
+    complex: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    nameagree: yes

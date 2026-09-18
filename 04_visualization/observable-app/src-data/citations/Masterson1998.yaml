@@ -1,0 +1,37 @@
+bibtex: Masterson1998
+parent_bibtex: ~
+citation:
+  author: Jackie Masterson, Judit Druks
+  year: 1998
+  title: Description of a set of 164 nounsand 102 verbs matched for printed word frequency,
+    familiarityand age-of-acquisition
+  journal: Journal of Neurolinguistics
+  volume: '11'
+  pages: 331-354
+  doi: 10.1016/s0911-6044(98)00023-2
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 266
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - frequency_kf
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  - imagine_mean
+  - imagine_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - pos
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    pos: yes
+    visualcomp: yes

@@ -1,0 +1,47 @@
+bibtex: Kanske2010
+parent_bibtex: ~
+citation:
+  author: Philipp Kanske, Sonja A. Kotz
+  year: 2010
+  title: 'Leipzig Affective Norms for German: A reliability study'
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 987-991
+  doi: 10.3758/brm.42.4.987
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 1000
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - concrete_mean
+  - concrete_sd
+  - frequency
+  - length
+  - syllables
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - concrete_mean_female
+  - concrete_sd_female
+  - valence_mean_male
+  - valence_sd_mean
+  - arousal_mean_male
+  - arousal_sd_mean
+  - concrete_mean_male
+  - concrete_sd_male
+  flags:
+    arousal: yes
+    concrete: yes
+    freq: yes
+    letters: yes
+    syllables: yes
+    valence: yes

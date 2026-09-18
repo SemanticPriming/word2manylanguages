@@ -1,0 +1,48 @@
+bibtex: Ghasisin2015
+parent_bibtex: ~
+citation:
+  author: Leila Ghasisin, Fariba Yadegari, Mehdi Rahgozar, Ali Nazari, Niloufar Rastegarianzade
+  year: 2015
+  title: 'A new set of 272 pictures for psycholinguistic studies: Persian norms for
+    name agreement, image agreement, conceptual familiarity, visual complexity, and
+    age of acquisition'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 1148-1158
+  doi: 10.3758/s13428-014-0537-0
+  source: crossref
+dataset:
+  language_from_columns: persian_phonetic, persian
+  n_rows_csv: 272
+variables:
+  word_columns:
+  - word_persian_phonetic
+  - word_persian
+  raw_columns:
+  - word_persian_phonetic
+  - word_persian
+  - translate_word_english
+  - h_mean_middle_age
+  - h_mean_elderly
+  - name_agreement_percent_middle_age
+  - name_agreement_percent_elderly
+  - image_agreement_percent_middle_age
+  - image_agreement_percent_elderly
+  - familiar_mean_middle_age
+  - familiar_mean_elderly
+  - aoa_mean_middle_age
+  - aoa_mean_elderly
+  - visual_complexity_mean_middle_age
+  - visual_complexity_mean_elderly
+  - dont_know_percent_middle_age
+  - dont_know_percent_elderly
+  - dont_know_object_middle_age
+  - dont_know_object_elderly
+  - frequency
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    nameagree: yes
+    visualcomp: yes

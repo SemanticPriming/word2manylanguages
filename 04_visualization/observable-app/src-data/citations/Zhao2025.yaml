@@ -1,0 +1,40 @@
+bibtex: Zhao2025
+parent_bibtex: ~
+citation:
+  author: Ying Zhao, Hairun Wang, Chi-Shing Tse, Qingrong Chen
+  year: 2025
+  title: 'Chinese Onomatopoeia Database (COD): Concreteness, imageability, context
+    availability, age of acquisition, familiarity, semantic transparency, emotional
+    valence, and emotional arousal for Chinese onomatopoeic words'
+  journal: Behavior Research Methods
+  volume: '57'
+  pages: []
+  doi: 10.3758/s13428-025-02849-2
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 751
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - length
+  - concrete_mean
+  - imagine_mean
+  - aoa_mean
+  - familiar_mean
+  - semantic_transparency_mean
+  - context_availability_mean
+  - valence_mean
+  - arousal_mean
+  flags:
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    context: yes
+    familiar: yes
+    imagine: yes
+    letters: yes
+    semantic: yes
+    valence: yes

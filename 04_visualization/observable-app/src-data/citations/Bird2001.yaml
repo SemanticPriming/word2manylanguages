@@ -1,0 +1,31 @@
+bibtex: Bird2001
+parent_bibtex: ~
+citation:
+  author: Helen Bird, Sue Franklin, David Howard
+  year: 2001
+  title: Age of acquisition and imageability ratings for a large set of words, including
+    verbs and function words
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '33'
+  pages: 73-79
+  doi: 10.3758/bf03195349
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 2694
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - pos
+  - aoa_mean
+  - imagine_mean
+  - aoa_mean_mrc
+  - imagine_mean_mrc
+  - frequency
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    pos: yes

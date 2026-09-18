@@ -1,0 +1,35 @@
+bibtex: Luniewska2019_ms
+parent_bibtex: Luniewska2019
+citation:
+  author: Magdalena Łuniewska, Zofia Wodniecka, Carol A. Miller, Filip Smolík, Morna
+    Butcher, Vasiliki Chondrogianni, et al.
+  year: 2019
+  title: 'Age of acquisition of 299 words in seven languages: American English, Czech,
+    Gaelic, Lebanese Arabic, Malay, Persian and Western Armenian'
+  journal: PLOS ONE
+  volume: '14'
+  pages: e0220611
+  doi: 10.1371/journal.pone.0220611
+  source: crossref
+dataset:
+  language_from_columns: malay
+  n_rows_csv: 292
+variables:
+  word_columns:
+  - word_malay
+  raw_columns:
+  - translate_word_english
+  - pos
+  - aoa_mean
+  - word_malay
+  - language
+  - phonemes
+  - length
+  - compound_word
+  - frequency
+  flags:
+    aoa: yes
+    freq: yes
+    letters: yes
+    phonemes: yes
+    pos: yes

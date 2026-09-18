@@ -1,0 +1,55 @@
+bibtex: Miklashevsky2018
+parent_bibtex: ~
+citation:
+  author: Alex Miklashevsky
+  year: 2018
+  title: 'Perceptual Experience Norms for 506 Russian Nouns: Modality Rating, Spatial
+    Localization, Manipulability, Imageability and Other Variables'
+  journal: Journal of Psycholinguistic Research
+  volume: '47'
+  pages: 641-661
+  doi: 10.1007/s10936-017-9548-1
+  source: crossref
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 506
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - word_russian
+  - transliteration
+  - translate_word_english
+  - category
+  - abstractness_category
+  - length
+  - gender
+  - frequency_log
+  - visual_modality_mean
+  - visual_modality_sd
+  - auditory_modality_mean
+  - auditory_modality_sd
+  - olfactory_modality_mean
+  - olfactory_modality_sd
+  - gustatory_modality_mean
+  - gustatory_modality_sd
+  - haptic_modality_mean
+  - haptic_modality_sd
+  - imagine_mean
+  - imagine_sd
+  - manipulation_mean
+  - manipulation_sd
+  - spatial_localization_mean
+  - spatial_localization_sd
+  - aoa_mean
+  - aoa_sd
+  - frequency_mean
+  - frequency_sd
+  flags:
+    aoa: yes
+    category: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    sensory: yes
+    visualcomp: yes

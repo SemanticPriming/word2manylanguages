@@ -1,0 +1,41 @@
+bibtex: Allen2014
+parent_bibtex: ~
+citation:
+  author: David Allen, Kathy Conklin
+  year: 2014
+  title: Cross-linguistic similarity norms for Japanese–English translation equivalents
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 540-563
+  doi: 10.3758/s13428-013-0389-z
+  source: crossref
+dataset:
+  language_from_columns: english, japanese, katakana
+  n_rows_csv: 193
+variables:
+  word_columns:
+  - word_english
+  - word_japanese
+  - word_katakana
+  raw_columns:
+  - word_english
+  - word_japanese
+  - translate_japanese
+  - word_katakana
+  - picture_naming
+  - cognate_status
+  - aoa_mean_japanese_l1
+  - familiar_mean_english_l2
+  - concrete_mean_japanese_l1
+  - number_trans_l1_l2
+  - number_trans_l2_l1
+  - number_meaning_l1
+  - number_meaning_l2
+  - phonological_similarity
+  - semantic_similarity
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    picture: yes
+    semantic: yes

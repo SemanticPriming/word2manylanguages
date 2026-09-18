@@ -1,0 +1,44 @@
+bibtex: Kerr1991
+parent_bibtex: ~
+citation:
+  author: Nancy H. Kerr, Thomas H. Johnson
+  year: 1991
+  title: 'Word norms for blind and sighted subjects: Familiarity, concreteness, meaningfulness,
+    imageability, imagery modality, and word associations'
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '23'
+  pages: 461-485
+  doi: 10.3758/bf03209988
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 322
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - blind_sighted
+  - familiar_mean
+  - concrete_mean
+  - meaningfulness_mean
+  - imagine_mean
+  - familiar_sd
+  - concrete_sd
+  - meaningfulness_sd
+  - imagine_sd
+  - visual_percent
+  - auditory_percent
+  - tactile_percent
+  - taste_percent
+  - spatial_percent
+  - smell_percent
+  - associate
+  flags:
+    assoc: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    meaning: yes
+    sensory: yes
+    visualcomp: yes

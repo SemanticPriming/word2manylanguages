@@ -1,0 +1,43 @@
+bibtex: Leveau2012
+parent_bibtex: ~
+citation:
+  author: Nicolas Leveau, Sandra Jhean-Larose, Guy Denhière, Ba-Linh Nguyen
+  year: 2012
+  title: Validating an interlingual metanorm for emotional analysis of texts
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 1007-1014
+  doi: 10.3758/s13428-012-0208-y
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 6383
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - valence_mean
+  - arousal_mean
+  - valence_number
+  - arousal_number
+  - valence_mean_painchaud_2005
+  - valence_mean_syssau_font_2005
+  - valence_mean_bonin_etal_2003
+  - valence_mean_messina_etal_1989
+  - valence_mean_vikis_freiberg_1976
+  - valence_mean_bradley_lang_1999
+  - valence_mean_vo_al_2009
+  - valence_mean_leleu_1987
+  - valence_mean_zammuner_1998
+  - valence_mean_eilola_havelka_2007
+  - valence_mean_redondo_etal_2007
+  - valence_mean_niedenthal_etal_2004
+  - arousal_mean_bradley_lang_1999
+  - arousal_mean_vo_al_2009
+  - arousal_mean_leleu_1987
+  - arousal_mean_eilola_havelka_2007
+  - arousal_mean_redondo_etal_2007
+  flags:
+    arousal: yes
+    valence: yes

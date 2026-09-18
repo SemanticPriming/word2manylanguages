@@ -1,0 +1,60 @@
+bibtex: Morucci2019
+parent_bibtex: ~
+citation:
+  author: Piermatteo Morucci, Roberto Bottini, Davide Crepaldi
+  year: 2019
+  title: Augmented Modality Exclusivity Norms for Concrete and Abstract Italian Property
+    Words
+  journal: Journal of Cognition
+  volume: '2'
+  pages: []
+  doi: 10.5334/joc.88
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 643
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - gustatory_z
+  - gustatory_mean
+  - olfactory_z
+  - olfactory_mean
+  - touch_z
+  - touch_mean
+  - auditory_z
+  - auditory_mean
+  - visual_z
+  - visual_mean
+  - max_perception_strength_z
+  - max_perception_strengh_mean
+  - dominant_sense
+  - sum_perception_strength_z
+  - sum_perception_strength_mean
+  - entropy
+  - modality_exclusivity
+  - length
+  - frequency_cdcount
+  - zipf
+  - frequency_pmw
+  - frequency_pmw_log
+  - orthographic_neighborhood
+  - orthographic_levenshtein
+  - familiar_z
+  - familiar_mean
+  - aoa_z
+  - aoa_mean
+  - context_availability_z
+  - context_availability_mean
+  flags:
+    aoa: yes
+    context: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    modality: yes
+    orthon: yes
+    sensory: yes
+    visualcomp: yes

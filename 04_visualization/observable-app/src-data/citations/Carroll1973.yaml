@@ -1,0 +1,31 @@
+bibtex: Carroll1973
+parent_bibtex: ~
+citation:
+  author: John B. Carroll, Margaret N. White
+  year: 1973
+  title: Age-of-acquisition norms for 220 picturable nouns
+  journal: Journal of Verbal Learning and Verbal Behavior
+  volume: '12'
+  pages: 563-576
+  doi: 10.1016/s0022-5371(73)80036-2
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 220
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean_male
+  - aoa_sd_male
+  - aoa_mean_female
+  - aoa_sd_female
+  - aoa_mean
+  - aoa_sd
+  - frequency_tl
+  - frequency_kf
+  - frequency_ah
+  flags:
+    aoa: yes
+    freq: yes

@@ -1,0 +1,70 @@
+bibtex: Hirosh2025
+parent_bibtex: ~
+citation:
+  author: Zoya Hirosh, Hamutal Kreiner, Tamar Degani
+  year: 2025
+  title: Limited predictive value of L1 picture-norms for L2 picture-naming performance
+  journal: Applied Psycholinguistics
+  volume: '46'
+  pages: []
+  doi: 10.1017/s0142716425100179
+  source: crossref
+dataset:
+  language_from_columns: hebrew_modal_l1, english_modal_l1, modal_l2, english_modal_l2,
+    modal_spelling_variations_l2
+  n_rows_csv: 323
+variables:
+  word_columns:
+  - word_hebrew_modal_l1
+  - word_english_modal_l1
+  - word_modal_l2
+  - word_english_modal_l2
+  - word_modal_spelling_variations_l2
+  raw_columns:
+  - order
+  - item_id
+  - word_hebrew_modal_l1
+  - word_english_modal_l1
+  - name_agreement_hebrew_l1
+  - visual_complexity_hebrew_l1
+  - familiar_mean_hebrew_l1
+  - typicality_mean_hebrew_l1
+  - response_n_hebrew_l1
+  - other_responses_hebrew_l1
+  - word_modal_l2
+  - word_english_modal_l2
+  - word_modal_spelling_variations_l2
+  - modal_response_match_l1_proportion_l2
+  - name_agreement_english_l2
+  - visual_complexity_english_l2
+  - familiar_mean_english_l2
+  - typicality_mean_english_l2
+  - response_n_english_l2
+  - other_responses_english_l2
+  - appeared_in_naming_task
+  - accuracy_mean_hebrew_l1
+  - accuracy_sd_hebrew_l1
+  - accuracy_n_hebrew_l1
+  - rt_mean_hebrew_l1
+  - rt_sd_hebrew_l1
+  - rt_n_hebrew_l1
+  - accuracy_mean_english_l2
+  - accuracy_sd_english_l2
+  - accuracy_n_english_l2
+  - rt_mean_english_l2
+  - rt_sd_english_l2
+  - rt_n_english_l2
+  - syllables
+  - frequency_per_million
+  - is_two_words
+  - picture_source
+  flags:
+    accuracy: yes
+    familiar: yes
+    freq: yes
+    nameagree: yes
+    picture: yes
+    rt: yes
+    syllables: yes
+    typical: yes
+    visualcomp: yes

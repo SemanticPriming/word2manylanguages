@@ -1,0 +1,71 @@
+bibtex: Moors2013
+parent_bibtex: ~
+citation:
+  author: Agnes Moors, Jan De Houwer, Dirk Hermans, Sabine Wanmaker, Kevin van Schie,
+    Anne-Laura Van Harmelen, et al.
+  year: 2013
+  title: Norms of valence, arousal, dominance, and age of acquisition for 4,300 Dutch
+    words
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 169-177
+  doi: 10.3758/s13428-012-0243-8
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 4299
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - dominance_mean
+  - dominance_sd
+  - dominance_n
+  - aoa_mean
+  - aoa_sd
+  - aoa_n
+  - valence_mean_male
+  - valence_sd_male
+  - valence_n_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - arousal_n_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - dominance_n_male
+  - aoa_mean_male
+  - aoa_sd_male
+  - aoa_n_male
+  - valence_mean_male_female
+  - valence_sd_male_female
+  - valence_n_male_female
+  - arousal_mean_male_female
+  - arousal_sd_male_female
+  - arousal_n_male_female
+  - dominance_mean_male_female
+  - dominance_sd_male_female
+  - dominance_n_male_female
+  - aoa_mean_male_female
+  - aoa_sd_male_female
+  - aoa_n_male_female
+  - frequency_log10
+  - frequency
+  - length
+  - percent_n
+  - pos
+  flags:
+    aoa: yes
+    arousal: yes
+    dominate: yes
+    freq: yes
+    letters: yes
+    pos: yes
+    valence: yes

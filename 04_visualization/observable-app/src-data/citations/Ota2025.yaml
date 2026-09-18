@@ -1,0 +1,33 @@
+bibtex: Ota2025
+parent_bibtex: ~
+citation:
+  author: Naoto Ota, Masaya Mochizuki
+  year: 2025
+  title: 'JALEX: Japanese version of lexical decision database'
+  journal: Frontiers in Language Sciences
+  volume: '3'
+  pages: []
+  doi: 10.3389/flang.2024.1506509
+  source: crossref
+dataset:
+  language_from_columns: japanese
+  n_rows_csv: 5736
+variables:
+  word_columns:
+  - word_japanese
+  raw_columns:
+  - word_japanese
+  - item_number
+  - 'n'
+  - rt_mean
+  - rt_sd
+  - rt_se
+  - accuracy_mean
+  - translated_word_english
+  - orthographic_neighborhood
+  - phonographic_neighborhood
+  - old20
+  flags:
+    accuracy: yes
+    orthon: yes
+    rt: yes

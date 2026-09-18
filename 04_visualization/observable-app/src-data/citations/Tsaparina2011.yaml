@@ -1,0 +1,55 @@
+bibtex: Tsaparina2011
+parent_bibtex: ~
+citation:
+  author: Diana Tsaparina, Patrick Bonin, Alain Méot
+  year: 2011
+  title: Russian norms for name agreement, image agreement for the colorized version
+    of the Snodgrass and Vanderwart pictures and age of acquisition, conceptual familiarity,
+    and imageability scores for modal object names
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 1085-1099
+  doi: 10.3758/s13428-011-0121-9
+  source: crossref
+dataset:
+  language_from_columns: russian, russian_name
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_russian
+  - word_russian_name
+  raw_columns:
+  - translate_word_english
+  - translate_word_french
+  - word_russian
+  - word_russian_name
+  - name_agreement_h
+  - name_agreement_proportion
+  - image_agreement_mean
+  - image_agreement_sd
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  - imagine_mean
+  - imagine_sd
+  - visual_complexity_mean
+  - length
+  - syllables
+  - phonemes
+  - frequency_mean
+  - lexical_code_1_prop
+  - lexical_code_2_prop
+  - lexical_code_3_prop
+  - lexical_code_4_prop
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    letters: yes
+    nameagree: yes
+    phonemes: yes
+    syllables: yes
+    visualcomp: yes

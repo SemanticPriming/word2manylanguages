@@ -1,0 +1,37 @@
+bibtex: Alyahya2015
+parent_bibtex: ~
+citation:
+  author: Reem S.W. Alyahya, Judit Druks
+  year: 2016
+  title: The adaptation of the Object and Action Naming Battery into Saudi Arabic
+  journal: Aphasiology
+  volume: '30'
+  pages: 463-482
+  doi: 10.1080/02687038.2015.1070947
+  source: crossref
+dataset:
+  language_from_columns: arabic, arabic_synonym
+  n_rows_csv: 100
+variables:
+  word_columns:
+  - word_arabic
+  - word_arabic_synonym
+  raw_columns:
+  - translate_word_english
+  - word_arabic
+  - agreement_mean
+  - frequency
+  - imagine_mean
+  - aoa_mean
+  - phonemes
+  - visual_complexity_mean
+  - word_arabic_synonym
+  - frequency_synonym
+  - imagine_mean_synonym
+  - aoa_mean_synonym
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    phonemes: yes
+    visualcomp: yes

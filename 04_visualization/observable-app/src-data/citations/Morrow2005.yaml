@@ -1,0 +1,55 @@
+bibtex: Morrow2005
+parent_bibtex: ~
+citation:
+  author: Lorna I. Morrow, M. Frances Duffy
+  year: 2005
+  title: 'The representation of ontological category concepts as affected by healthy
+    aging: Normative data and theoretical implications'
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 608-625
+  doi: 10.3758/bf03192731
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 889
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - category
+  - typicality_mean_older
+  - typicality_sd_older
+  - familiar_mean_older
+  - familiar_sd_older
+  - unknown_percent_older
+  - frequency_mean_older
+  - frequency_sd_older
+  - visual_complexity_mean_older
+  - visual_complexity_sd_older
+  - imagine_mean_older
+  - imagine_sd_older
+  - aoa_mean_older
+  - aoa_sd_older
+  - typicality_mean_younger
+  - typicality_sd_younger
+  - familiar_mean_younger
+  - familiar_sd_younger
+  - unknown_percent_younger
+  - frequency_mean_younger
+  - frequency_sd_younger
+  - visual_complexity_mean_younger
+  - visual_complexity_sd_younger
+  - imagine_mean_younger
+  - imagine_sd_younger
+  - aoa_mean_younger
+  - aoa_sd_younger
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    typical: yes
+    visualcomp: yes

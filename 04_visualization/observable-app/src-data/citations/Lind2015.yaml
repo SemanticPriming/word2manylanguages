@@ -1,0 +1,53 @@
+bibtex: Lind2015
+parent_bibtex: ~
+citation:
+  author: Marianne Lind, Hanne Gram Simonsen, Pernille Hansen, Elisabeth Holm, Bjørn-Helge
+    Mevik
+  year: 2015
+  title: 'Norwegian Words: A lexical database for clinicians and researchers'
+  journal: Clinical Linguistics & Phonetics
+  volume: '29'
+  pages: 276-290
+  doi: 10.3109/02699206.2014.999952
+  source: crossref
+dataset:
+  language_from_columns: norwegian
+  n_rows_csv: 1651
+variables:
+  word_columns:
+  - word_norwegian
+  raw_columns:
+  - word_norwegian
+  - translate_word_english
+  - pos
+  - imagine_category
+  - imagine_mean
+  - aoa_subjective_category
+  - aoa_mean_subjective
+  - frequency_use_category
+  - frequency_use
+  - phonological_neighbors_category
+  - phonological_neighbors_number
+  - phonological_neighbors
+  - length
+  - sounds
+  - syllables
+  - derivation
+  - compound
+  - first_sound_fricative
+  - first_consonant_cluster
+  - grammatical_gender
+  - used_plural
+  - mass_noun
+  - valence_mean
+  - transitivity
+  - multi_word_phrase
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    pos: yes
+    sensory: yes
+    syllables: yes
+    valence: yes

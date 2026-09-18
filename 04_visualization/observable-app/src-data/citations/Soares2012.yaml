@@ -1,0 +1,44 @@
+bibtex: Soares2012
+parent_bibtex: ~
+citation:
+  author: Ana Paula Soares, Montserrat Comesaña, Ana P. Pinheiro, Alberto Simões,
+    Carla Sofia Frade
+  year: 2012
+  title: The adaptation of the Affective Norms for English Words (ANEW) for European
+    Portuguese
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 256-269
+  doi: 10.3758/s13428-011-0131-7
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 167
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - translate_word_english
+  - word_spanish
+  - valence_mean
+  - valence_sd
+  - valence_mean_women
+  - valence_sd_women
+  - valence_mean_men
+  - valence_sd_men
+  - arousal_mean
+  - arousal_sd
+  - arousal_mean_women
+  - arousal_sd_women
+  - arousal_mean_men
+  - arousal_sd_men
+  - dominance_mean
+  - dominance_sd
+  - dominance_mean_women
+  - dominance_sd_women
+  - dominance_mean_men
+  - dominance_sd_men
+  flags:
+    arousal: yes
+    dominate: yes
+    valence: yes

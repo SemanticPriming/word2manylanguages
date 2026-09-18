@@ -1,0 +1,26 @@
+bibtex: Schock2012
+parent_bibtex: ~
+citation:
+  author: Jocelyn Schock, Michael J. Cortese, Maya M. Khanna, Sean Toppi
+  year: 2012
+  title: Age of acquisition estimates for 3,000 disyllabic words
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 971-977
+  doi: 10.3758/s13428-012-0209-x
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 3000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean
+  - rt_mean
+  - aoa_sd
+  - rt_sd
+  flags:
+    aoa: yes
+    rt: yes

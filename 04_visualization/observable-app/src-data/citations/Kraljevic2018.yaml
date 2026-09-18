@@ -1,0 +1,36 @@
+bibtex: Kraljevic2018
+parent_bibtex: ~
+citation:
+  author: Jelena Kuvač Kraljević, Marina Olujić
+  year: 2018
+  title: Imageability and subjective frequency of the 500 rated nouns in the Croatian
+    Lexical Database
+  journal: Suvremena lingvistika
+  volume: '44'
+  pages: 73-90
+  doi: 10.22210/suvlin.2018.085.04
+  source: crossref
+dataset:
+  language_from_columns: croatian
+  n_rows_csv: 2873
+variables:
+  word_columns:
+  - word_croatian
+  raw_columns:
+  - word_croatian
+  - imagine_mean
+  - imagine_sd
+  - frequency_mean
+  - frequency_sd
+  - concrete_mean
+  - concrete_sd
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes

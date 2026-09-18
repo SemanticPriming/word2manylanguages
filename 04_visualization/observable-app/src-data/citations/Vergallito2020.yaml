@@ -1,0 +1,48 @@
+bibtex: Vergallito2020
+parent_bibtex: ~
+citation:
+  author: Alessandra Vergallito, Marco Alessandro Petilli, Marco Marelli
+  year: 2020
+  title: 'Perceptual modality norms for 1,121 Italian words: A comparison with concreteness
+    and imageability scores and an analysis of their impact in word processing tasks'
+  journal: Behavior Research Methods
+  volume: '52'
+  pages: 1599-1616
+  doi: 10.3758/s13428-019-01337-8
+  source: crossref
+dataset:
+  language_from_columns: italian, class
+  n_rows_csv: 1121
+variables:
+  word_columns:
+  - word_italian
+  - word_class
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - length
+  - word_class
+  - accuracy_ldt
+  - rt_mean_ldt
+  - accuracy_nt
+  - rt_mean_nt
+  - rt_z_ldt
+  - rt_z_nt
+  - auditory_mean
+  - gustatory_mean
+  - haptic_mean
+  - olfactory_mean
+  - visual_mean
+  - mod_e
+  - mod_exc
+  - max
+  - min
+  - mean
+  - mag
+  - mink
+  flags:
+    accuracy: yes
+    letters: yes
+    rt: yes
+    sensory: yes
+    visualcomp: yes

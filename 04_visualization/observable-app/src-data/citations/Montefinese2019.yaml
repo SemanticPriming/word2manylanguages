@@ -1,0 +1,37 @@
+bibtex: Montefinese2019
+parent_bibtex: ~
+citation:
+  author: Maria Montefinese, David Vinson, Gabriella Vigliocco, Ettore Ambrosini
+  year: 2019
+  title: Italian Age of Acquisition Norms for a Large Set of Words (ItAoA)
+  journal: Frontiers in Psychology
+  volume: '10'
+  pages: []
+  doi: 10.3389/fpsyg.2019.00278
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 1957
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_english_word
+  - pos
+  - aoa_mean
+  - aoa_sd
+  - length
+  - frequency_larepubblica
+  - frequency_itwac
+  - frequency_subtlex
+  - orthographic_neighbors
+  - frequency_mean_orthographic_neighbors
+  - frequency_maximum_orthographic_neighbors
+  - old20_subtlex
+  flags:
+    aoa: yes
+    freq: yes
+    letters: yes
+    orthon: yes
+    pos: yes

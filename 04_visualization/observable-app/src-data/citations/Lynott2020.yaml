@@ -1,0 +1,67 @@
+bibtex: Lynott2020
+parent_bibtex: ~
+citation:
+  author: Dermot Lynott, Louise Connell, Marc Brysbaert, James Brand, James Carney
+  year: 2020
+  title: 'The Lancaster Sensorimotor Norms: multidimensional measures of perceptual
+    and action strength for 40,000 English words'
+  journal: Behavior Research Methods
+  volume: '52'
+  pages: 1271-1291
+  doi: 10.3758/s13428-019-01316-z
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 39707
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - auditory_mean
+  - gustatory_mean
+  - haptic_mean
+  - interoceptive_mean
+  - olfactory_mean
+  - visual_mean
+  - foot_leg_mean
+  - hand_arm_mean
+  - head_mean
+  - mouth_mean
+  - torso_mean
+  - auditory_sd
+  - gustatory_sd
+  - haptic_sd
+  - interoceptive_sd
+  - olfactory_sd
+  - visual_sd
+  - foot_leg_sd
+  - hand_arm_sd
+  - head_sd
+  - mouth_sd
+  - torso_sd
+  - max_strength_perceptual
+  - minkowski3_perceptual
+  - exclusivity_perceptual
+  - dominant_perceptual
+  - max_strength_action
+  - minkowski3_action
+  - exclusivity_action
+  - dominant_action
+  - max_strength_sensorimotor
+  - minkowski3_sensorimotor
+  - exclusivity_sensorimotor
+  - dominant_sensorimotor
+  - n_known_perceptual
+  - list_n_perceptual
+  - percent_known_perceptual
+  - n_known_action
+  - list_n_action
+  - percent_known_action
+  - mean_age_perceptual
+  - mean_age_action
+  - list_num_perceptual
+  - list_num_action
+  flags:
+    sensory: yes
+    visualcomp: yes

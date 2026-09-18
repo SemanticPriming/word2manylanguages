@@ -1,0 +1,56 @@
+bibtex: Khwaileh2018
+parent_bibtex: ~
+citation:
+  author: Tariq Khwaileh, Eiman Mustafawi, Ruth Herbert, David Howard
+  year: 2018
+  title: 'Gulf Arabic nouns and verbs: A standardized set of 319 object pictures and
+    141 action pictures, with predictors of naming latencies'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 2408-2425
+  doi: 10.3758/s13428-018-1019-6
+  source: crossref
+dataset:
+  language_from_columns: arabic_aralex, arabic, arabic_name_agreement
+  n_rows_csv: 861
+variables:
+  word_columns:
+  - word_arabic_aralex
+  - word_arabic
+  - word_arabic_name_agreement
+  raw_columns:
+  - translate_word_english
+  - word_arabic_aralex
+  - word_arabic
+  - word_arabic_name_agreement
+  - gender
+  - animate_mean
+  - reversiveness
+  - syllables
+  - phonemes
+  - frequency_written
+  - rt_mean
+  - name_agreement_proportion
+  - visualcomplexity_mean
+  - visual_complexity_sd
+  - image_agreement_mean
+  - image_agreement_sd
+  - aoa_mean
+  - aoa_sd
+  - imagine_mean
+  - imagine_sd
+  - familiar_mean
+  - familiar_sd
+  - rationality
+  - initial_phoneme
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    nameagree: yes
+    phonemes: yes
+    rt: yes
+    syllables: yes
+    visualcomp: yes

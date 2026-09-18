@@ -1,0 +1,28 @@
+bibtex: Abdaoui2017
+parent_bibtex: ~
+citation:
+  author: Amine Abdaoui, Jérôme Azé, Sandra Bringay, Pascal Poncelet
+  year: 2017
+  title: 'FEEL: a French Expanded Emotion Lexicon'
+  journal: Language Resources and Evaluation
+  volume: '51'
+  pages: 833-855
+  doi: 10.1007/s10579-016-9364-5
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 14127
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - polarity
+  - joy_yesno
+  - fear_yesno
+  - sad_yesno
+  - anger_yesno
+  - surprise_yesno
+  - disgust_yesno
+  flags:
+    emotion: yes

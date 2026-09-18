@@ -1,0 +1,39 @@
+bibtex: Ferre2012
+parent_bibtex: ~
+citation:
+  author: Pilar Ferré, Marc Guasch, Cornelia Moldovan, Rosa Sánchez-Casas
+  year: 2012
+  title: Affective norms for 380 Spanish words belonging to three different semantic
+    categories
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 395-403
+  doi: 10.3758/s13428-011-0165-x
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 380
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - category
+  - word_spanish
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - familiar_mean
+  - familiar_sd
+  - concrete_mean
+  - concrete_sd
+  - frequency_mean
+  - length
+  flags:
+    arousal: yes
+    category: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    valence: yes

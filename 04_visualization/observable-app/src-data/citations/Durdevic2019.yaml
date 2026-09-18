@@ -1,0 +1,35 @@
+bibtex: Durdevic2019
+parent_bibtex: ~
+citation:
+  author: Dušica Filipović Đurđević
+  year: 2019
+  title: BALANCE OF MEANING PROBABILITIES IN PROCESSING OF SERBIAN HOMONYMY
+  journal: Primenjena psihologija
+  volume: '12'
+  pages: 283-304
+  doi: 10.19090/pp.2019.3.283-304
+  source: crossref
+dataset:
+  language_from_columns: serbian
+  n_rows_csv: 91
+variables:
+  word_columns:
+  - word_serbian
+  raw_columns:
+  - word_serbian
+  - ambiguity_type
+  - ambiguity_type_fine_grained
+  - frequency_lemma_2m
+  - length
+  - coltheart_n
+  - familiar_mean
+  - concrete_mean
+  - entropy_h
+  - number_meanings
+  - redundancy_t
+  flags:
+    ambiguity: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    letters: yes

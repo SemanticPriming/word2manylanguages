@@ -1,0 +1,26 @@
+bibtex: Cordier2005
+parent_bibtex: ~
+citation:
+  author: Françoise Cordier, Jean-François Le Ny
+  year: 2005
+  title: Evidence for several components of word familiarity
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 528-537
+  doi: 10.3758/bf03192724
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 42
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - frequency_experiential
+  - meaning_knowledge_mean
+  - familiar_mean
+  flags:
+    familiar: yes
+    freq: yes
+    meaning: yes

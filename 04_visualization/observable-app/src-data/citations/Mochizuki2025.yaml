@@ -1,0 +1,30 @@
+bibtex: Mochizuki2025
+parent_bibtex: ~
+citation:
+  author: Masaya Mochizuki, Naoto Ota
+  year: 2025
+  title: Collection of age of acquisition ratings for over 5,000 Japanese words
+  journal: Frontiers in Language Sciences
+  volume: '4'
+  pages: []
+  doi: 10.3389/flang.2025.1605224
+  source: crossref
+dataset:
+  language_from_columns: japanese
+  n_rows_csv: 5736
+variables:
+  word_columns:
+  - word_japanese
+  raw_columns:
+  - item_number
+  - word_japanese
+  - translate_word_english
+  - pos
+  - 'n'
+  - aoa_mean
+  - aoa_sd
+  - aoa_minimum
+  - aoa_maximum
+  flags:
+    aoa: yes
+    pos: yes

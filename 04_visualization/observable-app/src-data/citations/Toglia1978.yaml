@@ -1,0 +1,41 @@
+bibtex: Toglia1978
+parent_bibtex: ~
+citation:
+  author: Michael P. Toglia
+  year: 2009
+  title: 'Withstanding the test of time: The 1978 semantic word norms'
+  journal: Behavior Research Methods
+  volume: '41'
+  pages: 531-533
+  doi: 10.3758/brm.41.2.531
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 2854
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - list_id
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - category_mean
+  - category_sd
+  - meaning_mean
+  - meaning_sd
+  - familiar_mean
+  - familiar_sd
+  - no_attr
+  - no_asd
+  - pleasant_mean
+  - pleasant_sd
+  flags:
+    category: yes
+    concrete: yes
+    emotion: yes
+    familiar: yes
+    imagine: yes
+    meaning: yes

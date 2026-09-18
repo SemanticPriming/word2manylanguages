@@ -1,0 +1,67 @@
+bibtex: Schauenburg2015
+parent_bibtex: ~
+citation:
+  author: Gesche Schauenburg, Jens Ambrasat, Tobias Schröder, Christian von Scheve,
+    Markus Conrad
+  year: 2015
+  title: Emotional connotations of words related to authority and community
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 720-735
+  doi: 10.3758/s13428-014-0494-7
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 858
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - translate_word_english
+  - pos
+  - semantic_category
+  - valence_mean
+  - valence_se
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_se
+  - arousal_sd
+  - arousal_n
+  - potency_mean
+  - potency_se
+  - potency_sd
+  - potency_n
+  - authority_mean
+  - authority_se
+  - authority_sd
+  - authority_n
+  - community_mean
+  - community_se
+  - community_sd
+  - community_n
+  - cluster
+  - frequency_leipzig
+  - frequency_subtlex
+  - frequency_celex
+  - orthographic_n_celex
+  - orthographic_n_sum_celex
+  - fhn_celex
+  - frequency_dlex_abs
+  - frequency_dlex_norm
+  - orthographic_n_dlex
+  - orthographic_n_sum_dlex
+  - fhn_dlex
+  - frequency_zipf
+  - syllables
+  - length
+  flags:
+    arousal: yes
+    freq: yes
+    letters: yes
+    orthon: yes
+    pos: yes
+    semantic: yes
+    syllables: yes
+    valence: yes

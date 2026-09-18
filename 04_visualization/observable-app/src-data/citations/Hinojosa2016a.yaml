@@ -1,0 +1,42 @@
+bibtex: Hinojosa2016a
+parent_bibtex: ~
+citation:
+  author: J. A. Hinojosa, N. Martínez-García, C. Villalba-García, U. Fernández-Folgueiras,
+    A. Sánchez-Carmona, M. A. Pozo, et al.
+  year: 2016
+  title: Affective norms of 875 Spanish words for five discrete emotional categories
+    and two emotional dimensions
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 272-284
+  doi: 10.3758/s13428-015-0572-5
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 875
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - concrete_mean
+  - concrete_sd
+  - happiness_mean
+  - happiness_sd
+  - anger_mean
+  - anger_sd
+  - sad_mean
+  - sad_sd
+  - fear_mean
+  - fear_sd
+  - disgust_mean
+  - disgust_sd
+  flags:
+    arousal: yes
+    concrete: yes
+    emotion: yes
+    valence: yes

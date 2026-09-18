@@ -1,0 +1,37 @@
+bibtex: Shao2014
+parent_bibtex: ~
+citation:
+  author: Zeshu Shao, Ardi Roelofs, Antje S. Meyer
+  year: 2014
+  title: 'Predicting naming latencies for action pictures: Dutch norms'
+  journal: Behavior Research Methods
+  volume: '46'
+  pages: 274-283
+  doi: 10.3758/s13428-013-0358-6
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 124
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - visual_complexity_mean
+  - image_agreement_mean
+  - familiar_mean
+  - imagine_mean
+  - aoa_mean_years
+  - in_naming_task
+  - n_names
+  - prop_dominant
+  - h_statistic
+  - rt_mean_ms
+  flags:
+    aoa: yes
+    familiar: yes
+    imageagree: yes
+    imagine: yes
+    rt: yes
+    visualcomp: yes

@@ -1,0 +1,102 @@
+bibtex: Luniewska2016
+parent_bibtex: ~
+citation:
+  author: Magdalena Łuniewska, Ewa Haman, Sharon Armon-Lotem, Bartłomiej Etenkowski,
+    Frenette Southwood, Darinka Anđelković, et al.
+  year: 2016
+  title: 'Ratings of age of acquisition of 299 words across 25 languages: Is there
+    a cross-linguistic order of words?'
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 1154-1177
+  doi: 10.3758/s13428-015-0636-6
+  source: crossref
+dataset:
+  language_from_columns: english, afrikaans, catalan, danish, dutch, finnish, german,
+    greek, hebrew, hungarian, icelandic, irish, isixhosa, italian, lithuanian, luxembourgish,
+    maltese, polish, russian, south_african_english, serbian, slovak, spanish, swedish,
+    turkish
+  n_rows_csv: 299
+variables:
+  word_columns:
+  - word_english
+  - word_afrikaans
+  - word_catalan
+  - word_danish
+  - word_dutch
+  - word_finnish
+  - word_german
+  - word_greek
+  - word_hebrew
+  - word_hungarian
+  - word_icelandic
+  - word_irish
+  - word_isixhosa
+  - word_italian
+  - word_lithuanian
+  - word_luxembourgish
+  - word_maltese
+  - word_polish
+  - word_russian
+  - word_south_african_english
+  - word_serbian
+  - word_slovak
+  - word_spanish
+  - word_swedish
+  - word_turkish
+  raw_columns:
+  - word_english
+  - aoa_mean_afrikaans
+  - word_afrikaans
+  - aoa_mean_catalan
+  - word_catalan
+  - aoa_mean_danish
+  - word_danish
+  - aoa_mean_dutch
+  - word_dutch
+  - aoa_mean_english
+  - aoa_mean_finnish
+  - word_finnish
+  - aoa_mean_german
+  - word_german
+  - aoa_mean_greek
+  - word_greek
+  - aoa_mean_hebrew
+  - word_hebrew
+  - aoa_mean_hungarian
+  - word_hungarian
+  - aoa_mean_icelandic
+  - word_icelandic
+  - aoa_mean_irish
+  - word_irish
+  - aoa_mean_isixhosa
+  - word_isixhosa
+  - aoa_mean_italian
+  - word_italian
+  - aoa_mean_lithuanian
+  - word_lithuanian
+  - aoa_mean_luxembourgish
+  - word_luxembourgish
+  - aoa_mean_maltese
+  - word_maltese
+  - aoa_mean_polish
+  - word_polish
+  - aoa_mean_russian
+  - word_russian
+  - aoa_mean_south_african_english
+  - word_south_african_english
+  - aoa_mean_serbian
+  - word_serbian
+  - aoa_mean_slovak
+  - word_slovak
+  - aoa_mean_spanish
+  - word_spanish
+  - aoa_mean_swedish
+  - word_swedish
+  - aoa_mean_turkish
+  - word_turkish
+  - context_english
+  - context_afrikaans
+  flags:
+    aoa: yes
+    context: yes

@@ -1,0 +1,44 @@
+bibtex: Cuetos1999
+parent_bibtex: ~
+citation:
+  author: Fernando Cuetos, Andrew W. Ellis, Bernardo Alvarez
+  year: 1999
+  title: Naming times for the Snodgrass and Vanderwart pictures in Spanish
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '31'
+  pages: 650-658
+  doi: 10.3758/bf03200741
+  source: crossref
+dataset:
+  language_from_columns: spanish, english
+  n_rows_csv: 140
+variables:
+  word_columns:
+  - word_spanish
+  - word_english
+  raw_columns:
+  - word_spanish
+  - word_english
+  - rt_mean
+  - proportion_error
+  - phonemes
+  - syllables
+  - proportion_noname
+  - imageagree_mean
+  - familiar_mean
+  - complexity_mean
+  - frequency_adult
+  - ice
+  - mec_sp
+  - mec_su
+  - mec_to
+  - aoa_mean
+  flags:
+    aoa: yes
+    complex: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    phonemes: yes
+    rt: yes
+    syllables: yes

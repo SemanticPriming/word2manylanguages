@@ -1,0 +1,26 @@
+bibtex: Schock2011
+parent_bibtex: ~
+citation:
+  author: Jocelyn Schock, Michael J. Cortese, Maya M. Khanna
+  year: 2012
+  title: Imageability estimates for 3,000 disyllabic words
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 374-379
+  doi: 10.3758/s13428-011-0162-0
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 3000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - mean_rt
+  - rt_sd
+  - imagine_mean
+  - imagine_sd
+  flags:
+    imagine: yes
+    rt: yes

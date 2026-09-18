@@ -1,0 +1,45 @@
+bibtex: Yao2017
+parent_bibtex: ~
+citation:
+  author: Zhao Yao, Jia Wu, Yanyan Zhang, Zhenhong Wang
+  year: 2017
+  title: Norms of valence, arousal, concreteness, familiarity, imageability, and context
+    availability for 1,100 Chinese words
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1374-1385
+  doi: 10.3758/s13428-016-0793-2
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 1100
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - translate_word_english
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - concrete_mean
+  - concrete_sd
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - avaliability_mean
+  - avaliability_sd
+  - rt_mean
+  - rt_sd
+  - accuracy_mean
+  - accuracy_sd
+  flags:
+    accuracy: yes
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    rt: yes
+    valence: yes

@@ -1,0 +1,35 @@
+bibtex: Moldovan2015
+parent_bibtex: ~
+citation:
+  author: Cornelia D. Moldovan, Pilar Ferré, Josep Demestre, Rosa Sánchez-Casas
+  year: 2015
+  title: 'Semantic similarity: normative ratings for 185 Spanish noun triplets'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 788-799
+  doi: 10.3758/s13428-014-0501-z
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 185
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - concrete_mean
+  - familiar_mean
+  - similar_word
+  - similarity_mean
+  - similarity_sd
+  - concrete_mean_similar_word
+  - familiar_mean_similar_word
+  - less_similar_word
+  - less_similarity_mean
+  - less_similarity_sd
+  - concrete_mean_less_similar_word
+  - familiar_mean_less_similar_word
+  flags:
+    concrete: yes
+    familiar: yes
+    similar: yes

@@ -1,0 +1,172 @@
+bibtex: Imbir2016
+parent_bibtex: Imbir2015
+citation:
+  author: Kamil K. Imbir
+  year: 2016
+  title: 'Affective Norms for 4900 Polish Words Reload (ANPW_R): Assessments for
+    Valence, Arousal, Dominance, Origin, Significance, Concreteness, Imageability
+    and, Age of Acquisition'
+  journal: Frontiers in Psychology
+  volume: '7'
+  pages: '1081'
+  doi: 10.3389/fpsyg.2016.01081
+  source: crossref
+dataset:
+  language_from_columns: polish
+  n_rows_csv: 4905
+variables:
+  word_columns:
+  - word_polish
+  raw_columns:
+  - word_polish
+  - translate_word_english
+  - pos
+  - length
+  - frequency_subtlex_pl
+  - frequency_kazojc2011
+  - valence_n
+  - valence_minimum
+  - valence_maximum
+  - valence_mean
+  - valence_sd
+  - arousal_n
+  - arousal_minimum
+  - arousal_maximum
+  - arousal_mean
+  - arousal_sd
+  - dominance_n
+  - dominance_minimum
+  - dominance_maximum
+  - dominance_mean
+  - dominance_sd
+  - origin_n
+  - origin_minimum
+  - origin_maximum
+  - origin_mean
+  - origin_sd
+  - significance_n
+  - significance_minimum
+  - significance_maximum
+  - significance_mean
+  - significance_sd
+  - concrete_n
+  - concrete_minimum
+  - concrete_maximum
+  - concrete_mean
+  - concrete_sd
+  - imagine_n
+  - imagine_minimum
+  - imagine_maximum
+  - imagine_mean
+  - imagine_sd
+  - aoa_n
+  - aoa_minimum
+  - aoa_maximum
+  - aoa_mean
+  - aoa_sd
+  - valence_n_female
+  - valence_minimum_female
+  - valence_maximum_female
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_n_female
+  - arousal_minimum_female
+  - arousal_maximum_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - dominance_n_female
+  - dominance_minimum_female
+  - dominance_maximum_female
+  - dominance_mean_female
+  - dominance_sd_female
+  - origin_n_female
+  - origin_minimum_female
+  - origin_maximum_female
+  - origin_mean_female
+  - origin_sd_female
+  - significance_n_female
+  - significance_minimum_female
+  - significance_maximum_female
+  - significance_mean_female
+  - significance_sd_female
+  - concrete_n_female
+  - concrete_minimum_female
+  - concrete_maximum_female
+  - concrete_mean_female
+  - concrete_sd_female
+  - imagine_n_female
+  - imagine_minimum_female
+  - imagine_maximum_female
+  - imagine_mean_female
+  - imagine_sd_female
+  - aoa_n_female
+  - aoa_minimum_female
+  - aoa_maximum_female
+  - aoa_mean_female
+  - aoa_sd_female
+  - valence_n_male
+  - valence_minimum_male
+  - valence_maximum_male
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_n_male
+  - arousal_minimum_male
+  - arousal_maximum_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - dominance_n_male
+  - dominance_minimum_male
+  - dominance_maximum_male
+  - dominance_mean_male
+  - dominance_sd_male
+  - origin_n_male
+  - origin_minimum_male
+  - origin_maximum_male
+  - origin_mean_male
+  - origin_sd_male
+  - significance_n_male
+  - significance_minimum_male
+  - significance_maximum_male
+  - significance_mean_male
+  - significance_sd_male
+  - concrete_n_male
+  - concrete_minimum_male
+  - concrete_maximum_male
+  - concrete_mean_male
+  - concrete_sd_male
+  - imagine_n_male
+  - imagine_minimum_male
+  - imagine_maximum_male
+  - imagine_mean_male
+  - imagine_sd_male
+  - aoa_n_male
+  - aoa_minimum_male
+  - aoa_maximum_male
+  - aoa_mean_male
+  - aoa_sd_male
+  flags:
+    valence: yes
+    arousal: yes
+    concrete: yes
+    imagine: yes
+    aoa: yes
+    freq: yes
+    letters: yes
+    pos: yes
+notes: >
+  "ANPW_R" (Affective Norms for Polish Words - Reload) extends the
+  author's own earlier ANPW dataset (parent_bibtex: Imbir2015, 1,586
+  words - already in this collection) to 4,905 words. Verified: all 1,586
+  ANPW words are present in ANPW_R (expected - this is a superset/reload
+  of the same source, not independent duplicate data); valence/arousal/
+  dominance/origin/significance were re-collected under the reload's own
+  protocol (400 participants, 50 ratings/word, 25 women + 25 men) rather
+  than copied from the original ANPW values. Concreteness, imageability,
+  and age of acquisition are new to this dataset and were not present in
+  Imbir2015. Also checked against Riegel2015 (NAWL, 2,902 Polish words,
+  a fully independent norming project): 1,274 words incidentally overlap
+  by vocabulary, which is expected for two large general-Polish-word
+  samples and is not a data-duplication concern. Column names fixed from
+  the source spreadsheet's typos: "part of speach" to pos, "concretness"
+  to concrete, "imegability" to imagine, "ageOfAquisition" to aoa, to
+  match this collection's naming convention.

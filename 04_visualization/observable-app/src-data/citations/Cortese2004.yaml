@@ -1,0 +1,28 @@
+bibtex: Cortese2004
+parent_bibtex: ~
+citation:
+  author: Michael J. Cortese, April Fugett
+  year: 2004
+  title: Imageability ratings for 3,000 monosyllabic words
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 384-387
+  doi: 10.3758/bf03195585
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 3000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - rt_mean
+  - rt_sd
+  - imagine_n
+  - imagine_mean
+  - imagine_sd
+  - toglia_batting_1978
+  flags:
+    imagine: yes
+    rt: yes

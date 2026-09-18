@@ -1,0 +1,84 @@
+bibtex: Coso2023
+parent_bibtex: ~
+citation:
+  author: Bojana Ćoso, Marc Guasch, Irena Bogunović, Pilar Ferré, José A. Hinojosa
+  year: 2022
+  title: 'CROWD-5e: A Croatian psycholinguistic database of affective norms for five
+    discrete emotions'
+  journal: Behavior Research Methods
+  volume: '55'
+  pages: 4018-4034
+  doi: 10.3758/s13428-022-02003-2
+  source: crossref
+dataset:
+  language_from_columns: croatian
+  n_rows_csv: 3022
+variables:
+  word_columns:
+  - word_croatian
+  raw_columns:
+  - id_number
+  - word_croatian
+  - translate_word_english
+  - happiness_mean
+  - anger_mean
+  - sad_mean
+  - fear_mean
+  - disgust_mean
+  - happiness_sd
+  - anger_sd
+  - sad_sd
+  - fear_sd
+  - disgust_sd
+  - happiness_n
+  - anger_n
+  - sad_n
+  - fear_n
+  - disgust_n
+  - unknown_happiness_prop
+  - unknown_anger_prop
+  - unknown_sadness_prop
+  - unknown_fear_prop
+  - unknown_disgust_prop
+  - happiness_mean_male
+  - anger_mean_male
+  - sad_mean_male
+  - fear_mean_male
+  - disgust_mean_male
+  - happiness_sd_male
+  - anger_sd_male
+  - sad_sd_male
+  - fear_sd_male
+  - disgust_sd_male
+  - happiness_n_male
+  - anger_n_male
+  - sad_n_male
+  - fear_n_male
+  - disgust_n_male
+  - unknown_happiness_prop_male
+  - unknown_anger_prop_male
+  - unknown_sadness_prop_male
+  - unknown_fear_prop_male
+  - unknown_disgust_prop_male
+  - happiness_mean_female
+  - anger_mean_female
+  - sad_mean_female
+  - fear_mean_female
+  - disgust_mean_female
+  - happiness_sd_female
+  - anger_sd_female
+  - sad_sd_female
+  - fear_sd_female
+  - disgust_sd_female
+  - happiness_n_female
+  - anger_n_female
+  - sad_n_female
+  - fear_n_female
+  - disgust_n_female
+  - unknown_happiness_prop_female
+  - unknown_anger_prop_female
+  - unknown_sadness_prop_female
+  - unknown_fear_prop_female
+  - unknown_disgust_prop_female
+  flags:
+    emotion: yes

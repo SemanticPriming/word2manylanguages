@@ -1,0 +1,35 @@
+bibtex: Izura2005
+parent_bibtex: ~
+citation:
+  author: Cristina Izura, Natividad Hernández-MuÑoz, Andrew W. Ellis
+  year: 2005
+  title: Category norms for 500 Spanish words in five semantic categories
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 385-397
+  doi: 10.3758/bf03192708
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 499
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - typicality_mean
+  - familiar_mean
+  - aoa_mean
+  - imagine_mean
+  - lexical_availability_mean
+  - frequency
+  - length
+  - type
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    typical: yes

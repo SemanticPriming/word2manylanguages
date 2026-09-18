@@ -1,0 +1,33 @@
+bibtex: Birchenough2017
+parent_bibtex: ~
+citation:
+  author: Julia M. H. Birchenough, Robert Davies, Vincent Connelly
+  year: 2017
+  title: Rated age-of-acquisition norms for over 3,200 German words
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 484-501
+  doi: 10.3758/s13428-016-0718-0
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 3259
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - translate_word_english_british
+  - translate_word_english_american
+  - rating_n
+  - aoa_mean
+  - aoa_sd
+  - aoa_minimum
+  - aoa_maximum
+  - unknown_n
+  - aoa_mean_likert
+  - aoa_sd_likert
+  - aoa_minimum_likert
+  - aoa_maximum_likert
+  flags:
+    aoa: yes

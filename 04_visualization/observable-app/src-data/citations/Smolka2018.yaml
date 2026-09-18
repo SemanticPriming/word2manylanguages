@@ -1,0 +1,88 @@
+bibtex: Smolka2018
+parent_bibtex: ~
+citation:
+  author: Eva Smolka, Carsten Eulitz
+  year: 2018
+  title: 'Psycholinguistic measures for German verb pairs: Semantic transparency,
+    semantic relatedness, verb family size, and age of reading acquisition'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 1540-1562
+  doi: 10.3758/s13428-018-1052-5
+  source: crossref
+dataset:
+  language_from_columns: german_prime, german_target
+  n_rows_csv: 1186
+variables:
+  word_columns:
+  - word_german_prime
+  - word_german_target
+  raw_columns:
+  - word_german_prime
+  - word_german_target
+  - aoa_mean_prime
+  - aoa_sd_prime
+  - aoa_median_prime
+  - aor_mean_prime
+  - aor_sd_prime
+  - aor_median_prime
+  - aoa_mean_target
+  - aoa_sd_target
+  - aoa_median_target
+  - aor_mean_target
+  - aor_sd_target
+  - aor_median_target
+  - target_id
+  - letters_target
+  - syllables_target
+  - frequency_lemma_absolute_celex_target
+  - frequency_lemma_per_million_celex_target
+  - frequency_wordform_absolute_celex_target
+  - frequency_wordform_per_million_celex_target
+  - morphology_celex_target
+  - morphology_canoo_target
+  - participle_stem_target
+  - participle_suffix_target
+  - regularity_target
+  - family_size_celex_target
+  - family_size_mater_target
+  - prime_id
+  - letters_prime
+  - syllables_prime
+  - frequency_lemma_absolute_celex_prime
+  - frequency_lemma_per_million_celex_prime
+  - frequency_wordform_absolute_celex_prime
+  - frequency_wordform_per_million_celex_prime
+  - complexity_prime
+  - participle_stem_prime
+  - participle_suffix_prime
+  - regularity_prime
+  - relation_type
+  - transparency_wahrig_prime
+  - transparency_duden_prime
+  - transparency_combined_prime
+  - relatedness_wahrig
+  - relatedness_duden
+  - relatedness_combined
+  - rating_n
+  - rating_mean
+  - rating_median
+  - rating_sd
+  - rating_min
+  - rating_max
+  - frequency_wordform_absolute_dlexdb_prime
+  - frequency_wordform_per_million_dlexdb_prime
+  - frequency_lemma_absolute_dlexdb_prime
+  - frequency_lemma_per_million_dlexdb_prime
+  - frequency_wordform_absolute_dlexdb_target
+  - frequency_wordform_per_million_dlexdb_target
+  - frequency_lemma_absolute_dlexdb_target
+  - frequency_lemma_per_million_dlexdb_target
+  flags:
+    aoa: yes
+    complex: yes
+    freq: yes
+    letters: yes
+    morph: yes
+    prime: yes
+    syllables: yes

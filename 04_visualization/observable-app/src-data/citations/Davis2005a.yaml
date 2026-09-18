@@ -1,0 +1,27 @@
+bibtex: Davis2005a
+parent_bibtex: ~
+citation:
+  author: Colin J. Davis, Manuel Perea
+  year: 2005
+  title: 'BuscaPalabras: A program for deriving orthographic and phonological neighborhood
+    statistics and other psycholinguistic indices in Spanish'
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 665-671
+  doi: 10.3758/bf03192738
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 1359
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - familiar_mean
+  - imagine_mean
+  - concrete_mean
+  flags:
+    concrete: yes
+    familiar: yes
+    imagine: yes

@@ -1,0 +1,36 @@
+bibtex: Friendly1982
+parent_bibtex: ~
+citation:
+  author: Michael Friendly, Patricia E. Franklin, David Hoffman, David C. Rubin
+  year: 1982
+  title: 'The Toronto Word Pool: Norms for imagery, concreteness, orthographic variables,
+    and grammatical usage for 1,080 words'
+  journal: Behavior Research Methods & Instrumentation
+  volume: '14'
+  pages: 375-399
+  doi: 10.3758/bf03203275
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1093
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagne_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - length
+  - frequency_kf
+  - first_order_approximation
+  - second_order_approximation
+  - orthographic_neighborhood_ratio
+  - noun_percent
+  flags:
+    concrete: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    orthon: yes

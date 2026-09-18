@@ -1,0 +1,132 @@
+bibtex: Gruhn2008a
+parent_bibtex: ~
+citation:
+  author: Daniel Grühn, Jacqui Smith
+  year: 2008
+  title: 'Characteristics for 200 words rated by young and older adults: Age-dependent
+    evaluations of German adjectives (AGE)'
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 1088-1097
+  doi: 10.3758/brm.40.4.1088
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 202
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - translate_word_english
+  - length
+  - frequency_per_million
+  - frequency_class
+  - valence_mean_young_female
+  - valence_mean_young_male
+  - valence_mean_old_female
+  - valence_mean_old_male
+  - valence_mean_young
+  - valence_mean_old
+  - valence_mean
+  - arousal_mean_young_female
+  - arousal_mean_young_male
+  - arousal_mean_old_female
+  - arousal_mean_old_male
+  - arousal_mean_young
+  - arousal_mean_old
+  - arousal_mean
+  - control_mean_young_female
+  - control_mean_young_male
+  - control_mean_old_female
+  - control_mean_old_male
+  - control_mean_young
+  - control_mean_old
+  - control_mean
+  - imagine_mean_young_female
+  - imagine_mean_young_male
+  - imagine_mean_old_female
+  - imagine_mean_old_male
+  - imagine_mean_young
+  - imagine_mean_old
+  - imagine_mean
+  - selfrelevance_mean_young_female
+  - selfrelevance_mean_young_male
+  - selfrelevance_mean_old_female
+  - selfrelevance_mean_old_male
+  - selfrelevance_mean_young
+  - selfrelevance_mean_old
+  - selfrelevance_mean
+  - agerelevance_mean_young_female
+  - agerelevance_mean_young_male
+  - agerelevance_mean_old_female
+  - agerelevance_mean_old_male
+  - agerelevance_mean_young
+  - agerelevance_mean_old
+  - agerelevance_mean
+  - valence_mean_self
+  - valence_mean_other
+  - self_or_other_mean
+  - self_or_other_sd
+  - self_or_other_class
+  - valence_anova_p_age
+  - valence_anova_etasquared_age
+  - valence_anova_significant_age
+  - valence_anova_p_sex
+  - valence_anova_etasquared_sex
+  - valence_anova_significant_sex
+  - valence_anova_p_age_sex
+  - valence_anova_etasquared_age_sex
+  - valence_anova_significant_age_sex
+  - arousal_anova_p_age
+  - arousal_anova_etasquared_age
+  - arousal_anova_significant_age
+  - arousal_anova_p_sex
+  - arousal_anova_etasquared_sex
+  - arousal_anova_significant_sex
+  - arousal_anova_p_age_sex
+  - arousal_anova_etasquared_age_sex
+  - arousal_anova_significant_age_sex
+  - control_anova_p_age
+  - control_anova_etasquared_age
+  - control_anova_significant_age
+  - control_anova_p_sex
+  - control_anova_etasquared_sex
+  - control_anova_significant_sex
+  - control_anova_p_age_sex
+  - control_anova_etasquared_age_sex
+  - control_anova_significant_age_sex
+  - imagine_anova_p_age
+  - imagine_anova_etasquared_age
+  - imagine_anova_significant_age
+  - imagine_anova_p_sex
+  - imagine_anova_etasquared_sex
+  - imagine_anova_significant_sex
+  - imagine_anova_p_age_sex
+  - imagine_anova_etasquared_age_sex
+  - imagine_anova_significant_age_sex
+  - selfrelevance_anova_p_age
+  - selfrelevance_anova_etasquared_age
+  - selfrelevance_anova_significant_age
+  - selfrelevance_anova_p_sex
+  - selfrelevance_anova_etasquared_sex
+  - selfrelevance_anova_significant_sex
+  - selfrelevance_anova_p_age_sex
+  - selfrelevance_anova_etasquared_age_sex
+  - selfrelevance_anova_significant_age_sex
+  - agerelevance_anova_p_age
+  - agerelevance_anova_etasquared_age
+  - agerelevance_anova_significant_age
+  - agerelevance_anova_p_sex
+  - agerelevance_anova_etasquared_sex
+  - agerelevance_anova_significant_sex
+  - agerelevance_anova_p_age_sex
+  - agerelevance_anova_etasquared_age_sex
+  - agerelevance_anova_significant_age_sex
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    relevance: yes
+    valence: yes

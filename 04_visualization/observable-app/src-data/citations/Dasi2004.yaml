@@ -1,0 +1,31 @@
+bibtex: Dasi2004
+parent_bibtex: ~
+citation:
+  author: Carmen Dasí, María José Soler, Juan Carlos Ruiz
+  year: 2004
+  title: Normative data on the familiarity and difficulty of 196 Spanish word fragments
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 559-563
+  doi: 10.3758/bf03195602
+  source: crossref
+dataset:
+  language_from_columns: spanish, fragment
+  n_rows_csv: 196
+variables:
+  word_columns:
+  - word_spanish
+  - word_fragment
+  raw_columns:
+  - word_spanish
+  - word_fragment
+  - number_meanings
+  - frequency_lexesp
+  - number_letters_given
+  - ratio_given_letters_to_blanks
+  - first_or_last_letters_given
+  - familiar_mean
+  - difficulty
+  flags:
+    familiar: yes
+    freq: yes

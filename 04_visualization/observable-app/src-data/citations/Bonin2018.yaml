@@ -1,0 +1,34 @@
+bibtex: Bonin2018
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Alain Méot, Aurélia Bugaiska
+  year: 2018
+  title: 'Concreteness norms for 1,659 French words: Relationships with other psycholinguistic
+    variables and word recognition times'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 2366-2387
+  doi: 10.3758/s13428-018-1014-y
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1659
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - concrete_mean
+  - concrete_sd
+  - context_mean
+  - context_sd
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  flags:
+    arousal: yes
+    concrete: yes
+    context: yes
+    valence: yes

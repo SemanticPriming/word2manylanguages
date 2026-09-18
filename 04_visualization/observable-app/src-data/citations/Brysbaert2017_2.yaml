@@ -1,0 +1,42 @@
+bibtex: Brysbaert2017_2
+parent_bibtex: Brysbaert2017
+citation:
+  author: Marc Brysbaert, Andrew Biemiller
+  year: 2017
+  title: Test-based age-of-acquisition norms for 44 thousand English word meanings
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1520-1523
+  doi: 10.3758/s13428-016-0811-4
+  source: crossref
+dataset:
+  language_from_columns: english, english_alt_spelling
+  n_rows_csv: 51715
+variables:
+  word_columns:
+  - word_english
+  - word_english_alt_spelling
+  raw_columns:
+  - word_english
+  - word_english_alt_spelling
+  - frequency_pm
+  - pos_dominance
+  - length
+  - phonemes
+  - syllables
+  - lemma
+  - aoa_mean_kuperman
+  - percent_unknown_kuperman
+  - aoa_mean_kuperman_lemma
+  - percent_unknown_kuperman_lemma
+  - aoa_mean_bird_lemma
+  - aoa_mean_bristol_lemma
+  - aoa_mean_cort_lemma
+  - aoa_mean_schock
+  flags:
+    aoa: yes
+    freq: yes
+    letters: yes
+    phonemes: yes
+    pos: yes
+    syllables: yes

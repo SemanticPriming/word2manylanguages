@@ -1,0 +1,92 @@
+bibtex: Johnston2010
+parent_bibtex: ~
+citation:
+  author: Robert A. Johnston, Kevin Dent, Glyn W. Humphreys, Chris Barry
+  year: 2010
+  title: 'British-English norms and naming times for a set of 539 pictures: The role
+    of age of acquisition'
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 461-469
+  doi: 10.3758/brm.42.2.461
+  source: crossref
+dataset:
+  language_from_columns: english_us, english_gb
+  n_rows_csv: 539
+variables:
+  word_columns:
+  - word_english_us
+  - word_english_gb
+  raw_columns:
+  - word_english_us
+  - word_english_gb
+  - aoa_mean
+  - p_n
+  - familiar_mean
+  - familiar_cond
+  - complexity_mean
+  - dominance_valid
+  - us_uk_match
+  - raw_dom
+  - dont_know
+  - missing_name
+  - raw_valid
+  - total_miss
+  - dominance_total_miss
+  - no_alternatives
+  - h_statistic
+  - cobuild_f
+  - uk_name
+  - length
+  - naming_n
+  - percent_na
+  - percent_na_timed
+  - frequency_celex_comb
+  - frequency_celex_writ
+  - frequency_celex_spoken
+  - in
+  - response1
+  - response2
+  - response3
+  - response4
+  - response5
+  - response6
+  - response7
+  - response8
+  - response9
+  - response10
+  - response11
+  - response12
+  - response13
+  - response14
+  - response15
+  - response16
+  - response17
+  - response18
+  - response19
+  - response20
+  - response21
+  - response22
+  - response23
+  - response24
+  - response25
+  - rt_mean
+  - rt_sd
+  - rt_n
+  - noresponse_n
+  - voicekey_fail_n
+  - environmental_n
+  - dysfluency_n
+  - time_out_n
+  - pass_no_response_n
+  - non_dominance_n
+  - missing_data_n
+  flags:
+    aoa: yes
+    complex: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    picture: yes
+    rt: yes

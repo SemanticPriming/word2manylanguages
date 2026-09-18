@@ -1,0 +1,63 @@
+bibtex: Stevenson2007
+parent_bibtex: ~
+citation:
+  author: Ryan A. Stevenson, Joseph A. Mikels, Thomas W. James
+  year: 2007
+  title: Characterization of the Affective Norms for English Words by discrete emotional
+    categories
+  journal: Behavior Research Methods
+  volume: '39'
+  pages: 1020-1024
+  doi: 10.3758/bf03192999
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1034
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - anew_id
+  - category
+  - happiness_mean
+  - happiness_sd
+  - happiness_sex_diff
+  - anger_mean
+  - anger_sd
+  - anger_sex_diff
+  - sadness_mean
+  - sadness_sd
+  - sadness_sex_diff
+  - fear_mean
+  - fear_sd
+  - fear_sex_diff
+  - disgust_mean
+  - disgust_sd
+  - disgust_sex_diff
+  - 'n'
+  - happiness_mean_female
+  - happiness_sd_female
+  - anger_mean_female
+  - anger_sd_female
+  - sadness_mean_female
+  - sadness_sd_female
+  - fear_mean_female
+  - fear_sd_female
+  - disgust_mean_female
+  - disgust_sd_female
+  - n_female
+  - happiness_mean_male
+  - happiness_sd_male
+  - anger_mean_male
+  - anger_sd_male
+  - sadness_mean_male
+  - sadness_sd_male
+  - fear_mean_male
+  - fear_sd_male
+  - disgust_mean_male
+  - disgust_sd_male
+  - n_male
+  flags:
+    category: yes
+    emotion: yes

@@ -1,0 +1,55 @@
+bibtex: Monnier2017
+parent_bibtex: ~
+citation:
+  author: Catherine Monnier, Arielle Syssau
+  year: 2017
+  title: Affective norms for 720 French words rated by children and adolescents (FANchild)
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1882-1893
+  doi: 10.3758/s13428-016-0831-0
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1031
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - picture_source
+  - picture_number
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - valence_mean_male
+  - valence_sd_male
+  - arousal_mean_male
+  - arousal_sd_male
+  - valence_mean_female
+  - valence_sd_female
+  - arousal_mean_female
+  - arousal_sd_female
+  - length
+  - phonemes
+  - syllabus
+  - pos
+  - frequency_film
+  - frequency_books
+  - imagine_mean
+  - bonin2003
+  - gilet2012
+  - niedenthal2004
+  - ric2013
+  - syssau2005
+  flags:
+    arousal: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    picture: yes
+    pos: yes
+    valence: yes

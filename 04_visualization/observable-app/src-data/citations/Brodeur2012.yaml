@@ -1,0 +1,41 @@
+bibtex: Brodeur2012
+parent_bibtex: ~
+citation:
+  author: Mathieu B. Brodeur, Eva Kehayia, Geneviève Dion-Lessard, Mélissa Chauret,
+    Tina Montreuil, Emmanuelle Dionne-Dostie, et al.
+  year: 2012
+  title: 'The bank of standardized stimuli (BOSS): comparison between French and English
+    norms'
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 961-970
+  doi: 10.3758/s13428-011-0184-7
+  source: crossref
+dataset:
+  language_from_columns: french_modal_name
+  n_rows_csv: 483
+variables:
+  word_columns:
+  - word_french_modal_name
+  raw_columns:
+  - filename_english
+  - word_french_modal_name
+  - modal_name_agreement_percent
+  - h
+  - dko_percent
+  - dkn_percent
+  - total_percent
+  - modal_category
+  - category_agreement_percent
+  - hcat
+  - familiar_mean
+  - visual_complexity_mean
+  - object_agreement_mean
+  - viewpoint_agreement_mean
+  - nmi_percent
+  - manipulability_mean
+  - object_size_mean
+  flags:
+    category: yes
+    familiar: yes
+    visualcomp: yes

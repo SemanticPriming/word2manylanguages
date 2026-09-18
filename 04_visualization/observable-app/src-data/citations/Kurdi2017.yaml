@@ -1,0 +1,30 @@
+bibtex: Kurdi2017
+parent_bibtex: ~
+citation:
+  author: Benedek Kurdi, Shayn Lozano, Mahzarin R. Banaji
+  year: 2017
+  title: Introducing the Open Affective Standardized Image Set (OASIS)
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 457-470
+  doi: 10.3758/s13428-016-0715-3
+  source: crossref
+dataset:
+  language_from_columns: ''
+  n_rows_csv: 900
+variables:
+  word_columns: []
+  raw_columns:
+  - theme
+  - category
+  - source
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  flags:
+    arousal: yes
+    category: yes
+    valence: yes

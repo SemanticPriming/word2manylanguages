@@ -1,0 +1,25 @@
+bibtex: Spreen1966
+parent_bibtex: ~
+citation:
+  author: Otfried Spreen, Rudolph W. Schulz
+  year: 1966
+  title: Parameters of abstraction, meaningfulness, and pronunciability for 329 nouns
+  journal: Journal of Verbal Learning and Verbal Behavior
+  volume: '5'
+  pages: 459-468
+  doi: 10.1016/s0022-5371(66)80061-0
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 329
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - specificity_mean
+  - concrete_mean
+  - meaningfulness_mean
+  flags:
+    concrete: yes
+    meaning: yes

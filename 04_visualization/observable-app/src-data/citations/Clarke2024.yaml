@@ -1,0 +1,39 @@
+bibtex: Clarke2024
+parent_bibtex: ~
+citation:
+  doi: 10.17605/osf.io/npj4u
+  source: doi_unresolved
+dataset:
+  language_from_columns: english, thai, thai_ipa
+  n_rows_csv: 629
+variables:
+  word_columns:
+  - word_english
+  - word_thai
+  - word_thai_ipa
+  raw_columns:
+  - item_id
+  - word_english
+  - word_thai
+  - word_thai_ipa
+  - concrete_category
+  - length
+  - phonemes_n
+  - syllables_n
+  - imagine_mean
+  - imagine_sd
+  - frequency_subjective_mean
+  - frequency_subjective_sd
+  - body_object_interaction_mean
+  - body_object_interaction_sd
+  - aoa_mean
+  - aoa_sd
+  - frequency_google_hits
+  flags:
+    aoa: yes
+    concrete: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    syllables: yes

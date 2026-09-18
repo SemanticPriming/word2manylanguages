@@ -1,0 +1,37 @@
+bibtex: Lotto2010
+parent_bibtex: ~
+citation:
+  author: Lorella Lotto, Luca Surian, Remo Job
+  year: 2010
+  title: 'Objective age of acquisition for 223 Italian words: Norms and effects on
+    picture naming speed'
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 126-133
+  doi: 10.3758/brm.42.1.126
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 223
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - aoa_mean_lr
+  - aoa_mean_objective
+  - aoa_mean_subjective
+  - rt_mean
+  - typicality_mean
+  - familiar_mean
+  - frequency_o
+  - frequency_s
+  - length
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    rt: yes
+    typical: yes

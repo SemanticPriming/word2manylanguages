@@ -1,0 +1,28 @@
+bibtex: Speed2017
+parent_bibtex: ~
+citation:
+  author: Laura J. Speed, Asifa Majid
+  year: 2017
+  title: 'Dutch modality exclusivity norms: Simulating perceptual modality in space'
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 2204-2218
+  doi: 10.3758/s13428-017-0852-3
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 485
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - arousal_mean
+  - dominance_mean
+  - valence_mean
+  - modality
+  flags:
+    arousal: yes
+    dominate: yes
+    modality: yes
+    valence: yes

@@ -1,0 +1,61 @@
+bibtex: Syssau2009
+parent_bibtex: ~
+citation:
+  author: Arielle Syssau, Catherine Monnier
+  year: 2009
+  title: Children’s emotional norms for 600 French words
+  journal: Behavior Research Methods
+  volume: '41'
+  pages: 213-219
+  doi: 10.3758/brm.41.1.213
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 600
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - emotional_source
+  - picture_source
+  - picture_number
+  - age_rating
+  - negative_percent_5_years
+  - negative_percent_girls_5_years
+  - negative_percent_boys_5_years
+  - neutral_percent_5_years
+  - neutral_percent_girls_5_years
+  - neutral_percent_boys_5_years
+  - positive_percent_5_years
+  - positive_percent_girls_5_years
+  - positive_percent_boys_5_years
+  - negative_percent_7_years
+  - negative_percent_girls_7_years
+  - negative_percent_boys_7_years
+  - neutral_percent_7_years
+  - neutral_percent_girls_7_years
+  - neutral_percent_boys_7_years
+  - positive_percent_7_years
+  - positive_percent_girls_7_years
+  - positive_percent_boys_7_years
+  - negative_percent_9_years
+  - negative_percent_girls_9_years
+  - negative_percent_boys_9_years
+  - neutral_percent_9_years
+  - neutral_percent_girls_9_years
+  - neutral_percent_boys_9_years
+  - positive_percent_9_years
+  - positive_percent_girls_9_years
+  - positive_percent_boys_9_years
+  - negative_percent_adults
+  - neutral_percent_adults
+  - positive_percent_adults
+  - valence_mean
+  - valence_sd
+  flags:
+    emotion: yes
+    picture: yes
+    pos: yes
+    valence: yes

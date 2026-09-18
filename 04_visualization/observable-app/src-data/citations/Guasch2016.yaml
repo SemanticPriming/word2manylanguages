@@ -1,0 +1,46 @@
+bibtex: Guasch2016
+parent_bibtex: ~
+citation:
+  author: Marc Guasch, Pilar Ferré, Isabel Fraga
+  year: 2016
+  title: Spanish norms for affective and lexico-semantic variables for 1,400 words
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 1358-1369
+  doi: 10.3758/s13428-015-0684-y
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 1400
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - pos
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  - imagine_mean
+  - imagine_sd
+  - imagine_n
+  - availability_mean
+  - availability_sd
+  - availability_n
+  - familiar_mean
+  - familiar_sd
+  - familiar_n
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    pos: yes
+    valence: yes

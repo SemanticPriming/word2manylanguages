@@ -1,0 +1,35 @@
+bibtex: Rossion2004
+parent_bibtex: ~
+citation:
+  author: Bruno Rossion, Gilles Pourtois
+  year: 2004
+  title: 'Revisiting Snodgrass and Vanderwart''s Object Pictorial Set: The Role of
+    Surface Detail in Basic-Level Object Recognition'
+  journal: Perception
+  volume: '33'
+  pages: 217-236
+  doi: 10.1068/p5117
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - familiar_mean_line
+  - familiar_mean_gray
+  - familiar_mean_color
+  - familiar_sd_line
+  - familiar_sd_gray
+  - familiar_sd_color
+  - imagine_mean_line
+  - imagine_mean_gray
+  - imagine_mean_color
+  - imagine_sd_line
+  - imagine_sd_gray
+  - imagine_sd_color
+  flags:
+    familiar: yes
+    imagine: yes

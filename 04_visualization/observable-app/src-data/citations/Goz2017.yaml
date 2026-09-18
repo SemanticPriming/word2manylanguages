@@ -1,0 +1,42 @@
+bibtex: Goz2017
+parent_bibtex: ~
+citation:
+  author: İlyas Göz, Ali İ. Tekcan, Aslı Aktan Erciyes
+  year: 2017
+  title: Subjective age-of-acquisition norms for 600 Turkish words from four age groups
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1736-1746
+  doi: 10.3758/s13428-016-0817-y
+  source: crossref
+dataset:
+  language_from_columns: turkish
+  n_rows_csv: 568
+variables:
+  word_columns:
+  - word_turkish
+  raw_columns:
+  - word_turkish
+  - translate_word_english
+  - aoa_overall_mean
+  - aoa_overall_sd
+  - aoa_mean_children
+  - aoa_sd_children
+  - aoa_mean_older
+  - aoa_sd_young_adults
+  - aoa_mean_middle_aged
+  - aoa_sd_middle_aged
+  - aoa_mean_older_adults
+  - aoa_sd_older_adults
+  - imagine_mean
+  - concrete_mean
+  - frequency_mean
+  - syllables
+  - length
+  flags:
+    aoa: yes
+    concrete: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    syllables: yes

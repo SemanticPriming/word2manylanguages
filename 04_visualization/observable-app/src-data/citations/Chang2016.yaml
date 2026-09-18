@@ -1,0 +1,33 @@
+bibtex: Chang2016
+parent_bibtex: ~
+citation:
+  author: Ya-Ning Chang, Chun-Hsien Hsu, Jie-Li Tsai, Chien-Liang Chen, Chia-Ying
+    Lee
+  year: 2016
+  title: A psycholinguistic database for traditional Chinese character naming
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 112-122
+  doi: 10.3758/s13428-014-0559-7
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified, zhuyin
+  n_rows_csv: 3314
+variables:
+  word_columns:
+  - word_chinese_simplified
+  - word_zhuyin
+  raw_columns:
+  - word_chinese_simplified
+  - word_zhuyin
+  - frequency
+  - familiar_mean
+  - ambiguity_mean
+  - accuracy_naming
+  - rt_mean_naming
+  flags:
+    accuracy: yes
+    ambiguity: yes
+    familiar: yes
+    freq: yes
+    rt: yes

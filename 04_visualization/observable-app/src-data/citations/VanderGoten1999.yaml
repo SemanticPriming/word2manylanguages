@@ -1,0 +1,31 @@
+bibtex: VanderGoten1999
+parent_bibtex: ~
+citation:
+  author: Koen Van Der Goten, Gino De Vooght, Eva Kemps
+  year: 1999
+  title: Concreteness and Emotional Valence Ratings of 399 Dutch Nouns
+  journal: Psychologica Belgica
+  volume: '39'
+  pages: '49'
+  doi: 10.5334/pb.941
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 399
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - valence_mean
+  - valence_sd
+  - concrete_mean
+  - concrete_sd
+  - frequency
+  - frequency_mlj
+  - syllable_type
+  flags:
+    concrete: yes
+    freq: yes
+    valence: yes

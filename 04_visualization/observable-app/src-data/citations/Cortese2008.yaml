@@ -1,0 +1,27 @@
+bibtex: Cortese2008
+parent_bibtex: ~
+citation:
+  author: Michael J. Cortese, Maya M. Khanna
+  year: 2008
+  title: Age of acquisition ratings for 3,000 monosyllabic words
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 791-794
+  doi: 10.3758/brm.40.3.791
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 3000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_subjective_n
+  - aoa_subjective_mean
+  - aoa_subjective_sd
+  - rt_mean
+  - rt_sd
+  flags:
+    aoa: yes
+    rt: yes

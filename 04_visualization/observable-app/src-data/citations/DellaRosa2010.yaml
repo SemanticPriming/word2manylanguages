@@ -1,0 +1,44 @@
+bibtex: DellaRosa2010
+parent_bibtex: ~
+citation:
+  author: Pasquale A. Della Rosa, Eleonora Catricalà, Gabriella Vigliocco, Stefano
+    F. Cappa
+  year: 2010
+  title: 'Beyond the abstract—concrete dichotomy: Mode of acquisition, concreteness,
+    imageability, familiarity, age of acquisition, context availability, and abstractness
+    norms for a set of 417 Italian words'
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 1042-1048
+  doi: 10.3758/brm.42.4.1042
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 417
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - concrete_mean
+  - concrete_sd
+  - imagine_mean
+  - imagine_sd
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  - ca
+  - casd
+  - abs
+  - abssd
+  - moa_mean
+  - moa_sd
+  - length
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    imagine: yes
+    letters: yes

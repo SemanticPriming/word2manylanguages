@@ -1,0 +1,38 @@
+bibtex: Cuetos2003
+parent_bibtex: ~
+citation:
+  author: Fernando Cuetos, Maira Alija
+  year: 2003
+  title: Normative data and naming times for action pictures
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '35'
+  pages: 168-177
+  doi: 10.3758/bf03195508
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 100
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - imagine_mean
+  - familiar_mean
+  - aoa_mean
+  - visual_complexity_mean
+  - percent_na
+  - h_statistic
+  - frequency
+  - frequency_comp
+  - phonemes
+  - syllables
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    phonemes: yes
+    syllables: yes
+    visualcomp: yes

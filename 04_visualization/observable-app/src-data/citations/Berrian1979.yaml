@@ -1,0 +1,29 @@
+bibtex: Berrian1979
+parent_bibtex: ~
+citation:
+  author: Raymond W. Berrian, Douglas P. Metzler, Neal E. Kroll, Gail M. Clark-Meyers
+  year: 1979
+  title: Estimates of imagery, ease of definition, and animateness for 328 adjectives.
+  journal: 'Journal of Experimental Psychology: Human Learning and Memory'
+  volume: '5'
+  pages: 435-447
+  doi: 10.1037/0278-7393.5.4.435
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 324
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - ease_define_mean
+  - ease_define_sd
+  - animate_mean
+  - animate_sd
+  - frequency_kf
+  flags:
+    freq: yes
+    imagine: yes

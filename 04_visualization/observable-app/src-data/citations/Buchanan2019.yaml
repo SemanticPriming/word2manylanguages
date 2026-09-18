@@ -1,0 +1,31 @@
+bibtex: Buchanan2019
+parent_bibtex: ~
+citation:
+  author: Erin M. Buchanan, K. D. Valentine, Nicholas P. Maxwell
+  year: 2019
+  title: 'English semantic feature production norms: An extended database of 4436
+    concepts'
+  journal: Behavior Research Methods
+  volume: '51'
+  pages: 1849-1863
+  doi: 10.3758/s13428-019-01243-z
+  source: crossref
+dataset:
+  language_from_columns: english_1, english_2
+  n_rows_csv: 208515
+variables:
+  word_columns:
+  - word_english_1
+  - word_english_2
+  raw_columns:
+  - word_english_1
+  - word_english_2
+  - root_cosine
+  - raw_cosine
+  - affix_cosine
+  - raw_cosine_2013
+  - jcn
+  - lsa
+  - fsg
+  - bsg
+  flags: {}

@@ -1,0 +1,31 @@
+bibtex: Paivio1968
+parent_bibtex: ~
+citation:
+  author: Allan Paivio, John C. Yuille, Stephen A. Madigan
+  year: 1968
+  title: Concreteness, imagery, and meaningfulness values for 925 nouns.
+  journal: Journal of Experimental Psychology
+  volume: '76'
+  pages: 1-25
+  doi: 10.1037/h0025327
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 925
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - meaningfulness_mean
+  - meaningfulness_sd
+  - frequency
+  flags:
+    concrete: yes
+    freq: yes
+    imagine: yes
+    meaning: yes

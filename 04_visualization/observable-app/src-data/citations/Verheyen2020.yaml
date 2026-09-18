@@ -1,0 +1,61 @@
+bibtex: Verheyen2020
+parent_bibtex: ~
+citation:
+  author: Steven Verheyen, Simon De Deyne, Sarah Linsen, Gert Storms
+  year: 2020
+  title: Lexicosemantic, affective, and distributional norms for 1,000 Dutch adjectives
+  journal: Behavior Research Methods
+  volume: '52'
+  pages: 1108-1121
+  doi: 10.3758/s13428-019-01303-4
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 1000
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - origin
+  - aoa_mean
+  - aoa_sd
+  - aoa_unknown
+  - arousal_mean
+  - arousal_sd
+  - arousal_unknown
+  - concrete_mean
+  - concrete_sd
+  - concrete_unknown
+  - dominance_mean
+  - dominance_sd
+  - dominance_unknown
+  - familiar_mean
+  - familiar_sd
+  - familiar_unknown
+  - imagine_mean
+  - imagine_sd
+  - imagine_unknown
+  - valence_mean
+  - valence_sd
+  - valence_unknown
+  - length
+  - syllables
+  - bigram
+  - neighbors
+  - frequency_celex
+  - frequency_subtlex
+  - instrength
+  - betweenness
+  flags:
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    syllables: yes
+    valence: yes

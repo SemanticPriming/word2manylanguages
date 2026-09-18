@@ -1,0 +1,27 @@
+bibtex: Whalen1994
+parent_bibtex: ~
+citation:
+  author: D. H. Whalen, Elizabeth C. Zsiga
+  year: 1994
+  title: Subjective familiarity of English word/name homophones
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '26'
+  pages: 402-408
+  doi: 10.3758/bf03204656
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 120
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - name_rank
+  - familiar_mean_name
+  - familiar_sd_name
+  - rank
+  - familiar_mean
+  - familiar_sd
+  flags:
+    familiar: yes

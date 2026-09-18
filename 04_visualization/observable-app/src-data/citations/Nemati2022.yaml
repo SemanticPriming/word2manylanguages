@@ -1,0 +1,41 @@
+bibtex: Nemati2022
+parent_bibtex: ~
+citation:
+  author: Fatemeh Nemati, Chris Westbury, Geoff Hollis, Hossein Haghbin
+  year: 2022
+  title: 'The Persian Lexicon Project: minimized orthographic neighbourhood effects
+    in a dense language'
+  journal: Journal of Psycholinguistic Research
+  volume: '51'
+  pages: 957-979
+  doi: 10.1007/s10936-022-09863-x
+  source: crossref
+dataset:
+  language_from_columns: persian, type
+  n_rows_csv: 62113
+variables:
+  word_columns:
+  - word_persian
+  - word_type
+  raw_columns:
+  - word_persian
+  - frequency_bijankhan_per_million
+  - frequency_wiki_per_million
+  - frequency_webcorpus_per_million
+  - frequency_newscorpus_per_million
+  - frequency_cc100_per_million
+  - word_type
+  - frequency_mean_per_million
+  - frequency_log
+  - length
+  - orthographic_neighbors_n
+  - accuracy_mean
+  - accuracy_n
+  - rt_mean
+  - rt_n
+  flags:
+    accuracy: yes
+    freq: yes
+    letters: yes
+    orthon: yes
+    rt: yes

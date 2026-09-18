@@ -1,0 +1,35 @@
+bibtex: Jasmin2012
+parent_bibtex: ~
+citation:
+  author: Kyle Jasmin, Daniel Casasanto
+  year: 2012
+  title: 'The QWERTY Effect: How typing shapes the meanings of words.'
+  journal: Psychonomic Bulletin & Review
+  volume: '19'
+  pages: 499-504
+  doi: 10.3758/s13423-012-0229-7
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 984
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - arousal_mean
+  - arousal_sd
+  - concrete_mean
+  - concrete_sd
+  - dominance_mean
+  - dominance_sd
+  - imagine_mean
+  - imagine_sd
+  - valence_mean
+  - valence_sd
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    imagine: yes
+    valence: yes

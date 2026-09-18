@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>Word2ManyLanguages Explorer</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="modulepreload" href="./_observablehq/client.465da126.js">
+<link rel="modulepreload" href="./_observablehq/runtime.fa9f71c0.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.eed70da6.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/080cf928.js">
+<link rel="modulepreload" href="./_npm/htl@1.0.0/11521f02.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.e003f924.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/93ce672e.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/604cb63b.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/b8e751b6.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/c662ea05.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/d162d8c6.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/5cedd0be.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/65d51007.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/c576a91a.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/8b43826d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/3fb06f14.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/20b76948.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/097745a2.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/8683b012.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/5c319046.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/33924f3e.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.2/8d67a1ae.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/8037bd0b.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/a9ba0229.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/e0a47f97.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/f9e9e0ab.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/2da8eb3b.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/09002e01.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/5108797c.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/c9f2571b.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/f3c78e0d.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/28717d05.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/7c6e2a50.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3d1d57c6.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/643581a8.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/e99232db.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/bd07fd9a.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/d09f7cc9.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/f53f17b2.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/af036d7e.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.1.0/7b06abe7.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/5f640032.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.3/b42f30a7.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.465da126.js";
+import {registerFile} from "./_observablehq/stdlib.eed70da6.js";
+
+registerFile("./data/combined.json", {"name":"./data/combined.json","mimeType":"application/json","path":"./_file/data/combined.647b47d7.json","lastModified":1789732738212,"size":20155717});
+
+define({id: "3962fb04", inputs: ["FileAttachment"], outputs: ["raw"], body: (FileAttachment) => {
+const raw = FileAttachment("./data/combined.json").json();
+return {raw};
+}});
+
+define({id: "1af28ecd", inputs: ["raw"], outputs: ["sources"], body: (raw) => {
+const sources = [...new Set(raw.map((d) => d.source))].sort();
+return {sources};
+}});
+
+define({id: "06e24471", inputs: ["view","Inputs","sources"], outputs: ["sourceInput"], body: (view,Inputs,sources) => {
+const sourceInput = view(
+  Inputs.select(["All", ...sources], {label: "Source", value: "All"})
+);
+return {sourceInput};
+}});
+
+define({id: "b3e4c8ad", inputs: ["sourceInput","raw"], outputs: ["bySource"], body: (sourceInput,raw) => {
+const bySource = sourceInput === "All" ? raw : raw.filter((d) => d.source === sourceInput);
+return {bySource};
+}});
+
+define({id: "a4ec814c", inputs: ["bySource"], outputs: ["languages"], body: (bySource) => {
+const languages = [...new Set(bySource.map((d) => d.language))].sort();
+return {languages};
+}});
+
+define({id: "5126e5db", inputs: ["view","Inputs","languages"], outputs: ["languageInput"], body: (view,Inputs,languages) => {
+const languageInput = view(
+  Inputs.select(["All", ...languages], {label: "Language", value: "All"})
+);
+return {languageInput};
+}});
+
+define({id: "9069eea4", inputs: ["languageInput","bySource"], outputs: ["byLanguage"], body: (languageInput,bySource) => {
+const byLanguage = languageInput === "All" ? bySource : bySource.filter((d) => d.language === languageInput);
+return {byLanguage};
+}});
+
+define({id: "24389a4f", inputs: ["byLanguage"], outputs: ["vars"], body: (byLanguage) => {
+const vars = [...new Set(byLanguage.map((d) => d.var))].sort();
+return {vars};
+}});
+
+define({id: "3df2e5ca", inputs: ["view","Inputs","vars"], outputs: ["varInput"], body: (view,Inputs,vars) => {
+const varInput = view(
+  Inputs.select(["All", ...vars], {label: "Variable", value: "All"})
+);
+return {varInput};
+}});
+
+define({id: "c65b0745", inputs: ["varInput","byLanguage"], outputs: ["byVar"], body: (varInput,byLanguage) => {
+const byVar = varInput === "All" ? byLanguage : byLanguage.filter((d) => d.var === varInput);
+return {byVar};
+}});
+
+define({id: "914b29bc", inputs: ["view","Inputs"], outputs: ["algoInput"], body: (view,Inputs) => {
+const algoInput = view(
+  Inputs.select(["All", "Continuous Bag of Words", "Skip-gram"], {label: "Algorithm", value: "All"})
+);
+return {algoInput};
+}});
+
+define({id: "347753f5", inputs: ["algoInput","byVar"], outputs: ["byAlgo"], body: (algoInput,byVar) => {
+const byAlgo = algoInput === "All" ? byVar : byVar.filter((d) => d.algo === algoInput);
+return {byAlgo};
+}});
+
+define({id: "93de5727", inputs: ["byAlgo"], outputs: ["windowChoices"], body: (byAlgo) => {
+const windowChoices = [...new Set(byAlgo.map((d) => d.window).filter((d) => d != null))].sort((a, b) => a - b);
+return {windowChoices};
+}});
+
+define({id: "e807f884", inputs: ["view","Inputs","windowChoices"], outputs: ["windowInput"], body: (view,Inputs,windowChoices) => {
+const windowInput = view(
+  Inputs.checkbox(windowChoices, {label: "Window Size", value: windowChoices})
+);
+return {windowInput};
+}});
+
+define({id: "2bb9a9f1", inputs: ["byAlgo"], outputs: ["dimChoices"], body: (byAlgo) => {
+const dimChoices = [...new Set(byAlgo.map((d) => d.dim).filter((d) => d != null))].sort((a, b) => a - b);
+return {dimChoices};
+}});
+
+define({id: "870f3a3c", inputs: ["view","Inputs","dimChoices"], outputs: ["dimInput"], body: (view,Inputs,dimChoices) => {
+const dimInput = view(
+  Inputs.checkbox(dimChoices, {label: "Dimensions", value: dimChoices})
+);
+return {dimInput};
+}});
+
+define({id: "a0892baa", inputs: ["view","Inputs"], outputs: ["rankingMetric"], body: (view,Inputs) => {
+const rankingMetric = view(
+  Inputs.radio(
+    new Map([
+      ["Adjusted R", "adjusted_r"],
+      ["Adjusted R Squared", "adjusted_r_squared"],
+      ["R Squared", "r_squared"],
+      ["R", "r"]
+    ]),
+    {label: "Ranking Metric", value: "adjusted_r"}
+  )
+);
+return {rankingMetric};
+}});
+
+define({id: "5469d400", inputs: ["windowInput","dimInput","byAlgo"], outputs: ["windowSet","dimSet","filtered"], body: (windowInput,dimInput,byAlgo) => {
+const windowSet = new Set(windowInput);
+const dimSet = new Set(dimInput);
+const filtered = byAlgo.filter((d) => windowSet.has(d.window) && dimSet.has(d.dim));
+return {windowSet,dimSet,filtered};
+}});
+
+define({id: "55fb243c", inputs: ["filtered","rankingMetric"], outputs: ["bestModels"], body: (filtered,rankingMetric) => {
+const bestModels = filtered
+  .map((d) => ({
+    var: d.var,
+    language: d.language,
+    algo: d.algo,
+    source: d.source,
+    window: d.window,
+    dim: d.dim,
+    value: d[rankingMetric] == null ? null : Math.round(d[rankingMetric] * 1000) / 1000,
+    citation: d.citation ?? null,
+    citation_doi: d.citation_doi ?? null,
+    citation_title: d.citation_title ?? null
+  }))
+  .sort((a, b) => (b.value ?? -Infinity) - (a.value ?? -Infinity));
+return {bestModels};
+}});
+
+define({id: "da711eab", inputs: ["bestModels","htl"], outputs: ["bestModelsDisplay"], body: (bestModels,htl) => {
+// The table needs the citation rendered as a clickable link; the CSV
+// download needs plain text, so keep both views over the same rows.
+const bestModelsDisplay = bestModels.map((d) => ({
+  ...d,
+  citation:
+    d.citation == null
+      ? null
+      : d.citation_doi
+      ? htl.html`<a href=${d.citation_doi} target="_blank" rel="noopener noreferrer" title=${d.citation_title ?? ""}>${d.citation}</a>`
+      : d.citation
+}));
+return {bestModelsDisplay};
+}});
+
+define({id: "44a884d5", inputs: ["bestModelsDisplay","Inputs","htl","display"], body: async (bestModelsDisplay,Inputs,htl,display) => {
+display(await(
+bestModelsDisplay.length > 0
+  ? Inputs.table(bestModelsDisplay, {
+      columns: ["var", "language", "algo", "source", "window", "dim", "value", "citation"],
+      header: {
+        var: "Variable",
+        language: "Language",
+        algo: "Algorithm",
+        source: "Source",
+        window: "Window",
+        dim: "Dim",
+        value: "Value",
+        citation: "Citation"
+      },
+      format: {citation: (c) => c ?? ""},
+      rows: 12
+    })
+  : htl.html`<p><em>No rows match the current filters. Try widening the selection or choosing "All".</em></p>`
+))
+}});
+
+define({id: "495a8364", outputs: ["downloadCsv"], body: () => {
+function downloadCsv(rows, filename) {
+  const header = Object.keys(rows[0] ?? {});
+  const csv = [
+    header.join(","),
+    ...rows.map((row) => header.map((key) => JSON.stringify(row[key] ?? "")).join(","))
+  ].join("\n");
+  const blob = new Blob([csv], {type: "text/csv"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+return {downloadCsv};
+}});
+
+define({id: "9ba9ce19", inputs: ["Inputs","downloadCsv","bestModels","display"], body: async (Inputs,downloadCsv,bestModels,display) => {
+display(await(
+Inputs.button("Download Best Models CSV", {
+  reduce: () => downloadCsv(bestModels, "best_models.csv")
+})
+))
+}});
+
+define({id: "468075f6", inputs: ["d3","filtered","rankingMetric","windowChoices","dimChoices"], outputs: ["heatmapSummary"], body: (d3,filtered,rankingMetric,windowChoices,dimChoices) => {
+const heatmapSummary = (() => {
+  const groups = d3.rollup(
+    filtered,
+    (v) => d3.mean(v, (d) => d[rankingMetric]),
+    (d) => d.algo,
+    (d) => d.window,
+    (d) => d.dim
+  );
+  const windowLevels = windowChoices;
+  const dimLevels = dimChoices;
+  const algoLevels = [...new Set(filtered.map((d) => d.algo))];
+  const out = [];
+  for (const algo of algoLevels) {
+    for (const window of windowLevels) {
+      for (const dim of dimLevels) {
+        const avg = groups.get(algo)?.get(window)?.get(dim);
+        out.push({
+          algo_panel: algo === "Continuous Bag of Words" ? "CBOW" : algo === "Skip-gram" ? "SKIP-GRAM" : algo,
+          window,
+          dim,
+          avg_metric: avg == null || Number.isNaN(avg) ? null : Math.round(avg * 1000) / 1000
+        });
+      }
+    }
+  }
+  return out;
+})();
+return {heatmapSummary};
+}});
+
+define({id: "176c8c84", inputs: ["heatmapSummary","Plot","rankingMetric","windowChoices","htl","display"], body: async (heatmapSummary,Plot,rankingMetric,windowChoices,htl,display) => {
+display(await(
+heatmapSummary.length > 0
+  ? Plot.plot({
+      title: `Average ${rankingMetric} by Window × Dimension`,
+      subtitle: "Red outline indicates original model dimensions and windows (window = 5, dim = 300)",
+      marginLeft: 60,
+      facet: {data: heatmapSummary, x: "algo_panel"},
+      x: {axis: null},
+      y: {label: "Window", domain: windowChoices, tickFormat: (d) => d},
+      color: {type: "sequential", scheme: "viridis", label: "Avg (rounded)", legend: true},
+      fx: {label: null},
+      marks: [
+        Plot.cell(heatmapSummary, {
+          x: "dim",
+          y: "window",
+          fill: "avg_metric",
+          fx: "algo_panel",
+          stroke: "#ccc"
+        }),
+        Plot.text(heatmapSummary, {
+          x: "dim",
+          y: "window",
+          fx: "algo_panel",
+          text: (d) => (d.avg_metric == null ? "" : d.avg_metric.toFixed(3)),
+          fill: "black",
+          fontWeight: "bold"
+        }),
+        Plot.frame(
+          heatmapSummary.filter((d) => d.window === 5 && d.dim === 300),
+          {x: "dim", y: "window", fx: "algo_panel", stroke: "red", strokeWidth: 2.5}
+        )
+      ],
+      height: 420,
+      width: 900
+    })
+  : htl.html`<p><em>No rows match the current filters.</em></p>`
+))
+}});
+
+define({id: "ce1f8b85", inputs: ["Inputs","downloadCsv","heatmapSummary","display"], body: async (Inputs,downloadCsv,heatmapSummary,display) => {
+display(await(
+Inputs.button("Download Heatmap Data CSV", {
+  reduce: () => downloadCsv(heatmapSummary, "heatmap_data.csv")
+})
+))
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="word2-many-languages-explorer" tabindex="-1"><a class="observablehq-header-anchor" href="#word2-many-languages-explorer">Word2ManyLanguages Explorer</a></h1>
+<p>Interactive exploration of model performance across languages, corpora, and hyperparameter configurations. Ported from the original <a href="https://shiny.rstudio.com/" target="_blank" rel="noopener noreferrer">Shiny app</a> to <a href="https://observablehq.com/framework/" target="_blank" rel="noopener noreferrer">Observable Framework</a>.</p>
+<div class="observablehq observablehq--block"><!--:3962fb04:--></div>
+<div class="observablehq observablehq--block"><!--:1af28ecd:--></div>
+<div class="tip">
+Use the filters below to narrow the dataset before viewing the table or heatmap. Results update automatically.
+</div>
+<h2 id="filters" tabindex="-1"><a class="observablehq-header-anchor" href="#filters">Filters</a></h2>
+<div class="observablehq observablehq--block"><!--:06e24471:--></div>
+<div class="observablehq observablehq--block"><!--:b3e4c8ad:--></div>
+<div class="observablehq observablehq--block"><!--:a4ec814c:--></div>
+<div class="observablehq observablehq--block"><!--:5126e5db:--></div>
+<div class="observablehq observablehq--block"><!--:9069eea4:--></div>
+<div class="observablehq observablehq--block"><!--:24389a4f:--></div>
+<div class="observablehq observablehq--block"><!--:3df2e5ca:--></div>
+<div class="observablehq observablehq--block"><!--:c65b0745:--></div>
+<div class="observablehq observablehq--block"><!--:914b29bc:--></div>
+<div class="observablehq observablehq--block"><!--:347753f5:--></div>
+<div class="observablehq observablehq--block"><!--:93de5727:--></div>
+<div class="observablehq observablehq--block"><!--:e807f884:--></div>
+<div class="observablehq observablehq--block"><!--:2bb9a9f1:--></div>
+<div class="observablehq observablehq--block"><!--:870f3a3c:--></div>
+<div class="observablehq observablehq--block"><!--:a0892baa:--></div>
+<div class="observablehq observablehq--block"><!--:5469d400:--></div>
+<h2 id="best-models-table" tabindex="-1"><a class="observablehq-header-anchor" href="#best-models-table">Best Models Table</a></h2>
+<div class="observablehq observablehq--block"><!--:55fb243c:--></div>
+<div class="observablehq observablehq--block"><!--:da711eab:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:44a884d5:--></div>
+<div class="observablehq observablehq--block"><!--:495a8364:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:9ba9ce19:--></div>
+<h2 id="heatmap" tabindex="-1"><a class="observablehq-header-anchor" href="#heatmap">Heatmap</a></h2>
+<div class="observablehq observablehq--block"><!--:468075f6:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:176c8c84:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:ce1f8b85:--></div>
+<h2 id="citations" tabindex="-1"><a class="observablehq-header-anchor" href="#citations">Citations</a></h2>
+<p>References used in this project will appear here.</p>
+<style>
+.tip {
+  background: color-mix(in srgb, var(--theme-foreground-focus) 12%, transparent);
+  border-left: 4px solid var(--theme-foreground-focus);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+</style>
+</main>
+<footer id="observablehq-footer">
+<div>Word2ManyLanguages Explorer — built with Observable Framework.</div>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+bibtex: Surprenant1999
+parent_bibtex: ~
+citation:
+  author: Aimée M. Surprenant, Susan L. Hura, Mary P. Harper, Leah H. Jamieson, Glenis
+    Long, Scott M. Thede, et al.
+  year: 1999
+  title: Familiarity and pronounceability of nouns and names
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '31'
+  pages: 638-649
+  doi: 10.3758/bf03200740
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 200
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - frequency_kf
+  - familiar_mean
+  - familiar_sd
+  - pronounce_mean
+  - pronounce_sd
+  flags:
+    familiar: yes
+    freq: yes
+    pronounce: yes

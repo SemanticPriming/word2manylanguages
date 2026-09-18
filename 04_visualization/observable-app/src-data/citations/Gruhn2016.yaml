@@ -1,0 +1,58 @@
+bibtex: Gruhn2016
+parent_bibtex: ~
+citation:
+  author: Daniel Grühn
+  year: 2016
+  title: An English Word Database of EMOtional TErms (EMOTE)
+  journal: Psychological Reports
+  volume: '119'
+  pages: 290-308
+  doi: 10.1177/0033294116658474
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 2197
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - letters
+  - syllables
+  - frequency_kf
+  - frequency_bnc
+  - frequency_tv
+  - frequency_pg
+  - frequency_bn
+  - noun
+  - adjective
+  - valence_mean_noun
+  - arousal_mean_noun
+  - imagery_mean_noun
+  - concrete_mean_noun
+  - meaningfulness_mean_noun
+  - familiar_mean_noun
+  - emotionality_mean_noun
+  - valence_mean_adj
+  - arousal_mean_adj
+  - imagery_mean_adj
+  - concrete_mean_adj
+  - meaningfulness_mean_adj
+  - familiar_mean_adj
+  - emotionality_mean_adj
+  - likeableness_mean_adj
+  - desireability_mean_adj
+  - control_mean_adj
+  - memory_percent_hits
+  - memory_percent_false_alarm
+  - memory_d_prime
+  flags:
+    arousal: yes
+    concrete: yes
+    emotion: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    meaning: yes
+    syllables: yes
+    valence: yes

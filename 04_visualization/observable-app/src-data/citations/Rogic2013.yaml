@@ -1,0 +1,32 @@
+bibtex: Rogic2013
+parent_bibtex: ~
+citation:
+  author: Maja Rogić, Ana Jerončić, Marija Bošnjak, Ana Sedlar, Darko Hren, Vedran
+    Deletis
+  year: 2013
+  title: 'A visual object naming task standardized for the Croatian language: A tool
+    for research and clinical practice'
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 1144-1158
+  doi: 10.3758/s13428-012-0308-8
+  source: crossref
+dataset:
+  language_from_columns: croatian
+  n_rows_csv: 61
+variables:
+  word_columns:
+  - word_croatian
+  raw_columns:
+  - translate_word_english
+  - word_croatian
+  - familiar_mean
+  - familiar_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - naming_latency_mean
+  - naming_latency_sd
+  flags:
+    familiar: yes
+    picture: yes
+    visualcomp: yes

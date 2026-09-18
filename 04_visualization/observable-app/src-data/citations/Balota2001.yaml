@@ -1,0 +1,26 @@
+bibtex: Balota2001
+parent_bibtex: ~
+citation:
+  author: David A. Balota, Maura Pilotti, Michael J. Cortese
+  year: 2001
+  title: Subjective frequency estimates for 2,938 monosyllabic words
+  journal: Memory & Cognition
+  volume: '29'
+  pages: 639-647
+  doi: 10.3758/bf03200465
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 2942
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - frequency_subjective_read_mean
+  - frequency_subjective_heard_mean
+  - frequency_subjective_written_mean
+  - frequency_subjective_said_mean
+  - frequency_subjective_encountered_mean
+  flags:
+    freq: yes

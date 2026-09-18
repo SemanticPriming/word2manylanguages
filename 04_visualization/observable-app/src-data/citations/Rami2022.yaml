@@ -1,0 +1,37 @@
+bibtex: Rami2022
+parent_bibtex: ~
+citation:
+  author: Youssef Rami, Samir Diouny, Mohamed Yeou, Najib Kissani
+  year: 2024
+  title: 'The adaptation of the Object and Action Naming Battery into Moroccan Arabic:
+    Norms for name agreement, frequency, imageability, visual complexity, and age
+    of acquisition'
+  journal: 'Applied Neuropsychology: Adult'
+  volume: '31'
+  pages: 923-931
+  doi: 10.1080/23279095.2022.2089041
+  source: crossref
+dataset:
+  language_from_columns: arabic_moroccan
+  n_rows_csv: 130
+variables:
+  word_columns:
+  - word_arabic_moroccan
+  raw_columns:
+  - pos
+  - word_arabic_moroccan
+  - translate_word_english
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - aoa_mean
+  - aoa_sd
+  - imagine_mean
+  - imagine_sd
+  - frequency_spoken_mean
+  - frequency_spoken_sd
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    pos: yes
+    visualcomp: yes

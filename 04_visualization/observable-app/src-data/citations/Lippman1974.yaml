@@ -1,0 +1,26 @@
+bibtex: Lippman1974
+parent_bibtex: ~
+citation:
+  author: Marcia Z. Lippman
+  year: 1974
+  title: Enactive imagery in paired-associate learning
+  journal: Memory & Cognition
+  volume: '2'
+  pages: 385-390
+  doi: 10.3758/bf03209014
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 226
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_mean
+  - imagine_sd
+  - frequency_mean
+  - frequency_sd
+  flags:
+    freq: yes
+    imagine: yes

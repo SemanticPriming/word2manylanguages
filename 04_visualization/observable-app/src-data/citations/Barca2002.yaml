@@ -1,0 +1,64 @@
+bibtex: Barca2002
+parent_bibtex: ~
+citation:
+  author: Laura Barca, Cristina Burani, Lisa S. Arduino
+  year: 2002
+  title: Word naming times and psycholinguistic norms for Italian nouns
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '34'
+  pages: 424-434
+  doi: 10.3758/bf03195471
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 626
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - frequency_ilc_adult_written
+  - frequency_colfis_adult_written
+  - frequency_totfq_child_written
+  - frequency_compfq_child_written
+  - frequency_prodfq_child_written
+  - frequency_spkfq_adult_spoken
+  - 'n'
+  - bigram
+  - syllables
+  - length
+  - phonome_stress
+  - phoneme_voice
+  - mann
+  - voiced
+  - stop
+  - nasal
+  - fricative
+  - affricate
+  - liquid
+  - bilabial
+  - labiodental
+  - dental
+  - alveolar
+  - palatal
+  - velar
+  - vowel
+  - rt_mean
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    rt: yes
+    syllables: yes

@@ -1,0 +1,30 @@
+bibtex: Dodds2011
+parent_bibtex: ~
+citation:
+  author: Peter Sheridan Dodds, Kameron Decker Harris, Isabel M. Kloumann, Catherine
+    A. Bliss, Christopher M. Danforth
+  year: 2011
+  title: 'Temporal Patterns of Happiness and Information in a Global Social Network:
+    Hedonometrics and Twitter'
+  journal: PLoS ONE
+  volume: '6'
+  pages: e26752
+  doi: 10.1371/journal.pone.0026752
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 10222
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - happiness_rank
+  - happiness_mean
+  - happiness_sd
+  - twitter_rank
+  - google_rank
+  - nyt_rank
+  - lyrics_rank
+  flags:
+    emotion: yes

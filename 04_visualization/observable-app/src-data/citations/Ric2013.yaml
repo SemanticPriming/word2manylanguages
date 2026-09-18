@@ -1,0 +1,53 @@
+bibtex: Ric2013
+parent_bibtex: ~
+citation:
+  author: François Ric, Theodore Alexopoulos, Dominique Muller, Benoîte Aubé
+  year: 2013
+  title: Emotional norms for 524 French personality trait words
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 414-421
+  doi: 10.3758/s13428-012-0276-z
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 524
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - frequency_subtitle
+  - frequency_books
+  - valence_mean
+  - valence_sd
+  - valence_response_rate
+  - consequences_possessor_mean
+  - consequences_possessor_sd
+  - consequences_possessor_response_rate
+  - consequences_others_mean
+  - consequences_others_sd
+  - consequences_others_response_rate
+  - approach_mean
+  - approach_sd
+  - approach_response_rate
+  - anger_mean
+  - anger_sd
+  - anger_response_rate
+  - disgust_mean
+  - disgust_sd
+  - disgust_response_rate
+  - happiness_mean
+  - happiness_sd
+  - happiness_response_rate
+  - fear_mean
+  - fear_sd
+  - fear_response_rate
+  - sadness_mean
+  - sadness_sd
+  - sadness_response_rate
+  flags:
+    emotion: yes
+    freq: yes
+    valence: yes

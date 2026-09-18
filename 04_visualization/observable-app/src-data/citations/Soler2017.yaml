@@ -1,0 +1,42 @@
+bibtex: Soler2017
+parent_bibtex: ~
+citation:
+  author: María José Soler, Carmen Dasí, Juan Carlos Ruiz, Teresa Cervera
+  year: 2017
+  title: Spanish norms for completion of restricted length word stems
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1920-1929
+  doi: 10.3758/s13428-016-0834-x
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 272
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - id
+  - word_spanish
+  - stem
+  - total_baseline_completion
+  - priming_baseline_completion
+  - priming_mean
+  - completions_n
+  - letters_blanks_ratio
+  - syllabic_structure
+  - frequency
+  - familiar_mean
+  - meanings_n
+  - length
+  - syllables
+  - arousal_mean
+  - valence_mean
+  flags:
+    arousal: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    meaning: yes
+    syllables: yes
+    valence: yes

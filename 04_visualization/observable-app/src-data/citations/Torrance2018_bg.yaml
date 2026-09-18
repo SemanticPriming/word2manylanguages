@@ -1,0 +1,61 @@
+bibtex: Torrance2018_bg
+parent_bibtex: Torrance2018
+citation:
+  author: Mark Torrance, Guido Nottbusch, Rui A. Alves, Barbara Arfé, Lucile Chanquoy,
+    Evgeny Chukharev-Hudilainen, et al.
+  year: 2018
+  title: Timed written picture naming in 14 European languages
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 744-758
+  doi: 10.3758/s13428-017-0902-x
+  source: crossref
+dataset:
+  language_from_columns: bulgarian
+  n_rows_csv: 260
+variables:
+  word_columns:
+  - word_bulgarian
+  raw_columns:
+  - image_number
+  - word_bulgarian
+  - mc_response_percent_correct
+  - mc_name_percent_correct
+  - name_agreement_h
+  - spell_percent_correct
+  - spell_h
+  - proportion_null_response
+  - rt_mean
+  - rt_sd
+  - rt_q25
+  - rt_median
+  - rt_q75
+  - mean_interkeypressinterval_mean
+  - mean_interkeypressinterval_sd
+  - mean_interkeypressinterval_q25
+  - mean_interkeypressinterval_median
+  - mean_interkeypressinterval_q75
+  - rt_commonname_mean
+  - rt_commonname_sd
+  - rt_commonname_q25
+  - rt_commonname_median
+  - rt_commonname_q75
+  - mean_interkeypressintervalcommonname_mean
+  - mean_interkeypressintervalcommonname_sd
+  - mean_interkeypressintervalcommonname_q25
+  - mean_interkeypressintervalcommonname_median
+  - mean_interkeypressintervalcommonname_q75
+  - alt_names
+  - alt_spells
+  - image_filesize
+  - familiar_mean
+  - complexity_mean
+  - matchimage_mean
+  - length
+  - mc_response_wdlen
+  flags:
+    complex: yes
+    familiar: yes
+    letters: yes
+    nameagree: yes
+    rt: yes

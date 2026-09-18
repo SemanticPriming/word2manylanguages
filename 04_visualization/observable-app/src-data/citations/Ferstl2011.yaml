@@ -1,0 +1,28 @@
+bibtex: Ferstl2011
+parent_bibtex: ~
+citation:
+  author: Evelyn C. Ferstl, Alan Garnham, Christina Manouilidou
+  year: 2011
+  title: 'Implicit causality bias in English: a corpus of 300 verbs'
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 124-135
+  doi: 10.3758/s13428-010-0023-2
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 305
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - semantic_category
+  - length
+  - frequency_celex
+  - valence_mean
+  flags:
+    freq: yes
+    letters: yes
+    semantic: yes
+    valence: yes

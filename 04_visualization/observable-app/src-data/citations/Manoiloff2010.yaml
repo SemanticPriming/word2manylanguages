@@ -1,0 +1,50 @@
+bibtex: Manoiloff2010
+parent_bibtex: ~
+citation:
+  author: Laura Manoiloff, Marcela Artstein, María Belén Canavoso, Laura Fernández,
+    Juan Segui
+  year: 2010
+  title: Expanded norms for 400 experimental pictures in an Argentinean Spanish-speaking
+    population
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 452-460
+  doi: 10.3758/brm.42.2.452
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 400
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - name_agreement_h_mean
+  - name_agreement_proportion
+  - familiar_mean
+  - familiar_median
+  - familiar_sd
+  - imagine_mean
+  - imagine_median
+  - imagine_sd
+  - visual_complexity_mean
+  - visual_complexity_median
+  - visual_complexity_sd
+  - image_variability_mean
+  - image_variability_median
+  - image_variability_sd
+  - aoa_mean
+  - aoa_median
+  - aoa_sd
+  - association_h
+  - association_percent_mfn
+  - association
+  flags:
+    aoa: yes
+    assoc: yes
+    familiar: yes
+    imagevar: yes
+    imagine: yes
+    nameagree: yes
+    visualcomp: yes

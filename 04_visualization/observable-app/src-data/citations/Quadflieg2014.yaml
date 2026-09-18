@@ -1,0 +1,71 @@
+bibtex: Quadflieg2014
+parent_bibtex: ~
+citation:
+  author: Susanne Quadflieg, Caroline Michel, Henryk Bukowski, Dana Samson
+  year: 2014
+  title: A database of psycholinguistic and lexical properties for French adjectives
+    referring to human and/or nonhuman attributes.
+  journal: Canadian Journal of Experimental Psychology / Revue canadienne de psychologie
+    expérimentale
+  volume: '68'
+  pages: 67-76
+  doi: 10.1037/cep0000001
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 875
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - translate_word_german
+  - pos
+  - length
+  - syllables
+  - frequency_films
+  - frequency_books
+  - humans_yes
+  - humans_no
+  - humans_n
+  - human_difficulty
+  - nonhumans_yes
+  - nonhumans_no
+  - nonhumans_n
+  - nonhuman_difficulty
+  - category
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  - concrete_difficulty
+  - familiar_mean
+  - familiar_sd
+  - familiar_n
+  - familiar_difficulty
+  - intensity_mean
+  - intensity_sd
+  - intensity_n
+  - intensity_difficulty
+  - temporal_stability_mean
+  - temporal_stability_sd
+  - temporal_stability_n
+  - temporal_stability_difficulty
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - valence_difficulty
+  - visibility_mean
+  - visibility_sd
+  - visibility_n
+  - visibility_difficulty
+  flags:
+    category: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    intense: yes
+    letters: yes
+    pos: yes
+    syllables: yes
+    valence: yes

@@ -1,0 +1,23 @@
+bibtex: Marques2004
+parent_bibtex: ~
+citation:
+  author: J. Frederico Marques
+  year: 2013
+  title: Normas de familiaridade para substantivos comuns
+  journal: Laboratório de Psicologia
+  volume: '2'
+  pages: []
+  doi: 10.14417/lp.774
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 459
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - familiar_mean_reference
+  - familiar_mean_meaning
+  flags:
+    familiar: yes

@@ -1,0 +1,56 @@
+bibtex: Perry2018
+parent_bibtex: ~
+citation:
+  author: Lynn K. Perry, Marcus Perlman, Bodo Winter, Dominic W. Massaro, Gary Lupyan
+  year: 2018
+  title: Iconicity in the speech of children and adults
+  journal: Developmental Science
+  volume: '21'
+  pages: []
+  doi: 10.1111/desc.12572
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 3001
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - iconicity_mean
+  - list_identifier
+  - aoa_mean_kuperman
+  - frequency_raw_subtlex
+  - pos_dominant_subtlex
+  - pos_percent_dominant_subtlex
+  - letters
+  - frequency_raw_parental_input
+  - frequency_childes_age_12
+  - frequency_childes_age_15
+  - frequency_childes_age_18
+  - frequency_childes_age_21
+  - frequency_childes_age_24
+  - frequency_childes_age_27
+  - frequency_childes_age_30
+  - frequency_childes_age_33
+  - frequency_childes_age_36
+  - frequency_childes_age_39
+  - frequency_childes_age_42
+  - frequency_childes_age_45
+  - frequency_childes_age_48
+  - frequency_childes_age_51
+  - frequency_childes_age_54
+  - frequency_childes_age_57
+  - frequency_childes_age_60
+  - frequency_childes_age_63
+  - frequency_childes_age_66
+  - frequency_childes_age_69
+  - concrete_mean
+  - morphemes
+  flags:
+    aoa: yes
+    concrete: yes
+    freq: yes
+    letters: yes
+    morph: yes
+    pos: yes

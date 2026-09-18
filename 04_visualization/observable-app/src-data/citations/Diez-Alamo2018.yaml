@@ -1,0 +1,25 @@
+bibtex: Diez-Alamo2018
+parent_bibtex: ~
+citation:
+  author: Antonio M. Díez-Álamo, Emiliano Díez, Dominika Zofia Wojcik, María Angeles
+    Alonso, Angel Fernandez
+  year: 2019
+  title: Sensory experience ratings for 5,500 Spanish words
+  journal: Behavior Research Methods
+  volume: '51'
+  pages: 1205-1215
+  doi: 10.3758/s13428-018-1057-0
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 5500
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - aoa_mean
+  - aoa_sd
+  flags:
+    aoa: yes

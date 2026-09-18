@@ -1,0 +1,36 @@
+bibtex: Tabossi2011
+parent_bibtex: ~
+citation:
+  author: Patrizia Tabossi, Lisa Arduino, Rachele Fanari
+  year: 2011
+  title: Descriptive norms for 245 Italian idiomatic expressions
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 110-123
+  doi: 10.3758/s13428-010-0018-z
+  source: crossref
+dataset:
+  language_from_columns: italian_idiom
+  n_rows_csv: 245
+variables:
+  word_columns:
+  - word_italian_idiom
+  raw_columns:
+  - word_italian_idiom
+  - number_words
+  - meaning_knowledge
+  - familiar_mean
+  - familiar_sd
+  - aoa_mean
+  - aoa_sd
+  - predictability
+  - syntactic_flexibility_mean
+  - syntactic_flexibility_sd
+  - literal_plausability_mean
+  - literal_plausability_sd
+  - compositionality_mean
+  - compositionality_sd
+  flags:
+    aoa: yes
+    familiar: yes
+    meaning: yes

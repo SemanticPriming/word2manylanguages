@@ -1,0 +1,35 @@
+bibtex: Ferre2017
+parent_bibtex: ~
+citation:
+  author: Pilar Ferré, Marc Guasch, Natalia Martínez-García, Isabel Fraga, José Antonio
+    Hinojosa
+  year: 2017
+  title: 'Moved by words: Affective ratings for a set of 2,266 Spanish words in five
+    discrete emotion categories'
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1082-1094
+  doi: 10.3758/s13428-016-0768-3
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 2266
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - translate_word_english
+  - happiness_mean
+  - happiness_sd
+  - anger_mean
+  - anger_sd
+  - sad_mean
+  - sad_sd
+  - fear_mean
+  - fear_sd
+  - disgust_mean
+  - disgust_sd
+  - 'n'
+  flags:
+    emotion: yes

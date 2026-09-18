@@ -1,0 +1,44 @@
+bibtex: Moreno-Martinez2012
+parent_bibtex: ~
+citation:
+  author: Francisco Javier Moreno-Martínez, Pedro R. Montoro
+  year: 2012
+  title: 'An Ecological Alternative to Snodgrass & Vanderwart: 360 High Quality Colour
+    Images with Norms for Seven Psycholinguistic Variables'
+  journal: PLoS ONE
+  volume: '7'
+  pages: e37527
+  doi: 10.1371/journal.pone.0037527
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 367
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - category
+  - translate_word_english
+  - word_spanish
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - manip_mean
+  - manip_sd
+  - typicality_mean
+  - typicality_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - name_agreement_proportion
+  - name_agreement_h
+  - name_agreement_percent_modal
+  - frequency_log
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    freq: yes
+    nameagree: yes
+    typical: yes
+    visualcomp: yes

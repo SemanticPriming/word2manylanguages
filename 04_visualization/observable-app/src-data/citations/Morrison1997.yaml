@@ -1,0 +1,41 @@
+bibtex: Morrison1997
+parent_bibtex: ~
+citation:
+  author: Catriona M. Morrison, Tameron D. Chappell, Andrew W. Ellis
+  year: 1997
+  title: Age of Acquisition Norms for a Large Set of Object Names and Their Relation
+    to Adult Estimates and Other Variables
+  journal: The Quarterly Journal of Experimental Psychology Section A
+  volume: '50'
+  pages: 528-559
+  doi: 10.1080/027249897392017
+  source: crossref
+dataset:
+  language_from_columns: ''
+  n_rows_csv: 297
+variables:
+  word_columns: []
+  raw_columns:
+  - name
+  - aoa_objective_lr_months
+  - aoa_objective_75_months
+  - aoa_rated_scale
+  - aoa_rated_months
+  - imagine_mean
+  - frequency_mean
+  - familiar_mean
+  - visual_complexity_mean
+  - name_agreement
+  - picture_name_agreement
+  - phonemes
+  - syllables
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    nameagree: yes
+    phonemes: yes
+    picture: yes
+    syllables: yes
+    visualcomp: yes

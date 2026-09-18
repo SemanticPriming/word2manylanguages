@@ -1,0 +1,59 @@
+bibtex: Wang2019
+parent_bibtex: ~
+citation:
+  author: Ruiming Wang, Shuting Huang, Yacong Zhou, Zhenguang G. Cai
+  year: 2020
+  title: 'Chinese character handwriting: A large-scale behavioral study and a database'
+  journal: Behavior Research Methods
+  volume: '52'
+  pages: 82-96
+  doi: 10.3758/s13428-019-01206-4
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified, context_chinese
+  n_rows_csv: 1600
+variables:
+  word_columns:
+  - word_chinese_simplified
+  - word_context_chinese
+  raw_columns:
+  - item_id
+  - word_chinese_simplified
+  - word_context_chinese
+  - n_trials
+  - n_accuracy
+  - n_misheard
+  - n_tip_pen
+  - n_misspelt
+  - n_misremembered
+  - proportion_accuracy
+  - proportion_misheard
+  - proportion_tip_pen
+  - proportion_misspelt
+  - proportion_misremembered
+  - rt_mean
+  - duration_mean
+  - rt_z
+  - duration_z
+  - frequency_count
+  - frequency_context
+  - aoa_mean
+  - n_meanings
+  - imagine_z
+  - concrete_z
+  - phonogram
+  - sro
+  - regularity_z
+  - homophone_density_log
+  - n_strokes
+  - n_radicals
+  - composition_lr
+  - composition_td
+  - familiar_z
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    rt: yes

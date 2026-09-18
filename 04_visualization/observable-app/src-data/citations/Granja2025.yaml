@@ -1,0 +1,37 @@
+bibtex: Granja2025
+parent_bibtex: ~
+citation:
+  author: María Álvarez de la Granja, María Carmen Parafita Couto, Ana Rita Sá-Leite,
+    Isabel Fraga, Jon Andoni Duñabeitia, Christos Pliatsikas, et al.
+  year: 2025
+  title: 'The Galician MultiPic: a picture dataset that captures lexical variation'
+  journal: Frontiers in Psychology
+  volume: '16'
+  pages: []
+  doi: 10.3389/fpsyg.2025.1551000
+  source: crossref
+dataset:
+  language_from_columns: galician, galician_form
+  n_rows_csv: 999
+variables:
+  word_columns:
+  - word_galician
+  - word_galician_form
+  raw_columns:
+  - picture_name
+  - number_responses
+  - name_agreement_h
+  - word_galician
+  - number_modal_response
+  - word_galician_form
+  - number_modal_response_galician_form
+  - number_valid_alternatives
+  - number_do_not_know
+  - number_idiosyncratic_responses
+  - familiar_mean
+  - familiar_sd
+  - translate_word_english
+  flags:
+    familiar: yes
+    nameagree: yes
+    picture: yes

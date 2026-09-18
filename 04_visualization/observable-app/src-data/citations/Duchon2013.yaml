@@ -1,0 +1,27 @@
+bibtex: Duchon2013
+parent_bibtex: ~
+citation:
+  author: Andrew Duchon, Manuel Perea, Nuria Sebastián-Gallés, Antonia Martí, Manuel
+    Carreiras
+  year: 2013
+  title: 'EsPal: One-stop shopping for Spanish word properties'
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 1246-1258
+  doi: 10.3758/s13428-013-0326-1
+  source: crossref
+dataset:
+  language_from_columns: spanish
+  n_rows_csv: 1359
+variables:
+  word_columns:
+  - word_spanish
+  raw_columns:
+  - word_spanish
+  - familiar_mean
+  - imagine_mean
+  - concrete_mean
+  flags:
+    concrete: yes
+    familiar: yes
+    imagine: yes

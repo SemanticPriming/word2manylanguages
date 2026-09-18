@@ -1,0 +1,55 @@
+bibtex: Bernabeu2018
+parent_bibtex: ~
+citation:
+  author: Pablo Bernabeu
+  year: 2020
+  title: Dutch modality exclusivity norms for 336 properties and 411 concepts
+  journal: []
+  volume: []
+  pages: []
+  doi: 10.31234/osf.io/s2c5h
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 747
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - category
+  - word_dutch
+  - pos
+  - inflected_property
+  - inflection_category
+  - modality
+  - perceptual_strength_mean
+  - exclusivity_proportion
+  - auditory_mean
+  - haptic_mean
+  - visual_mean
+  - auditory_sd
+  - haptic_sd
+  - visual_sd
+  - frequency_lg10cd_subtlexnl
+  - frequency_lg10wf_subtlexnl
+  - frequency_celex_lem
+  - inflected_prop_freq_lg10cd_subtlexnl
+  - aoa_mean_brysbaertetal2014
+  - concrete_mean_brysbaertetal2014
+  - known_percent_brysbaertetal2014
+  - length
+  - phonemes_dutchpond
+  - orthographic_neighbours_dutchpond
+  - phonographic_neighbours_dutchpond
+  flags:
+    aoa: yes
+    category: yes
+    concrete: yes
+    freq: yes
+    letters: yes
+    modality: yes
+    orthon: yes
+    phonemes: yes
+    pos: yes
+    sensory: yes
+    visualcomp: yes

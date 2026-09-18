@@ -1,0 +1,32 @@
+bibtex: Cheng2025
+parent_bibtex: ~
+citation:
+  author: Xi Cheng, Chi-Shing Tse, Yuen-Lai Chan, Kai Yan Lau, Yen Na Yum
+  year: 2025
+  title: Unveiling the intensity–ambiguity relationships among affective and lexico-semantic
+    variables in Chinese characters and the character–word relationships in Chinese
+    two-character words
+  journal: Behavior Research Methods
+  volume: '57'
+  pages: []
+  doi: 10.3758/s13428-025-02753-9
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional
+  n_rows_csv: 3971
+variables:
+  word_columns:
+  - word_chinese_traditional
+  raw_columns:
+  - word_chinese_traditional
+  - arousal_mean
+  - arousal_sd
+  - valence_mean
+  - valence_sd
+  - valance_z
+  - arousal_z
+  - valence_sd_z
+  - arousal_sd_z
+  flags:
+    arousal: yes
+    valence: yes

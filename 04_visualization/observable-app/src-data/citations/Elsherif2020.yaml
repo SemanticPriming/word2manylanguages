@@ -1,0 +1,57 @@
+bibtex: Elsherif2020
+parent_bibtex: ~
+citation:
+  author: Mahmoud Medhat Elsherif, Jon C. Catling, Steven Frisson
+  year: 2020
+  title: 'Two words as one: A multi-naming investigation of the age-of-acquisition
+    effect in compound-word processing'
+  journal: Memory & Cognition
+  volume: '48'
+  pages: 511-525
+  doi: 10.3758/s13421-019-00986-6
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 226
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - length
+  - frequency_mean_log
+  - familiar_mean_american
+  - familiar_mean_british
+  - imagine_mean_british
+  - aoa_mean_log
+  - imagine_mean_american
+  - transparency_mean
+  - lexeme_meaning_dominance_mean
+  - length_first_lexeme_mean
+  - frequency_first_lexeme_mean
+  - familiar_mean_first_lexeme
+  - aoa_mean_log_first_lexeme
+  - imagine_mean_first_lexeme
+  - bilabial
+  - labiodental
+  - dental
+  - labiovelar
+  - postalvelolar
+  - alveolar
+  - palatal
+  - palatal_alveolar
+  - glottal
+  - velar
+  - voiced
+  - length_second_lexeme_mean
+  - frequency_second_lexeme_mean
+  - familiar_mean_second_lexeme
+  - aoa_mean_log_second_lexeme
+  - imagine_mean_second_lexeme
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    pos: yes

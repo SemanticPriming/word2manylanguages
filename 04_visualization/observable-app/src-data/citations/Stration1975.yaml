@@ -1,0 +1,33 @@
+bibtex: Stration1975
+parent_bibtex: ~
+citation:
+  author: R. Paul Stration, Kenneth A. Jacobus, Bonnie Brinley
+  year: 1975
+  title: Age-of-acquisition, imagery, familiarity and meaningfulness norms for 543
+    words
+  journal: Behavior Research Methods & Instrumentation
+  volume: '7'
+  pages: 1-6
+  doi: 10.3758/bf03201278
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 506
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean
+  - aoa_sd
+  - imagine_mean
+  - imagine_sd
+  - familiar_mean
+  - familiar_sd
+  - meaningfulness_mean
+  - meaningfulness_sd
+  flags:
+    aoa: yes
+    familiar: yes
+    imagine: yes
+    meaning: yes

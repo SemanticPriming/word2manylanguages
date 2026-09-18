@@ -1,0 +1,34 @@
+bibtex: Zechmeister1975
+parent_bibtex: ~
+citation:
+  author: Eugene B. Zechmeister, Joseph King, Chris Gude, Bernadette Opera-nadi
+  year: 1975
+  title: Ratings of frequency, familiarity, orthographic distinctiveness and pronunciability
+    for 192 surnames
+  journal: Behavior Research Methods & Instrumentation
+  volume: '7'
+  pages: 531-533
+  doi: 10.3758/bf03201625
+  source: crossref
+dataset:
+  language_from_columns: english_name
+  n_rows_csv: 192
+variables:
+  word_columns:
+  - word_english_name
+  raw_columns:
+  - word_english_name
+  - count
+  - frequency_mean
+  - frequency_sd
+  - familiar_mean
+  - familiar_sd
+  - orthographic_mean
+  - orthographic_sd
+  - pronounce_mean
+  - pronounce_sd
+  flags:
+    familiar: yes
+    freq: yes
+    orthon: yes
+    pronounce: yes

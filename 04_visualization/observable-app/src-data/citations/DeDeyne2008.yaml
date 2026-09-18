@@ -1,0 +1,43 @@
+bibtex: DeDeyne2008
+parent_bibtex: ~
+citation:
+  author: Simon De Deyne, Gert Storms
+  year: 2008
+  title: 'Word associations: Norms for 1,424 Dutch words in a continuous task'
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 198-205
+  doi: 10.3758/brm.40.1.198
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 668
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - translate_word_english
+  - familiar_mean
+  - familiar_sd
+  - familiar_n
+  - category
+  - goodness_mean
+  - goodness_sd
+  - goodness_n
+  - typicality_mean
+  - typicality_sd
+  - typicality_n
+  - dont_know
+  - n_know_item
+  - imagine_mean
+  - imagine_sd
+  - log(lemmafreq)
+  - aoa_mean
+  - percent_known
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes
+    imagine: yes
+    typical: yes

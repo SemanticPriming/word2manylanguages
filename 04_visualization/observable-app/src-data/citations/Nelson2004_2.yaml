@@ -1,0 +1,35 @@
+bibtex: Nelson2004_2
+parent_bibtex: Nelson2004
+citation:
+  author: Douglas L. Nelson, Cathy L. McEvoy, Thomas A. Schreiber
+  year: 2004
+  title: The University of South Florida free association, rhyme, and word fragment
+    norms
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 402-407
+  doi: 10.3758/bf03195588
+  source: crossref
+dataset:
+  language_from_columns: english_1, english_2
+  n_rows_csv: 72176
+variables:
+  word_columns:
+  - word_english_1
+  - word_english_2
+  raw_columns:
+  - word_english_1
+  - word_english_2
+  - fsg
+  - bsg
+  - msg
+  - osg
+  - qss
+  - qfr
+  - qcon
+  - qps
+  - tss
+  - tfr
+  - tcon
+  - tps
+  flags: {}

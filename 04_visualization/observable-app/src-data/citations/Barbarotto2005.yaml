@@ -1,0 +1,31 @@
+bibtex: Barbarotto2005
+parent_bibtex: ~
+citation:
+  author: Riccardo Barbarotto, Marcella Laiacona, Erminio Capitani
+  year: 2005
+  title: 'Objective versus estimated age of word acquisition: A study of 202 Italian
+    children'
+  journal: Behavior Research Methods
+  volume: '37'
+  pages: 644-650
+  doi: 10.3758/bf03192735
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 80
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - aoa_mean_subjective
+  - aoa_mean_subjective_male
+  - aoa_mean_subjective_female
+  - aoa_mean_objective
+  - aoa_exceed_objective
+  - aoa_youngest_percent_objective
+  - aoa_oldest_percent_objective
+  - aoa_regression_estimate_objective
+  flags:
+    aoa: yes

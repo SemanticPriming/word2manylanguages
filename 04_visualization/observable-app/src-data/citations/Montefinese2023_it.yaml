@@ -1,0 +1,38 @@
+bibtex: Montefinese2023_it
+parent_bibtex: Montefinese2023
+citation:
+  author: Maria Montefinese, Lorenzo Gregori, Andrea Amelio Ravelli, Rossella Varvara,
+    Daniele Paolo Radicioni
+  year: 2023
+  title: 'CONcreTEXT norms: Concreteness ratings for Italian and English words in
+    context'
+  journal: PLOS ONE
+  volume: '18'
+  pages: e0293031
+  doi: 10.1371/journal.pone.0293031
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 562
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - sentence_id
+  - word_italian
+  - pos
+  - index_number
+  - sentence_italian
+  - concrete_mean
+  - concrete_sd
+  - wordnet_synset
+  - target_lexical_accessibility
+  - sentence_lexical_accessibility
+  - lexical_density
+  - sentence_length
+  - clauses
+  - mean_token_per_clause
+  - syntactic_tree_depth
+  flags:
+    concrete: yes
+    pos: yes

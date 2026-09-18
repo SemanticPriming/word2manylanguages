@@ -1,0 +1,29 @@
+bibtex: Heise1965
+parent_bibtex: ~
+citation:
+  author: David R. Heise
+  year: 1965
+  title: Semantic differential profiles for 1,000 most frequent English words.
+  journal: 'Psychological Monographs: General and Applied'
+  volume: '79'
+  pages: 1-31
+  doi: 10.1037/h0093884
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - context
+  - evaluation_dimension
+  - activity_dimension
+  - potency_dimension
+  - polarization_distance
+  - n_affiliation
+  - n_achievement
+  - V9
+  flags:
+    context: yes

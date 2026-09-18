@@ -1,0 +1,40 @@
+bibtex: Brodeur2010
+parent_bibtex: ~
+citation:
+  author: Mathieu B. Brodeur, Emmanuelle Dionne-Dostie, Tina Montreuil, Martin Lepage
+  year: 2010
+  title: The Bank of Standardized Stimuli (BOSS), a New Set of 480 Normative Photos
+    of Objects to Be Used as Visual Stimuli in Cognitive Research
+  journal: PLoS ONE
+  volume: '5'
+  pages: e10773
+  doi: 10.1371/journal.pone.0010773
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 480
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - filename_english
+  - word_english
+  - modal_name_agreement_percent
+  - h_value
+  - dko_percent
+  - dkn_percent
+  - total_percent
+  - modal_category_modal_name
+  - category_agreement_percent
+  - hcat
+  - familiar_mean
+  - visual_complexity_mean
+  - object_agreement_mean
+  - viewpoint_agreement_mean
+  - nmi
+  - manipulability_mean
+  - living_non_living
+  flags:
+    category: yes
+    familiar: yes
+    visualcomp: yes

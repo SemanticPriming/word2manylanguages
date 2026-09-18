@@ -1,0 +1,68 @@
+bibtex: Clark2004
+parent_bibtex: ~
+citation:
+  author: James M. Clark, Allan Paivio
+  year: 2004
+  title: Extensions of the Paivio, Yuille, and Madigan (1968) norms
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 371-383
+  doi: 10.3758/bf03195584
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 925
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - aoa_mean
+  - concrete_mean
+  - familiar_mean
+  - imagine_mean
+  - intensity_mean
+  - valence_mean
+  - dict
+  - frequency_log_avlkb
+  - length
+  - syllables
+  - meaningfulness_mean
+  - frequency_tl
+  - frequency_kf
+  - frequency_avlrf
+  - associate_number
+  - context_mean
+  - ease_definition_mean
+  - same_initial_letters
+  - same_initial_letters_log
+  - same_initial_sound
+  - ambiguity_mean
+  - emotionality_pleasantness_mean
+  - pronounce_mean
+  - rhyming_mean
+  - similar_looking_words_mean
+  - similar_sounding_words_mean
+  - goodness_mean
+  - emotionality_goodness_mean
+  - gender_mean_replication
+  - gender_ladenness_mean
+  - familiar_mean_replication
+  - imagine_mean_replication
+  flags:
+    ambiguity: yes
+    aoa: yes
+    assoc: yes
+    concrete: yes
+    context: yes
+    emotion: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    intense: yes
+    letters: yes
+    meaning: yes
+    pronounce: yes
+    similar: yes
+    syllables: yes
+    valence: yes

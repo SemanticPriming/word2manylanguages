@@ -1,0 +1,51 @@
+bibtex: Citron2016
+parent_bibtex: ~
+citation:
+  author: Francesca M. M. Citron, Cristina Cacciari, Michael Kucharski, Luna Beck,
+    Markus Conrad, Arthur M. Jacobs
+  year: 2016
+  title: 'When emotions are expressed figuratively: Psycholinguistic and Affective
+    Norms of 619 Idioms for German (PANIG)'
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 91-111
+  doi: 10.3758/s13428-015-0581-4
+  source: crossref
+dataset:
+  language_from_columns: idiom_german, idiom_english
+  n_rows_csv: 621
+variables:
+  word_columns:
+  - word_idiom_german
+  - word_idiom_english
+  raw_columns:
+  - word_idiom_german
+  - word_idiom_english
+  - meaning_english
+  - ambiguity_type
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - familiar_mean
+  - familiar_sd
+  - semantic_transparency_mean
+  - semantic_transparency_sd
+  - figurativeness_mean
+  - figurativeness_sd
+  - concrete_mean
+  - concrete_sd
+  - knowledge_proportion
+  - confidence_mean
+  - confidence_sd
+  - length
+  - number_words
+  flags:
+    ambiguity: yes
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    letters: yes
+    meaning: yes
+    semantic: yes
+    valence: yes

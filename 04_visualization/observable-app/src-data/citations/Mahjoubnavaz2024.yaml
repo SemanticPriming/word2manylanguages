@@ -1,0 +1,73 @@
+bibtex: Mahjoubnavaz2024
+parent_bibtex: ~
+citation:
+  author: Firouzeh Mahjoubnavaz, Setareh Mokhtari, Reza Khosrowabadi
+  year: 2024
+  title: Norms for 718 Persian Words in Emotional Dimensions, Animacy, and Familiarity
+  journal: Journal of Psycholinguistic Research
+  volume: '53'
+  pages: []
+  doi: 10.1007/s10936-024-10104-6
+  source: crossref
+dataset:
+  language_from_columns: english, persian
+  n_rows_csv: 718
+variables:
+  word_columns:
+  - word_english
+  - word_persian
+  raw_columns:
+  - word_english
+  - word_persian
+  - valence_mean_english
+  - valence_sd_english
+  - valence_mean_persian
+  - valence_sd_persian
+  - valence_n_persian
+  - valence_mean_english_male
+  - valence_sd_english_male
+  - valence_mean_persian_male
+  - valence_sd_persian_male
+  - valence_n_persian_male
+  - valence_mean_english_female
+  - valence_sd_english_female
+  - valence_mean_persian_female
+  - valence_sd_persian_female
+  - valence_n_persian_female
+  - familiar_mean_persian
+  - familiar_sd_persian
+  - familiar_n_persian
+  - familiar_mean_persian_male
+  - familiar_sd_persian_male
+  - familiar_n_persian_male
+  - familiar_mean_persian_female
+  - familiar_sd_persian_female
+  - familiar_n_persian_female
+  - animacy_mean_persian
+  - animacy_sd_persian
+  - animacy_n_persian
+  - animacy_mean_persian_male
+  - animacy_sd_persian_male
+  - animacy_n_persian_male
+  - animacy_mean_persian_female
+  - animacy_sd_persian_female
+  - animacy_n_persian_female
+  - arousal_mean_english
+  - arousal_sd_english
+  - arousal_mean_persian
+  - arousal_sd_persian
+  - arousal_n_persian
+  - arousal_mean_english_male
+  - arousal_sd_english_male
+  - arousal_mean_persian_male
+  - arousal_sd_persian_male
+  - arousal_n_persian_male
+  - arousal_mean_english_female
+  - arousal_sd_english_female
+  - arousal_mean_persian_female
+  - arousal_sd_persian_female
+  - arousal_n_persian_female
+  flags:
+    arousal: yes
+    familiar: yes
+    valence: yes

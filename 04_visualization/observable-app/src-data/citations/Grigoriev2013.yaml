@@ -1,0 +1,46 @@
+bibtex: Grigoriev2013
+parent_bibtex: ~
+citation:
+  author: Andrei Grigoriev, Ivan Oshhepkov
+  year: 2013
+  title: 'Objective age of acquisition norms for a set of 286 words in Russian: Relationships
+    with other psycholinguistic variables'
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 1208-1217
+  doi: 10.3758/s13428-013-0319-0
+  source: crossref
+dataset:
+  language_from_columns: russian
+  n_rows_csv: 288
+variables:
+  word_columns:
+  - word_russian
+  raw_columns:
+  - translate_word_english
+  - word_russian
+  - category
+  - aoa_objective_mean_months
+  - name_agreement_proportion
+  - name_agreement_h
+  - image_agreement_mean
+  - image_agreement_sd
+  - imagine_mean
+  - imagine_sd
+  - familiar_mean
+  - familiar_sd
+  - frequency_ljashevskajasharov
+  - frequency_zasorina
+  - dominance_egf
+  - dominance_first
+  - length
+  flags:
+    aoa: yes
+    category: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    letters: yes
+    nameagree: yes

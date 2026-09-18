@@ -1,0 +1,132 @@
+bibtex: Popovic2026_words
+parent_bibtex: ~
+citation:
+  author: Milica Popović Stijačić, Dušica Filipović Đurđević
+  year: 2025
+  title: Perceptual Strength, Concreteness, Imagibility, Context Availability, Age
+    of Acquisition, Familiarity, Emotional valence, and Arousal Ratings for 2100
+    Serbian Nouns and their Effect on Visual Lexical Decision Latencies
+  journal: PsychArchives (preprint, not peer-reviewed)
+  volume: ~
+  pages: ~
+  doi: 10.23668/psycharchives.21378
+  source: psycharchives
+dataset:
+  language_from_columns: serbian
+  n_rows_csv: 2100
+variables:
+  word_columns:
+  - word_serbian
+  raw_columns:
+  - list_order
+  - translate_word_english
+  - word_serbian
+  - frequency_per_million
+  - frequency_log
+  - length
+  - imagine_mean
+  - context_availability_mean
+  - valence_mean
+  - familiar_mean
+  - concrete_mean
+  - concrete_category
+  - concrete_category_three
+  - arousal_mean
+  - aoa_mean
+  - visual_strength_mean_possible
+  - auditory_strength_mean_possible
+  - gustatory_strength_mean_possible
+  - olfactory_strength_mean_possible
+  - tactile_strength_mean_possible
+  - dominant_modality_possible
+  - dominant_modality_numeric_possible
+  - visual_category_possible
+  - auditory_category_possible
+  - gustatory_category_possible
+  - olfactory_category_possible
+  - tactile_category_possible
+  - number_of_modalities_possible
+  - visual_exclusivity_proportion_possible
+  - auditory_exclusivity_proportion_possible
+  - gustatory_exclusivity_proportion_possible
+  - olfactory_exclusivity_proportion_possible
+  - tactile_exclusivity_proportion_possible
+  - visual_exclusivity_percent_possible
+  - auditory_exclusivity_percent_possible
+  - gustatory_exclusivity_percent_possible
+  - olfactory_exclusivity_percent_possible
+  - tactile_exclusivity_percent_possible
+  - entropy_2_possible
+  - entropy_4_possible
+  - modality_exclusivity_proportion_possible
+  - modality_exclusivity_possible
+  - perceptual_strength_sum_possible
+  - perceptual_strength_max_possible
+  - vector_length_possible
+  - minkowski_3_possible
+  - minkowski_4_possible
+  - minkowski_5_possible
+  - minkowski_6_possible
+  - minkowski_7_possible
+  - minkowski_8_possible
+  - minkowski_9_possible
+  - minkowski_10_possible
+  - modality_rating_mean_possible
+  - visual_strength_mean_real
+  - auditory_strength_mean_real
+  - gustatory_strength_mean_real
+  - olfactory_strength_mean_real
+  - tactile_strength_mean_real
+  - dominant_modality_real
+  - dominant_modality_numeric_real
+  - visual_category_real
+  - auditory_category_real
+  - gustatory_category_real
+  - olfactory_category_real
+  - tactile_category_real
+  - number_of_modalities_real
+  - visual_exclusivity_proportion_real
+  - auditory_exclusivity_proportion_real
+  - gustatory_exclusivity_proportion_real
+  - olfactory_exclusivity_proportion_real
+  - tactile_exclusivity_proportion_real
+  - visual_exclusivity_percent_real
+  - auditory_exclusivity_percent_real
+  - gustatory_exclusivity_percent_real
+  - olfactory_exclusivity_percent_real
+  - tactile_exclusivity_percent_real
+  - entropy_2_real
+  - entropy_4_real
+  - modality_exclusivity_proportion_real
+  - modality_exclusivity_real
+  - perceptual_strength_sum_real
+  - modality_rating_mean_real
+  - perceptual_strength_max_real
+  - vector_length_real
+  - minkowski_3_real
+  - minkowski_4_real
+  - minkowski_5_real
+  - minkowski_6_real
+  - minkowski_7_real
+  - minkowski_8_real
+  - minkowski_9_real
+  - minkowski_10_real
+  - accuracy_mean
+  - accuracy_n
+  - rt_mean
+  - rt_n
+  flags:
+    accuracy: yes
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    context: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    modality: yes
+    rt: yes
+    sensory: yes
+    valence: yes
+    visualcomp: yes

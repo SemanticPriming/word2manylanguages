@@ -1,0 +1,35 @@
+bibtex: Bestgen2012
+parent_bibtex: ~
+citation:
+  author: Yves Bestgen, Nadja Vincze
+  year: 2012
+  title: Checking and bootstrapping lexical norms by means of word similarity indexes
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 998-1006
+  doi: 10.3758/s13428-012-0195-z
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 17350
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - arousal_mean_lsa
+  - arousal_mean_norms
+  - concrete_mean_lsa
+  - concrete_mean_norms
+  - dominance_mean_lsa
+  - dominance_mean_norms
+  - imagine_mean_lsa
+  - imagine_mean_norms
+  - valence_mean_lsa
+  - valence_mean_norms
+  flags:
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    imagine: yes
+    valence: yes

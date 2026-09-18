@@ -1,0 +1,44 @@
+bibtex: SelviBalo2020
+parent_bibtex: ~
+citation:
+  author: Semra Selvi Balo, İlknur Maviş, Aylin Müge Tunçer
+  year: 2020
+  title: 586 Türkçe Sözcüğün İmgelenebilirlik, Tanıdıklık ve Öznel Edinim Yaşı Norm
+    Değerleri (Imageability, Familiarity and Subjective Age of Acquisition Norms
+    of 586 Turkish Words)
+  journal: Dil, Konuşma ve Yutma Araştırmaları Dergisi (Journal of Language, Speech
+    and Swallowing Research)
+  volume: '3'
+  pages: 301-334
+  doi: ~
+  source: manual_pdf_extraction
+dataset:
+  language_from_columns: turkish
+  n_rows_csv: 586
+variables:
+  word_columns:
+  - word_turkish
+  raw_columns:
+  - word_turkish
+  - imagine_mean
+  - familiar_mean
+  - aoa_mean
+  flags:
+    imagine: yes
+    familiar: yes
+    aoa: yes
+notes: >
+  Article text in Turkish (English extended summary only); no DOI resolves
+  directly (published via DergiPark: https://dergipark.org.tr/en/pub/dkyad/article/835975).
+  Data extracted from the appendix table (Ek-1) via the PDF's embedded text
+  layer (pdftotext -layout), not OCR - all 586 rows matched the paper's
+  stated word count exactly. Ratings: imageability and familiarity on
+  7-point Likert scales, subjective age of acquisition on a 5-point Likert
+  scale, from 206 participants. No standard deviations or per-word N are
+  reported in the source paper - only overall 25th/75th percentiles for
+  each variable (not included here, see original paper Ek-1 table header).
+  No concreteness measure and no English gloss are provided by the source.
+  Checked against existing Turkish datasets in this collection: Goz2017
+  (568 words, has concreteness/AoA/imageability, different source) and
+  Raman2014 (260 picture-naming norms, name/image agreement, no
+  imageability) - no overlap in source or methodology.

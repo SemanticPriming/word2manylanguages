@@ -1,0 +1,50 @@
+bibtex: Eilola2010
+parent_bibtex: ~
+citation:
+  author: Tiina M. Eilola, Jelena Havelka
+  year: 2010
+  title: Affective norms for 210 British English and Finnish nouns
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 134-140
+  doi: 10.3758/brm.42.1.134
+  source: crossref
+dataset:
+  language_from_columns: english, finnish
+  n_rows_csv: 210
+variables:
+  word_columns:
+  - word_english
+  - word_finnish
+  raw_columns:
+  - word_english
+  - word_finnish
+  - length_english
+  - length_finnish
+  - familiar_mean_english
+  - familiar_sd_english
+  - valence_mean_english
+  - valence_sd_english
+  - emotionalcharge_mean_english
+  - emotionalcharge_sd_english
+  - offensiveness_mean_english
+  - offensiveness_sd_english
+  - concrete_mean_english
+  - concrete_sd_english
+  - familiar_mean_finnish
+  - familiar_sd_finnish
+  - valence_mean_finnish
+  - valence_sd_finnish
+  - emotionalcharge_mean_finnish
+  - emotionalcharge_sd_finnish
+  - offensiveness_mean_finnish
+  - offensiveness_sd_finnish
+  - concrete_mean_finnish
+  - concrete_sd_finnish
+  flags:
+    concrete: yes
+    emotion: yes
+    familiar: yes
+    letters: yes
+    taboo: yes
+    valence: yes

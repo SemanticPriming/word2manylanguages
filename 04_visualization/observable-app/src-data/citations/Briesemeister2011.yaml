@@ -1,0 +1,33 @@
+bibtex: Briesemeister2011
+parent_bibtex: ~
+citation:
+  author: Benny B. Briesemeister, Lars Kuchinke, Arthur M. Jacobs
+  year: 2011
+  title: 'Discrete emotion norms for nouns: Berlin affective word list (DENN–BAWL)'
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 441-448
+  doi: 10.3758/s13428-011-0059-y
+  source: crossref
+dataset:
+  language_from_columns: german
+  n_rows_csv: 1958
+variables:
+  word_columns:
+  - word_german
+  raw_columns:
+  - word_german
+  - happiness_mean
+  - happiness_sd
+  - anger_mean
+  - anger_sd
+  - sad_mean
+  - sad_sd
+  - fear_mean
+  - fear_sd
+  - disgust_mean
+  - disgust_sd
+  - basic_emo_cat_conservative
+  - basic_emo_cat_liberal
+  flags:
+    emotion: yes

@@ -1,0 +1,40 @@
+bibtex: Amsel2012
+parent_bibtex: ~
+citation:
+  author: Ben D. Amsel, Thomas P. Urbach, Marta Kutas
+  year: 2012
+  title: Perceptual and motor attribute ratings for 559 object concepts
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 1028-1041
+  doi: 10.3758/s13428-012-0215-z
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 559
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - familiar_mean
+  - pain_mean
+  - smell_mean
+  - color_mean
+  - taste_mean
+  - sound_mean
+  - grasp_mean
+  - motion_mean
+  - familiar_rt
+  - pain_rt
+  - smell_rt
+  - color_rt
+  - taste_rt
+  - sound_rt
+  - grasp_rt
+  - motion_rt
+  - pc1_scores
+  - pc2_scores
+  flags:
+    familiar: yes
+    sensory: yes

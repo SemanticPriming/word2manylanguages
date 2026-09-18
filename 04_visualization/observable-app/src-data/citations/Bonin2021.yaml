@@ -1,0 +1,30 @@
+bibtex: Bonin2021
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Betty Laroche, Alain Méot
+  year: 2021
+  title: Psycholinguistic norms for a set of 506 French compound words
+  journal: Behavior Research Methods
+  volume: '54'
+  pages: 393-413
+  doi: 10.3758/s13428-021-01601-w
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 506
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  flags:
+    aoa: yes
+    familiar: yes
+    imagine: yes

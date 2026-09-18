@@ -1,0 +1,30 @@
+bibtex: Cai2021
+parent_bibtex: ~
+citation:
+  author: Zhenguang G. Cai, Shuting Huang, Zebo Xu, Nan Zhao
+  year: 2022
+  title: Objective ages of acquisition for 3300+ simplified Chinese characters
+  journal: Behavior Research Methods
+  volume: '54'
+  pages: 311-323
+  doi: 10.3758/s13428-021-01626-1
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 4237
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - aoa_cai2001
+  - aoa_cai2011
+  - aoa_cai_mean
+  - aoa_shu
+  - aoa_liu
+  - frequency_pku
+  - n_meanings
+  - n_strokes
+  flags:
+    aoa: yes
+    freq: yes

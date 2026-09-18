@@ -1,0 +1,91 @@
+bibtex: Salmon2010
+parent_bibtex: ~
+citation:
+  author: J. P. Salmon, P. A. McMullen, J. H. Filliter
+  year: 2010
+  title: Norms for two types of manipulability (graspability and functional usage),
+    familiarity, and age of acquisition for 320 photographs of objects
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 82-95
+  doi: 10.3758/brm.42.1.82
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 328
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - category
+  - familiar_group
+  - expected_familiar_group
+  - aoa_subjective_group
+  - expected_aoa_s_group
+  - manip_group
+  - expected_manip_group
+  - familiar_n_fma
+  - familiar_mean_fma
+  - familiar_sd_fma
+  - familiar_n_afm
+  - familiar_mean_afm
+  - familiar_sd_afm
+  - familiar_n_maf
+  - familiar_mean_maf
+  - familiar_sd_maf
+  - familiar_n
+  - familiar_mean
+  - familiar_sd
+  - aoa_subjective_n_afm
+  - aoa_subjective_mean_afm
+  - aoa_subjective_sd_afm
+  - aoa_subjective_n_maf
+  - aoa_subjective_mean_maf
+  - aoa_subjective_sd_maf
+  - aoa_subjective_n_fma
+  - aoa_subjective_mean_fma
+  - aoa_subjective_sd_fma
+  - aoa_subjective_n
+  - aoa_subjective_mean
+  - aoa_subjective_sd
+  - manip1_n_maf
+  - manip1_mean_maf
+  - manip1_sd_maf
+  - manip1_n_fma
+  - manip1_mean_fma
+  - manip1_sd_fma
+  - manip1_n_afm
+  - manip1_mean_afm
+  - manip1_sd_afm
+  - manip1_n
+  - manip1_mean
+  - manip1_sd
+  - manip2_n_maf
+  - manip2_mean_maf
+  - manip2_sd_maf
+  - manip2_n_fma
+  - manip2_mean_fma
+  - manip2_sd_fma
+  - manip2_n_afm
+  - manip2_mean_afm
+  - manip2_sd_afm
+  - manip2_n
+  - manip2_mean
+  - manip2_sd
+  - familiar_practice_n
+  - familiar_practice_mean
+  - familiar_practice_sd
+  - aoa_subjective_practice_n
+  - aoa_subjective_practice_mean
+  - aoa_subjective_practice_sd
+  - manip1_practice_n
+  - manip1_practice_mean
+  - manip1_practice_sd
+  - manip2_practice_nn
+  - manip2_practice_mean
+  - manip2_practice_sd
+  flags:
+    aoa: yes
+    category: yes
+    familiar: yes

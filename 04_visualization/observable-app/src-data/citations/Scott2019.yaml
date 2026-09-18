@@ -1,0 +1,56 @@
+bibtex: Scott2019
+parent_bibtex: ~
+citation:
+  author: Graham G. Scott, Anne Keitel, Marc Becirspahic, Bo Yao, Sara C. Sereno
+  year: 2019
+  title: 'The Glasgow Norms: Ratings of 5,500 words on nine scales'
+  journal: Behavior Research Methods
+  volume: '51'
+  pages: 1258-1270
+  doi: 10.3758/s13428-018-1099-3
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 5553
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - length
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - dominance_mean
+  - dominance_sd
+  - dominance_n
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  - imagine_mean
+  - imagine_sd
+  - imagine_n
+  - familiar_mean
+  - familiar_sd
+  - familiar_n
+  - aoa_mean
+  - aoa_sd
+  - aoa_n
+  - size_mean
+  - size_sd
+  - size_n
+  - gender_mean
+  - gender_sd
+  - gender_n
+  flags:
+    aoa: yes
+    arousal: yes
+    concrete: yes
+    dominate: yes
+    familiar: yes
+    imagine: yes
+    letters: yes
+    valence: yes

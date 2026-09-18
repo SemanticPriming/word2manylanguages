@@ -1,0 +1,39 @@
+bibtex: Bonin2015
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Alain Méot, Séverine Millotte, Aurélia Bugaiska
+  year: 2015
+  title: Norms and reading times for acronyms in French
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 251-267
+  doi: 10.3758/s13428-014-0466-y
+  source: crossref
+dataset:
+  language_from_columns: english_acronym
+  n_rows_csv: 321
+variables:
+  word_columns:
+  - word_english_acronym
+  raw_columns:
+  - word_english_acronym
+  - aoa_mean
+  - frequency_mean_subjective
+  - imagine_mean
+  - length
+  - phonemes
+  - syllables
+  - neighbors_n
+  - frequency_objective
+  - frequency_mean_bigram
+  - type_of_acronyms
+  - voiced_feature
+  - rt_mean
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes
+    rt: yes
+    syllables: yes

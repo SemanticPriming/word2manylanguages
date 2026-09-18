@@ -1,0 +1,25 @@
+bibtex: Ghyselinck2003
+parent_bibtex: ~
+citation:
+  author: Mandy Ghyselinck, Roel Custers, Marc Brysbaert
+  year: 2003
+  title: |-
+    Age-of-Acquisition Ratings for 2332 Dutch Words from 49 Different
+                            Semantic Categories
+  journal: Psychologica Belgica
+  volume: '43'
+  pages: '181'
+  doi: 10.5334/pb.1009
+  source: crossref
+dataset:
+  language_from_columns: dutch
+  n_rows_csv: 2333
+variables:
+  word_columns:
+  - word_dutch
+  raw_columns:
+  - word_dutch
+  - aoa_mean
+  - known_proportion
+  flags:
+    aoa: yes

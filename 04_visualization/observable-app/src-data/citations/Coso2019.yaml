@@ -1,0 +1,37 @@
+bibtex: Coso2019
+parent_bibtex: ~
+citation:
+  author: Bojana Ćoso, Marc Guasch, Pilar Ferré, José Antonio Hinojosa
+  year: 2019
+  title: Affective and concreteness norms for 3,022 Croatian words
+  journal: Quarterly Journal of Experimental Psychology
+  volume: '72'
+  pages: 2302-2312
+  doi: 10.1177/1747021819834226
+  source: crossref
+dataset:
+  language_from_columns: croatian
+  n_rows_csv: 3022
+variables:
+  word_columns:
+  - word_croatian
+  raw_columns:
+  - word_croatian
+  - translate_word_english
+  - translate_word_spanish
+  - percent_knowledge
+  - letters
+  - valence_mean
+  - valence_sd
+  - valence_n
+  - arousal_mean
+  - arousal_sd
+  - arousal_n
+  - concrete_mean
+  - concrete_sd
+  - concrete_n
+  flags:
+    arousal: yes
+    concrete: yes
+    letters: yes
+    valence: yes

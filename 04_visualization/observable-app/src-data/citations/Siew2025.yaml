@@ -1,0 +1,40 @@
+bibtex: Siew2025
+parent_bibtex: ~
+citation:
+  author: Cynthia S. Q. Siew, Feria Chang, Jin Jye Wong
+  year: 2025
+  title: Investigating the Effects of Valence, Arousal, Concreteness, and Humor on
+    Words Unique to Singapore English
+  journal: Journal of Cognition
+  volume: '8'
+  pages: []
+  doi: 10.5334/joc.470
+  source: crossref
+dataset:
+  language_from_columns: english_singapore
+  n_rows_csv: 287
+variables:
+  word_columns:
+  - word_english_singapore
+  raw_columns:
+  - word_english_singapore
+  - valence_n
+  - valence_mean
+  - valence_sd
+  - arousal_n
+  - arousal_mean
+  - arousal_sd
+  - concrete_n
+  - concrete_mean
+  - concrete_sd
+  - humor_n
+  - humor_mean
+  - humor_sd
+  - valence_mean_latent
+  - arousal_mean_latent
+  - concrete_mean_latent
+  - humor_mean_latent
+  flags:
+    arousal: yes
+    concrete: yes
+    valence: yes

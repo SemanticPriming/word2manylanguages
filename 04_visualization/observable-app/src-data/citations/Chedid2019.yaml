@@ -1,0 +1,31 @@
+bibtex: Chedid2019
+parent_bibtex: ~
+citation:
+  author: Georges Chedid, Maximilliano A. Wilson, Christophe Bedetti, Amandine E.
+    Rey, Guillaume T. Vallet, Simona Maria Brambati
+  year: 2019
+  title: Norms of conceptual familiarity for 3,596 French nouns and their contribution
+    in lexical decision
+  journal: Behavior Research Methods
+  volume: '51'
+  pages: 2238-2247
+  doi: 10.3758/s13428-018-1106-8
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 3596
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - familiar_mean_conceptual
+  - familiar_sd_conceptual
+  - familiar_minimum_conceptual
+  - familiar_maximum_conceptual
+  - number_of_raters
+  - rt_mean
+  - rt_sd
+  flags:
+    familiar: yes
+    rt: yes

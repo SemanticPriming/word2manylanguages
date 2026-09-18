@@ -1,0 +1,33 @@
+bibtex: Brodeur2014
+parent_bibtex: ~
+citation:
+  author: Mathieu B. Brodeur, Katherine Guérard, Maria Bouras
+  year: 2014
+  title: 'Bank of Standardized Stimuli (BOSS) Phase II: 930 New Normative Photos'
+  journal: PLoS ONE
+  volume: '9'
+  pages: e106953
+  doi: 10.1371/journal.pone.0106953
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 931
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - filename_english
+  - dko_percent
+  - dkn_percent
+  - total_percent
+  - word_english
+  - modal_name_agreement_percent
+  - hcat
+  - familiar_mean
+  - visual_complexity_mean
+  - object_agreement_mean
+  - viewpoint_agreement_mean
+  - manipulability_mean
+  flags:
+    familiar: yes
+    visualcomp: yes

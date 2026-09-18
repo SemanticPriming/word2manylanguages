@@ -1,0 +1,54 @@
+bibtex: Conca2024
+parent_bibtex: ~
+citation:
+  author: Francesca Conca, Daniela M. Gibbons, Başak Bayram, Enise I. Incesoy, Marta
+    Tacchini, Emrah Düzel, et al.
+  year: 2024
+  title: 'TACO: A Turkish database for abstract concepts'
+  journal: Behavior Research Methods
+  volume: '56'
+  pages: 7427-7439
+  doi: 10.3758/s13428-024-02428-x
+  source: crossref
+dataset:
+  language_from_columns: turkish
+  n_rows_csv: 503
+variables:
+  word_columns:
+  - word_turkish
+  raw_columns:
+  - word_turkish
+  - translate_word_italian
+  - translate_word_english
+  - pos
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - arousal_mean
+  - arousal_sd
+  - valence_mean
+  - valence_sd
+  - mental_state_mean
+  - mental_state_sd
+  - political_mean
+  - political_sd
+  - quantity_mean
+  - quantity_sd
+  - space_mean
+  - space_sd
+  - social_mean
+  - social_sd
+  - theoretic_mean
+  - theoretic_sd
+  - dominant_dimension
+  - exclusivity_score
+  flags:
+    aoa: yes
+    arousal: yes
+    familiar: yes
+    imagine: yes
+    pos: yes
+    valence: yes

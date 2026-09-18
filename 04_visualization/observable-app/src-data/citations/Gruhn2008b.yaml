@@ -1,0 +1,75 @@
+bibtex: Gruhn2008b
+parent_bibtex: ~
+citation:
+  author: Daniel Grühn, Susanne Scheibe
+  year: 2008
+  title: 'Age-related differences in valence and arousal ratings of pictures from
+    the International Affective Picture System (IAPS): Do ratings become more extreme
+    with age?'
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 512-521
+  doi: 10.3758/brm.40.2.512
+  source: crossref
+dataset:
+  language_from_columns: ''
+  n_rows_csv: 504
+variables:
+  word_columns: []
+  raw_columns:
+  - iaps_id
+  - iaps_description
+  - set
+  - iaps_content
+  - iaps_valence_category
+  - valence_mean_young_female
+  - valence_mean_young_male
+  - valence_mean_old_female
+  - valence_mean_old_male
+  - valence_mean_female
+  - valence_mean_male
+  - valence_mean_young
+  - valence_mean_old
+  - valence_mean
+  - arousal_mean_young_female
+  - arousal_mean_young_male
+  - arousal_mean_old_female
+  - arousal_mean_old_male
+  - arousal_mean_female
+  - arousal_mean_male
+  - arousal_mean_young
+  - arousal_mean_old
+  - arousal_mean
+  - valence_anova_p_age
+  - valence_anova_etasquared_age
+  - valence_anova_significant_age
+  - valence_anova_p_age_sex
+  - valence_anova_etasquared_age_sex
+  - valence_anova_significant_age_sex
+  - valence_anova_p_sex
+  - valence_anova_etasquared_sex
+  - valence_anova_significant_sex
+  - arousal_anova_p_age
+  - arousal_anova_etasquared_age
+  - arousal_anova_significant_age
+  - arousal_anova_p_age_sex
+  - arousal_anova_etasquared_age_sex
+  - arousal_anova_signficant_age_sex
+  - arousal_anova_p_sex
+  - arousal_anova_etasquared_sex
+  - arousal_anova_significant_sex
+  - percent_hits_young
+  - percent_hits_old
+  - percent_hits
+  - percent_false_alarm_young
+  - percent_false_alarm_old
+  - percent_false_alarm
+  - dprime_young
+  - dprime_old
+  - dprime
+  - response_bias_c_young
+  - response_bias_c_old
+  - response_bias_c
+  flags:
+    arousal: yes
+    valence: yes

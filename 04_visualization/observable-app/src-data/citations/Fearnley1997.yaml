@@ -1,0 +1,58 @@
+bibtex: Fearnley1997
+parent_bibtex: ~
+citation:
+  author: Stephen Fearnley
+  year: 1997
+  title: MRC Psycholinguistic Database search program
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '29'
+  pages: 291-295
+  doi: 10.3758/bf03204829
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 150000
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - length
+  - phonemes
+  - syllables
+  - frequency_kfwritten
+  - number_categories_kf
+  - number_samples_kf
+  - frequency_tf
+  - frequency_brown_verbal
+  - familiar_mean
+  - concrete_mean
+  - imagine_mean
+  - meaningfulness_mean_colorado
+  - meaningfulness_mean_pavio
+  - aoa_mean
+  - type
+  - syntactic_category
+  - pos
+  - morphemic_status
+  - contextual_status
+  - pronunciation_variability
+  - capitalization
+  - irregular_plural
+  - stress_phoneme_transcription
+  - syllable_phoneme_transcription
+  - stress_pattern
+  flags:
+    aoa: yes
+    concrete: yes
+    context: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    meaning: yes
+    morph: yes
+    phonemes: yes
+    pos: yes
+    pronounce: yes
+    syllables: yes

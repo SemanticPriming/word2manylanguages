@@ -1,0 +1,25 @@
+bibtex: Bonin2015a
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Alain Méot, Ludovic Ferrand, Aurélia Bugaïska
+  year: 2015
+  title: 'Sensory experience ratings (SERs) for 1,659 French words: Relationships
+    with other psycholinguistic variables and visual word recognition'
+  journal: Behavior Research Methods
+  volume: '47'
+  pages: 813-825
+  doi: 10.3758/s13428-014-0503-x
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1659
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - translate_word_english
+  - sensory_mean
+  - sensory_sd
+  flags:
+    sensory: yes

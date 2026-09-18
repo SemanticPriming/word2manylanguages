@@ -1,0 +1,44 @@
+bibtex: Shao2016
+parent_bibtex: ~
+citation:
+  author: Zeshu Shao, Julia Stiegert
+  year: 2016
+  title: 'Predictors of photo naming: Dutch norms for 327 photos'
+  journal: Behavior Research Methods
+  volume: '48'
+  pages: 577-584
+  doi: 10.3758/s13428-015-0613-0
+  source: crossref
+dataset:
+  language_from_columns: dutch, dutch_dominant
+  n_rows_csv: 327
+variables:
+  word_columns:
+  - word_dutch
+  - word_dutch_dominant
+  raw_columns:
+  - counter
+  - image_name
+  - word_dutch
+  - word_dutch_dominant
+  - objective_vc
+  - subjective_vc
+  - image_agreement_mean
+  - imagine_mean
+  - proportion
+  - h_statistic
+  - aoa_mean
+  - frequency_log
+  - familiar_mean
+  - length
+  - syllables
+  - naming_rt
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    letters: yes
+    picture: yes
+    syllables: yes

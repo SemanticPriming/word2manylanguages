@@ -1,0 +1,22 @@
+bibtex: Juhasz2013
+parent_bibtex: ~
+citation:
+  author: Barbara J. Juhasz, Melvin J. Yap
+  year: 2013
+  title: Sensory experience ratings for over 5,000 mono- and disyllabic words
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 160-168
+  doi: 10.3758/s13428-012-0242-9
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 5857
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - sensory_mean
+  flags:
+    sensory: yes

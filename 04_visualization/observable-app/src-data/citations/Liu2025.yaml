@@ -1,0 +1,35 @@
+bibtex: Liu2025
+parent_bibtex: ~
+citation:
+  author: Jia Liu, Lin Fan, Xiaokun Zhang, Zeming Xu
+  year: 2026
+  title: Affective and Psycholinguistic Norms for 1200 Two‐character Chinese Words
+  journal: International Journal of Applied Linguistics
+  volume: '36'
+  pages: 965-978
+  doi: 10.1111/ijal.12829
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 1200
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - concrete_mean
+  - concrete_sd
+  - arousal_mean
+  - arousal_sd
+  - familiar_mean
+  - familiar_sd
+  - typicality_mean
+  - typicality_sd
+  - valence_mean
+  - valence_sd
+  flags:
+    arousal: yes
+    concrete: yes
+    familiar: yes
+    typical: yes
+    valence: yes

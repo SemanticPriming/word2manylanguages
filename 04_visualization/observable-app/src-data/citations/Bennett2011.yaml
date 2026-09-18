@@ -1,0 +1,28 @@
+bibtex: Bennett2011
+parent_bibtex: ~
+citation:
+  author: Stephen D. R. Bennett, A. Nicole Burnett, Paul D. Siakaluk, Penny M. Pexman
+  year: 2011
+  title: Imageability and body–object interaction ratings for 599 multisyllabic nouns
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 1100-1109
+  doi: 10.3758/s13428-011-0117-5
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 599
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - imagine_n
+  - imagine_mean
+  - imagine_sd
+  - boi_n
+  - boi_mean
+  - boi_sd
+  flags:
+    imagine: yes
+    sensory: yes

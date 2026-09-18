@@ -1,0 +1,51 @@
+bibtex: Wolna2023
+parent_bibtex: ~
+citation:
+  author: Agata Wolna, Magdalena Łuniewska, Ewa Haman, Zofia Wodniecka
+  year: 2022
+  title: Polish norms for a set of colored drawings of 168 objects and 146 actions
+    with predictors of naming performance
+  journal: Behavior Research Methods
+  volume: '55'
+  pages: 2706-2732
+  doi: 10.3758/s13428-022-01923-3
+  source: crossref
+dataset:
+  language_from_columns: polish_cue, polish_response
+  n_rows_csv: 2020
+variables:
+  word_columns:
+  - word_polish_cue
+  - word_polish_response
+  raw_columns:
+  - sheet
+  - picture_file_name
+  - word_polish_cue
+  - word_polish_response
+  - rt_mean
+  - rt_sd
+  - number_types
+  - max
+  - 'n'
+  - h
+  - h_norm
+  - name_agreement_percent
+  - aoa_mean
+  - frequency_lemma
+  - frequency_lemma_log
+  - complexity_index_n
+  - complexity_index
+  - imagine_mean
+  - goodness_depiction
+  - image_agreement_mean
+  - familiar_image_mean
+  flags:
+    aoa: yes
+    complex: yes
+    familiar: yes
+    freq: yes
+    imageagree: yes
+    imagine: yes
+    nameagree: yes
+    picture: yes
+    rt: yes

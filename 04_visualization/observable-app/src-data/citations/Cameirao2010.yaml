@@ -1,0 +1,44 @@
+bibtex: Cameirao2010
+parent_bibtex: ~
+citation:
+  author: Manuela L. Cameirão, Selene G. Vicente
+  year: 2010
+  title: Age-of-acquisition norms for a set of 1,749 Portuguese words
+  journal: Behavior Research Methods
+  volume: '42'
+  pages: 474-480
+  doi: 10.3758/brm.42.2.474
+  source: crossref
+dataset:
+  language_from_columns: portuguese
+  n_rows_csv: 1749
+variables:
+  word_columns:
+  - word_portuguese
+  raw_columns:
+  - word_portuguese
+  - translate_word_english
+  - cgram
+  - familiar_mean
+  - concrete_mean
+  - imagine_mean
+  - aoa_mean
+  - aoa_sd
+  - length
+  - silo_n
+  - phonemes
+  - silphom_n
+  - ond
+  - oup
+  - phoneme_density
+  - phonome_up
+  - frequency
+  - frequency_log
+  flags:
+    aoa: yes
+    concrete: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    phonemes: yes

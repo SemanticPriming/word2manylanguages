@@ -1,0 +1,34 @@
+bibtex: Rinaldi2004
+parent_bibtex: ~
+citation:
+  author: Pasquale Rinaldi, Laura Barca, Cristina Burani
+  year: 2004
+  title: A database for semantic, grammatical, and frequency properties of the first
+    words acquired by Italian children
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 525-530
+  doi: 10.3758/bf03195599
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 519
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - word_italian
+  - translate_word_english
+  - pos
+  - percent_cfv
+  - imagine_mean
+  - imagine_sd
+  - frequency_cw
+  - frequency_cc
+  - frequency_cp
+  - frequency_aw
+  - frequency_as
+  flags:
+    freq: yes
+    imagine: yes
+    pos: yes

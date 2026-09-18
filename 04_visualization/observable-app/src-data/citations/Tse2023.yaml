@@ -1,0 +1,70 @@
+bibtex: Tse2023
+parent_bibtex: ~
+citation:
+  author: Chi-Shing Tse, Yuen-Lai Chan, Melvin J. Yap, Ho Chung Tsang
+  year: 2022
+  title: 'The Chinese Lexicon Project II: A megastudy of speeded naming performance
+    for 25,000+ traditional Chinese two-character words'
+  journal: Behavior Research Methods
+  volume: '55'
+  pages: 4382-4402
+  doi: 10.3758/s13428-022-02022-z
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional, frequency
+  n_rows_csv: 25281
+variables:
+  word_columns:
+  - word_chinese_traditional
+  - word_frequency
+  raw_columns:
+  - word_chinese_traditional
+  - translate_word_chinese_simplified
+  - ntrials
+  - accuracy
+  - rt_mean
+  - rt_sd
+  - rt_z
+  - pronunciation_1
+  - pronunciation_2
+  - initial_phoneme_feature_1
+  - initial_phoneme_feature_2
+  - initial_phoneme_feature_3
+  - initial_phoneme_feature_4
+  - initial_phoneme_feature_5
+  - initial_phoneme_feature_6
+  - initial_phoneme_feature_7
+  - initial_phoneme_feature_8
+  - initial_phoneme_feature_9
+  - initial_phoneme_feature_10
+  - initial_phoneme_feature_11
+  - initial_phoneme_feature_12
+  - initial_phoneme_feature_13
+  - stroke_1
+  - stroke_2
+  - phoneme_1
+  - phoneme_2
+  - character_frequency_1
+  - character_frequency_2
+  - word_frequency
+  - regularity_1_dummy_contrast_1
+  - regularity_2_dummy_contrast_1
+  - regularity_1_dummy_contrast_2
+  - regularity_2_dummy_contrast_2
+  - op_consistency_1
+  - op_consistency_2
+  - phono_consistency_1
+  - phono_consistency_2
+  - homophone_1
+  - homophone_2
+  - neighborhood_1
+  - neighborhood_2
+  - meaning_1
+  - meaning_2
+  - transparency_1
+  - transparency_2
+  flags:
+    accuracy: yes
+    meaning: yes
+    pronounce: yes
+    rt: yes

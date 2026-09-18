@@ -1,0 +1,49 @@
+bibtex: Janschewitz2008
+parent_bibtex: ~
+citation:
+  author: Kristin Janschewitz
+  year: 2008
+  title: Taboo, emotionally valenced, and emotionally neutral word norms
+  journal: Behavior Research Methods
+  volume: '40'
+  pages: 1065-1074
+  doi: 10.3758/brm.40.4.1065
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1380
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - rater
+  - word_english
+  - type
+  - length
+  - syllables
+  - frequency_kf
+  - valence_mean_anew
+  - arousal_mean_anew
+  - personal_use_mean
+  - personal_use_sd
+  - familiar_mean
+  - familiar_sd
+  - offensiveness_mean
+  - offensiveness_sd
+  - taboo_mean
+  - taboo_sd
+  - valence_mean
+  - valence_sd
+  - arousal_mean
+  - arousal_sd
+  - imagine_mean
+  - imagine_sd
+  flags:
+    arousal: yes
+    familiar: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    syllables: yes
+    taboo: yes
+    valence: yes

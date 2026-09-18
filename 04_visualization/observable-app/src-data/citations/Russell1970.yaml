@@ -1,0 +1,49 @@
+bibtex: Russell1970
+parent_bibtex: ~
+citation:
+  author: Wallace A. Russell
+  year: 1970
+  title: THE COMPLETE GERMAN LANGUAGE NORMS FOR RESPONSES TO 100 WORDS FROM THE KENT-ROSANOFF
+    WORD ASSOCIATION TEST11The work reported here was carried out during the writer's
+    tenure as a Senior Research Scholar at the University of Wuerzburg under a United
+    States Government Grant (Fulbright Act). Appreciation must be expressed for the
+    cooperation given by Dr. W. Arnold, head of the Psychological Institute at Wuerzburg.
+    The assistance of Oskar R. Meseck at all stages of data collection is also acknowledged,
+    as is the invaluable aid of Drs. Erwin Roth, Klaus Foppa, and Ferdinand Merz,
+    particularly pertaining to translation of English into German.
+  journal: Norms of Word Association
+  volume: []
+  pages: 53-94
+  doi: 10.1016/b978-0-12-563050-4.50006-6
+  source: crossref
+dataset:
+  language_from_columns: german, english
+  n_rows_csv: 7710
+variables:
+  word_columns:
+  - word_german
+  - word_english
+  raw_columns:
+  - word_german
+  - word_english
+  - semantic_category
+  - exemplar_generation_n_20
+  - exemplar_generation_prop
+  - typicality_mean
+  - typicality_sd
+  - aoa_mean
+  - aoa_sd
+  - familiar_mean
+  - familiar_sd
+  - frequency
+  - frequency_log
+  - phonemes
+  - syllables
+  flags:
+    aoa: yes
+    familiar: yes
+    freq: yes
+    phonemes: yes
+    semantic: yes
+    syllables: yes
+    typical: yes

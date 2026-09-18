@@ -1,0 +1,30 @@
+bibtex: Xu2021
+parent_bibtex: ~
+citation:
+  author: Xu Xu, Jiayin Li, Shulun Guo
+  year: 2021
+  title: Age of acquisition ratings for 19,716 simplified Chinese words
+  journal: Behavior Research Methods
+  volume: '53'
+  pages: 558-573
+  doi: 10.3758/s13428-020-01455-8
+  source: crossref
+dataset:
+  language_from_columns: chinese_simplified
+  n_rows_csv: 19716
+variables:
+  word_columns:
+  - word_chinese_simplified
+  raw_columns:
+  - word_chinese_simplified
+  - aoa_mean
+  - aoa_sd
+  - ratings_n
+  - percent_male
+  - percent_female
+  - age_maximum
+  - age_minimum
+  - education_maximum
+  - education_minimum
+  flags:
+    aoa: yes

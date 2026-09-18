@@ -1,0 +1,29 @@
+bibtex: Rocklage2018
+parent_bibtex: ~
+citation:
+  author: Matthew D. Rocklage, Derek D. Rucker, Loran F. Nordgren
+  year: 2018
+  title: 'The Evaluative Lexicon 2.0: The measurement of emotionality, extremity,
+    and valence in language'
+  journal: Behavior Research Methods
+  volume: '50'
+  pages: 1327-1344
+  doi: 10.3758/s13428-017-0975-6
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 1543
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - valence_mean
+  - extremity_mean
+  - wmotionality_mean
+  - valence_sd
+  - extremity_sd
+  - emotionality_sd
+  flags:
+    emotion: yes
+    valence: yes

@@ -1,0 +1,32 @@
+bibtex: Lachaud2007
+parent_bibtex: ~
+citation:
+  doi: ~
+  source: unknown
+  data_url: https://shs.hal.science/halshs-00419728
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1225
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - meaning
+  - 'n'
+  - aoa_mean
+  - aoa_minimum
+  - aoa_maximum
+  - aoa_sd
+  - aoa_certainty_mean
+  - aoa_certainty_minimum
+  - aoa_certainty_maximum
+  - aoa_certainty_sd
+  - familiar_mean
+  - familiar_minimum
+  - familiar_maximum
+  - familiar_sd
+  flags:
+    aoa: yes
+    familiar: yes
+    meaning: yes

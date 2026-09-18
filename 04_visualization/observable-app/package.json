@@ -1,0 +1,16 @@
+{
+  "name": "word2manylanguages-explorer",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "observable preview",
+    "build": "observable build",
+    "deploy": "observable deploy",
+    "clean": "rimraf src/.observablehq/cache"
+  },
+  "dependencies": {
+    "@observablehq/framework": "^1",
+    "d3-dsv": "^3",
+    "js-yaml": "^4"
+  }
+}

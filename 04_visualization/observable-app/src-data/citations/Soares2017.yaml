@@ -1,0 +1,45 @@
+bibtex: Soares2017
+parent_bibtex: ~
+citation:
+  author: Ana Paula Soares, Ana Santos Costa, João Machado, Montserrat Comesaña, Helena
+    Mendes Oliveira
+  year: 2017
+  title: 'The Minho Word Pool: Norms for imageability, concreteness, and subjective
+    frequency for 3,800 Portuguese words'
+  journal: Behavior Research Methods
+  volume: '49'
+  pages: 1065-1081
+  doi: 10.3758/s13428-016-0767-4
+  source: crossref
+dataset:
+  language_from_columns: portuguese
+  n_rows_csv: 3800
+variables:
+  word_columns:
+  - word_portuguese
+  raw_columns:
+  - word_portuguese
+  - translate_word_english
+  - imagine_mean
+  - imagine_sd
+  - concrete_mean
+  - concrete_sd
+  - frequency_s_mean
+  - frequency_s_sd
+  - length
+  - syllables
+  - syllabic_structure
+  - pos
+  - wordform_per_million_frequency
+  - wordform_per_million_frequency_log10
+  - frequency_zipf
+  - orthographic_neighborhood_size
+  - orthographic_levenshtein_distance
+  flags:
+    concrete: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    orthon: yes
+    pos: yes
+    syllables: yes

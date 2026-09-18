@@ -1,0 +1,46 @@
+bibtex: Izura2012
+parent_bibtex: ~
+citation:
+  author: Cristina Izura, David Playfoot
+  year: 2012
+  title: A normative study of acronyms and acronym naming
+  journal: Behavior Research Methods
+  volume: '44'
+  pages: 862-889
+  doi: 10.3758/s13428-011-0175-8
+  source: crossref
+dataset:
+  language_from_columns: english_acronym, english_phrase
+  n_rows_csv: 146
+variables:
+  word_columns:
+  - word_english_acronym
+  - word_english_phrase
+  raw_columns:
+  - word_english_acronym
+  - word_english_phrase
+  - semantic_related_responses_percent
+  - voiced
+  - ambiguity_type
+  - length
+  - syllables
+  - phonemes
+  - orthographic_neighbors
+  - imagine_mean
+  - frequency_rate_mean
+  - frequency_log_google
+  - frequency_log_bing
+  - frequency_log_altavista
+  - aoa_mean
+  - frequency_bigram
+  - frequency_trigram
+  flags:
+    ambiguity: yes
+    aoa: yes
+    freq: yes
+    imagine: yes
+    letters: yes
+    orthon: yes
+    phonemes: yes
+    semantic: yes
+    syllables: yes

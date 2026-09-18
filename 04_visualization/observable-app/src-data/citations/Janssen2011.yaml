@@ -1,0 +1,42 @@
+bibtex: Janssen2011
+parent_bibtex: ~
+citation:
+  author: Niels Janssen, Petra E. Pajtas, Alfonso Caramazza
+  year: 2011
+  title: 'A set of 150 pictures with morphologically complex English compound names:
+    Norms for name agreement, familiarity, image agreement, and visual complexity'
+  journal: Behavior Research Methods
+  volume: '43'
+  pages: 478-490
+  doi: 10.3758/s13428-011-0065-0
+  source: crossref
+dataset:
+  language_from_columns: english, english_celex
+  n_rows_csv: 150
+variables:
+  word_columns:
+  - word_english
+  - word_english_celex
+  raw_columns:
+  - word_english
+  - word_english_celex
+  - type
+  - mame_agreement_h_mean
+  - name_agreement_proportion
+  - familiar_mean
+  - familiar_sd
+  - imagine_mean
+  - imagine_sd
+  - visual_complexity_mean
+  - visual_complexity_sd
+  - frequency_compound
+  - frequency_lexeme1
+  - frequency_lexeme2
+  - rt_mean
+  flags:
+    familiar: yes
+    freq: yes
+    imagine: yes
+    nameagree: yes
+    rt: yes
+    visualcomp: yes

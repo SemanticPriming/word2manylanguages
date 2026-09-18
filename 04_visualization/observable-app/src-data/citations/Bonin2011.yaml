@@ -1,0 +1,26 @@
+bibtex: Bonin2011
+parent_bibtex: ~
+citation:
+  author: Patrick Bonin, Alain Méot, Ludovic Ferrand, Sébastien Roux
+  year: 2011
+  title: 'L’imageabilité : normes et relations avec d’autres variables psycholinguistiques'
+  journal: L’Année psychologique
+  volume: Vol. 111
+  pages: 327-357
+  doi: 10.3917/anpsy.112.0327
+  source: crossref
+dataset:
+  language_from_columns: french
+  n_rows_csv: 1493
+variables:
+  word_columns:
+  - word_french
+  raw_columns:
+  - word_french
+  - frequency_subjective_mean
+  - aoa_mean
+  - imagine_mean
+  flags:
+    aoa: yes
+    freq: yes
+    imagine: yes

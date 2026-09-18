@@ -1,0 +1,47 @@
+bibtex: Nelson2004
+parent_bibtex: ~
+citation:
+  author: Douglas L. Nelson, Cathy L. McEvoy, Thomas A. Schreiber
+  year: 2004
+  title: The University of South Florida free association, rhyme, and word fragment
+    norms
+  journal: Behavior Research Methods, Instruments, & Computers
+  volume: '36'
+  pages: 402-407
+  doi: 10.3758/bf03195588
+  source: crossref
+dataset:
+  language_from_columns: english
+  n_rows_csv: 5086
+variables:
+  word_columns:
+  - word_english
+  raw_columns:
+  - word_english
+  - 'n'
+  - set_size
+  - set_size_singles
+  - frequency_kf
+  - concrete_mean
+  - homograph
+  - pos
+  - mean_connectivity
+  - connectivity_strength
+  - resonance_probability
+  - resonance_strength
+  - accessibility_index
+  - non_responses
+  - ending_stem_set_size
+  - ending_stem_strength
+  - beginning_stem_set_size
+  - beginning_stem_strength
+  - ending_fragment_cue
+  - ending_fragment_set_size
+  - ending_fragment_strength
+  - beginning_fragment_cue
+  - beginning_cue_set_size
+  - beginning_cue_strength
+  flags:
+    concrete: yes
+    freq: yes
+    pos: yes

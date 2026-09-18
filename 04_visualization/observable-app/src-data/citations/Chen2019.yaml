@@ -1,0 +1,35 @@
+bibtex: Chen2019
+parent_bibtex: ~
+citation:
+  author: I-Hsuan Chen, Qingqing Zhao, Yunfei Long, Qin Lu, Chu-Ren Huang
+  year: 2019
+  title: Mandarin Chinese modality exclusivity norms
+  journal: PLOS ONE
+  volume: '14'
+  pages: e0211336
+  doi: 10.1371/journal.pone.0211336
+  source: crossref
+dataset:
+  language_from_columns: chinese_traditional, chinese_simplified, pinyin
+  n_rows_csv: 232
+variables:
+  word_columns:
+  - word_chinese_traditional
+  - word_chinese_simplified
+  - word_pinyin
+  raw_columns:
+  - word_chinese_traditional
+  - word_chinese_simplified
+  - word_pinyin
+  - translate_word_english
+  - gustatory_mean
+  - visual_strength_mean
+  - auditory_mean
+  - olfactory_strength_mean
+  - haptic_strength_mean
+  - dominant_modality
+  - modality_exclusivity
+  flags:
+    modality: yes
+    sensory: yes
+    visualcomp: yes

@@ -1,0 +1,102 @@
+bibtex: Montefinese2013_words
+parent_bibtex: Montefinese2013
+citation:
+  author: Maria Montefinese, Ettore Ambrosini, Beth Fairfield, Nicola Mammarella
+  year: 2013
+  title: 'Semantic memory: A feature-based analysis and new norms for Italian'
+  journal: Behavior Research Methods
+  volume: '45'
+  pages: 440-461
+  doi: 10.3758/s13428-012-0263-4
+  source: crossref
+dataset:
+  language_from_columns: italian
+  n_rows_csv: 160
+variables:
+  word_columns:
+  - word_italian
+  raw_columns:
+  - domain
+  - category
+  - word_italian
+  - translate_word_english
+  - length_italian
+  - length_english
+  - syllables
+  - frequency
+  - frequency_log
+  - familiar_mean
+  - typicality_mean
+  - exemplar_dominance_mean
+  - exemplar_mean_rank
+  - exemplar_1_occur
+  - exemplar_availability
+  - 'n'
+  - features
+  - frequency_production_sum
+  - frequency_production_mean
+  - dominance_mean
+  - n_feature_notax
+  - production_frequency_notax
+  - production_frequency_mean_notax
+  - n_distinct_features
+  - percent_distinct_features
+  - n_distinct_features_notax
+  - percent_distinct_features_notax
+  - distinctiveness_mean
+  - distinctiveness_mean_notax
+  - cue_value_mean
+  - cue_value_mean_notax
+  - n_correlated_pairs
+  - n_possible_correlated_pairs
+  - percent_correlated_pairs
+  - n_correlated_pairs_notax
+  - n_possible_correlated_pairs_notax
+  - percent_correlated_pairs_notax
+  - intercorrelation_density
+  - intercorrelation_density_mean
+  - intercorrelation_density_notax
+  - intercorrelation_density_mean_notax
+  - relevance_mean
+  - relevance_mean_notax
+  - significance_mean
+  - significance_mean_notax
+  - n_sense_features
+  - n_functional_features
+  - n_encyc_features
+  - n_taxonomic_features
+  - percent_sense_features
+  - percent_function_features
+  - percent_encyc_features
+  - percent_taxonomic_features
+  - percent_sense_features_notax
+  - percent_function_features_notax
+  - percent_encyc_features_notax
+  - n_sense_features_garrard
+  - n_function_features_garrard
+  - n_encyc_features_garrard
+  - n_taxonomic_features_garrard
+  - percent_sense_features_garrard
+  - percent_functiopercent_features_garrard
+  - percent_encyc_features_garrard
+  - percent_taxonomic_features_garrard
+  - percent_sense_features_notax_garrard
+  - percent_functiopercent_features_notax_garrard
+  - percent_encyc_features_notax_garrard
+  - dominance_cos_mean
+  - dominance_euc_mean
+  - dominance_city_mean
+  - binary_cos_mean
+  - binary_euc_mean
+  - binary_city_mean
+  - n_neighbors
+  - n_cosine_near_neighbors
+  flags:
+    category: yes
+    dist: yes
+    dominate: yes
+    familiar: yes
+    freq: yes
+    letters: yes
+    syllables: yes
+    typical: yes
