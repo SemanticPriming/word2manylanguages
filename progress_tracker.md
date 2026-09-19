@@ -2,20 +2,20 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 95.1% (214/225 items complete)**
+**Overall: 96.4% (217/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 3531/3540
-- Counts eval model-results written: 3528/3531
-- Norms eval model-results written: 2088/2091
-- Replication eval model-results written: 768/771
+- Model files trained: 3536/3540
+- Counts eval model-results written: 3535/3536
+- Norms eval model-results written: 2095/2096
+- Replication eval model-results written: 776/776
 
 Language-level completion (all applicable model-results present for that language):
 - Models complete (60/60): 58/59
 - Counts eval complete: 58/59
 - Norms eval complete: 34/35
 - Replication eval complete: 12/13
-- Zenodo upload at target version: 52/59
+- Zenodo upload at target version: 55/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
 |---|---|---|---|---|---|---|---|
@@ -30,7 +30,7 @@ Language-level completion (all applicable model-results present for that languag
 | [x] | da | Danish | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | de | German | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | el | Greek | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
-| [ ] | en | English | [ ] 51/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | en | English | [ ] 56/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [x] | eo | Esperanto | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [ ] | es | Spanish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
 | [x] | et | Estonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
@@ -66,15 +66,15 @@ Language-level completion (all applicable model-results present for that languag
 | [x] | sk | Slovak | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | sl | Slovenian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | sq | Albanian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
-| [ ] | sr | Serbian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
+| [x] | sr | Serbian | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | sv | Swedish | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | ta | Tamil | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | te | Telugu | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | th | Thai | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | tl | Tagalog | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
-| [ ] | tr | Turkish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
+| [x] | tr | Turkish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | tw | Taiwanese / Traditional Chinese | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | uk | Ukrainian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
-| [ ] | ur | Urdu | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
+| [x] | ur | Urdu | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [ ] | vi | Vietnamese | [x] 60/60 | [x] 1/1 | n/a | n/a | [ ] v2 |
 | [ ] | zh | Chinese / Mandarin | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [ ] v2 |
