@@ -676,6 +676,40 @@ def _next_zenodo_version_for(csv_path, language, version, part):
     return f"v{len(dois) + 1}"
 
 
+def _published_file_checksums(record_id):
+    """Public-API {filename: md5} for record_id's currently published files
+    -- used to detect a would-be new-version upload whose files exactly
+    match what's already live, so a batch job that crashed partway through
+    and restarted doesn't republish an identical copy of a part that
+    already made it out fine last time (see _batch_matches_published)."""
+    r = _retry(lambda: requests.get(f"{API}/records/{record_id}", headers=_headers(), timeout=REQUEST_TIMEOUT), "fetch published record")
+    data = r.json()
+    checksums = {}
+    for f in data.get("files", []):
+        name = f.get("key") or f.get("filename")
+        checksum = f.get("checksum", "")
+        checksums[name] = checksum[len("md5:"):] if checksum.startswith("md5:") else checksum
+    return checksums
+
+
+def _batch_matches_published(batch, chunk_dir, published_checksums):
+    """True if every spec in this part's batch already matches a
+    same-named, same-md5 file in published_checksums -- i.e. the local
+    content is byte-identical to what's already published, so uploading it
+    again as a new version would be pure churn (the "crashed partway
+    through a multi-part job, restarted, and re-planned a part that had
+    already landed correctly" case)."""
+    for spec in batch:
+        path = materialize_chunk(spec, chunk_dir)
+        try:
+            if published_checksums.get(spec.name) != _md5(path):
+                return False
+        finally:
+            if spec.offset is not None:
+                path.unlink(missing_ok=True)
+    return True
+
+
 def sync_language(language, version, models_dir, dry_run=False):
     """
     Uploads every {language}_*_wxd.csv.bz2 in models_dir to Zenodo, split
@@ -687,6 +721,13 @@ def sync_language(language, version, models_dir, dry_run=False):
     (logged clearly, since that changes the language's part count going
     forward). Languages/versions with no prior DOI at all (new 2024
     languages, or a first-ever 2024 supplement) always create new records.
+
+    A part that already has a published record is checked against that
+    record's live file checksums first (_batch_matches_published); an
+    exact match is skipped rather than republished as a needless new
+    version -- the case where a multi-part run crashes partway through
+    and, on restart, re-plans a part that had already landed correctly
+    last time.
     """
     models_dir = Path(models_dir)
     paths = sorted(models_dir.glob(f"{language}_*_wxd.csv.bz2"))
@@ -722,6 +763,10 @@ def sync_language(language, version, models_dir, dry_run=False):
             _log(f"--- Part {part}/{len(batches)}: {len(batch)} file(s), {total_bytes/1e9:.2f}GB ---")
         zenodo_version = _next_zenodo_version_for(DOIS_CSV, language, version, part)
         if part in existing:
+            published_checksums = _published_file_checksums(existing[part])
+            if _batch_matches_published(batch, chunk_dir, published_checksums):
+                _log(f"  part {part} already matches published record {existing[part]} -- skipping (no new version needed)")
+                continue
             doi = upload_batch_as_new_version(language, version, part, batch, chunk_dir, existing[part])
         else:
             title = f"word2manylanguages: {language} Word2Vec embeddings ({version} corpus)"

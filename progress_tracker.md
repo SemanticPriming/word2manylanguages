@@ -2,20 +2,20 @@
 
 Re-run `python progress_tracker.py` any time to refresh this file.
 
-**Overall: 97.3% (219/225 items complete)**
+**Overall: 98.2% (221/225 items complete)**
 
 Raw object counts (actual files/model-results produced, not just "language fully done"):
-- Model files trained: 3539/3540
-- Counts eval model-results written: 3539/3539
-- Norms eval model-results written: 2099/2099
-- Replication eval model-results written: 779/779
+- Model files trained: 3540/3540
+- Counts eval model-results written: 3539/3540
+- Norms eval model-results written: 2099/2100
+- Replication eval model-results written: 779/780
 
 Language-level completion (all applicable model-results present for that language):
-- Models complete (60/60): 58/59
+- Models complete (60/60): 59/59
 - Counts eval complete: 58/59
 - Norms eval complete: 34/35
 - Replication eval complete: 12/13
-- Zenodo upload at target version: 57/59
+- Zenodo upload at target version: 58/59
 
 | | Code | Language | Models | Counts | Norms | Replication | Zenodo |
 |---|---|---|---|---|---|---|---|
@@ -30,9 +30,9 @@ Language-level completion (all applicable model-results present for that languag
 | [x] | da | Danish | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
 | [x] | de | German | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | el | Greek | [x] 60/60 | [x] 1/1 | [x] 1/1 | n/a | [x] v2 |
-| [ ] | en | English | [ ] 59/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
+| [ ] | en | English | [x] 60/60 | [ ] 0/1 | [ ] 0/1 | [ ] 0/1 | [ ] v2 |
 | [x] | eo | Esperanto | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
-| [ ] | es | Spanish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [ ] v2 |
+| [x] | es | Spanish | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
 | [x] | et | Estonian | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | eu | Basque | [x] 60/60 | [x] 1/1 | n/a | n/a | [x] v2 |
 | [x] | fa | Farsi | [x] 60/60 | [x] 1/1 | [x] 1/1 | [x] 1/1 | [x] v2 |
