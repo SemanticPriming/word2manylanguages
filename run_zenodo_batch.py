@@ -44,8 +44,7 @@ if os.path.exists(env_path):
 # per progress_tracker.md) but isn't yet at its target Zenodo version.
 # Edit freely: drop languages you don't want tonight, or add more once
 # their models finish.
-languages = [  "zh", "es" #, "en"
-]
+languages = [ "es", "en"]
 version = "2018"       # '2018' or '2024' -- see run_language_pipeline.py's module docstring
 max_retries = 5         # whole-call retries per language before giving up on it
 retry_wait_seconds = 300  # 5 minutes
